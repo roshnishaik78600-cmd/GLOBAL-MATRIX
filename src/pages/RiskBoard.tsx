@@ -282,7 +282,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ------------------------------------------ HISTORICAL MOVEMENT -- */}
-      <div className="lg:col-span-12">
+      <div className="min-w-0 lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
           <SectionTitle
             meta="each row is one event; the bar is its 80% interval"
