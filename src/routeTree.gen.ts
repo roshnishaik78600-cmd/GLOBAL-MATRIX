@@ -37,6 +37,7 @@ import { Route as AppWorldRouteImport } from './routes/app/world'
 import { Route as AppCountryNodeIdRouteImport } from './routes/app/country/$nodeId'
 import { Route as AppEventEventIdRouteImport } from './routes/app/event/$eventId'
 import { Route as AppIndustryIndustryIdRouteImport } from './routes/app/industry/$industryId'
+import { Route as AppReportEventIdRouteImport } from './routes/app/report/$eventId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -178,6 +179,11 @@ const AppIndustryIndustryIdRoute = AppIndustryIndustryIdRouteImport.update({
   path: '/industry/$industryId',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReportEventIdRoute = AppReportEventIdRouteImport.update({
+  id: '/report/$eventId',
+  path: '/report/$eventId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -208,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
+  '/app/report/$eventId': typeof AppReportEventIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -237,6 +244,7 @@ export interface FileRoutesByTo {
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
+  '/app/report/$eventId': typeof AppReportEventIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -268,6 +276,7 @@ export interface FileRoutesById {
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
+  '/app/report/$eventId': typeof AppReportEventIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -300,6 +309,7 @@ export interface FileRouteTypes {
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
+    | '/app/report/$eventId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
+    | '/app/report/$eventId'
   id:
     | '__root__'
     | '/'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
+    | '/app/report/$eventId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -569,6 +581,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndustryIndustryIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/report/$eventId': {
+      id: '/app/report/$eventId'
+      path: '/report/$eventId'
+      fullPath: '/app/report/$eventId'
+      preLoaderRoute: typeof AppReportEventIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -594,6 +613,7 @@ interface AppRouteChildren {
   AppCountryNodeIdRoute: typeof AppCountryNodeIdRoute
   AppEventEventIdRoute: typeof AppEventEventIdRoute
   AppIndustryIndustryIdRoute: typeof AppIndustryIndustryIdRoute
+  AppReportEventIdRoute: typeof AppReportEventIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -618,6 +638,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCountryNodeIdRoute: AppCountryNodeIdRoute,
   AppEventEventIdRoute: AppEventEventIdRoute,
   AppIndustryIndustryIdRoute: AppIndustryIndustryIdRoute,
+  AppReportEventIdRoute: AppReportEventIdRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
