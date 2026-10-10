@@ -495,6 +495,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      reserve_brief_claim: {
+        Args: {
+          p_daily_limit: number
+          p_interval_ms: number
+          p_user_id: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "admin" | "user"
