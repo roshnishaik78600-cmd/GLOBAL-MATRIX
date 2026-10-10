@@ -92,78 +92,78 @@
   --secondary-foreground: #f5f7fa;
   --muted: #111b31;
   /* Secondary text. The overwhelming majority of supporting copy sits here. */
-  --muted-foreground: #a3b1c6;
+  --muted-foreground: #929cb5;
   /* Muted text. Reserved for the lowest-priority register — labels inside a
      chart, a legend caption, anything a reader should be able to skip without
      missing an argument. Three text rungs, not two, because a design system
      that claims a muted colour and never defines it is a design system with a
      hole in it. */
   --muted-text: #6b7a91;
-  --accent: #16223b;
-  --accent-foreground: #f5f7fa;
-  --destructive: #f06a7a;
-  --border: #1f2c45;
-  --input: #1f2c45;
-  --ring: #5eb8ff;
+  --accent: #151a35;
+  --accent-foreground: #f2f5ff;
+  --destructive: #ff647c;
+  --border: #232a4d;
+  --input: #232a4d;
+  --ring: #48e5ff;
 
   /* The secondary surface, as a first-class name. Two lifts only: a card sits
      on `--card`, a nested well or a control bed sits on this. */
-  --surface-2: #111b31;
+  --surface-2: #151a35;
 
-  --rule: #1f2c45;
-  --grid: #172238;
+  --rule: #232a4d;
+  --grid: #181e3a;
 
   /* Status ramp. Green means "measured and improving", red means "measured and
      worse", amber means "measured but stale or unresolved". None of them are
      decorative and none of them are ever used for a non-status meaning. */
   --stable: #36c98f;
-  --warning: #f2b84b;
-  --elevated: #f2b84b;
-  --critical: #f06a7a;
-  --signal: #f06a7a;
+  --warning: #ffbe69;
+  --elevated: #ffbe69;
+  --critical: #ff647c;
+  --signal: #ff647c;
 
   /* Accents. Rationed: cyan for live/interactive, violet for the propagation
      and uncertainty layer. */
-  --cyan: #38d6e8;
-  --violet: #a58bff;
+  --cyan: #48e5ff;
+  --violet: #9270ff;
   /* Information. The fourth signal colour, for neutral/informational states that
      are neither positive, warning nor critical. */
   --info: #6ea8fe;
 
-  --chart-1: #f06a7a;
-  --chart-2: #4fd1c5;
+  --chart-1: #ff647c;
+  --chart-2: #48e5ff;
   --chart-3: #36c98f;
-  --chart-4: #f2b84b;
-  --chart-5: #8b7cff;
+  --chart-4: #ffbe69;
+  --chart-5: #9270ff;
   --chart-6: #6ea8fe;
 
-  --sidebar: #050a14;
-  --sidebar-foreground: #f5f7fa;
-  --sidebar-primary: #f5f7fa;
-  --sidebar-primary-foreground: #060b17;
-  --sidebar-accent: #111b31;
-  --sidebar-accent-foreground: #f5f7fa;
-  --sidebar-border: #1f2c45;
-  --sidebar-ring: #4fd1c5;
+  --sidebar: #070a15;
+  --sidebar-foreground: #f2f5ff;
+  --sidebar-primary: #f2f5ff;
+  --sidebar-primary-foreground: #090d1a;
+  --sidebar-accent: #151a35;
+  --sidebar-accent-foreground: #f2f5ff;
+  --sidebar-border: #232a4d;
+  --sidebar-ring: #48e5ff;
 
   /* Executive risk-surface tokens. Values mirror the tokens above; they are
      kept as separate names because a large share of the console is written
      against `--exec-*`, and retuning one register must not silently retune the
      other. The mapping is enforced by the fact that both ramps resolve to the
      same six colours. */
-  --exec-base: #060b17;
-  --exec-panel: #0b1324;
-  --exec-surface: #111b31;
-  --exec-surface-strong: #16223b;
-  --exec-hairline: #1f2c45;
-  --exec-hairline-strong: #35414f;
-  --exec-ink: #f5f7fa;
-  --exec-ink-dim: #a7b0bc;
-  --exec-ink-muted: #6f7a87;
-  --exec-cyan: #4fd1c5;
-  --exec-violet: #8b7cff;
-  --exec-amber: #f2b84b;
-  --exec-crimson: #f06a7a;
+  --exec-base: #090d1a;
+  --exec-panel: #10152b;
+  --exec-surface: #151a35;
+  --exec-surface-strong: #1c2245;
+  --exec-hairline: #232a4d;
+  --exec-hairline-strong: #363e66;
+  --exec-ink: #f2f5ff;
+  --exec-ink-dim: #929cb5;
+  --exec-ink-muted: #6f7894;
+  --exec-cyan: #48e5ff;
+  --exec-violet: #9270ff;
+  --exec-amber: #ffbe69;
+  --exec-crimson: #ff647c;
   --exec-emerald: #36c98f;
   --exec-info: #6ea8fe;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
