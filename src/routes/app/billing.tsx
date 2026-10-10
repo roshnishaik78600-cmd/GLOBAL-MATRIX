@@ -63,7 +63,9 @@ function Billing() {
     return (
       <div role="alert" className="p-8 text-sm text-destructive">
         {error}
-        <Button variant="outline" onClick={refresh} className="ml-3">Retry</Button>
+        <Button variant="outline" onClick={refresh} className="ml-3">
+          Retry
+        </Button>
       </div>
     );
   if (!data) return <p className="p-8 text-sm text-muted-foreground">Loading billing…</p>;
@@ -110,8 +112,13 @@ function Billing() {
         )}
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
           {!data.subscription && (
-            <Button variant="outline"
-              onClick={() => free().then(refresh).catch(() => setError("Could not activate Free Explorer. Try again."))}
+            <Button
+              variant="outline"
+              onClick={() =>
+                free()
+                  .then(refresh)
+                  .catch(() => setError("Could not activate Free Explorer. Try again."))
+              }
               className="rounded-md border border-border px-3 py-1.5 text-foreground hover:bg-accent"
             >
               Activate Free Explorer
@@ -161,7 +168,9 @@ function Billing() {
                     <td>{fmt(o.created_at)}</td>
                     <td>
                       {o.status === "pending_payment" && (
-                        <Button variant="ghost" size="sm"
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           className="text-xs text-muted-foreground underline"
                           onClick={async () => {
                             if (!confirm("Cancel this order?")) return;
