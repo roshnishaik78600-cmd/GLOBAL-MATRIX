@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "@/lib/router-shim";
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CircleAlert,
-  Loader2,
-  Mail,
-  MailCheck,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CircleAlert, Loader2, Mail, MailCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";
@@ -29,10 +22,7 @@ interface AuthProps {
  * the second guard, `?returnTo=/login` would navigate to /login, the effect
  * below would fire again, and the user would sit in a navigation loop.
  */
-function resolveRedirectAfterAuth(
-  returnTo: string | null,
-  fallback = "/app",
-) {
+function resolveRedirectAfterAuth(returnTo: string | null, fallback = "/app") {
   if (returnTo?.startsWith("/") && !returnTo.startsWith("//")) {
     const target = returnTo.split("?")[0].replace(/\/+$/, "");
     const authPages = ["/auth", "/login", "/signup"];
@@ -41,12 +31,9 @@ function resolveRedirectAfterAuth(
   return fallback;
 }
 
-const SIGNIN_FAILURE =
-  "We couldn't sign you in. Check your email and password and try again.";
-const SIGNUP_FAILURE =
-  "We couldn't create your account. Check the details and try again.";
-const NETWORK_FAILURE =
-  "We couldn't complete that request. Please try again.";
+const SIGNIN_FAILURE = "We couldn't sign you in. Check your email and password and try again.";
+const SIGNUP_FAILURE = "We couldn't create your account. Check the details and try again.";
+const NETWORK_FAILURE = "We couldn't complete that request. Please try again.";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -126,9 +113,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
     return Object.keys(next).length === 0;
   };
 
-  const handleFormSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isLoading) return;
     if (!validate()) return;
@@ -153,9 +138,10 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
           navigate(redirect);
         }
       } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword(
-          { email: email.trim(), password },
-        );
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
         if (signInError) throw signInError;
         navigate(redirect);
       }
@@ -197,15 +183,8 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
           stands between a phone and the form. */}
       <aside className="relative hidden overflow-hidden border-r border-[var(--exec-hairline)] bg-[var(--exec-panel)] lg:flex lg:w-[46%] lg:flex-col lg:justify-between xl:w-1/2">
         <div className="p-10 xl:p-14">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2.5"
-            aria-label="GlobalMatrix home"
-          >
-            <span
-              className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]"
-              aria-hidden
-            />
+          <Link to="/" className="inline-flex items-center gap-2.5" aria-label="GlobalMatrix home">
+            <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
             <span className="text-[14px] font-semibold tracking-[0.2em] uppercase">
               Globalmatrix
             </span>
@@ -219,9 +198,8 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
             <span className="text-[var(--exec-cyan)]">Trace the impact.</span>
           </p>
           <p className="mt-5 max-w-md text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
-            Global geopolitical and supply-chain exposure intelligence that
-            connects events to the countries, flows, infrastructure, industries
-            and businesses they affect.
+            Global geopolitical and supply-chain exposure intelligence that connects events to the
+            countries, flows, infrastructure, industries and businesses they affect.
           </p>
 
           {/* The product in four steps: a restrained chain, not a demo. */}
@@ -241,10 +219,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                   <span className="w-24 shrink-0 text-[13px] font-semibold tracking-[0.14em] text-[var(--exec-ink)] uppercase">
                     {node.label}
                   </span>
-                  <span
-                    className="h-px min-w-0 flex-1 bg-[var(--exec-hairline)]"
-                    aria-hidden
-                  />
+                  <span className="h-px min-w-0 flex-1 bg-[var(--exec-hairline)]" aria-hidden />
                   <span className="exec-label shrink-0">{node.note}</span>
                 </div>
                 {i < CHAIN.length - 1 ? (
@@ -273,8 +248,8 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
         </div>
 
         <p className="px-10 pb-10 text-[12px] leading-relaxed text-[var(--exec-ink-muted)] xl:px-14">
-          Evidence before decoration · every figure carries its source and
-          freshness · scenarios are never presented as predictions.
+          Evidence before decoration · every figure carries its source and freshness · scenarios are
+          never presented as predictions.
         </p>
       </aside>
 
@@ -289,11 +264,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
               <ArrowLeft className="size-3.5" /> Home
             </Link>
             <span className="exec-label truncate text-[var(--exec-ink-dim)]">
-              {step === "form"
-                ? isSignup
-                  ? "Create account"
-                  : "Sign in"
-                : "Check your email"}
+              {step === "form" ? (isSignup ? "Create account" : "Sign in") : "Check your email"}
             </span>
           </div>
 
@@ -307,10 +278,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                 <p className="exec-label text-[var(--exec-cyan)]">
                   {reason ? "Restricted action" : isSignup ? "New account" : "Welcome"}
                 </p>
-                <h1
-                  id="auth-title"
-                  className="t-section mt-2 text-[var(--exec-ink)]"
-                >
+                <h1 id="auth-title" className="t-section mt-2 text-[var(--exec-ink)]">
                   {reason
                     ? "Sign in to continue"
                     : isSignup
@@ -325,11 +293,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                       : "Continue to your global intelligence workspace."}
                 </p>
 
-                <form
-                  onSubmit={handleFormSubmit}
-                  noValidate
-                  className="mt-6 flex flex-col gap-4"
-                >
+                <form onSubmit={handleFormSubmit} noValidate className="mt-6 flex flex-col gap-4">
                   {isSignup ? (
                     <div className="flex flex-col gap-1.5">
                       <label
@@ -348,9 +312,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                         onChange={(e) => setName(e.target.value)}
                         disabled={isLoading}
                         aria-invalid={fieldErrors.name ? true : undefined}
-                        aria-describedby={
-                          fieldErrors.name ? "auth-name-error" : undefined
-                        }
+                        aria-describedby={fieldErrors.name ? "auth-name-error" : undefined}
                         className="h-11"
                       />
                       {fieldErrors.name ? (
@@ -391,9 +353,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={isLoading}
                         aria-invalid={fieldErrors.email ? true : undefined}
-                        aria-describedby={
-                          fieldErrors.email ? "auth-email-error" : undefined
-                        }
+                        aria-describedby={fieldErrors.email ? "auth-email-error" : undefined}
                         className="h-11 pl-9"
                       />
                     </div>
@@ -426,9 +386,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={isLoading}
                       aria-invalid={fieldErrors.password ? true : undefined}
-                      aria-describedby={
-                        fieldErrors.password ? "auth-password-error" : undefined
-                      }
+                      aria-describedby={fieldErrors.password ? "auth-password-error" : undefined}
                       className="h-11"
                     />
                     {fieldErrors.password ? (
@@ -477,9 +435,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
 
                 <div className="my-5 flex items-center gap-3">
                   <span className="h-px flex-1 bg-[var(--exec-hairline)]" />
-                  <span className="exec-label text-[var(--exec-ink-muted)]">
-                    or
-                  </span>
+                  <span className="exec-label text-[var(--exec-ink-muted)]">or</span>
                   <span className="h-px flex-1 bg-[var(--exec-hairline)]" />
                 </div>
                 <Button
@@ -523,9 +479,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
               </>
             ) : (
               <>
-                <p className="exec-label text-[var(--exec-cyan)]">
-                  Verification
-                </p>
+                <p className="exec-label text-[var(--exec-cyan)]">Verification</p>
                 <h1
                   id="auth-title"
                   className="t-section mt-2 flex items-center gap-2 text-[var(--exec-ink)]"
@@ -535,10 +489,8 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                 </h1>
                 <p className="mt-2 text-[14px] leading-relaxed text-[var(--exec-ink-dim)]">
                   We sent a confirmation link to{" "}
-                  <span className="font-medium text-[var(--exec-ink)]">
-                    {email.trim()}
-                  </span>
-                  . Open it to confirm your account, then come back and sign in.
+                  <span className="font-medium text-[var(--exec-ink)]">{email.trim()}</span>. Open
+                  it to confirm your account, then come back and sign in.
                 </p>
 
                 <Button
@@ -557,8 +509,8 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
           </motion.section>
 
           <p className="mt-5 text-center text-[12px] leading-relaxed text-[var(--exec-ink-muted)]">
-            Public intelligence needs no account — close this page and keep
-            browsing. An account only saves your watchlist and notes.
+            Public intelligence needs no account — close this page and keep browsing. An account
+            only saves your watchlist and notes.
           </p>
         </div>
       </main>

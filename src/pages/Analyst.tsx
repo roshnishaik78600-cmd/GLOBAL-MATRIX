@@ -24,7 +24,13 @@ import { cn } from "@/lib/utils";
  */
 /** The place this event lands on hardest, by weighted contribution. */
 function mostExposedNode(assessment: {
-  scenario: { pathways: { magnitude: number; confidence: number; exposures: { nodeId: string; impact: number }[] }[] };
+  scenario: {
+    pathways: {
+      magnitude: number;
+      confidence: number;
+      exposures: { nodeId: string; impact: number }[];
+    }[];
+  };
 }): string | null {
   const byNode = new Map<string, number>();
   for (const pathway of assessment.scenario.pathways) {
@@ -49,10 +55,7 @@ export default function Analyst() {
   const [error, setError] = useState<string | null>(null);
 
   const active = eventId ?? feed?.rows[0]?.id ?? null;
-  const detail = useQuery(
-    api.intel.eventDetail,
-    active ? { eventId: active } : "skip",
-  );
+  const detail = useQuery(api.intel.eventDetail, active ? { eventId: active } : "skip");
 
   const run = async () => {
     if (!active) return;
@@ -89,11 +92,10 @@ export default function Analyst() {
   const assessment = detail?.assessment;
   const topExposedNode = assessment ? mostExposedNode(assessment) : null;
 
-  const getNodeLabel = (id: string) =>
-    getNode(id).label;
+  const getNodeLabel = (id: string) => getNode(id).label;
 
   return (
-      <PageFrame
+    <PageFrame
       eyebrow="AI analyst"
       title="AI analyst"
       lede="A question answered with evidence, drivers and sources — never a claim without the ledger it came from."
@@ -129,19 +131,14 @@ export default function Analyst() {
         </>
       }
     >
-
       {error ? (
         <div className="lg:col-span-12">
           <div
             className="rounded-lg border border-[color-mix(in_srgb,var(--exec-crimson)_45%,transparent)] px-4 py-3"
             role="status"
           >
-            <p className="exec-label text-[var(--exec-crimson)]">
-              TEMPORARILY UNAVAILABLE
-            </p>
-            <p className="mt-1 text-[13px] leading-relaxed text-[var(--exec-ink)]">
-              {error}
-            </p>
+            <p className="exec-label text-[var(--exec-crimson)]">TEMPORARILY UNAVAILABLE</p>
+            <p className="mt-1 text-[13px] leading-relaxed text-[var(--exec-ink)]">{error}</p>
           </div>
         </div>
       ) : null}
@@ -175,21 +172,14 @@ export default function Analyst() {
               <div className="space-y-4 p-3">
                 <div>
                   <p className="label text-muted-foreground">In one line</p>
-                  <p className="mt-1.5 text-[13.5px] leading-relaxed">
-                    {brief.thesis}
-                  </p>
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed">{brief.thesis}</p>
                 </div>
                 {brief.channels.length > 0 ? (
                   <div>
-                    <p className="label text-muted-foreground">
-                      How it travels
-                    </p>
+                    <p className="label text-muted-foreground">How it travels</p>
                     <ul className="mt-2 space-y-1.5">
                       {brief.channels.map((c, i) => (
-                        <li
-                          key={i}
-                          className="flex gap-2.5 text-[12px] leading-relaxed"
-                        >
+                        <li key={i} className="flex gap-2.5 text-[12px] leading-relaxed">
                           <span className="num shrink-0 text-[12px] text-signal">
                             {String(i + 1).padStart(2, "0")}
                           </span>
@@ -201,9 +191,7 @@ export default function Analyst() {
                 ) : null}
                 {brief.caveats.length > 0 ? (
                   <div>
-                    <p className="label text-muted-foreground">
-                      What would prove this wrong
-                    </p>
+                    <p className="label text-muted-foreground">What would prove this wrong</p>
                     <ul className="mt-2 space-y-1.5">
                       {brief.caveats.map((c, i) => (
                         <li
@@ -268,8 +256,14 @@ export default function Analyst() {
                   "Uncertainty",
                   assessment ? `±${(assessment.uncertainty / 2).toFixed(1)} pts` : "—",
                 ],
-                ["Evidence mass", assessment ? `${(assessment.evidenceStrength * 100).toFixed(0)}%` : "—"],
-                ["Dominant channel", assessment ? CHANNEL_LABEL[assessment.dominantChannel as Channel] : "—"],
+                [
+                  "Evidence mass",
+                  assessment ? `${(assessment.evidenceStrength * 100).toFixed(0)}%` : "—",
+                ],
+                [
+                  "Dominant channel",
+                  assessment ? CHANNEL_LABEL[assessment.dominantChannel as Channel] : "—",
+                ],
                 ["Model", brief?.model ?? "—"],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-center justify-between px-3 py-2">
@@ -300,9 +294,7 @@ export default function Analyst() {
                     </span>
                   </div>
                   <p className="mt-1 text-[12px] leading-snug">{s.headline}</p>
-                  <p className="mt-1 text-[12px] leading-snug text-muted-foreground">
-                    {s.source}
-                  </p>
+                  <p className="mt-1 text-[12px] leading-snug text-muted-foreground">{s.source}</p>
                   <div className="mt-1.5 flex items-center gap-2">
                     <Bar
                       value={s.reliability}
@@ -334,10 +326,7 @@ export default function Analyst() {
             {topExposedNode ? (
               <NodeEvidence nodeId={topExposedNode} />
             ) : (
-              <NoVerifiedData
-                title="Reported context"
-                domain="a most-exposed place to report on"
-              />
+              <NoVerifiedData title="Reported context" domain="a most-exposed place to report on" />
             )}
           </div>
           <div className="lg:col-span-6">

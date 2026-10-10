@@ -29,10 +29,7 @@ export function FocusDrawer() {
   const countries = useQuery(api.intel.countryDirectory);
   // Subscriptions are scoped to the kind of thing being inspected, so opening
   // a country never pays for the sector and signal-matrix payloads.
-  const matrix = useQuery(
-    api.intel.signalMatrix,
-    focus?.kind === "node" ? {} : "skip",
-  );
+  const matrix = useQuery(api.intel.signalMatrix, focus?.kind === "node" ? {} : "skip");
   const industries = useQuery(
     api.intel.industryDirectory,
     focus?.kind === "industry" ? {} : "skip",
@@ -46,10 +43,8 @@ export function FocusDrawer() {
     const corridor = countries?.corridors.find((c) => c.nodeId === focus.id);
     const signals = matrix?.rows.find((r) => r.nodeId === focus.id);
     // Events that name this node among the places they land hardest on.
-    const events = (feed?.rows ?? []).filter((r) =>
-      r.topNodes.some((n) => n.nodeId === focus.id),
-    );
-    const peers = (row?.nodeId ? countries?.countries ?? [] : [])
+    const events = (feed?.rows ?? []).filter((r) => r.topNodes.some((n) => n.nodeId === focus.id));
+    const peers = (row?.nodeId ? (countries?.countries ?? []) : [])
       .filter((c) => c.nodeId !== focus.id)
       .slice(0, 5);
 
@@ -117,8 +112,7 @@ export function FocusDrawer() {
         >
           {events.length === 0 ? (
             <p className="px-4 py-3 text-[13px] text-muted-foreground">
-              No event currently ranks this node among the places it lands on
-              hardest.
+              No event currently ranks this node among the places it lands on hardest.
             </p>
           ) : (
             <ul className="divide-y divide-rule">
@@ -129,12 +123,8 @@ export function FocusDrawer() {
                     className="block px-4 py-2.5 transition-colors hover:bg-[var(--exec-surface)]"
                   >
                     <div className="flex items-baseline justify-between gap-2">
-                      <span className="line-clamp-2 text-[12px] leading-snug">
-                        {e.title}
-                      </span>
-                      <span className="num shrink-0 text-[12px]">
-                        {e.score30.toFixed(0)}
-                      </span>
+                      <span className="line-clamp-2 text-[12px] leading-snug">{e.title}</span>
+                      <span className="num shrink-0 text-[12px]">{e.score30.toFixed(0)}</span>
                     </div>
                     <p className="num mt-1 text-[12px] text-muted-foreground">
                       {e.reference} · {STAGE_LABEL[e.stage]} ·{" "}
@@ -163,15 +153,9 @@ export function FocusDrawer() {
                     <span className="num w-7 shrink-0 text-[12px] text-muted-foreground">
                       {c.short}
                     </span>
-                    <span className="min-w-0 flex-1 truncate text-[12px]">
-                      {c.label}
-                    </span>
+                    <span className="min-w-0 flex-1 truncate text-[12px]">{c.label}</span>
                     <span className="w-14 shrink-0">
-                      <Bar
-                        value={c.load}
-                        tone={riskColorForScore(c.load * 100)}
-                        height={3}
-                      />
+                      <Bar value={c.load} tone={riskColorForScore(c.load * 100)} height={3} />
                     </span>
                     <span className="num w-8 shrink-0 text-right text-[12px]">
                       {(c.load * 100).toFixed(0)}%
@@ -199,9 +183,7 @@ export function FocusDrawer() {
                           <span className="num w-7 shrink-0 text-[12px] text-muted-foreground">
                             {c.short}
                           </span>
-                          <span className="min-w-0 flex-1 truncate text-[12px]">
-                            {c.label}
-                          </span>
+                          <span className="min-w-0 flex-1 truncate text-[12px]">{c.label}</span>
                           <span className="num w-8 shrink-0 text-right text-[12px]">
                             {(c.load * 100).toFixed(0)}%
                           </span>
@@ -258,15 +240,11 @@ export function FocusDrawer() {
       >
         <Section title="How it travels" note="channel pressure">
           <ul className="divide-y divide-rule">
-            {(
-              Object.entries(event.channelPressure) as [Channel, number][]
-            )
+            {(Object.entries(event.channelPressure) as [Channel, number][])
               .sort((a, b) => b[1] - a[1])
               .map(([channel, value]) => (
                 <li key={channel} className="flex items-center gap-3 px-4 py-2">
-                  <span className="w-24 shrink-0 text-[13px]">
-                    {CHANNEL_LABEL[channel]}
-                  </span>
+                  <span className="w-24 shrink-0 text-[13px]">{CHANNEL_LABEL[channel]}</span>
                   <Bar
                     value={value}
                     tone={riskColorForScore(value * 100)}
@@ -307,14 +285,11 @@ export function FocusDrawer() {
           </ul>
         </Section>
 
-        <Section
-          title="Show evidence"
-          note={`${event.signalCount} observations in the ledger`}
-        >
+        <Section title="Show evidence" note={`${event.signalCount} observations in the ledger`}>
           <p className="px-4 py-3 text-[13px] leading-relaxed text-muted-foreground">
-            The full evidence ledger — every observation, its source class, its
-            reliability weight and its corroboration count — is on the event
-            page, where each row can be read against the score it supports.
+            The full evidence ledger — every observation, its source class, its reliability weight
+            and its corroboration count — is on the event page, where each row can be read against
+            the score it supports.
           </p>
         </Section>
       </Drawer>
@@ -373,8 +348,8 @@ export function FocusDrawer() {
         </Section>
         <Section title="Show evidence" note="reported">
           <p className="px-4 py-3 text-[13px] leading-relaxed text-muted-foreground">
-            Sector-level figures in this build are model output. Reported figures
-            are published per economy, on that economy&apos;s page.
+            Sector-level figures in this build are model output. Reported figures are published per
+            economy, on that economy&apos;s page.
           </p>
         </Section>
       </Drawer>
@@ -382,9 +357,7 @@ export function FocusDrawer() {
   }
 
   if (focus?.kind === "channel") {
-    const events = (feed?.rows ?? []).filter(
-      (r) => r.channelPressure[focus.id] > 0.3,
-    );
+    const events = (feed?.rows ?? []).filter((r) => r.channelPressure[focus.id] > 0.3);
     return (
       <Drawer
         open={open}
@@ -407,9 +380,7 @@ export function FocusDrawer() {
                     className="block px-4 py-2.5 transition-colors hover:bg-[var(--exec-surface)]"
                   >
                     <div className="flex items-baseline justify-between gap-2">
-                      <span className="line-clamp-2 text-[12px] leading-snug">
-                        {e.title}
-                      </span>
+                      <span className="line-clamp-2 text-[12px] leading-snug">{e.title}</span>
                       <span className="num shrink-0 text-[12px]">
                         {(e.channelPressure[focus.id as Channel] * 100).toFixed(0)}%
                       </span>
@@ -427,15 +398,7 @@ export function FocusDrawer() {
   return null;
 }
 
-function Section({
-  title,
-  note,
-  children,
-}: {
-  title: string;
-  note?: string;
-  children: ReactNode;
-}) {
+function Section({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
   return (
     <section className="border-b border-rule last:border-b-0">
       <div className="flex items-baseline justify-between gap-2 px-4 pt-3 pb-1.5">

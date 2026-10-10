@@ -31,13 +31,7 @@ export function NavDirectory({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function NavRow({
-  item,
-  onNavigate,
-}: {
-  item: NavItem;
-  onNavigate?: () => void;
-}) {
+function NavRow({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const Icon = item.icon;
 
   if (item.unavailable) {
@@ -83,13 +77,7 @@ function NavRow({
  * laptop and become unreachable. As a dialog it can scroll, it traps Escape,
  * and it closes on a click outside or on navigation.
  */
-export function ExplorePanel({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
+export function ExplorePanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -104,7 +92,12 @@ export function ExplorePanel({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Explore GlobalMatrix">
+    <div
+      className="fixed inset-0 z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Explore GlobalMatrix"
+    >
       <button
         type="button"
         aria-label="Close explore panel"

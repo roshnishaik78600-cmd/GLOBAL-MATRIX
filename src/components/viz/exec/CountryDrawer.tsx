@@ -14,12 +14,7 @@ import { freshnessOf } from "@/lib/freshness";
 import { macroSeries, useMacroData, useTradeData } from "@/hooks/use-verified-data";
 import { NodeRiskRadar, RadarLegend } from "./NodeRiskRadar";
 import { FragilityArc } from "./FragilityArc";
-import {
-  BasisTag,
-  FreshnessTag,
-  NoDataAvailable,
-  SectionTitle,
-} from "./system";
+import { BasisTag, FreshnessTag, NoDataAvailable, SectionTitle } from "./system";
 import { loadColour } from "./Topology";
 
 /**
@@ -58,9 +53,9 @@ export function CountryDrawer({ nodeId }: { nodeId: string }) {
   const exposure = profile?.exposure;
   const pressure = useMemo(
     () =>
-      Object.fromEntries(
-        (exposure?.byChannel ?? []).map((c) => [c.channel, c.load]),
-      ) as Partial<Record<Channel, number>>,
+      Object.fromEntries((exposure?.byChannel ?? []).map((c) => [c.channel, c.load])) as Partial<
+        Record<Channel, number>
+      >,
     [exposure],
   );
 
@@ -142,7 +137,6 @@ export function CountryDrawer({ nodeId }: { nodeId: string }) {
   );
 }
 
-
 /* ------------------------------------------------------------------ tabs */
 
 /** Modules shared by several tabs. */
@@ -187,9 +181,8 @@ function OverviewTab({ nodeId }: { nodeId: string }) {
         <div className="min-w-0">
           <p className="exec-label">Structural fragility</p>
           <p className="mt-1 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-            A modelled structural parameter for this economy, independent of any
-            current event. It is not a default probability, a credit rating, or a
-            forecast of instability.
+            A modelled structural parameter for this economy, independent of any current event. It
+            is not a default probability, a credit rating, or a forecast of instability.
           </p>
         </div>
       </div>
@@ -206,7 +199,11 @@ function OverviewTab({ nodeId }: { nodeId: string }) {
         <SectionTitle meta="MODEL OUTPUT" right={<BasisTag basis="model" />}>
           Load
         </SectionTitle>
-        <Row label="Blended exposure" value={pct(exposure?.load ?? 0)} tone={loadColour(exposure?.load ?? 0)} />
+        <Row
+          label="Blended exposure"
+          value={pct(exposure?.load ?? 0)}
+          tone={loadColour(exposure?.load ?? 0)}
+        />
         <Row label="Events touching this node" value={String(exposure?.eventCount ?? 0)} />
         <Row
           label="Off-channel arrivals"
@@ -241,7 +238,10 @@ function EventsTab({ nodeId }: { nodeId: string }) {
   }
   return (
     <div>
-      <SectionTitle meta={`${contributions.length} contributions`} right={<BasisTag basis="model" />}>
+      <SectionTitle
+        meta={`${contributions.length} contributions`}
+        right={<BasisTag basis="model" />}
+      >
         Events
       </SectionTitle>
       <ul className="divide-y divide-[var(--exec-hairline)]">
@@ -290,9 +290,7 @@ function TradeTab({ nodeId }: { nodeId: string }) {
         right={
           <FreshnessTag
             freshness={
-              trade.data === null
-                ? "unavailable"
-                : freshnessOf(trade.retrievedAt, "comtrade")
+              trade.data === null ? "unavailable" : freshnessOf(trade.retrievedAt, "comtrade")
             }
           />
         }
@@ -334,9 +332,8 @@ function TradeTab({ nodeId }: { nodeId: string }) {
         </ul>
       )}
       <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        Reporter totals only. Where a bilateral figure is not published, the
-        honest answer is that it is unknown — not an estimate drawn from a
-        different dataset.
+        Reporter totals only. Where a bilateral figure is not published, the honest answer is that
+        it is unknown — not an estimate drawn from a different dataset.
       </p>
     </div>
   );
@@ -361,7 +358,11 @@ function DrawerMetric({
         className="exec-num block text-[13px] font-semibold"
         style={{
           color:
-            signed && value < 0 ? "var(--exec-crimson)" : signed ? "var(--exec-emerald)" : undefined,
+            signed && value < 0
+              ? "var(--exec-crimson)"
+              : signed
+                ? "var(--exec-emerald)"
+                : undefined,
         }}
       >
         {signed && value > 0 ? "+" : ""}
@@ -374,9 +375,7 @@ function DrawerMetric({
 function EconomyTab({ nodeId }: { nodeId: string }) {
   const macro = useMacroData();
   const series = useMemo(() => macroSeries(macro.data ?? []), [macro.data]);
-  const readings = [...series.entries()].filter(([key]) =>
-    key.startsWith(`${nodeId}:`),
-  );
+  const readings = [...series.entries()].filter(([key]) => key.startsWith(`${nodeId}:`));
 
   return (
     <div>
@@ -385,9 +384,7 @@ function EconomyTab({ nodeId }: { nodeId: string }) {
         right={
           <FreshnessTag
             freshness={
-              macro.data === null
-                ? "unavailable"
-                : freshnessOf(macro.retrievedAt, "worldbank")
+              macro.data === null ? "unavailable" : freshnessOf(macro.retrievedAt, "worldbank")
             }
           />
         }
@@ -501,9 +498,8 @@ function CompaniesTab() {
       reason="GlobalMatrix models exposure at the level of countries, chokepoints and industries. No filings database, registry or supply-chain disclosure feed is connected to this build, so there is no company figure to show here — and a plausible-looking one would be invented."
       hint={
         <p className="mt-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-          What is measurable today: industry exposure, the countries that carry it,
-          and the events that drive it. Open Industries to see the same
-          propagation at sector level.
+          What is measurable today: industry exposure, the countries that carry it, and the events
+          that drive it. Open Industries to see the same propagation at sector level.
         </p>
       }
     />
@@ -558,14 +554,11 @@ function SupplyTab({ nodeId }: { nodeId: string }) {
             No structural dependency declared.
           </p>
         ) : (
-          peers.slice(0, 6).map((p) => (
-            <Row
-              key={p.nodeId}
-              label={p.label}
-              hint={p.basis}
-              value={p.strength.toFixed(2)}
-            />
-          ))
+          peers
+            .slice(0, 6)
+            .map((p) => (
+              <Row key={p.nodeId} label={p.label} hint={p.basis} value={p.strength.toFixed(2)} />
+            ))
         )}
       </div>
       <div className="px-3 py-2">
@@ -575,34 +568,26 @@ function SupplyTab({ nodeId }: { nodeId: string }) {
             No tracked economy declares a strong dependency on this node.
           </p>
         ) : (
-          dependents.slice(0, 6).map((d) => (
-            <Row
-              key={d.nodeId}
-              label={d.label}
-              hint={d.basis}
-              value={d.strength.toFixed(2)}
-            />
-          ))
+          dependents
+            .slice(0, 6)
+            .map((d) => (
+              <Row key={d.nodeId} label={d.label} hint={d.basis} value={d.strength.toFixed(2)} />
+            ))
         )}
       </div>
     </div>
   );
 }
 
-const POLICY_TAG =
-  /export control|tariff|sanction|carbon|regulation|industrial policy/i;
+const POLICY_TAG = /export control|tariff|sanction|carbon|regulation|industrial policy/i;
 
 function PolicyTab({ nodeId }: { nodeId: string }) {
   const profile = useQuery(api.intel.countryProfile, { nodeId });
-  const tagged = (profile?.exposure.contributions ?? []).filter((c) =>
-    POLICY_TAG.test(c.title),
-  );
+  const tagged = (profile?.exposure.contributions ?? []).filter((c) => POLICY_TAG.test(c.title));
   const events = useQuery(api.intel.detectionFeed, {});
 
   const policyEvents = (events?.rows ?? []).filter(
-    (r) =>
-      r.topNodes.some((n) => n.nodeId === nodeId) ||
-      r.tags.some((t) => POLICY_TAG.test(t)),
+    (r) => r.topNodes.some((n) => n.nodeId === nodeId) || r.tags.some((t) => POLICY_TAG.test(t)),
   );
 
   return (
@@ -636,8 +621,7 @@ function PolicyTab({ nodeId }: { nodeId: string }) {
       )}
       {tagged.length > 0 ? (
         <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] text-[var(--exec-ink-dim)]">
-          {tagged.length} contribution(s) on this node come from a
-          policy-tagged event.
+          {tagged.length} contribution(s) on this node come from a policy-tagged event.
         </p>
       ) : null}
     </div>
@@ -651,9 +635,8 @@ function MarketsTab() {
       reason="FX, rates, commodity futures and volatility all require a price feed. None is connected to this build, so no level, change or return is shown. GlobalMatrix does not fill a markets panel with modelled placeholders, because a price that is not a price is worse than no price."
       hint={
         <p className="mt-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-          The macro figures that *are* connected — reported growth, reported trade
-          totals — appear under Economy and Trade, each with its publisher and
-          reference period.
+          The macro figures that *are* connected — reported growth, reported trade totals — appear
+          under Economy and Trade, each with its publisher and reference period.
         </p>
       }
     />
@@ -698,7 +681,11 @@ function RiskTab({
           );
         })}
       </div>
-      <Row label="Blended exposure" value={pct(exposure?.load ?? 0)} tone={loadColour(exposure?.load ?? 0)} />
+      <Row
+        label="Blended exposure"
+        value={pct(exposure?.load ?? 0)}
+        tone={loadColour(exposure?.load ?? 0)}
+      />
       <Row
         label="Structural fragility"
         hint="modelled parameter, not a probability"
@@ -708,9 +695,8 @@ function RiskTab({
       <Row label="Network criticality" value={(profile?.node.criticality ?? 0).toFixed(2)} />
       <Row label="Mean model uncertainty" value="see the event analysis" />
       <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        Every figure in this module is GlobalMatrix model output derived from the
-        scenario corpus. None of it is an observed measurement, and none of it is
-        a sovereign-risk probability.
+        Every figure in this module is GlobalMatrix model output derived from the scenario corpus.
+        None of it is an observed measurement, and none of it is a sovereign-risk probability.
       </p>
     </div>
   );

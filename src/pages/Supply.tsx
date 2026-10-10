@@ -6,18 +6,9 @@ import { getNode } from "@/lib/intel/nodes";
 import { pct } from "@/lib/format";
 import { WorldMap, MapLegend } from "@/components/viz/WorldMap";
 import { FlowDiagram } from "@/components/viz/Flow";
-import {
-  ChokepointBoard,
-  ChokepointRoster,
-} from "@/components/viz/exec/ChokepointBoard";
+import { ChokepointBoard, ChokepointRoster } from "@/components/viz/exec/ChokepointBoard";
 import { loadColour } from "@/components/viz/exec/Topology";
-import {
-  Action,
-  PageFrame,
-  PageLoading,
-  Region,
-  Segmented,
-} from "@/components/viz/exec/design";
+import { Action, PageFrame, PageLoading, Region, Segmented } from "@/components/viz/exec/design";
 import {
   ExecCard,
   DominantCard,
@@ -45,8 +36,7 @@ export default function Supply() {
   const [view, setView] = useState<"chokepoints" | "sectors">("chokepoints");
   const { toggle } = useFocus();
 
-  const activeIndustry =
-    industryId ?? directory?.industries[0]?.id ?? null;
+  const activeIndustry = industryId ?? directory?.industries[0]?.id ?? null;
   const flow = useQuery(
     api.intel.supplyFlow,
     activeIndustry ? { industryId: activeIndustry } : "skip",
@@ -90,12 +80,8 @@ export default function Supply() {
     const plotted = new Set(nodes.map((n) => n.nodeId));
 
     const arcs = [
-      ...upstreams.flatMap((u) =>
-        producers.map((p) => ({ from: u, to: p, weight: 1 })),
-      ),
-      ...producers.flatMap((p) =>
-        consumers.map((c) => ({ from: p, to: c, weight: 1 })),
-      ),
+      ...upstreams.flatMap((u) => producers.map((p) => ({ from: u, to: p, weight: 1 }))),
+      ...producers.flatMap((p) => consumers.map((c) => ({ from: p, to: c, weight: 1 }))),
     ].filter((a) => plotted.has(a.from) && plotted.has(a.to));
 
     return { geoNodes: nodes, geoFlows: arcs };
@@ -136,7 +122,6 @@ export default function Supply() {
         </>
       }
     >
-
       {view === "chokepoints" ? (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           <Region width={8}>
@@ -149,20 +134,13 @@ export default function Supply() {
               }
               right={<BasisTag basis="model" />}
             >
-              <ChokepointBoard
-                rows={rows}
-                selected={active}
-                onSelect={setSelected}
-              />
+              <ChokepointBoard rows={rows} selected={active} onSelect={setSelected} />
             </DominantCard>
           </Region>
 
           <Region width={4} className="flex flex-col gap-3">
             <ExecCard>
-              <SectionTitle
-                meta="ranked by derived load"
-                right={<BasisTag basis="model" />}
-              >
+              <SectionTitle meta="ranked by derived load" right={<BasisTag basis="model" />}>
                 All bottlenecks
               </SectionTitle>
               <ChokepointRoster
@@ -302,9 +280,7 @@ export default function Supply() {
                   </li>
                   <li className="px-3 py-2">
                     <p className="exec-label">Dominant channel</p>
-                    <p className="mt-1 text-[12px] text-[var(--exec-ink)]">
-                      {sector.topChannel}
-                    </p>
+                    <p className="mt-1 text-[12px] text-[var(--exec-ink)]">{sector.topChannel}</p>
                   </li>
                 </ul>
               ) : (
@@ -328,10 +304,9 @@ export default function Supply() {
                   </p>
                   <p className="mt-1.5 max-w-lg text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
                     Every stage in this sector&apos;s chain is an abstraction such as
-                    &ldquo;input&rdquo; or &ldquo;route&rdquo;, which has no place on
-                    the map. GlobalMatrix does not place those at approximate
-                    coordinates to fill the frame; the chain is shown above in full
-                    instead.
+                    &ldquo;input&rdquo; or &ldquo;route&rdquo;, which has no place on the map.
+                    GlobalMatrix does not place those at approximate coordinates to fill the frame;
+                    the chain is shown above in full instead.
                   </p>
                 </div>
               ) : (
@@ -341,10 +316,10 @@ export default function Supply() {
                     <MapLegend />
                   </div>
                   <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-                    Arcs follow the sector&apos;s declared structure: each input and
-                    route node feeds each declared producer, and each producer feeds
-                    each declared consumer. Their weights are structural shares, not
-                    measured tonnage — no shipment-level data is connected.
+                    Arcs follow the sector&apos;s declared structure: each input and route node
+                    feeds each declared producer, and each producer feeds each declared consumer.
+                    Their weights are structural shares, not measured tonnage — no shipment-level
+                    data is connected.
                   </p>
                 </>
               )}

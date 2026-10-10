@@ -36,9 +36,7 @@ export function RiskTrajectory({
         {marks.map((r) => (
           <li key={r.horizonDays} className="px-3 py-2.5">
             <div className="flex items-baseline justify-between gap-2">
-              <span className="label text-muted-foreground">
-                {r.horizonDays} days out
-              </span>
+              <span className="label text-muted-foreground">{r.horizonDays} days out</span>
               <span
                 className="num text-[13px] font-semibold"
                 style={{ color: riskColorForScore(r.score) }}
@@ -64,8 +62,8 @@ export function RiskTrajectory({
               />
             </div>
             <p className="num mt-1 text-[12px] text-muted-foreground">
-              80% interval {r.low.toFixed(0)}–{r.high.toFixed(0)} · wider means
-              less certain, not worse
+              80% interval {r.low.toFixed(0)}–{r.high.toFixed(0)} · wider means less certain, not
+              worse
             </p>
           </li>
         ))}

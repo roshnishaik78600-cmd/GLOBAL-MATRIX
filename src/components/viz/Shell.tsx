@@ -70,8 +70,7 @@ export function Shell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("gm:open-search", onOpenSearch);
   }, []);
 
-  const signIn = () =>
-    navigate(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
+  const signIn = () => navigate(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
 
   return (
     <div className="flex h-dvh w-full flex-col overflow-hidden bg-background text-foreground">
@@ -96,10 +95,7 @@ export function Shell({ children }: { children: ReactNode }) {
             className="flex min-w-0 shrink-0 items-center gap-2.5"
             aria-label="GlobalMatrix, overview"
           >
-            <span
-              className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]"
-              aria-hidden
-            />
+            <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
             <span className="truncate text-[14px] font-semibold tracking-[0.2em] text-[var(--exec-ink)] uppercase">
               Globalmatrix
             </span>
@@ -114,11 +110,7 @@ export function Shell({ children }: { children: ReactNode }) {
             aria-label="Primary"
           >
             {PRIMARY_NAV.map((item, i) => (
-              <TopLink
-                key={item.to}
-                item={item}
-                wideOnly={i >= PRIMARY_NAV_XL_FROM}
-              />
+              <TopLink key={item.to} item={item} wideOnly={i >= PRIMARY_NAV_XL_FROM} />
             ))}
           </nav>
 
@@ -184,9 +176,7 @@ export function Shell({ children }: { children: ReactNode }) {
         {focus ? (
           <div className="border-t border-[var(--exec-hairline)] bg-[var(--exec-surface)]">
             <div className="gm-width flex min-w-0 items-center gap-2 px-4 py-2 lg:px-8">
-              <span className="exec-label shrink-0 text-[var(--exec-cyan)]">
-                Inspecting
-              </span>
+              <span className="exec-label shrink-0 text-[var(--exec-cyan)]">Inspecting</span>
               <span className="min-w-0 flex-1 truncate text-[13px] text-[var(--exec-ink)]">
                 {focusLabel(focus)}
               </span>
@@ -228,11 +218,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <CommandPalette open={searchOpen} onOpenChange={setSearchOpen} />
       {/* Countries get the ten-module board; every other entity keeps the
           six-question drawer. One drawer per kind, not two competing ones. */}
-      {focus?.kind === "node" ? (
-        <CountryDrawer nodeId={focus.id} />
-      ) : (
-        <FocusDrawer />
-      )}
+      {focus?.kind === "node" ? <CountryDrawer nodeId={focus.id} /> : <FocusDrawer />}
     </div>
   );
 }
@@ -258,11 +244,12 @@ function AccountMenu({
     user.email?.split("@")[0] ||
     "Account";
 
-  const initials = displayName
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("") || "G";
+  const initials =
+    displayName
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() ?? "")
+      .join("") || "G";
 
   return (
     <DropdownMenu>
@@ -286,13 +273,9 @@ function AccountMenu({
         className="w-60 border-[var(--exec-hairline)] bg-[var(--exec-surface)] text-[var(--exec-ink)]"
       >
         <DropdownMenuLabel className="px-3 py-2">
-          <p className="truncate text-[13px] font-medium text-[var(--exec-ink)]">
-            {displayName}
-          </p>
+          <p className="truncate text-[13px] font-medium text-[var(--exec-ink)]">{displayName}</p>
           <p className="truncate text-[12px] font-normal text-[var(--exec-ink-muted)]">
-            {user.isAnonymous || !user.email
-              ? "Guest session — no email attached"
-              : user.email}
+            {user.isAnonymous || !user.email ? "Guest session — no email attached" : user.email}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-[var(--exec-hairline)]" />
@@ -303,10 +286,7 @@ function AccountMenu({
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-[var(--exec-hairline)]" />
-        <DropdownMenuItem
-          onSelect={onSignOut}
-          className="cursor-pointer text-[13px]"
-        >
+        <DropdownMenuItem onSelect={onSignOut} className="cursor-pointer text-[13px]">
           <LogOut className="size-4 text-[var(--exec-ink-muted)]" aria-hidden />
           Sign out
         </DropdownMenuItem>
@@ -394,9 +374,7 @@ function IconButton({
 function MobileBar({ onOpenSearch }: { onOpenSearch: () => void }) {
   const { isAuthenticated } = useAuthAction();
   const signIn = () =>
-    window.location.assign(
-      `/login?returnTo=${encodeURIComponent(window.location.pathname)}`,
-    );
+    window.location.assign(`/login?returnTo=${encodeURIComponent(window.location.pathname)}`);
 
   return (
     <nav
@@ -457,9 +435,7 @@ function MobileLink({
       className={({ isActive }) =>
         cn(
           "flex min-w-0 flex-1 flex-col items-center justify-center gap-1 text-[12px] transition-colors",
-          isActive
-            ? "text-[var(--exec-cyan)]"
-            : "text-[var(--exec-ink-dim)]",
+          isActive ? "text-[var(--exec-cyan)]" : "text-[var(--exec-ink-dim)]",
         )
       }
     >

@@ -3,16 +3,9 @@ import { Link } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { ArrowUpRight, BookmarkCheck, LogIn } from "lucide-react";
 import { api } from "@/lib/backend/api";
-import {
-  DataType,
-  PageFrame,
-  PageLoading,
-} from "@/components/viz/exec/design";
+import { DataType, PageFrame, PageLoading } from "@/components/viz/exec/design";
 import { BasisTag, ExecCard, SectionTitle } from "@/components/viz/exec/system";
-import {
-  CountryCard,
-  type ExecCountry,
-} from "@/components/viz/exec/CountryCard";
+import { CountryCard, type ExecCountry } from "@/components/viz/exec/CountryCard";
 import { useAuthAction, useToggleWatch } from "@/hooks/use-auth-action";
 import { BAND_LABEL, CHANNEL_LABEL, STAGE_LABEL, type Channel } from "@/lib/intel/types";
 import { pct } from "@/lib/format";
@@ -33,7 +26,11 @@ function WatchSourceRow({ sourceId }: { sourceId: string }) {
   const control = useSourceControl(sourceId);
 
   if (status === undefined) {
-    return <div className="px-4 py-3"><span className="shimmer block h-4 w-2/3" /></div>;
+    return (
+      <div className="px-4 py-3">
+        <span className="shimmer block h-4 w-2/3" />
+      </div>
+    );
   }
   if (status === null) return null;
 
@@ -112,8 +109,7 @@ export default function Watchlist() {
     );
   }
 
-  const total =
-    watchedEvents.length + watchedCountries.length + watchedIndustries.length;
+  const total = watchedEvents.length + watchedCountries.length + watchedIndustries.length;
 
   return (
     <PageFrame
@@ -134,16 +130,13 @@ export default function Watchlist() {
         <div className="lg:col-span-12">
           <ExecCard>
             <div className="flex flex-col items-start gap-3 p-5">
-              <span className="exec-label text-[var(--exec-cyan)]">
-                SIGN IN TO TRACK
-              </span>
+              <span className="exec-label text-[var(--exec-cyan)]">SIGN IN TO TRACK</span>
               <p className="t-card max-w-xl text-[var(--exec-ink)]">
                 Your watchlist lives in your account, not in this browser.
               </p>
               <p className="max-w-xl text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-                Browsing GlobalMatrix never needs an account — only saving does.
-                Sign in and every event, country or industry you bookmark is
-                collected here for your next visit.
+                Browsing GlobalMatrix never needs an account — only saving does. Sign in and every
+                event, country or industry you bookmark is collected here for your next visit.
               </p>
               <button
                 type="button"
@@ -162,9 +155,7 @@ export default function Watchlist() {
         <div className="lg:col-span-12">
           <ExecCard>
             <div className="flex flex-col items-start gap-3 p-5">
-              <span className="exec-label text-[var(--exec-cyan)]">
-                NOTHING TRACKED YET
-              </span>
+              <span className="exec-label text-[var(--exec-cyan)]">NOTHING TRACKED YET</span>
               <p className="t-card max-w-xl text-[var(--exec-ink)]">
                 Bookmark items anywhere and they will gather here.
               </p>
@@ -290,8 +281,8 @@ export default function Watchlist() {
                       {row.label}
                     </Link>
                     <p className="exec-label mt-1.5 truncate">
-                      {pct(row.load)} exposure · dominant{" "}
-                      {CHANNEL_LABEL[row.topChannel]} · {row.eventCount} events
+                      {pct(row.load)} exposure · dominant {CHANNEL_LABEL[row.topChannel]} ·{" "}
+                      {row.eventCount} events
                     </p>
                   </div>
                   <div className="flex shrink-0 items-center gap-1">
@@ -353,10 +344,7 @@ export default function Watchlist() {
       {isAuthenticated ? (
         <div className="lg:col-span-12">
           <ExecCard bodyClassName="flex flex-col">
-            <SectionTitle
-              meta="live connectors"
-              right={<BasisTag basis="observed" />}
-            >
+            <SectionTitle meta="live connectors" right={<BasisTag basis="observed" />}>
               Verified sources behind what you track
             </SectionTitle>
             <ul className="divide-y divide-[var(--exec-hairline)]">
@@ -367,11 +355,10 @@ export default function Watchlist() {
               ))}
             </ul>
             <p className="border-t border-[var(--exec-hairline)] px-4 py-3 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-              Tracked events come from the versioned scenario corpus, not from
-              these feeds — no external publisher announces a scenario. These
-              rows are the measured data underneath the countries you track:
-              they update here as the server stores new verified readings, not
-              on a page timer.
+              Tracked events come from the versioned scenario corpus, not from these feeds — no
+              external publisher announces a scenario. These rows are the measured data underneath
+              the countries you track: they update here as the server stores new verified readings,
+              not on a page timer.
             </p>
           </ExecCard>
         </div>
@@ -379,10 +366,9 @@ export default function Watchlist() {
 
       {/* The honest label for the whole page: events are scenario corpus. */}
       <p className="lg:col-span-12 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-        Tracking state is stored per account. Event entries follow the scenario
-        corpus (SCENARIO basis); country and industry exposure values are MODEL
-        OUTPUT derived live from that corpus — see Methodology for how each is
-        computed.
+        Tracking state is stored per account. Event entries follow the scenario corpus (SCENARIO
+        basis); country and industry exposure values are MODEL OUTPUT derived live from that corpus
+        — see Methodology for how each is computed.
       </p>
     </PageFrame>
   );

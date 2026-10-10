@@ -30,9 +30,7 @@ export function Panel({
       <div className="panel-head">
         <span className="label text-foreground/85">{title}</span>
         <div className="flex items-center gap-3">
-          {meta ? (
-            <span className="label text-muted-foreground">{meta}</span>
-          ) : null}
+          {meta ? <span className="label text-muted-foreground">{meta}</span> : null}
           {actions}
         </div>
       </div>
@@ -42,13 +40,7 @@ export function Panel({
 }
 
 /** Explicit, non-fabricated empty state. */
-export function NoData({
-  reason,
-  className,
-}: {
-  reason: string;
-  className?: string;
-}) {
+export function NoData({ reason, className }: { reason: string; className?: string }) {
   return (
     <div
       className={cn(
@@ -57,9 +49,7 @@ export function NoData({
       )}
     >
       <span className="label text-muted-foreground">No data</span>
-      <p className="max-w-xs text-[12px] leading-relaxed text-muted-foreground/80">
-        {reason}
-      </p>
+      <p className="max-w-xs text-[12px] leading-relaxed text-muted-foreground/80">{reason}</p>
     </div>
   );
 }
@@ -104,10 +94,7 @@ export function Expandable({
         <span className="label flex shrink-0 items-center gap-1 text-muted-foreground">
           {open ? closeLabel : openLabel}
           <ChevronDown
-            className={cn(
-              "size-3 transition-transform duration-200",
-              open && "rotate-180",
-            )}
+            className={cn("size-3 transition-transform duration-200", open && "rotate-180")}
             aria-hidden
           />
         </span>
@@ -207,9 +194,7 @@ export function Gauge({
         >
           {band}
         </span>
-        {detail ? (
-          <span className="text-[12px] text-muted-foreground">{detail}</span>
-        ) : null}
+        {detail ? <span className="text-[12px] text-muted-foreground">{detail}</span> : null}
       </div>
     </div>
   );
@@ -238,9 +223,7 @@ export function Radar({
     return [cx + Math.cos(angle) * r * ratio, cy + Math.sin(angle) * r * ratio];
   };
 
-  const poly = axes
-    .map((a, i) => point(i, clamp01(a.value)).join(","))
-    .join(" ");
+  const poly = axes.map((a, i) => point(i, clamp01(a.value)).join(",")).join(" ");
 
   return (
     <svg
@@ -254,9 +237,7 @@ export function Radar({
       {[0.25, 0.5, 0.75, 1].map((ring) => (
         <polygon
           key={ring}
-          points={axes
-            .map((_, i) => point(i, ring).join(","))
-            .join(" ")}
+          points={axes.map((_, i) => point(i, ring).join(",")).join(" ")}
           fill="none"
           stroke="var(--grid)"
           strokeWidth={1}
@@ -264,17 +245,7 @@ export function Radar({
       ))}
       {axes.map((_, i) => {
         const [x, y] = point(i, 1);
-        return (
-          <line
-            key={i}
-            x1={cx}
-            y1={cy}
-            x2={x}
-            y2={y}
-            stroke="var(--grid)"
-            strokeWidth={1}
-          />
-        );
+        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="var(--grid)" strokeWidth={1} />;
       })}
       <polygon
         points={poly}
@@ -292,12 +263,7 @@ export function Radar({
             className={onSelect ? "cursor-pointer" : undefined}
             onClick={() => onSelect?.(a.label)}
           >
-            <circle
-              cx={x}
-              cy={y}
-              r={active ? 4 : 2.5}
-              fill={riskColorForScore(a.value * 100)}
-            />
+            <circle cx={x} cy={y} r={active ? 4 : 2.5} fill={riskColorForScore(a.value * 100)} />
             <text
               x={lx}
               y={ly}
@@ -398,12 +364,8 @@ export function Timeline({
           />
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline justify-between gap-3">
-              <span className="truncate text-[13px] font-medium">
-                {item.title}
-              </span>
-              <span className="num shrink-0 text-[12px] text-muted-foreground">
-                {item.time}
-              </span>
+              <span className="truncate text-[13px] font-medium">{item.title}</span>
+              <span className="num shrink-0 text-[12px] text-muted-foreground">{item.time}</span>
             </div>
             {item.detail ? (
               <p className="mt-0.5 line-clamp-2 text-[12px] leading-snug text-muted-foreground">

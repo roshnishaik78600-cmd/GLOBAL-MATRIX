@@ -274,12 +274,9 @@ export function buildStages(chain: ChainPayload): ChainStage[] {
         id: i.id,
         label: i.label,
         href: `/app/industry/${i.id}`,
-        meta: i.channel
-          ? `via ${CHANNEL_LABEL[i.channel as Channel].toLowerCase()}`
-          : undefined,
+        meta: i.channel ? `via ${CHANNEL_LABEL[i.channel as Channel].toLowerCase()}` : undefined,
         weight: Math.min(1, i.share),
-        detail:
-          "Structural share of this industry exposed to the nodes this event reaches.",
+        detail: "Structural share of this industry exposed to the nodes this event reaches.",
       })),
       unmeasured: {
         title: "No industry reached",

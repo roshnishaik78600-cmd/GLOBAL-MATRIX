@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/countries")({
       { title: "Countries — GlobalMatrix" },
       {
         name: "description",
-        content: "Browse every country tracked by GlobalMatrix, with exposure scores and recent events.",
+        content:
+          "Browse every country tracked by GlobalMatrix, with exposure scores and recent events.",
       },
       { property: "og:title", content: "Countries — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Browse every country tracked by GlobalMatrix, with exposure scores and recent events.",
+        content:
+          "Browse every country tracked by GlobalMatrix, with exposure scores and recent events.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

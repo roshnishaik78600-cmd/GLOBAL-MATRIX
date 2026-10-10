@@ -16,19 +16,11 @@ import { cn } from "@/lib/utils";
  * alignment of two graphics imply something it cannot support.
  */
 
-export function MacroTrend({
-  nodeId,
-  className,
-}: {
-  nodeId?: string;
-  className?: string;
-}) {
+export function MacroTrend({ nodeId, className }: { nodeId?: string; className?: string }) {
   const macro = useMacroData();
 
   const entries = useMemo(() => {
-    const series: ReturnType<typeof macroSeries> = macro.data
-      ? macroSeries(macro.data)
-      : new Map();
+    const series: ReturnType<typeof macroSeries> = macro.data ? macroSeries(macro.data) : new Map();
     if (nodeId) {
       const hit = series.get(`${nodeId}:gdpGrowth`);
       return hit ? [{ nodeId, ...hit }] : [];
@@ -73,9 +65,7 @@ export function MacroTrend({
       className={cn("min-w-0", className)}
     >
       <div className="space-y-1 border-b border-rule px-3 py-2">
-        <SourceLine
-          provenance={entries[0].latest.provenance}
-        />
+        <SourceLine provenance={entries[0].latest.provenance} />
         <SourceNote note="Annual real GDP growth, exactly as reported. Revisions land without notice and the most recent year is often partial." />
       </div>
 
@@ -96,10 +86,9 @@ export function MacroTrend({
       <div className="space-y-1.5 border-t border-rule px-3 py-2">
         <StatusBadge status="scenario" />
         <p className="text-[12px] leading-relaxed text-muted-foreground">
-          Dashed markers are years in which this scenario corpus dates an event.
-          A marker beside a growth reading shows the two happened in the same
-          period. That is a correlation in time, not a demonstrated cause — the
-          model does not claim the event produced the reading.
+          Dashed markers are years in which this scenario corpus dates an event. A marker beside a
+          growth reading shows the two happened in the same period. That is a correlation in time,
+          not a demonstrated cause — the model does not claim the event produced the reading.
         </p>
       </div>
     </Panel>
@@ -125,14 +114,11 @@ function SeriesChart({
   const min = Math.min(...values, 0);
   const span = max - min || 1;
 
-  const x = (i: number) =>
-    padL + (i / Math.max(1, years.length - 1)) * (W - padL - 6);
+  const x = (i: number) => padL + (i / Math.max(1, years.length - 1)) * (W - padL - 6);
   const y = (v: number) => H - padB - ((v - min) / span) * (H - padB - 8);
 
   const line = values.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
-  const marked = years
-    .map((year, i) => ({ year, i }))
-    .filter((p) => eventsByYear.has(p.year));
+  const marked = years.map((year, i) => ({ year, i })).filter((p) => eventsByYear.has(p.year));
 
   return (
     <div>
@@ -165,14 +151,7 @@ function SeriesChart({
             </title>
           </line>
         ))}
-        <line
-          x1={padL}
-          y1={y(0)}
-          x2={W - 6}
-          y2={y(0)}
-          stroke="var(--rule)"
-          strokeWidth={1}
-        />
+        <line x1={padL} y1={y(0)} x2={W - 6} y2={y(0)} stroke="var(--rule)" strokeWidth={1} />
         <polyline
           points={line}
           fill="none"
@@ -181,17 +160,17 @@ function SeriesChart({
           vectorEffect="non-scaling-stroke"
         />
         {values.map((v, i) => (
-          <circle
-            key={years[i]}
-            cx={x(i)}
-            cy={y(v)}
-            r={1.8}
-            fill="var(--foreground)"
-          >
+          <circle key={years[i]} cx={x(i)} cy={y(v)} r={1.8} fill="var(--foreground)">
             <title>{`${years[i]}: ${v.toFixed(2)}% reported`}</title>
           </circle>
         ))}
-        <text x={2} y={y(max) + 4} className="num" fill="var(--muted-foreground)" style={{ fontSize: 12 }}>
+        <text
+          x={2}
+          y={y(max) + 4}
+          className="num"
+          fill="var(--muted-foreground)"
+          style={{ fontSize: 12 }}
+        >
           {max.toFixed(1)}
         </text>
         <text

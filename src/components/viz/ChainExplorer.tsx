@@ -6,12 +6,7 @@ import { ArrowRight, Building2, LineChart } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import { Panel, Skeleton } from "@/components/viz/core";
 import { StatusBadge } from "@/components/viz/Provenance";
-import {
-  buildStages,
-  type ChainRow,
-  type ChainStage,
-  type ChainStageId,
-} from "@/lib/intel/chain";
+import { buildStages, type ChainRow, type ChainStage, type ChainStageId } from "@/lib/intel/chain";
 import { riskColorForScore } from "@/lib/intel/visual";
 import { cn } from "@/lib/utils";
 
@@ -44,17 +39,11 @@ export function ChainExplorer({ className }: { className?: string }) {
   const [rowId, setRowId] = useState<string | null>(null);
 
   const active = eventId ?? feed?.rows[0]?.id ?? null;
-  const chain = useQuery(
-    api.intel.eventChain,
-    active ? { eventId: active } : "skip",
-  );
+  const chain = useQuery(api.intel.eventChain, active ? { eventId: active } : "skip");
 
   // The stage list is built in a pure module so this page and the homepage's
   // Follow the Shock section cannot drift apart on what a stage means.
-  const stages = useMemo<ChainStage[]>(
-    () => (chain ? buildStages(chain) : []),
-    [chain],
-  );
+  const stages = useMemo<ChainStage[]>(() => (chain ? buildStages(chain) : []), [chain]);
 
   if (!feed) {
     return (
@@ -149,17 +138,12 @@ export function ChainExplorer({ className }: { className?: string }) {
                           {s.title}
                         </span>
                       </span>
-                      <span
-                        className="block h-[3px] w-full bg-[var(--exec-surface)]"
-                        aria-hidden
-                      >
+                      <span className="block h-[3px] w-full bg-[var(--exec-surface)]" aria-hidden>
                         <span
                           className="block h-full transition-[width] duration-300"
                           style={{
                             width: `${Math.max(2, (s.rows[0]?.weight ?? 0) * 100)}%`,
-                            backgroundColor: riskColorForScore(
-                              (s.rows[0]?.weight ?? 0) * 100,
-                            ),
+                            backgroundColor: riskColorForScore((s.rows[0]?.weight ?? 0) * 100),
                           }}
                         />
                       </span>
@@ -267,9 +251,7 @@ export function ChainExplorer({ className }: { className?: string }) {
                   </p>
                   {row ? (
                     <div className="flex min-w-0 flex-col gap-2">
-                      <p className="min-w-0 text-[15px] font-semibold leading-snug">
-                        {row.label}
-                      </p>
+                      <p className="min-w-0 text-[15px] font-semibold leading-snug">{row.label}</p>
                       {row.weight !== undefined ? (
                         <p className="flex items-baseline gap-2">
                           <span
@@ -278,9 +260,7 @@ export function ChainExplorer({ className }: { className?: string }) {
                           >
                             {(row.weight * 100).toFixed(0)}
                           </span>
-                          <span className="label text-muted-foreground">
-                            weighted exposure
-                          </span>
+                          <span className="label text-muted-foreground">weighted exposure</span>
                         </p>
                       ) : null}
                       {row.meta ? (
@@ -310,8 +290,8 @@ export function ChainExplorer({ className }: { className?: string }) {
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-rule px-3 py-2">
             <span className="label text-muted-foreground">
-              {measured} of {stages.length} stages carry measured rows for this event · the
-              rest are stated as unmeasured, never zero
+              {measured} of {stages.length} stages carry measured rows for this event · the rest are
+              stated as unmeasured, never zero
             </span>
             <Link
               to={`/app/event/${chain.event.id}`}
@@ -345,12 +325,7 @@ function RowBody({
       className="w-full min-w-0 text-left"
     >
       <span className="flex items-baseline justify-between gap-2">
-        <span
-          className={cn(
-            "min-w-0 truncate text-[12px]",
-            selected && "text-foreground",
-          )}
-        >
+        <span className={cn("min-w-0 truncate text-[12px]", selected && "text-foreground")}>
           {row.label}
         </span>
         {row.weight !== undefined ? (

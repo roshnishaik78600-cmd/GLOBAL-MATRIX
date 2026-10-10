@@ -35,13 +35,7 @@ export interface ExecCountry {
   trend?: number[];
 }
 
-export function CountryCard({
-  row,
-  index = 0,
-}: {
-  row: ExecCountry;
-  index?: number;
-}) {
+export function CountryCard({ row, index = 0 }: { row: ExecCountry; index?: number }) {
   const toggleWatch = useToggleWatch();
   const navigate = useNavigate();
   const { toggle, isFocused } = useFocus();
@@ -52,9 +46,9 @@ export function CountryCard({
   const alert = row.load >= 0.55;
   const ringColour = row.load >= 0.75 ? "var(--exec-crimson)" : "var(--exec-amber)";
 
-  const pressure = Object.fromEntries(
-    row.byChannel.map((c) => [c.channel, c.load]),
-  ) as Partial<Record<Channel, number>>;
+  const pressure = Object.fromEntries(row.byChannel.map((c) => [c.channel, c.load])) as Partial<
+    Record<Channel, number>
+  >;
 
   return (
     <motion.article
@@ -195,7 +189,11 @@ export function RegionSummary({
 }) {
   const load = rows.length > 0 ? rows.reduce((s, r) => s + r.load, 0) / rows.length : 0;
   const colour =
-    load >= 0.6 ? "var(--exec-crimson)" : load >= 0.35 ? "var(--exec-amber)" : "var(--exec-emerald)";
+    load >= 0.6
+      ? "var(--exec-crimson)"
+      : load >= 0.35
+        ? "var(--exec-amber)"
+        : "var(--exec-emerald)";
 
   return (
     <div className="glass flex flex-wrap items-center gap-x-5 gap-y-2 px-3 py-2">

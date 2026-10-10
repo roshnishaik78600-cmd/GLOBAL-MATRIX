@@ -60,7 +60,9 @@ export function DemoQr({ className }: { className?: string }) {
       <rect width={SIZE} height={SIZE} fill="white" />
       {MODULES.map((row, y) =>
         row.map((on, x) =>
-          on ? <rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill="currentColor" /> : null,
+          on ? (
+            <rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill="currentColor" />
+          ) : null,
         ),
       )}
     </svg>

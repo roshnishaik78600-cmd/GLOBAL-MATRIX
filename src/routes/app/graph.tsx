@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/graph")({
       { title: "Graph Explorer — GlobalMatrix" },
       {
         name: "description",
-        content: "Explore how events propagate through the exposure graph of countries, industries and businesses.",
+        content:
+          "Explore how events propagate through the exposure graph of countries, industries and businesses.",
       },
       { property: "og:title", content: "Graph Explorer — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Explore how events propagate through the exposure graph of countries, industries and businesses.",
+        content:
+          "Explore how events propagate through the exposure graph of countries, industries and businesses.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

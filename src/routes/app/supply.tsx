@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/supply")({
       { title: "Supply Chain Exposure — GlobalMatrix" },
       {
         name: "description",
-        content: "Trace supply-chain exposure across industries, routes and critical infrastructure.",
+        content:
+          "Trace supply-chain exposure across industries, routes and critical infrastructure.",
       },
       { property: "og:title", content: "Supply Chain Exposure — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Trace supply-chain exposure across industries, routes and critical infrastructure.",
+        content:
+          "Trace supply-chain exposure across industries, routes and critical infrastructure.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

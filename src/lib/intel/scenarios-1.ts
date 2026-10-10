@@ -103,12 +103,48 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Tool-level denial propagates forward along the semiconductor bill-of-materials: advanced logic capacity first, then memory pricing, then assembly. Re-routing adds 25–45 days of lead time, which front-loads the shock into inventory rather than output.",
         exposures: [
-          { nodeId: "TW", exposure: 0.94, impact: 0.61, lagDays: 34, note: "Leading-edge logic expansion programmes re-sequenced" },
-          { nodeId: "KR", exposure: 0.81, impact: 0.44, lagDays: 28, note: "DRAM capital plans shifted to mature nodes" },
-          { nodeId: "CN", exposure: 0.72, impact: 0.57, lagDays: 40, note: "Tool service and spares access narrows first" },
-          { nodeId: "JP", exposure: 0.66, impact: 0.31, lagDays: 30, note: "Materials suppliers see order deferral" },
-          { nodeId: "NL", exposure: 0.58, impact: 0.52, lagDays: 21, note: "Export-licence throughput becomes a binding constraint" },
-          { nodeId: "SG", exposure: 0.55, impact: 0.29, lagDays: 45, note: "Transshipment scrutiny raises dwell time" },
+          {
+            nodeId: "TW",
+            exposure: 0.94,
+            impact: 0.61,
+            lagDays: 34,
+            note: "Leading-edge logic expansion programmes re-sequenced",
+          },
+          {
+            nodeId: "KR",
+            exposure: 0.81,
+            impact: 0.44,
+            lagDays: 28,
+            note: "DRAM capital plans shifted to mature nodes",
+          },
+          {
+            nodeId: "CN",
+            exposure: 0.72,
+            impact: 0.57,
+            lagDays: 40,
+            note: "Tool service and spares access narrows first",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.66,
+            impact: 0.31,
+            lagDays: 30,
+            note: "Materials suppliers see order deferral",
+          },
+          {
+            nodeId: "NL",
+            exposure: 0.58,
+            impact: 0.52,
+            lagDays: 21,
+            note: "Export-licence throughput becomes a binding constraint",
+          },
+          {
+            nodeId: "SG",
+            exposure: 0.55,
+            impact: 0.29,
+            lagDays: 45,
+            note: "Transshipment scrutiny raises dwell time",
+          },
         ],
       },
       {
@@ -120,10 +156,34 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Two-stage repricing: memory spot contracts move first, then foundry-weighted equity multiples. Institutional positioning in the supply chain concentrates the drawdown.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.72, impact: 0.34, lagDays: 9, note: "Supply-chain equity concentration cuts" },
-          { nodeId: "KR", exposure: 0.63, impact: 0.38, lagDays: 12, note: "Memory names lead sector de-rating" },
-          { nodeId: "TW", exposure: 0.6, impact: 0.31, lagDays: 10, note: "Foundry multiple compresses on capex risk" },
-          { nodeId: "SWIFT", exposure: 0.3, impact: 0.12, lagDays: 15, note: "Settlement friction limited to flagged corridors" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.72,
+            impact: 0.34,
+            lagDays: 9,
+            note: "Supply-chain equity concentration cuts",
+          },
+          {
+            nodeId: "KR",
+            exposure: 0.63,
+            impact: 0.38,
+            lagDays: 12,
+            note: "Memory names lead sector de-rating",
+          },
+          {
+            nodeId: "TW",
+            exposure: 0.6,
+            impact: 0.31,
+            lagDays: 10,
+            note: "Foundry multiple compresses on capex risk",
+          },
+          {
+            nodeId: "SWIFT",
+            exposure: 0.3,
+            impact: 0.12,
+            lagDays: 15,
+            note: "Settlement friction limited to flagged corridors",
+          },
         ],
       },
       {
@@ -135,10 +195,34 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Allied coordination is the mechanism of the control itself, which makes it self-reinforcing for allies and openly contested by the target. Retaliatory consultation requests raise the floor without changing the ceiling.",
         exposures: [
-          { nodeId: "CN", exposure: 0.68, impact: 0.46, lagDays: 18, note: "Consultation requests filed; export-control retaliation threatened" },
-          { nodeId: "US", exposure: 0.55, impact: 0.27, lagDays: 14, note: "Coalition cohesion becomes a stated policy goal" },
-          { nodeId: "NL", exposure: 0.5, impact: 0.24, lagDays: 20, note: "Domestic industry pushback on licence volume" },
-          { nodeId: "EU", exposure: 0.44, impact: 0.22, lagDays: 25, note: "Member-state split on economic cost" },
+          {
+            nodeId: "CN",
+            exposure: 0.68,
+            impact: 0.46,
+            lagDays: 18,
+            note: "Consultation requests filed; export-control retaliation threatened",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.55,
+            impact: 0.27,
+            lagDays: 14,
+            note: "Coalition cohesion becomes a stated policy goal",
+          },
+          {
+            nodeId: "NL",
+            exposure: 0.5,
+            impact: 0.24,
+            lagDays: 20,
+            note: "Domestic industry pushback on licence volume",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.44,
+            impact: 0.22,
+            lagDays: 25,
+            note: "Member-state split on economic cost",
+          },
         ],
       },
       {
@@ -150,8 +234,20 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Weak and lagged. Only via fab electricity contracts and the industrial-power queue, where new capacity is already deferred rather than cancelled.",
         exposures: [
-          { nodeId: "TW", exposure: 0.3, impact: 0.14, lagDays: 70, note: "Industrial load forecast revised marginally down" },
-          { nodeId: "JP", exposure: 0.26, impact: 0.11, lagDays: 85, note: "Grid connection queue slippage" },
+          {
+            nodeId: "TW",
+            exposure: 0.3,
+            impact: 0.14,
+            lagDays: 70,
+            note: "Industrial load forecast revised marginally down",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.26,
+            impact: 0.11,
+            lagDays: 85,
+            note: "Grid connection queue slippage",
+          },
         ],
       },
     ],
@@ -183,7 +279,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-15",
         channel: "trade",
         headline: "Magnet-grade alloys and heavy RE targets added to controlled catalogue",
-        detail: "Annex published covering dysprosium, terbium and neodymium magnet alloys at defined purity bands.",
+        detail:
+          "Annex published covering dysprosium, terbium and neodymium magnet alloys at defined purity bands.",
         reliability: 0.95,
         weight: 0.9,
         corroborations: 5,
@@ -196,7 +293,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-22",
         channel: "trade",
         headline: "Magnet makers report doubled lead times on qualifying stock",
-        detail: "Qualification of an alternative origin takes 9–14 months, so lead-time extension is effectively a binding constraint.",
+        detail:
+          "Qualification of an alternative origin takes 9–14 months, so lead-time extension is effectively a binding constraint.",
         reliability: 0.76,
         weight: 0.72,
         corroborations: 3,
@@ -222,7 +320,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-10-01",
         channel: "diplomatic",
         headline: "Objection lodged at the WTO committee",
-        detail: "Objection framed as a non-discrimination failure; procedural, with no suspension request.",
+        detail:
+          "Objection framed as a non-discrimination failure; procedural, with no suspension request.",
         reliability: 0.86,
         weight: 0.44,
         corroborations: 2,
@@ -239,11 +338,41 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Control at the alloy stage removes the substitution route. Downstream users cannot re-source quickly because alternative origins require 9–14 months of qualification, so effective elasticity of demand is near zero inside one planning cycle.",
         exposures: [
-          { nodeId: "DE", exposure: 0.88, impact: 0.52, lagDays: 60, note: "Traction motor and actuator supply contracted on long-term offtake" },
-          { nodeId: "JP", exposure: 0.82, impact: 0.47, lagDays: 55, note: "Servo motor and HDD actuator exposure" },
-          { nodeId: "US", exposure: 0.7, impact: 0.38, lagDays: 50, note: "Defence-contract magnet qualification backlog" },
-          { nodeId: "EU", exposure: 0.68, impact: 0.36, lagDays: 65, note: "Aggregate member-state exposure via automotive tiering" },
-          { nodeId: "CN", exposure: 0.6, impact: 0.24, lagDays: 20, note: "Upstream value capture intact; downstream margin shifts" },
+          {
+            nodeId: "DE",
+            exposure: 0.88,
+            impact: 0.52,
+            lagDays: 60,
+            note: "Traction motor and actuator supply contracted on long-term offtake",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.82,
+            impact: 0.47,
+            lagDays: 55,
+            note: "Servo motor and HDD actuator exposure",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.7,
+            impact: 0.38,
+            lagDays: 50,
+            note: "Defence-contract magnet qualification backlog",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.68,
+            impact: 0.36,
+            lagDays: 65,
+            note: "Aggregate member-state exposure via automotive tiering",
+          },
+          {
+            nodeId: "CN",
+            exposure: 0.6,
+            impact: 0.24,
+            lagDays: 20,
+            note: "Upstream value capture intact; downstream margin shifts",
+          },
         ],
       },
       {
@@ -255,8 +384,20 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Physical premium and equity re-rating move together for upstream holders; downstream users carry the cost without a hedge, so dispersion widens before index-level damage appears.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.58, impact: 0.26, lagDays: 14, note: "Materials overweight versus downstream underweight" },
-          { nodeId: "DE", exposure: 0.5, impact: 0.24, lagDays: 18, note: "Downstream margin guidance at risk" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.58,
+            impact: 0.26,
+            lagDays: 14,
+            note: "Materials overweight versus downstream underweight",
+          },
+          {
+            nodeId: "DE",
+            exposure: 0.5,
+            impact: 0.24,
+            lagDays: 18,
+            note: "Downstream margin guidance at risk",
+          },
         ],
       },
       {
@@ -268,9 +409,27 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Procedural objections preserve an off-ramp but consume the time advantage that made the regime effective. Each month of WTO process is a month of inventory accumulation by the exposed side.",
         exposures: [
-          { nodeId: "EU", exposure: 0.55, impact: 0.28, lagDays: 30, note: "Coordination between exposed members" },
-          { nodeId: "CN", exposure: 0.5, impact: 0.21, lagDays: 25, note: "Retaliatory catalogue language signalled" },
-          { nodeId: "US", exposure: 0.46, impact: 0.19, lagDays: 22, note: "Allied pre-emption of alternative supply investment" },
+          {
+            nodeId: "EU",
+            exposure: 0.55,
+            impact: 0.28,
+            lagDays: 30,
+            note: "Coordination between exposed members",
+          },
+          {
+            nodeId: "CN",
+            exposure: 0.5,
+            impact: 0.21,
+            lagDays: 25,
+            note: "Retaliatory catalogue language signalled",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.46,
+            impact: 0.19,
+            lagDays: 22,
+            note: "Allied pre-emption of alternative supply investment",
+          },
         ],
       },
       {
@@ -282,7 +441,13 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Lagged and indirect through EV and wind-turbine production volume rather than mineral prices.",
         exposures: [
-          { nodeId: "DE", exposure: 0.26, impact: 0.12, lagDays: 110, note: "EV production-plan slippage" },
+          {
+            nodeId: "DE",
+            exposure: 0.26,
+            impact: 0.12,
+            lagDays: 110,
+            note: "EV production-plan slippage",
+          },
         ],
       },
     ],
@@ -314,7 +479,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-08-30",
         channel: "finance",
         headline: "War-risk premia for Gulf–Europe crude rise fourfold",
-        detail: "Premium repricing applies to hulls with no credible rerouting option in the current charter window.",
+        detail:
+          "Premium repricing applies to hulls with no credible rerouting option in the current charter window.",
         reliability: 0.9,
         weight: 0.82,
         corroborations: 7,
@@ -327,7 +493,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-04",
         channel: "trade",
         headline: "Transit guidance lowered to product and crude tankers",
-        detail: "Advisory extends caution from general navigation to a named vessel class across a wider latitudinal band.",
+        detail:
+          "Advisory extends caution from general navigation to a named vessel class across a wider latitudinal band.",
         reliability: 0.94,
         weight: 0.86,
         corroborations: 5,
@@ -340,7 +507,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-12",
         channel: "trade",
         headline: "Two tankers reroute via Cape, adding 11–14 days",
-        detail: "Chartering reports indicate the reroute is priced into freight rather than resisted by operators.",
+        detail:
+          "Chartering reports indicate the reroute is priced into freight rather than resisted by operators.",
         reliability: 0.87,
         weight: 0.74,
         corroborations: 6,
@@ -353,7 +521,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-21",
         channel: "energy",
         headline: "VLCC tonne-miles up 22% while global loadings flat",
-        detail: "The gap between tonne-miles and volumes is the cleanest available measure of the security premium.",
+        detail:
+          "The gap between tonne-miles and volumes is the cleanest available measure of the security premium.",
         reliability: 0.85,
         weight: 0.8,
         corroborations: 4,
@@ -366,7 +535,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-27",
         channel: "diplomatic",
         headline: "Transit-notification mechanism invoked for first time",
-        detail: "Pre-notification framework activated between adjacent states, indicating a move from reactive to managed corridor governance.",
+        detail:
+          "Pre-notification framework activated between adjacent states, indicating a move from reactive to managed corridor governance.",
         reliability: 0.79,
         weight: 0.52,
         corroborations: 3,
@@ -383,10 +553,34 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Distance, not volume, sets the price. Additional tonne-miles on a fixed tanker fleet are arithmetically equivalent to supply loss, and the elasticity of substitution toward alternative origin is low inside a quarter.",
         exposures: [
-          { nodeId: "EU", exposure: 0.86, impact: 0.58, lagDays: 21, note: "Refinery crude slate discount to alternative origins" },
-          { nodeId: "IN", exposure: 0.79, impact: 0.51, lagDays: 24, note: "Refinery margin compression on long-haul imports" },
-          { nodeId: "SA", exposure: 0.6, impact: 0.33, lagDays: 18, note: "Export revenue protected, loadings redirected" },
-          { nodeId: "AE", exposure: 0.64, impact: 0.38, lagDays: 20, note: "Storage utilisation elevated on reroute anticipation" },
+          {
+            nodeId: "EU",
+            exposure: 0.86,
+            impact: 0.58,
+            lagDays: 21,
+            note: "Refinery crude slate discount to alternative origins",
+          },
+          {
+            nodeId: "IN",
+            exposure: 0.79,
+            impact: 0.51,
+            lagDays: 24,
+            note: "Refinery margin compression on long-haul imports",
+          },
+          {
+            nodeId: "SA",
+            exposure: 0.6,
+            impact: 0.33,
+            lagDays: 18,
+            note: "Export revenue protected, loadings redirected",
+          },
+          {
+            nodeId: "AE",
+            exposure: 0.64,
+            impact: 0.38,
+            lagDays: 20,
+            note: "Storage utilisation elevated on reroute anticipation",
+          },
         ],
       },
       {
@@ -398,10 +592,34 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Freight cost enters landed price directly, and schedule unreliability compounds it. Container lines absorb the first tranche; the pass-through to goods prices arrives at the second.",
         exposures: [
-          { nodeId: "EU", exposure: 0.78, impact: 0.49, lagDays: 30, note: "Landed-cost inflation in import-dependent categories" },
-          { nodeId: "IN", exposure: 0.7, impact: 0.42, lagDays: 28, note: "Export competitiveness erosion on long-haul routes" },
-          { nodeId: "AE", exposure: 0.58, impact: 0.3, lagDays: 26, note: "Transhipment and warehousing demand rises" },
-          { nodeId: "REDSEA", exposure: 0.92, impact: 0.61, lagDays: 15, note: "Chokepoint throughput is the origin of the shock" },
+          {
+            nodeId: "EU",
+            exposure: 0.78,
+            impact: 0.49,
+            lagDays: 30,
+            note: "Landed-cost inflation in import-dependent categories",
+          },
+          {
+            nodeId: "IN",
+            exposure: 0.7,
+            impact: 0.42,
+            lagDays: 28,
+            note: "Export competitiveness erosion on long-haul routes",
+          },
+          {
+            nodeId: "AE",
+            exposure: 0.58,
+            impact: 0.3,
+            lagDays: 26,
+            note: "Transhipment and warehousing demand rises",
+          },
+          {
+            nodeId: "REDSEA",
+            exposure: 0.92,
+            impact: 0.61,
+            lagDays: 15,
+            note: "Chokepoint throughput is the origin of the shock",
+          },
         ],
       },
       {
@@ -413,9 +631,27 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Insurance is the fastest channel because it reprices on renewal rather than on delivery. Credit spreads on exposed sovereigns follow within weeks.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.7, impact: 0.38, lagDays: 8, note: "Commodity and shipping factor concentration" },
-          { nodeId: "SWIFT", exposure: 0.4, impact: 0.19, lagDays: 12, note: "Trade-finance pricing on flagged voyages" },
-          { nodeId: "EU", exposure: 0.46, impact: 0.23, lagDays: 15, note: "Corporate credit repricing for import-intensive sectors" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.7,
+            impact: 0.38,
+            lagDays: 8,
+            note: "Commodity and shipping factor concentration",
+          },
+          {
+            nodeId: "SWIFT",
+            exposure: 0.4,
+            impact: 0.19,
+            lagDays: 12,
+            note: "Trade-finance pricing on flagged voyages",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.46,
+            impact: 0.23,
+            lagDays: 15,
+            note: "Corporate credit repricing for import-intensive sectors",
+          },
         ],
       },
       {
@@ -427,9 +663,27 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "The notification mechanism is evidence of partial governance, which lowers tail probability while raising coordination cost. It is a partial off-ramp, not a resolution.",
         exposures: [
-          { nodeId: "EG", exposure: 0.55, impact: 0.31, lagDays: 35, note: "Corridor governance dependent on transit state" },
-          { nodeId: "EU", exposure: 0.48, impact: 0.24, lagDays: 40, note: "Mandate renewal becomes the binding constraint" },
-          { nodeId: "SA", exposure: 0.44, impact: 0.2, lagDays: 45, note: "Bilateral arrangements outside the multilateral frame" },
+          {
+            nodeId: "EG",
+            exposure: 0.55,
+            impact: 0.31,
+            lagDays: 35,
+            note: "Corridor governance dependent on transit state",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.48,
+            impact: 0.24,
+            lagDays: 40,
+            note: "Mandate renewal becomes the binding constraint",
+          },
+          {
+            nodeId: "SA",
+            exposure: 0.44,
+            impact: 0.2,
+            lagDays: 45,
+            note: "Bilateral arrangements outside the multilateral frame",
+          },
         ],
       },
     ],
@@ -461,7 +715,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-18",
         channel: "energy",
         headline: "Posture shifted from escort to route-avoidance advice",
-        detail: "Advisory language changed from 'transit support available' to 'consider alternative routing', a discrete doctrinal change.",
+        detail:
+          "Advisory language changed from 'transit support available' to 'consider alternative routing', a discrete doctrinal change.",
         reliability: 0.93,
         weight: 0.9,
         corroborations: 5,
@@ -474,7 +729,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-23",
         channel: "energy",
         headline: "Contact reported between escort group and fast-craft group",
-        detail: "Reports describe a standoff rather than an exchange, with damage disputed across sources.",
+        detail:
+          "Reports describe a standoff rather than an exchange, with damage disputed across sources.",
         reliability: 0.79,
         weight: 0.74,
         corroborations: 4,
@@ -487,7 +743,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-25",
         channel: "finance",
         headline: "Front-month crude skew flattens on prompt-supply bid",
-        detail: "Backwardation narrowing is the market's way of pricing a supply expectation rather than a demand one.",
+        detail:
+          "Backwardation narrowing is the market's way of pricing a supply expectation rather than a demand one.",
         reliability: 0.85,
         weight: 0.72,
         corroborations: 4,
@@ -500,7 +757,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-09-29",
         channel: "diplomatic",
         headline: "Contact urged through a third-country channel",
-        detail: "Deliberate third-country intermediation implies neither side wants a direct bilateral record.",
+        detail:
+          "Deliberate third-country intermediation implies neither side wants a direct bilateral record.",
         reliability: 0.88,
         weight: 0.58,
         corroborations: 3,
@@ -513,7 +771,8 @@ export const SCENARIOS_1: Scenario[] = [
         observedAt: "2026-10-02",
         channel: "trade",
         headline: "Transits down 9% against seasonal baseline",
-        detail: "Transit shortfall measured against a five-year seasonal profile rather than the prior week.",
+        detail:
+          "Transit shortfall measured against a five-year seasonal profile rather than the prior week.",
         reliability: 0.81,
         weight: 0.76,
         corroborations: 3,
@@ -530,12 +789,48 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Bypass pipeline capacity is a small fraction of normal strait throughput, so effective supply is near-binary. This channel dominates any composite that contains it, which is why the engine weights energy above the others.",
         exposures: [
-          { nodeId: "HORMUZ", exposure: 0.99, impact: 0.78, lagDays: 3, note: "Origin of the shock; no meaningful bypass capacity" },
-          { nodeId: "IN", exposure: 0.88, impact: 0.72, lagDays: 10, note: "Import dependence with limited strategic reserve" },
-          { nodeId: "CN", exposure: 0.84, impact: 0.63, lagDays: 12, note: "Discounted crude origin concentration" },
-          { nodeId: "JP", exposure: 0.82, impact: 0.61, lagDays: 9, note: "Almost total import dependence" },
-          { nodeId: "KR", exposure: 0.8, impact: 0.58, lagDays: 9, note: "Refinery configuration optimised to Middle East slate" },
-          { nodeId: "EU", exposure: 0.62, impact: 0.44, lagDays: 14, note: "Partial offset from non-Gulf sourcing" },
+          {
+            nodeId: "HORMUZ",
+            exposure: 0.99,
+            impact: 0.78,
+            lagDays: 3,
+            note: "Origin of the shock; no meaningful bypass capacity",
+          },
+          {
+            nodeId: "IN",
+            exposure: 0.88,
+            impact: 0.72,
+            lagDays: 10,
+            note: "Import dependence with limited strategic reserve",
+          },
+          {
+            nodeId: "CN",
+            exposure: 0.84,
+            impact: 0.63,
+            lagDays: 12,
+            note: "Discounted crude origin concentration",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.82,
+            impact: 0.61,
+            lagDays: 9,
+            note: "Almost total import dependence",
+          },
+          {
+            nodeId: "KR",
+            exposure: 0.8,
+            impact: 0.58,
+            lagDays: 9,
+            note: "Refinery configuration optimised to Middle East slate",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.62,
+            impact: 0.44,
+            lagDays: 14,
+            note: "Partial offset from non-Gulf sourcing",
+          },
         ],
       },
       {
@@ -547,9 +842,27 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Fastest transmission in the model. Energy derivatives reprice intraday; inflation expectations and currency follow within sessions.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.76, impact: 0.46, lagDays: 3, note: "Commodity beta and inflation breakeven repricing" },
-          { nodeId: "SWIFT", exposure: 0.45, impact: 0.24, lagDays: 6, note: "Payment behaviour shifts toward precautionary buffers" },
-          { nodeId: "IN", exposure: 0.52, impact: 0.29, lagDays: 5, note: "External balance and FX channel" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.76,
+            impact: 0.46,
+            lagDays: 3,
+            note: "Commodity beta and inflation breakeven repricing",
+          },
+          {
+            nodeId: "SWIFT",
+            exposure: 0.45,
+            impact: 0.24,
+            lagDays: 6,
+            note: "Payment behaviour shifts toward precautionary buffers",
+          },
+          {
+            nodeId: "IN",
+            exposure: 0.52,
+            impact: 0.29,
+            lagDays: 5,
+            note: "External balance and FX channel",
+          },
         ],
       },
       {
@@ -561,10 +874,34 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Freight and insurance compound the commodity shock, then the composite lands on landed goods prices with a lag set by contract structure.",
         exposures: [
-          { nodeId: "AE", exposure: 0.72, impact: 0.42, lagDays: 12, note: "Re-export hub throughput exposed" },
-          { nodeId: "SA", exposure: 0.62, impact: 0.33, lagDays: 10, note: "Loading programme schedules, not volumes, are hit" },
-          { nodeId: "IN", exposure: 0.6, impact: 0.36, lagDays: 20, note: "Landed-cost inflation on essential imports" },
-          { nodeId: "SUZK", exposure: 0.4, impact: 0.2, lagDays: 22, note: "Canal economics pressured by fleet repositioning" },
+          {
+            nodeId: "AE",
+            exposure: 0.72,
+            impact: 0.42,
+            lagDays: 12,
+            note: "Re-export hub throughput exposed",
+          },
+          {
+            nodeId: "SA",
+            exposure: 0.62,
+            impact: 0.33,
+            lagDays: 10,
+            note: "Loading programme schedules, not volumes, are hit",
+          },
+          {
+            nodeId: "IN",
+            exposure: 0.6,
+            impact: 0.36,
+            lagDays: 20,
+            note: "Landed-cost inflation on essential imports",
+          },
+          {
+            nodeId: "SUZK",
+            exposure: 0.4,
+            impact: 0.2,
+            lagDays: 22,
+            note: "Canal economics pressured by fleet repositioning",
+          },
         ],
       },
       {
@@ -576,10 +913,34 @@ export const SCENARIOS_1: Scenario[] = [
         mechanism:
           "Escort doctrine is a negotiated artefact. Every posture change raises the probability that the next one is ratcheted rather than reversed.",
         exposures: [
-          { nodeId: "IR", exposure: 0.78, impact: 0.49, lagDays: 15, note: "Leverage calculus shifts toward pre-emption" },
-          { nodeId: "US", exposure: 0.7, impact: 0.41, lagDays: 18, note: "Allied consultation requirements slow response" },
-          { nodeId: "GB", exposure: 0.6, impact: 0.33, lagDays: 16, note: "Inherited posture with limited domestic mandate" },
-          { nodeId: "AE", exposure: 0.5, impact: 0.26, lagDays: 20, note: "Mediation role becomes more valuable and more exposed" },
+          {
+            nodeId: "IR",
+            exposure: 0.78,
+            impact: 0.49,
+            lagDays: 15,
+            note: "Leverage calculus shifts toward pre-emption",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.7,
+            impact: 0.41,
+            lagDays: 18,
+            note: "Allied consultation requirements slow response",
+          },
+          {
+            nodeId: "GB",
+            exposure: 0.6,
+            impact: 0.33,
+            lagDays: 16,
+            note: "Inherited posture with limited domestic mandate",
+          },
+          {
+            nodeId: "AE",
+            exposure: 0.5,
+            impact: 0.26,
+            lagDays: 20,
+            note: "Mediation role becomes more valuable and more exposed",
+          },
         ],
       },
     ],

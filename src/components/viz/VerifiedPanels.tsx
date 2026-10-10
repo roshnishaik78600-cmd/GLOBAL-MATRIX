@@ -168,7 +168,7 @@ export function MacroPanel({ limit = 7 }: { limit?: number }) {
               note={
                 macro.refreshing
                   ? "Contacting the World Bank now."
-                  : macro.problem ?? "The World Bank returned no readings."
+                  : (macro.problem ?? "The World Bank returned no readings.")
               }
             />
           }
@@ -178,11 +178,7 @@ export function MacroPanel({ limit = 7 }: { limit?: number }) {
   }
 
   return (
-    <Panel
-      title="Economic indicators"
-      meta="real GDP growth, reported"
-      className="h-full"
-    >
+    <Panel title="Economic indicators" meta="real GDP growth, reported" className="h-full">
       <div className="border-b border-rule px-3 py-2">
         <SourceLine
           provenance={{
@@ -258,7 +254,7 @@ export function TradePanel({ limit = 7 }: { limit?: number }) {
               note={
                 trade.refreshing
                   ? "Contacting UN Comtrade now."
-                  : trade.problem ?? "UN Comtrade returned no readings."
+                  : (trade.problem ?? "UN Comtrade returned no readings.")
               }
             />
           }
@@ -297,9 +293,7 @@ export function TradePanel({ limit = 7 }: { limit?: number }) {
                 >
                   {node?.label ?? f.reporter}
                 </Link>
-                <span className="num w-16 shrink-0 text-right text-[12px]">
-                  {usd(total)}
-                </span>
+                <span className="num w-16 shrink-0 text-right text-[12px]">{usd(total)}</span>
                 <span
                   className={`num w-16 shrink-0 text-right text-[12px] ${
                     balance >= 0 ? "text-stable" : "text-warning"
@@ -396,7 +390,7 @@ function AttentionPanel() {
               note={
                 attention.refreshing
                   ? "Contacting GDELT now."
-                  : attention.problem ?? "GDELT returned no coverage data."
+                  : (attention.problem ?? "GDELT returned no coverage data.")
               }
             />
           }
@@ -429,9 +423,7 @@ function AttentionPanel() {
           return (
             <li key={s.topic} className="px-3 py-2.5">
               <div className="flex items-center gap-2.5">
-                <span className="min-w-0 flex-1 truncate text-[12px]">
-                  {titleCase(s.topic)}
-                </span>
+                <span className="min-w-0 flex-1 truncate text-[12px]">{titleCase(s.topic)}</span>
                 <span
                   className={`num shrink-0 text-[12px] ${
                     change > 0 ? "text-elevated" : "text-muted-foreground"
@@ -484,11 +476,7 @@ function HeadlinesPanel() {
         <NoVerifiedData
           title="Latest coverage"
           domain="GDELT article index"
-          action={
-            <SourceNote
-              note={headlines.problem ?? "GDELT returned no articles."}
-            />
-          }
+          action={<SourceNote note={headlines.problem ?? "GDELT returned no articles."} />}
         />
       </Panel>
     );
@@ -523,7 +511,9 @@ function HeadlinesPanel() {
               <p className="line-clamp-2 text-[12px] leading-snug">{h.title}</p>
               <p className="num mt-1 truncate text-[12px] text-muted-foreground">
                 {h.domain}
-                {h.seenAt ? ` · ${h.seenAt.slice(0, 13).replace(/(\d{4})(\d{2})(\d{2})T(\d{2})/, "$1-$2-$3 $4:00")} UTC` : ""}
+                {h.seenAt
+                  ? ` · ${h.seenAt.slice(0, 13).replace(/(\d{4})(\d{2})(\d{2})T(\d{2})/, "$1-$2-$3 $4:00")} UTC`
+                  : ""}
               </p>
             </a>
           </li>

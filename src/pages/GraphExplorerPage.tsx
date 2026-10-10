@@ -23,10 +23,7 @@ export default function GraphExplorerPage() {
   const selected = focus?.kind === "node" ? focus.id : null;
 
   const eventId = params.get("event") ?? feed?.rows[0]?.id;
-  const graph = useQuery(
-    api.intel.eventGraph,
-    eventId ? { eventId } : "skip",
-  );
+  const graph = useQuery(api.intel.eventGraph, eventId ? { eventId } : "skip");
 
   const nodeCount = graph?.nodes.length ?? 0;
   const [isolate, setIsolate] = useState(false);
@@ -68,7 +65,7 @@ export default function GraphExplorerPage() {
   }
 
   return (
-      <PageFrame
+    <PageFrame
       eyebrow="Knowledge graph"
       title="Knowledge graph"
       lede="The transmission graph as a knowledge web: pick an entity and see everything it shares exposure with."
@@ -91,7 +88,6 @@ export default function GraphExplorerPage() {
         </>
       }
     >
-
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
         <section className="lg:col-span-9">
           <Panel
@@ -161,9 +157,7 @@ export default function GraphExplorerPage() {
               <div className="space-y-3 p-3">
                 <div>
                   <p className="text-[14px] font-semibold">{selectedLabel(selected)}</p>
-                  <p className="num mt-0.5 text-[12px] text-muted-foreground">
-                    {selected}
-                  </p>
+                  <p className="num mt-0.5 text-[12px] text-muted-foreground">{selected}</p>
                 </div>
                 <Bar
                   value={nodeWeight(selected, graph?.nodes ?? [])}
@@ -198,9 +192,9 @@ export default function GraphExplorerPage() {
 
           <Panel title="Not available">
             <p className="px-3 py-3 text-[12px] leading-relaxed text-muted-foreground">
-              Company, commodity and policy nodes are absent because this build
-              has no company graph, commodity registry or policy dataset. Adding
-              them would mean inventing relationships, so they are not drawn.
+              Company, commodity and policy nodes are absent because this build has no company
+              graph, commodity registry or policy dataset. Adding them would mean inventing
+              relationships, so they are not drawn.
             </p>
           </Panel>
         </section>

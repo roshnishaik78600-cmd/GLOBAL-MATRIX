@@ -50,7 +50,9 @@ export function PaymentSection() {
 
         <div className="min-w-0 space-y-3">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Amount to pay</p>
+            <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+              Amount to pay
+            </p>
             <p className="mt-1 text-2xl font-semibold text-foreground">
               {formatINR(plan.price)}{" "}
               <span className="text-sm font-normal text-muted-foreground">{plan.cadence}</span>

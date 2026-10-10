@@ -2,7 +2,14 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const TABLES = ["observations", "source_runs", "watchlist", "annotations", "briefs", "exposure_deps"];
+const TABLES = [
+  "observations",
+  "source_runs",
+  "watchlist",
+  "annotations",
+  "briefs",
+  "exposure_deps",
+];
 
 /** Refetch on-screen data whenever a live table changes (RLS limits what each user receives). */
 export function useRealtimeSync() {

@@ -45,8 +45,7 @@ export const SOURCES = {
     label: "World Bank Open Data",
     publisher: "The World Bank Group",
     url: "https://data.worldbank.org",
-    covers:
-      "Annual national accounts and development indicators, as reported by member economies.",
+    covers: "Annual national accounts and development indicators, as reported by member economies.",
     limits:
       "Annual and lagging — the most recent year is often a partial estimate, and revisions land without notice.",
     dataType: "Annual national indicators, 5 series × 18 economies",

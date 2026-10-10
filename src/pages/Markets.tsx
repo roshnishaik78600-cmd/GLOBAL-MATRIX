@@ -41,9 +41,7 @@ export default function Markets() {
   // Newest fix per currency. The cache holds one row per key, so this is a
   // de-dup rather than a sort — but the `Date` parse keeps it correct if a
   // future refresh ever stores several observations per key.
-  const fxBySeries = new Map(
-    (rates.data ?? []).map((p) => [p.series, p] as const),
-  );
+  const fxBySeries = new Map((rates.data ?? []).map((p) => [p.series, p] as const));
   // `flatMap` rather than map-then-filter: it discards the undefined entries at
   // the type level, so the render below never has to re-prove that a point is
   // present before reading it.
@@ -51,13 +49,9 @@ export default function Markets() {
     const point = fxBySeries.get(c.code);
     return point ? [{ code: c.code, label: c.label, point }] : [];
   });
-  const yieldPoints = [...(yields.data ?? [])].sort((a, b) =>
-    a.tenor.localeCompare(b.tenor),
-  );
+  const yieldPoints = [...(yields.data ?? [])].sort((a, b) => a.tenor.localeCompare(b.tenor));
 
-  const rateFreshness = rates.retrievedAt
-    ? freshnessOf(rates.retrievedAt, "ecb")
-    : "unavailable";
+  const rateFreshness = rates.retrievedAt ? freshnessOf(rates.retrievedAt, "ecb") : "unavailable";
 
   return (
     <PageFrame
@@ -152,19 +146,16 @@ export default function Markets() {
                         </span>
                         <span className="exec-label">{row.code}/EUR</span>
                       </dd>
-                      <dd className="exec-label text-[var(--exec-ink-dim)]">
-                        {row.point.date}
-                      </dd>
+                      <dd className="exec-label text-[var(--exec-ink-dim)]">{row.point.date}</dd>
                     </div>
                   ))}
                 </dl>
                 <div className="mt-auto border-t border-[var(--exec-hairline)] px-4 py-3">
                   <p className="text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-                    <span className="text-[var(--exec-ink)]">OBSERVED</span> — fixed by
-                    the European Central Bank at 14:15 CET on TARGET business days.
-                    Units are {`currency`} per one euro. These are official reference
-                    rates, not executable quotes, and no rouble rate is tracked: the
-                    Bank suspended that fixing in March 2022.
+                    <span className="text-[var(--exec-ink)]">OBSERVED</span> — fixed by the European
+                    Central Bank at 14:15 CET on TARGET business days. Units are {`currency`} per
+                    one euro. These are official reference rates, not executable quotes, and no
+                    rouble rate is tracked: the Bank suspended that fixing in March 2022.
                   </p>
                 </div>
               </>
@@ -202,11 +193,10 @@ export default function Markets() {
               domain="market price"
               action={
                 <p className="text-[13px] leading-relaxed text-muted-foreground">
-                  Connecting a price source needs a licensed feed. The two boards
-                  above are central-bank fixings, which is a different thing: real,
-                  official and daily, but not a price anyone could trade. Until a
-                  licensed feed is connected, no panel here prints a return or a
-                  spread.
+                  Connecting a price source needs a licensed feed. The two boards above are
+                  central-bank fixings, which is a different thing: real, official and daily, but
+                  not a price anyone could trade. Until a licensed feed is connected, no panel here
+                  prints a return or a spread.
                 </p>
               }
             />
@@ -242,14 +232,10 @@ export default function Markets() {
         </section>
 
         <section className="lg:col-span-12">
-          <Panel
-            title="Finance-channel pressure"
-            meta="model output, not a market move"
-          >
+          <Panel title="Finance-channel pressure" meta="model output, not a market move">
             {financeEvents.length === 0 ? (
               <p className="px-3 py-4 text-[12px] text-muted-foreground">
-                No event in the corpus currently clears the finance-channel
-                threshold.
+                No event in the corpus currently clears the finance-channel threshold.
               </p>
             ) : (
               <ul className="divide-y divide-rule">
@@ -259,12 +245,9 @@ export default function Markets() {
                       to={`/app/event/${e.id}`}
                       className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 py-2.5 transition-colors hover:bg-[var(--exec-surface)]"
                     >
-                      <span className="min-w-0 flex-1 truncate text-[13px]">
-                        {e.title}
-                      </span>
+                      <span className="min-w-0 flex-1 truncate text-[13px]">{e.title}</span>
                       <span className="num text-[12px] text-muted-foreground">
-                        {CHANNEL_LABEL.finance}{" "}
-                        {(e.channelPressure.finance * 100).toFixed(0)}%
+                        {CHANNEL_LABEL.finance} {(e.channelPressure.finance * 100).toFixed(0)}%
                       </span>
                       <span className="num w-14 text-right text-[12px] font-semibold">
                         {e.score30.toFixed(1)}
@@ -357,9 +340,9 @@ function YieldCurve({
       </ul>
 
       <p className="mt-auto border-t border-[var(--exec-hairline)] pt-3 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        <span className="text-[var(--exec-ink)]">OBSERVED</span> — three observed
-        points on the euro area spot curve, not an interpolated yield curve.{" "}
-        {years[years.length - 1] - years[0]}y−{years[0]}y spread{" "}
+        <span className="text-[var(--exec-ink)]">OBSERVED</span> — three observed points on the euro
+        area spot curve, not an interpolated yield curve. {years[years.length - 1] - years[0]}y−
+        {years[0]}y spread{" "}
         <span className="exec-num text-[var(--exec-ink)]">
           {(values[values.length - 1] - values[0]).toFixed(2)}pp
         </span>
@@ -377,15 +360,8 @@ function aggregateHourly(
   for (const p of points) {
     const m = /^(\d{4})(\d{2})(\d{2})T(\d{2})\d{2}\d{2}Z?$/.exec(p.at);
     if (!m) continue;
-    const hour = Date.UTC(
-      Number(m[1]),
-      Number(m[2]) - 1,
-      Number(m[3]),
-      Number(m[4]),
-    );
+    const hour = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4]));
     totals.set(hour, (totals.get(hour) ?? 0) + p.attention);
   }
-  return [...totals.entries()]
-    .sort((a, b) => a[0] - b[0])
-    .map(([at, value]) => ({ at, value }));
+  return [...totals.entries()].sort((a, b) => a[0] - b[0]).map(([at, value]) => ({ at, value }));
 }

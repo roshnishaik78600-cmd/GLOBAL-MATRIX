@@ -32,7 +32,9 @@ export function RequestForm({ defaultKind = "sample" }: { defaultKind?: InquiryK
     }
     setErrors({});
     setState("sending");
-    const { error } = await supabase.from("inquiries").insert({ ...parsed.data, company: parsed.data.company ?? null });
+    const { error } = await supabase
+      .from("inquiries")
+      .insert({ ...parsed.data, company: parsed.data.company ?? null });
     if (error) {
       setState("error");
       setProblem(
@@ -50,7 +52,8 @@ export function RequestForm({ defaultKind = "sample" }: { defaultKind?: InquiryK
       <div className="rounded-lg border border-border bg-card p-6">
         <p className="text-sm font-semibold text-foreground">Request received.</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          We'll reply to {form.email} within two business days to confirm scope. No payment has been taken.
+          We'll reply to {form.email} within two business days to confirm scope. No payment has been
+          taken.
         </p>
       </div>
     );
@@ -59,13 +62,22 @@ export function RequestForm({ defaultKind = "sample" }: { defaultKind?: InquiryK
   const field = (key: "name" | "email" | "company", label: string, type = "text") => (
     <div className="space-y-1.5">
       <Label htmlFor={`rq-${key}`}>{label}</Label>
-      <Input id={`rq-${key}`} type={type} value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
+      <Input
+        id={`rq-${key}`}
+        type={type}
+        value={form[key]}
+        onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+      />
       {errors[key] && <p className="text-xs text-destructive">{errors[key]}</p>}
     </div>
   );
 
   return (
-    <form onSubmit={submit} className="space-y-4 rounded-lg border border-border bg-card p-6" noValidate>
+    <form
+      onSubmit={submit}
+      className="space-y-4 rounded-lg border border-border bg-card p-6"
+      noValidate
+    >
       <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Request type">
         {(Object.keys(KIND_LABEL) as InquiryKind[]).map((k) => (
           <button
@@ -87,11 +99,23 @@ export function RequestForm({ defaultKind = "sample" }: { defaultKind?: InquiryK
       {field("company", "Company (optional)")}
       <div className="space-y-1.5">
         <Label htmlFor="rq-message">What do you need to understand?</Label>
-        <Textarea id="rq-message" rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
-          placeholder="e.g. We import electronic components from Taiwan and South Korea via Malacca…" />
+        <Textarea
+          id="rq-message"
+          rows={4}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          placeholder="e.g. We import electronic components from Taiwan and South Korea via Malacca…"
+        />
         {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
       </div>
-      <input tabIndex={-1} autoComplete="off" aria-hidden className="hidden" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} />
+      <input
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        className="hidden"
+        value={form.website}
+        onChange={(e) => setForm({ ...form, website: e.target.value })}
+      />
       {state === "error" && <p className="text-sm text-destructive">{problem}</p>}
       <Button type="submit" disabled={state === "sending"} className="w-full sm:w-auto">
         {state === "sending" ? "Sending…" : KIND_LABEL[kind]}

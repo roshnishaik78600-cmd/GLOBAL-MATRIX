@@ -15,6 +15,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- untyped default for legacy call sites
 export type FnRef<Args = any, Result = any> = {
   readonly _path: string;
   readonly _run: (args: Args) => Promise<Result>;
@@ -51,9 +52,7 @@ export function useMutation<Args, Result>(
   return mutation.mutateAsync;
 }
 
-export function useAction<Args, Result>(
-  fn: FnRef<Args, Result>,
-): (args: Args) => Promise<Result> {
+export function useAction<Args, Result>(fn: FnRef<Args, Result>): (args: Args) => Promise<Result> {
   return useMutation(fn);
 }
 

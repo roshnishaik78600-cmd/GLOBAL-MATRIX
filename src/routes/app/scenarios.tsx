@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/scenarios")({
       { title: "Scenarios — GlobalMatrix" },
       {
         name: "description",
-        content: "Explore what-if scenarios for geopolitical and supply-chain shocks, never presented as predictions.",
+        content:
+          "Explore what-if scenarios for geopolitical and supply-chain shocks, never presented as predictions.",
       },
       { property: "og:title", content: "Scenarios — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Explore what-if scenarios for geopolitical and supply-chain shocks, never presented as predictions.",
+        content:
+          "Explore what-if scenarios for geopolitical and supply-chain shocks, never presented as predictions.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

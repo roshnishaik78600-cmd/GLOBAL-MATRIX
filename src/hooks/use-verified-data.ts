@@ -119,7 +119,7 @@ export type Verified<T> = {
   retryInMs?: number;
 };
 
-const parse = <T,>(rows: Row[], prefix: string): T[] => {
+const parse = <T>(rows: Row[], prefix: string): T[] => {
   const out: T[] = [];
   for (const r of rows) {
     if (!r.ok || !r.key.startsWith(prefix)) continue;
@@ -133,8 +133,7 @@ const parse = <T,>(rows: Row[], prefix: string): T[] => {
   return out;
 };
 
-const newest = (rows: Row[]): number =>
-  rows.reduce((max, r) => Math.max(max, r.retrievedAt), 0);
+const newest = (rows: Row[]): number => rows.reduce((max, r) => Math.max(max, r.retrievedAt), 0);
 
 /**
  * The `asOf` the panel should claim.
@@ -218,10 +217,7 @@ function useSourcePaused(sourceId: string): [boolean, (p: boolean) => void] {
       pauseListeners.delete(update);
     };
   }, [sourceId]);
-  const set = useCallback(
-    (next: boolean) => setSourcePaused(sourceId, next),
-    [sourceId],
-  );
+  const set = useCallback((next: boolean) => setSourcePaused(sourceId, next), [sourceId]);
   return [value, set];
 }
 
@@ -364,12 +360,7 @@ function useVerified<E>({
   return {
     sourceId,
     data: readings,
-    status:
-      readings === null
-        ? ""
-        : readings.length > 0
-          ? "observed"
-          : "unavailable",
+    status: readings === null ? "" : readings.length > 0 ? "observed" : "unavailable",
     asOf: latestAsOf(rows ?? []),
     // The newest verified fetch. Not the newest attempt: a failed attempt is
     // not a reason to tell a reader their data is fresh.
@@ -515,9 +506,7 @@ export function macroSeries(
   const out = new Map<string, { latest: MacroReading; history: MacroReading[] }>();
   for (const [node, perIndicator] of byNode) {
     for (const [indicator, list] of perIndicator) {
-      const sorted = [...list].sort((a, b) =>
-        (a.period ?? "").localeCompare(b.period ?? ""),
-      );
+      const sorted = [...list].sort((a, b) => (a.period ?? "").localeCompare(b.period ?? ""));
       const last = sorted[sorted.length - 1];
       if (last) out.set(`${node}:${indicator}`, { latest: last, history: sorted });
     }

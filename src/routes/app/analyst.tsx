@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/analyst")({
       { title: "Analyst — GlobalMatrix" },
       {
         name: "description",
-        content: "Ask questions of the GlobalMatrix dataset and get evidence-backed answers on events and exposure.",
+        content:
+          "Ask questions of the GlobalMatrix dataset and get evidence-backed answers on events and exposure.",
       },
       { property: "og:title", content: "Analyst — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Ask questions of the GlobalMatrix dataset and get evidence-backed answers on events and exposure.",
+        content:
+          "Ask questions of the GlobalMatrix dataset and get evidence-backed answers on events and exposure.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

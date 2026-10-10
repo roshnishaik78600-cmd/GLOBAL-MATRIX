@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/event/$eventId")({
       { title: "Event Analysis — GlobalMatrix" },
       {
         name: "description",
-        content: "Full analysis of a single event: sources, affected geography, industries and exposure.",
+        content:
+          "Full analysis of a single event: sources, affected geography, industries and exposure.",
       },
       { property: "og:title", content: "Event Analysis — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Full analysis of a single event: sources, affected geography, industries and exposure.",
+        content:
+          "Full analysis of a single event: sources, affected geography, industries and exposure.",
       },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary" },

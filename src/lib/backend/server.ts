@@ -128,7 +128,11 @@ export const generateBrief = createServerFn({ method: "POST" })
 
     const assessment = allAssessments(SCENARIOS).find((a) => a.scenario.id === data.eventId);
     if (!assessment) {
-      return { ok: false, reason: "unknown_event", message: "That event is not in the current corpus." };
+      return {
+        ok: false,
+        reason: "unknown_event",
+        message: "That event is not in the current corpus.",
+      };
     }
 
     const apiKey = process.env.LOVABLE_API_KEY;
@@ -162,13 +166,18 @@ export const generateBrief = createServerFn({ method: "POST" })
     // Plan entitlement: daily brief allowance from trusted subscription state.
     const { effectivePlan, BRIEF_DAILY_LIMIT } = await import("@/lib/billing/core");
     const { data: sub } = await supabaseAdmin
-      .from("subscriptions").select("plan,status,expires_at").eq("user_id", userId).maybeSingle();
+      .from("subscriptions")
+      .select("plan,status,expires_at")
+      .eq("user_id", userId)
+      .maybeSingle();
     const plan = effectivePlan(sub as never);
     const dayStart = new Date(now);
     dayStart.setUTCHours(0, 0, 0, 0);
     const { count } = await supabaseAdmin
-      .from("brief_claims").select("id", { count: "exact", head: true })
-      .eq("user_id", userId).gte("at", dayStart.toISOString());
+      .from("brief_claims")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", userId)
+      .gte("at", dayStart.toISOString());
     if ((count ?? 0) >= BRIEF_DAILY_LIMIT[plan]) {
       return {
         ok: false,
@@ -176,7 +185,9 @@ export const generateBrief = createServerFn({ method: "POST" })
         message: `Your plan allows ${BRIEF_DAILY_LIMIT[plan]} AI briefs per day. See Pricing to upgrade, or try again tomorrow.`,
       };
     }
-    await supabaseAdmin.from("brief_claims").insert({ user_id: userId, at: new Date(now).toISOString() });
+    await supabaseAdmin
+      .from("brief_claims")
+      .insert({ user_id: userId, at: new Date(now).toISOString() });
 
     const prompt = buildPrompt(assessment);
 
@@ -207,30 +218,54 @@ export const generateBrief = createServerFn({ method: "POST" })
         }),
       });
     } catch {
-      return { ok: false, reason: "upstream_error", message: "Could not reach the brief service. Try again in a moment." };
+      return {
+        ok: false,
+        reason: "upstream_error",
+        message: "Could not reach the brief service. Try again in a moment.",
+      };
     }
 
     if (!response.ok) {
       const detail = await response.text();
       console.error("[brief] gateway error", response.status, detail.slice(0, 500));
       if (response.status === 429) {
-        return { ok: false, reason: "rate_limited", message: "The AI service is busy. Try again in a minute." };
+        return {
+          ok: false,
+          reason: "rate_limited",
+          message: "The AI service is busy. Try again in a minute.",
+        };
       }
       if (response.status === 402) {
-        return { ok: false, reason: "upstream_error", message: "AI credits are exhausted for this workspace. Add credits, then retry." };
+        return {
+          ok: false,
+          reason: "upstream_error",
+          message: "AI credits are exhausted for this workspace. Add credits, then retry.",
+        };
       }
-      return { ok: false, reason: "upstream_error", message: `The brief service returned ${response.status}. Try again in a moment.` };
+      return {
+        ok: false,
+        reason: "upstream_error",
+        message: `The brief service returned ${response.status}. Try again in a moment.`,
+      };
     }
 
     let payload: { choices?: { message?: { content?: string } }[] };
     try {
       payload = (await response.json()) as typeof payload;
     } catch {
-      return { ok: false, reason: "unparseable", message: "The brief service returned an unreadable response." };
+      return {
+        ok: false,
+        reason: "unparseable",
+        message: "The brief service returned an unreadable response.",
+      };
     }
     const text = payload.choices?.[0]?.message?.content?.trim() ?? "";
     if (!text) {
-      return { ok: false, reason: "empty_response", message: "The model returned an empty response." };
+      return {
+        ok: false,
+        reason: "empty_response",
+        message: "The model returned an empty response.",
+      };
     }
 
     const parsed = parseBrief(text);
@@ -238,7 +273,8 @@ export const generateBrief = createServerFn({ method: "POST" })
       return {
         ok: false,
         reason: "unparseable",
-        message: "The model did not return the expected structure. Retry, or read the evidence ledger instead.",
+        message:
+          "The model did not return the expected structure. Retry, or read the evidence ledger instead.",
       };
     }
 
@@ -283,8 +319,7 @@ const tally = (out: ConnectorOutcome[]): RefreshResult => ({
 });
 
 type ClaimResult =
-  | { proceed: true }
-  | { proceed: false; reason: "in_flight" | "cooling_down"; retryInMs: number };
+  { proceed: true } | { proceed: false; reason: "in_flight" | "cooling_down"; retryInMs: number };
 
 async function claimRefresh(
   supabaseAdmin: typeof import("@/integrations/supabase/client.server").supabaseAdmin,
@@ -305,7 +340,11 @@ async function claimRefresh(
     const startedAt = Date.parse(lock.started_at);
     const inFlight = lock.finished_at === null && now - startedAt < policy.maxRunMs;
     if (inFlight) {
-      return { proceed: false, reason: "in_flight", retryInMs: Math.max(0, startedAt + policy.maxRunMs - now) };
+      return {
+        proceed: false,
+        reason: "in_flight",
+        retryInMs: Math.max(0, startedAt + policy.maxRunMs - now),
+      };
     }
 
     const forced = force === true && lock.consecutive_failures === 0;
@@ -352,7 +391,8 @@ function countReadings(payload: string): number {
 function validateOutcome(o: ConnectorOutcome): { ok: true } | { ok: false; why: string } {
   if (!(o.sourceId in SOURCES)) return { ok: false, why: `unknown source "${o.sourceId}"` };
   if (!o.key.trim()) return { ok: false, why: "empty key" };
-  if (!Number.isFinite(o.retrievedAt) || o.retrievedAt <= 0) return { ok: false, why: "invalid retrievedAt" };
+  if (!Number.isFinite(o.retrievedAt) || o.retrievedAt <= 0)
+    return { ok: false, why: "invalid retrievedAt" };
   if (!DATA_STATUSES.includes(o.status)) return { ok: false, why: `invalid status "${o.status}"` };
   if (o.publishedAt !== undefined && (!Number.isFinite(o.publishedAt) || o.publishedAt <= 0)) {
     return { ok: false, why: "invalid publishedAt" };
@@ -361,12 +401,14 @@ function validateOutcome(o: ConnectorOutcome): { ok: true } | { ok: false; why: 
   if (o.note && o.note.length > 500) return { ok: false, why: "note too long" };
 
   if (!o.ok) {
-    if (o.status !== "unavailable") return { ok: false, why: "a failed run must be recorded as unavailable" };
+    if (o.status !== "unavailable")
+      return { ok: false, why: "a failed run must be recorded as unavailable" };
     if (o.payload !== "[]") return { ok: false, why: "a failed run must not carry a payload" };
     return { ok: true };
   }
 
-  if (o.status !== "observed") return { ok: false, why: "a successful run must be recorded as observed" };
+  if (o.status !== "observed")
+    return { ok: false, why: "a successful run must be recorded as observed" };
   let readings: unknown;
   try {
     readings = JSON.parse(o.payload);
@@ -413,7 +455,7 @@ async function storeObservations(
         published_at: item.ok && item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
         retrieved_at: new Date(item.retrievedAt).toISOString(),
         reading_count: item.ok ? countReadings(item.payload) : 0,
-        problem: item.ok ? null : item.problem ?? "No verified data.",
+        problem: item.ok ? null : (item.problem ?? "No verified data."),
       };
       if (prior) await supabaseAdmin.from("source_runs").update(run).eq("id", prior.id);
       else await supabaseAdmin.from("source_runs").insert(run);
@@ -449,11 +491,18 @@ async function storeObservations(
     stored += 1;
   }
 
-  const { data: lock } = await supabaseAdmin.from("source_locks").select("*").eq("source_id", sourceId).maybeSingle();
+  const { data: lock } = await supabaseAdmin
+    .from("source_locks")
+    .select("*")
+    .eq("source_id", sourceId)
+    .maybeSingle();
   if (lock && policy) {
     const failed = failures > 0 || stored === 0;
     const consecutiveFailures = failed ? lock.consecutive_failures + 1 : 0;
-    const backoff = Math.min(policy.backoffBaseMs * 2 ** Math.max(0, consecutiveFailures - 1), policy.maxBackoffMs);
+    const backoff = Math.min(
+      policy.backoffBaseMs * 2 ** Math.max(0, consecutiveFailures - 1),
+      policy.maxBackoffMs,
+    );
     await supabaseAdmin
       .from("source_locks")
       .update({
@@ -481,12 +530,22 @@ const PROBLEMS = {
   empty: "The source returned no readings for this request.",
 } as const;
 
-async function getJson(url: string): Promise<{ ok: true; data: unknown } | { ok: false; problem: string; status: number }> {
+async function getJson(
+  url: string,
+): Promise<{ ok: true; data: unknown } | { ok: false; problem: string; status: number }> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, { signal: controller.signal, headers: { accept: "application/json", "user-agent": UA } });
-    if (!res.ok) return { ok: false, problem: res.status === 429 ? PROBLEMS.throttled : PROBLEMS.http, status: res.status };
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { accept: "application/json", "user-agent": UA },
+    });
+    if (!res.ok)
+      return {
+        ok: false,
+        problem: res.status === 429 ? PROBLEMS.throttled : PROBLEMS.http,
+        status: res.status,
+      };
     return { ok: true, data: await res.json() };
   } catch (e) {
     const aborted = e instanceof Error && e.name === "AbortError";
@@ -515,8 +574,24 @@ const fail = (sourceId: string, key: string, problem: string): ConnectorOutcome 
 });
 
 const ISO3: Record<string, string> = {
-  CN: "CHN", US: "USA", RU: "RUS", IR: "IRN", TW: "TWN", KR: "KOR", JP: "JPN", NL: "NLD",
-  GB: "GBR", DE: "DEU", IN: "IND", TR: "TUR", AE: "ARE", SA: "SAU", SG: "SGP", BR: "BRA", ZA: "ZAF", MY: "MYS",
+  CN: "CHN",
+  US: "USA",
+  RU: "RUS",
+  IR: "IRN",
+  TW: "TWN",
+  KR: "KOR",
+  JP: "JPN",
+  NL: "NLD",
+  GB: "GBR",
+  DE: "DEU",
+  IN: "IND",
+  TR: "TUR",
+  AE: "ARE",
+  SA: "SAU",
+  SG: "SGP",
+  BR: "BRA",
+  ZA: "ZAF",
+  MY: "MYS",
 };
 const ECONOMIES = Object.entries(ISO3).map(([node, iso3]) => ({ node, iso3 }));
 
@@ -533,7 +608,8 @@ async function pullWorldBank(series: (typeof WB_SERIES)[number]): Promise<Connec
   const url = `https://api.worldbank.org/v2/country/${countries}/indicator/${series.id}?format=json&date=2018:2025&per_page=1000`;
   const res = await getJson(url);
   if (!res.ok) return fail("worldbank", series.key, res.problem);
-  if (!Array.isArray(res.data) || !Array.isArray(res.data[1])) return fail("worldbank", series.key, PROBLEMS.shape);
+  if (!Array.isArray(res.data) || !Array.isArray(res.data[1]))
+    return fail("worldbank", series.key, PROBLEMS.shape);
 
   const meta = res.data[0] as { lastupdated?: string } | undefined;
   const rows = res.data[1] as unknown[];
@@ -542,13 +618,20 @@ async function pullWorldBank(series: (typeof WB_SERIES)[number]): Promise<Connec
   const readings: Record<string, unknown>[] = [];
   for (const row of rows) {
     if (typeof row !== "object" || row === null) continue;
-    const r = row as { countryiso3code?: unknown; date?: unknown; value?: unknown; country?: { id?: unknown } };
+    const r = row as {
+      countryiso3code?: unknown;
+      date?: unknown;
+      value?: unknown;
+      country?: { id?: unknown };
+    };
     const iso3 = typeof r.countryiso3code === "string" ? r.countryiso3code : null;
     const year = typeof r.date === "string" ? r.date : null;
     if (!iso3 || !year) continue;
     const node = isoToNode.get(iso3) ?? (typeof r.country?.id === "string" ? r.country.id : null);
     if (!node) continue;
-    const value = usableNumber(r.value, { positive: series.key === "gdp" || series.key === "population" });
+    const value = usableNumber(r.value, {
+      positive: series.key === "gdp" || series.key === "population",
+    });
     if (value === null) continue;
     readings.push({
       key: `${node}:${series.key}:${year}`,
@@ -559,7 +642,12 @@ async function pullWorldBank(series: (typeof WB_SERIES)[number]): Promise<Connec
       value,
       unit: series.unit,
       period: year,
-      provenance: { sourceId: "worldbank", asOf: meta?.lastupdated ?? "", retrievedAt, status: "observed" },
+      provenance: {
+        sourceId: "worldbank",
+        asOf: meta?.lastupdated ?? "",
+        retrievedAt,
+        status: "observed",
+      },
     });
   }
   if (readings.length === 0) return fail("worldbank", series.key, PROBLEMS.empty);
@@ -577,7 +665,16 @@ async function pullWorldBank(series: (typeof WB_SERIES)[number]): Promise<Connec
 }
 
 const COMTRADE_REPORTERS: Record<string, number> = {
-  CN: 156, US: 842, DE: 276, JP: 392, GB: 826, NL: 528, IN: 699, KR: 410, SG: 702, BR: 223,
+  CN: 156,
+  US: 842,
+  DE: 276,
+  JP: 392,
+  GB: 826,
+  NL: 528,
+  IN: 699,
+  KR: 410,
+  SG: 702,
+  BR: 223,
 };
 
 async function pullComtrade(period: string): Promise<ConnectorOutcome> {
@@ -585,11 +682,14 @@ async function pullComtrade(period: string): Promise<ConnectorOutcome> {
   const url = `https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=${reporterCodes.join(",")}&period=${period}&flowCode=M,X&partnerCode=0&cmdCode=TOTAL`;
   const res = await getJson(url);
   if (!res.ok) return fail("comtrade", `comtrade:${period}`, res.problem);
-  if (typeof res.data !== "object" || res.data === null) return fail("comtrade", `comtrade:${period}`, PROBLEMS.shape);
+  if (typeof res.data !== "object" || res.data === null)
+    return fail("comtrade", `comtrade:${period}`, PROBLEMS.shape);
   const rows = (res.data as { data?: unknown }).data;
   if (!Array.isArray(rows)) return fail("comtrade", `comtrade:${period}`, PROBLEMS.shape);
 
-  const codeToNode = new Map(Object.entries(COMTRADE_REPORTERS).map(([node, code]) => [code, node]));
+  const codeToNode = new Map(
+    Object.entries(COMTRADE_REPORTERS).map(([node, code]) => [code, node]),
+  );
   const retrievedAt = Date.now();
   const totals = new Map<string, { exports: number; imports: number }>();
   for (const row of rows) {
@@ -614,9 +714,23 @@ async function pullComtrade(period: string): Promise<ConnectorOutcome> {
     period,
     exportsUsd: Math.round(t.exports),
     importsUsd: Math.round(t.imports),
-    provenance: { sourceId: "comtrade", asOf: period, retrievedAt, status: "observed", note: "Public preview tier: sampled, abbreviated detail." },
+    provenance: {
+      sourceId: "comtrade",
+      asOf: period,
+      retrievedAt,
+      status: "observed",
+      note: "Public preview tier: sampled, abbreviated detail.",
+    },
   }));
-  return { sourceId: "comtrade", key: `comtrade:${period}`, asOf: period, retrievedAt, status: "observed", ok: true, payload: JSON.stringify(flows) };
+  return {
+    sourceId: "comtrade",
+    key: `comtrade:${period}`,
+    asOf: period,
+    retrievedAt,
+    status: "observed",
+    ok: true,
+    payload: JSON.stringify(flows),
+  };
 }
 
 function gdeltStamp(raw: string): number | undefined {
@@ -632,7 +746,9 @@ const GDELT_RETRIES = 2;
 let gdeltLastCall = 0;
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-async function gdeltGet(path: string): Promise<{ ok: true; data: unknown } | { ok: false; problem: string }> {
+async function gdeltGet(
+  path: string,
+): Promise<{ ok: true; data: unknown } | { ok: false; problem: string }> {
   for (let attempt = 0; attempt <= GDELT_RETRIES; attempt++) {
     const since = GDELT_MIN_INTERVAL_MS - (Date.now() - gdeltLastCall);
     if (since > 0) await wait(since);
@@ -652,7 +768,8 @@ async function pullGdeltAttention(topic: string): Promise<ConnectorOutcome> {
   const query = encodeURIComponent(topic);
   const res = await gdeltGet(`doc/doc?query=${query}&mode=timelinevolinfo&format=json&timespan=7d`);
   if (!res.ok) return fail("gdelt", `attention:${topic}`, res.problem);
-  if (typeof res.data !== "object" || res.data === null) return fail("gdelt", `attention:${topic}`, PROBLEMS.shape);
+  if (typeof res.data !== "object" || res.data === null)
+    return fail("gdelt", `attention:${topic}`, PROBLEMS.shape);
   const timeline = (res.data as { timeline?: unknown }).timeline;
   if (!Array.isArray(timeline)) return fail("gdelt", `attention:${topic}`, PROBLEMS.shape);
 
@@ -674,7 +791,13 @@ async function pullGdeltAttention(topic: string): Promise<ConnectorOutcome> {
         at: b.date,
         attention: value,
         tone: null,
-        provenance: { sourceId: "gdelt", asOf: b.date, retrievedAt, status: "observed", note: "Media attention volume. Not evidence that an event occurred." },
+        provenance: {
+          sourceId: "gdelt",
+          asOf: b.date,
+          retrievedAt,
+          status: "observed",
+          note: "Media attention volume. Not evidence that an event occurred.",
+        },
       });
     }
   }
@@ -692,15 +815,25 @@ async function pullGdeltAttention(topic: string): Promise<ConnectorOutcome> {
 
 async function pullGdeltHeadlines(topic: string): Promise<ConnectorOutcome> {
   const query = encodeURIComponent(topic);
-  const res = await gdeltGet(`doc/doc?query=${query}&mode=artlist&format=json&maxrecords=25&sort=datedesc&timespan=7d`);
+  const res = await gdeltGet(
+    `doc/doc?query=${query}&mode=artlist&format=json&maxrecords=25&sort=datedesc&timespan=7d`,
+  );
   if (!res.ok) return fail("gdelt", `headlines:${topic}`, res.problem);
-  if (typeof res.data !== "object" || res.data === null) return fail("gdelt", `headlines:${topic}`, PROBLEMS.shape);
+  if (typeof res.data !== "object" || res.data === null)
+    return fail("gdelt", `headlines:${topic}`, PROBLEMS.shape);
   const articles = (res.data as { articles?: unknown }).articles;
   if (!Array.isArray(articles)) return fail("gdelt", `headlines:${topic}`, PROBLEMS.shape);
 
   const retrievedAt = Date.now();
   const seen = new Set<string>();
-  const items: { key: string; title: string; url: string; domain: string; seenAt: string; provenance: unknown }[] = [];
+  const items: {
+    key: string;
+    title: string;
+    url: string;
+    domain: string;
+    seenAt: string;
+    provenance: unknown;
+  }[] = [];
   for (const a of articles) {
     if (typeof a !== "object" || a === null) continue;
     const r = a as { url?: unknown; title?: unknown; domain?: unknown; seendate?: unknown };
@@ -723,7 +856,8 @@ async function pullGdeltHeadlines(topic: string): Promise<ConnectorOutcome> {
   let publishedAt: number | undefined;
   for (const item of items) {
     const stamp = gdeltStamp(item.seenAt);
-    if (stamp !== undefined && (publishedAt === undefined || stamp > publishedAt)) publishedAt = stamp;
+    if (stamp !== undefined && (publishedAt === undefined || stamp > publishedAt))
+      publishedAt = stamp;
   }
   return {
     sourceId: "gdelt",
@@ -741,12 +875,18 @@ const ATTENTION_TOPICS = ["trade war", "sanctions"];
 
 /* ---- ECB (SDMX, text transport) ---- */
 
-async function getText(url: string): Promise<{ ok: true; data: string } | { ok: false; problem: string }> {
+async function getText(
+  url: string,
+): Promise<{ ok: true; data: string } | { ok: false; problem: string }> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, { signal: controller.signal, headers: { accept: "text/csv, text/plain", "user-agent": UA } });
-    if (!res.ok) return { ok: false, problem: res.status === 429 ? PROBLEMS.throttled : PROBLEMS.http };
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { accept: "text/csv, text/plain", "user-agent": UA },
+    });
+    if (!res.ok)
+      return { ok: false, problem: res.status === 429 ? PROBLEMS.throttled : PROBLEMS.http };
     return { ok: true, data: await res.text() };
   } catch (e) {
     const aborted = e instanceof Error && e.name === "AbortError";
@@ -762,10 +902,30 @@ async function pullEcbFx(): Promise<ConnectorOutcome> {
   const codes = ECB_FX.map((c) => c.code);
   const url = `${ECB_BASE}/EXR/D.${codes.join("+")}.EUR.SP00.A?format=csvdata&detail=dataonly&lastNObservations=1`;
   const res = await getText(url);
-  if (!res.ok) return { sourceId: "ecb", key: "fx", asOf: "", retrievedAt: Date.now(), status: "unavailable", ok: false, problem: res.problem, payload: "[]" };
+  if (!res.ok)
+    return {
+      sourceId: "ecb",
+      key: "fx",
+      asOf: "",
+      retrievedAt: Date.now(),
+      status: "unavailable",
+      ok: false,
+      problem: res.problem,
+      payload: "[]",
+    };
 
   const rows = readSdmx(res.data);
-  if (rows.length === 0) return { sourceId: "ecb", key: "fx", asOf: "", retrievedAt: Date.now(), status: "unavailable", ok: false, problem: "The source returned a table we could not read.", payload: "[]" };
+  if (rows.length === 0)
+    return {
+      sourceId: "ecb",
+      key: "fx",
+      asOf: "",
+      retrievedAt: Date.now(),
+      status: "unavailable",
+      ok: false,
+      problem: "The source returned a table we could not read.",
+      payload: "[]",
+    };
 
   const retrievedAt = Date.now();
   const labelOf = new Map(ECB_FX.map((c) => [c.code, c.label]));
@@ -783,11 +943,35 @@ async function pullEcbFx(): Promise<ConnectorOutcome> {
       label: `${labelOf.get(series)} per euro`,
       date: row.date,
       value: row.value,
-      provenance: { sourceId: "ecb", asOf: row.date, retrievedAt, status: "observed", note: "ECB reference rate, fixed 14:15 CET. Not an executable quote." },
+      provenance: {
+        sourceId: "ecb",
+        asOf: row.date,
+        retrievedAt,
+        status: "observed",
+        note: "ECB reference rate, fixed 14:15 CET. Not an executable quote.",
+      },
     });
   }
-  if (points.length === 0) return { sourceId: "ecb", key: "fx", asOf: "", retrievedAt, status: "unavailable", ok: false, problem: "The source returned no readings for this request.", payload: "[]" };
-  return { sourceId: "ecb", key: "fx", asOf, retrievedAt, status: "observed", ok: true, payload: JSON.stringify(points) };
+  if (points.length === 0)
+    return {
+      sourceId: "ecb",
+      key: "fx",
+      asOf: "",
+      retrievedAt,
+      status: "unavailable",
+      ok: false,
+      problem: "The source returned no readings for this request.",
+      payload: "[]",
+    };
+  return {
+    sourceId: "ecb",
+    key: "fx",
+    asOf,
+    retrievedAt,
+    status: "observed",
+    ok: true,
+    payload: JSON.stringify(points),
+  };
 }
 
 async function pullEcbYield(): Promise<ConnectorOutcome[]> {
@@ -796,12 +980,30 @@ async function pullEcbYield(): Promise<ConnectorOutcome[]> {
     const url = `${ECB_BASE}/YC/B.U2.EUR.4F.G_N_A.SV_C_YM.${tenor.code}?format=csvdata&detail=dataonly&lastNObservations=1`;
     const res = await getText(url);
     if (!res.ok) {
-      out.push({ sourceId: "ecb", key: `yield:${tenor.code}`, asOf: "", retrievedAt: Date.now(), status: "unavailable", ok: false, problem: res.problem, payload: "[]" });
+      out.push({
+        sourceId: "ecb",
+        key: `yield:${tenor.code}`,
+        asOf: "",
+        retrievedAt: Date.now(),
+        status: "unavailable",
+        ok: false,
+        problem: res.problem,
+        payload: "[]",
+      });
       continue;
     }
     const rows = readSdmx(res.data);
     if (rows.length === 0) {
-      out.push({ sourceId: "ecb", key: `yield:${tenor.code}`, asOf: "", retrievedAt: Date.now(), status: "unavailable", ok: false, problem: "The source returned a table we could not read.", payload: "[]" });
+      out.push({
+        sourceId: "ecb",
+        key: `yield:${tenor.code}`,
+        asOf: "",
+        retrievedAt: Date.now(),
+        status: "unavailable",
+        ok: false,
+        problem: "The source returned a table we could not read.",
+        payload: "[]",
+      });
       continue;
     }
     const retrievedAt = Date.now();

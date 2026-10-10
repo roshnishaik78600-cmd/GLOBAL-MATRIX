@@ -10,12 +10,7 @@ import { useFocus } from "@/lib/focus";
 import { WorldMap, MapLegend } from "@/components/viz/WorldMap";
 import { loadColour } from "@/components/viz/exec/Topology";
 import { TradeBalance, TradeOpenness, TradeSankey } from "@/components/viz/exec/TradeEngine";
-import {
-  Action,
-  PageFrame,
-  PageLoading,
-  Region,
-} from "@/components/viz/exec/design";
+import { Action, PageFrame, PageLoading, Region } from "@/components/viz/exec/design";
 import {
   ExecCard,
   DominantCard,
@@ -41,9 +36,7 @@ export default function Trade() {
 
   const flows = useMemo(() => trade.data ?? [], [trade.data]);
 
-  const tradeEvents = (feed?.rows ?? [])
-    .filter((r) => r.channelPressure.trade > 0.3)
-    .slice(0, 8);
+  const tradeEvents = (feed?.rows ?? []).filter((r) => r.channelPressure.trade > 0.3).slice(0, 8);
 
   const mapNodes = useMemo(() => {
     const rows = trade.data ?? [];
@@ -101,210 +94,201 @@ export default function Trade() {
         </>
       }
     >
+      {/* DOMINANT VISUAL — the flow engine. */}
+      <Region width={8}>
+        <DominantCard
+          title="Reported trade flows"
+          meta={
+            trade.asOf
+              ? `UN Comtrade · ${trade.asOf} · ${flows.length} reporters`
+              : "UN Comtrade · awaiting a reading"
+          }
+          right={<BasisTag basis="observed" />}
+          bodyClassName="flex flex-col"
+        >
+          <TradeSankey flows={flows} />
+          <ProvenanceFoot
+            sourceId="comtrade"
+            retrievedAt={trade.retrievedAt}
+            freshness={freshness}
+            period={trade.asOf || undefined}
+            note="The public preview tier reports total merchandise trade per reporter with the counterparty always 'World'. It returns no bilateral corridor and no commodity split, so neither is drawn here: a bilateral chord built from a source that does not contain counterparties would be a fabrication, and this page would rather be smaller than wrong."
+          />
+        </DominantCard>
+      </Region>
 
-      
-        {/* DOMINANT VISUAL — the flow engine. */}
-        <Region width={8}>
-          <DominantCard
-            title="Reported trade flows"
+      <Region width={4} className="flex flex-col gap-3">
+        <ExecCard>
+          <TradeBalance flows={flows} />
+        </ExecCard>
+
+        <ExecCard className="flex-1">
+          <TradeOpenness />
+        </ExecCard>
+      </Region>
+
+      {/* GLOBAL TRADE MAP — where the reporting happens. */}
+      <Region width={7}>
+        <ExecCard className="h-full">
+          <SectionTitle
             meta={
-              trade.asOf
-                ? `UN Comtrade · ${trade.asOf} · ${flows.length} reporters`
-                : "UN Comtrade · awaiting a reading"
+              mapNodes.length === 0
+                ? "no mappable reporter"
+                : `${mapNodes.length} economies · total merchandise trade`
             }
             right={<BasisTag basis="observed" />}
-            bodyClassName="flex flex-col"
           >
-            <TradeSankey flows={flows} />
-            <ProvenanceFoot
-              sourceId="comtrade"
-              retrievedAt={trade.retrievedAt}
-              freshness={freshness}
-              period={trade.asOf || undefined}
-              note="The public preview tier reports total merchandise trade per reporter with the counterparty always 'World'. It returns no bilateral corridor and no commodity split, so neither is drawn here: a bilateral chord built from a source that does not contain counterparties would be a fabrication, and this page would rather be smaller than wrong."
-            />
-          </DominantCard>
-        </Region>
-
-        <Region width={4} className="flex flex-col gap-3">
-          <ExecCard>
-            <TradeBalance flows={flows} />
-          </ExecCard>
-
-          <ExecCard className="flex-1">
-            <TradeOpenness />
-          </ExecCard>
-        </Region>
-
-        {/* GLOBAL TRADE MAP — where the reporting happens. */}
-        <Region width={7}>
-          <ExecCard className="h-full">
-            <SectionTitle
-              meta={
-                mapNodes.length === 0
-                  ? "no mappable reporter"
-                  : `${mapNodes.length} economies · total merchandise trade`
-              }
-              right={<BasisTag basis="observed" />}
-            >
-              Trade map
-            </SectionTitle>
-            {mapNodes.length === 0 ? (
-              <div className="px-3 py-6">
-                <p className="exec-label text-[var(--exec-ink)]">
-                  NO VERIFIED GEOGRAPHIC DATA AVAILABLE
-                </p>
-                <p className="mt-1.5 max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-                  {"No reporter returned a total for a place GlobalMatrix can plot. Nothing is drawn rather than substituting an estimate."}
-                </p>
-              </div>
-            ) : (
-              <WorldMap
-                nodes={mapNodes}
-                height={380}
-                onSelect={(id) => toggle({ kind: "node", id })}
-              />
-            )}
-            <div className="border-t border-[var(--exec-hairline)]">
-              <MapLegend />
+            Trade map
+          </SectionTitle>
+          {mapNodes.length === 0 ? (
+            <div className="px-3 py-6">
+              <p className="exec-label text-[var(--exec-ink)]">
+                NO VERIFIED GEOGRAPHIC DATA AVAILABLE
+              </p>
+              <p className="mt-1.5 max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
+                {
+                  "No reporter returned a total for a place GlobalMatrix can plot. Nothing is drawn rather than substituting an estimate."
+                }
+              </p>
             </div>
-            <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-              Marker size and shading are each reporter&apos;s own total
-              merchandise trade. No arcs are drawn between economies: this tier
-              has no counterparty detail, and an arc would imply a shipping lane
-              the data does not contain.
-            </p>
-          </ExecCard>
-        </Region>
-
-        {/* The ranking, in full, so the Sankey is auditable against it. */}
-        <Region width={5}>
-          <ExecCard className="h-full">
-            <SectionTitle meta="descending by total" right={<BasisTag basis="observed" />}>
-              Reporter ledger
-            </SectionTitle>
-            {flows.length === 0 ? (
-              <p className="px-3 py-6 text-[13px] text-[var(--exec-ink-dim)]">
-                No reported values stored.
-              </p>
-            ) : (
-              <div className="max-h-[19rem] overflow-x-auto overflow-y-auto">
-                <table className="w-full text-left">
-                  <thead className="sticky top-0 bg-[var(--exec-base)]">
-                    <tr className="border-b border-[var(--exec-hairline)]">
-                      {["Reporter", "Exports", "Imports", "Balance"].map((h, i) => (
-                        <th
-                          key={h}
-                          className={`exec-label px-3 py-1.5 ${i === 0 ? "" : "text-right"}`}
-                        >
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[...flows]
-                      .sort(
-                        (a, b) =>
-                          b.exportsUsd + b.importsUsd - (a.exportsUsd + a.importsUsd),
-                      )
-                      .map((f) => {
-                        const balance = f.exportsUsd - f.importsUsd;
-                        return (
-                          <tr
-                            key={f.key}
-                            onClick={() => toggle({ kind: "node", id: f.reporter })}
-                            className={`cursor-pointer border-b border-[var(--exec-hairline)] transition-colors hover:bg-[var(--exec-surface-strong)] ${
-                              isFocused("node", f.reporter) ? "bg-[var(--exec-surface-strong)]" : ""
-                            }`}
-                          >
-                            <td className="px-3 py-1.5 text-[13px] text-[var(--exec-ink)]">
-                              {getNode(f.reporter).label}
-                            </td>
-                            <td className="exec-num px-3 py-1.5 text-right text-[12px] whitespace-nowrap">
-                              {compact(f.exportsUsd)}
-                            </td>
-                            <td className="exec-num px-3 py-1.5 text-right text-[12px] whitespace-nowrap">
-                              {compact(f.importsUsd)}
-                            </td>
-                            <td
-                              className="exec-num px-3 py-1.5 text-right text-[12px] font-semibold"
-                              style={{
-                                color:
-                                  balance >= 0
-                                    ? "var(--exec-emerald)"
-                                    : "var(--exec-crimson)",
-                              }}
-                            >
-                              {balance >= 0 ? "+" : "−"}
-                              {compact(balance)}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            <ProvenanceFoot
-              sourceId="comtrade"
-              retrievedAt={trade.retrievedAt}
-              freshness={freshness}
-              period={trade.asOf || undefined}
+          ) : (
+            <WorldMap
+              nodes={mapNodes}
+              height={380}
+              onSelect={(id) => toggle({ kind: "node", id })}
             />
-          </ExecCard>
-        </Region>
+          )}
+          <div className="border-t border-[var(--exec-hairline)]">
+            <MapLegend />
+          </div>
+          <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
+            Marker size and shading are each reporter&apos;s own total merchandise trade. No arcs
+            are drawn between economies: this tier has no counterparty detail, and an arc would
+            imply a shipping lane the data does not contain.
+          </p>
+        </ExecCard>
+      </Region>
 
-        {/* Trade-channel events. Kept last and visibly separate. */}
-        <Region width={12}>
-          <ExecCard>
-            <SectionTitle
-              meta="MODEL OUTPUT · not a reported policy change"
-              right={<BasisTag basis="scenario" />}
-            >
-              Trade-channel events
-            </SectionTitle>
-            {tradeEvents.length === 0 ? (
-              <p className="px-3 py-4 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-                No event in the current corpus carries material pressure on the
-                trade channel. No tariff, quota or sanctions registry is
-                connected, so no policy change is asserted here in either
-                direction.
-              </p>
-            ) : (
-              <ul className="grid grid-cols-1 gap-px md:grid-cols-2 xl:grid-cols-4">
-                {tradeEvents.map((e) => (
-                  <li key={e.id}>
-                    <button
-                      type="button"
-                      onClick={() => toggle({ kind: "event", id: e.id })}
-                      className="flex h-full w-full flex-col gap-1 px-3 py-2 text-left transition-colors hover:bg-[var(--exec-surface-strong)]"
-                    >
-                      <span className="flex items-baseline justify-between gap-2">
-                        <span className="exec-label">
-                          {CHANNEL_LABEL.trade} {(e.channelPressure.trade * 100).toFixed(0)}%
-                        </span>
-                        <span
-                          className="exec-num text-[12px] font-semibold"
-                          style={{ color: loadColour(e.score30 / 100) }}
+      {/* The ranking, in full, so the Sankey is auditable against it. */}
+      <Region width={5}>
+        <ExecCard className="h-full">
+          <SectionTitle meta="descending by total" right={<BasisTag basis="observed" />}>
+            Reporter ledger
+          </SectionTitle>
+          {flows.length === 0 ? (
+            <p className="px-3 py-6 text-[13px] text-[var(--exec-ink-dim)]">
+              No reported values stored.
+            </p>
+          ) : (
+            <div className="max-h-[19rem] overflow-x-auto overflow-y-auto">
+              <table className="w-full text-left">
+                <thead className="sticky top-0 bg-[var(--exec-base)]">
+                  <tr className="border-b border-[var(--exec-hairline)]">
+                    {["Reporter", "Exports", "Imports", "Balance"].map((h, i) => (
+                      <th
+                        key={h}
+                        className={`exec-label px-3 py-1.5 ${i === 0 ? "" : "text-right"}`}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...flows]
+                    .sort((a, b) => b.exportsUsd + b.importsUsd - (a.exportsUsd + a.importsUsd))
+                    .map((f) => {
+                      const balance = f.exportsUsd - f.importsUsd;
+                      return (
+                        <tr
+                          key={f.key}
+                          onClick={() => toggle({ kind: "node", id: f.reporter })}
+                          className={`cursor-pointer border-b border-[var(--exec-hairline)] transition-colors hover:bg-[var(--exec-surface-strong)] ${
+                            isFocused("node", f.reporter) ? "bg-[var(--exec-surface-strong)]" : ""
+                          }`}
                         >
-                          {e.score30.toFixed(0)}
-                        </span>
+                          <td className="px-3 py-1.5 text-[13px] text-[var(--exec-ink)]">
+                            {getNode(f.reporter).label}
+                          </td>
+                          <td className="exec-num px-3 py-1.5 text-right text-[12px] whitespace-nowrap">
+                            {compact(f.exportsUsd)}
+                          </td>
+                          <td className="exec-num px-3 py-1.5 text-right text-[12px] whitespace-nowrap">
+                            {compact(f.importsUsd)}
+                          </td>
+                          <td
+                            className="exec-num px-3 py-1.5 text-right text-[12px] font-semibold"
+                            style={{
+                              color: balance >= 0 ? "var(--exec-emerald)" : "var(--exec-crimson)",
+                            }}
+                          >
+                            {balance >= 0 ? "+" : "−"}
+                            {compact(balance)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          )}
+          <ProvenanceFoot
+            sourceId="comtrade"
+            retrievedAt={trade.retrievedAt}
+            freshness={freshness}
+            period={trade.asOf || undefined}
+          />
+        </ExecCard>
+      </Region>
+
+      {/* Trade-channel events. Kept last and visibly separate. */}
+      <Region width={12}>
+        <ExecCard>
+          <SectionTitle
+            meta="MODEL OUTPUT · not a reported policy change"
+            right={<BasisTag basis="scenario" />}
+          >
+            Trade-channel events
+          </SectionTitle>
+          {tradeEvents.length === 0 ? (
+            <p className="px-3 py-4 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
+              No event in the current corpus carries material pressure on the trade channel. No
+              tariff, quota or sanctions registry is connected, so no policy change is asserted here
+              in either direction.
+            </p>
+          ) : (
+            <ul className="grid grid-cols-1 gap-px md:grid-cols-2 xl:grid-cols-4">
+              {tradeEvents.map((e) => (
+                <li key={e.id}>
+                  <button
+                    type="button"
+                    onClick={() => toggle({ kind: "event", id: e.id })}
+                    className="flex h-full w-full flex-col gap-1 px-3 py-2 text-left transition-colors hover:bg-[var(--exec-surface-strong)]"
+                  >
+                    <span className="flex items-baseline justify-between gap-2">
+                      <span className="exec-label">
+                        {CHANNEL_LABEL.trade} {(e.channelPressure.trade * 100).toFixed(0)}%
                       </span>
-                      <span className="line-clamp-2 text-[12px] leading-snug text-[var(--exec-ink)]">
-                        {e.title}
+                      <span
+                        className="exec-num text-[12px] font-semibold"
+                        style={{ color: loadColour(e.score30 / 100) }}
+                      >
+                        {e.score30.toFixed(0)}
                       </span>
-                      <span className="exec-num mt-auto text-[12px] text-[var(--exec-ink-dim)]">
-                        {e.detectedAt} · 80% {e.low30.toFixed(0)}–{e.high30.toFixed(0)}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </ExecCard>
-        </Region>
-      
+                    </span>
+                    <span className="line-clamp-2 text-[12px] leading-snug text-[var(--exec-ink)]">
+                      {e.title}
+                    </span>
+                    <span className="exec-num mt-auto text-[12px] text-[var(--exec-ink-dim)]">
+                      {e.detectedAt} · 80% {e.low30.toFixed(0)}–{e.high30.toFixed(0)}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </ExecCard>
+      </Region>
     </PageFrame>
   );
 }

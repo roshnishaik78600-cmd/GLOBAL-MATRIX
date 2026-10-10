@@ -29,7 +29,10 @@ function Badge({
   return (
     <span className="glass flex items-center gap-2 px-2.5 py-1.5" title={title}>
       <span className="exec-label whitespace-nowrap">{label}</span>
-      <span className="exec-num text-[12px] font-bold whitespace-nowrap" style={accent ? { color: accent } : undefined}>
+      <span
+        className="exec-num text-[12px] font-bold whitespace-nowrap"
+        style={accent ? { color: accent } : undefined}
+      >
         {value}
       </span>
       {dot ? (
@@ -120,7 +123,11 @@ export function ExecFilters({
       </button>
 
       <div className="flex flex-wrap items-center gap-1">
-        <FilterChip active={region === null} onClick={() => onRegion(null)} icon={<Globe2 className="size-3" />}>
+        <FilterChip
+          active={region === null}
+          onClick={() => onRegion(null)}
+          icon={<Globe2 className="size-3" />}
+        >
           All regions
         </FilterChip>
         {regions.map((r) => (
@@ -236,10 +243,7 @@ export function ExecIconLink({
   icon: React.ReactNode;
 }) {
   return (
-    <Link
-      to={to}
-      className="glass glass-hover flex items-center gap-2 px-2.5 py-1.5"
-    >
+    <Link to={to} className="glass glass-hover flex items-center gap-2 px-2.5 py-1.5">
       <span className="text-[var(--exec-ink-dim)]">{icon}</span>
       <span className="exec-label">{label}</span>
     </Link>

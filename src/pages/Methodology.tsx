@@ -78,9 +78,7 @@ export default function Methodology() {
               Globalmatrix
             </span>
           </Link>
-          <span className="exec-label ml-auto text-[var(--exec-ink-dim)]">
-            Methodology
-          </span>
+          <span className="exec-label ml-auto text-[var(--exec-ink-dim)]">Methodology</span>
           <Link
             to="/"
             className="inline-flex items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3.5 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
@@ -101,9 +99,9 @@ export default function Methodology() {
             A model you can argue with.
           </h1>
           <p className="t-body mt-3 max-w-2xl text-[var(--exec-ink-dim)]">
-            Five stages take a published dataset to a number you can act on.
-            Each is a different kind of evidence with a different way of being
-            wrong, and each one is labelled wherever it appears on screen.
+            Five stages take a published dataset to a number you can act on. Each is a different
+            kind of evidence with a different way of being wrong, and each one is labelled wherever
+            it appears on screen.
           </p>
         </div>
       </header>
@@ -125,10 +123,7 @@ export default function Methodology() {
                 className="card relative flex min-w-0 flex-col gap-2 p-4"
               >
                 {i < STAGES.length - 1 ? (
-                  <span
-                    aria-hidden
-                    className="absolute top-8 -right-4 hidden h-px w-4 xl:block"
-                  >
+                  <span aria-hidden className="absolute top-8 -right-4 hidden h-px w-4 xl:block">
                     <span className="flow-arc block h-px w-full bg-[var(--exec-violet)] opacity-70" />
                   </span>
                 ) : null}
@@ -219,26 +214,20 @@ export default function Methodology() {
               reader who audits the method should find the gaps in the method. */}
           <div className="card flex min-w-0 flex-col">
             <div className="border-b border-[var(--exec-hairline)] px-4 py-3">
-              <h2 className="t-card text-[var(--exec-ink)]">
-                What GlobalMatrix does not know
-              </h2>
+              <h2 className="t-card text-[var(--exec-ink)]">What GlobalMatrix does not know</h2>
             </div>
             <div className="flex flex-col gap-3 p-4">
               <p className="max-w-3xl text-[14px] leading-relaxed text-[var(--exec-ink-dim)]">
-                No IMF data, company filings, commodity prices, port throughput,
-                policy registry, bilateral trade corridors or price feeds are
-                connected in this build. Where a surface depends on one of those
-                it renders an explicit empty state instead of a
+                No IMF data, company filings, commodity prices, port throughput, policy registry,
+                bilateral trade corridors or price feeds are connected in this build. Where a
+                surface depends on one of those it renders an explicit empty state instead of a
                 plausible-looking stand-in.
               </p>
               <p className="max-w-3xl text-[14px] leading-relaxed text-[var(--exec-ink-dim)]">
-                The event corpus behind the model is a synthetic, internally
-                consistent scenario set — not a newswire. It is labelled{" "}
-                <span className="font-semibold text-[var(--exec-amber)]">
-                  SCENARIO
-                </span>{" "}
-                everywhere it appears so it is never mistaken for something that
-                happened.
+                The event corpus behind the model is a synthetic, internally consistent scenario set
+                — not a newswire. It is labelled{" "}
+                <span className="font-semibold text-[var(--exec-amber)]">SCENARIO</span> everywhere
+                it appears so it is never mistaken for something that happened.
               </p>
             </div>
           </div>
@@ -246,9 +235,7 @@ export default function Methodology() {
           {/* ------------------------------------------------------------ SOURCES */}
           <div>
             <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-              <h2 className="t-section text-[var(--exec-ink)]">
-                Verified sources
-              </h2>
+              <h2 className="t-section text-[var(--exec-ink)]">Verified sources</h2>
               <Link
                 to="/app/data"
                 className="text-[13px] text-[var(--exec-cyan)] transition-opacity hover:opacity-80"
@@ -259,18 +246,13 @@ export default function Methodology() {
             <ul className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {SOURCE_LIST.map((s) => (
                 <li key={s.id} className="card flex flex-col gap-2 p-4">
-                  <p className="text-[15px] font-semibold text-[var(--exec-ink)]">
-                    {s.label}
-                  </p>
-                  <p className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
-                    {s.publisher}
-                  </p>
+                  <p className="text-[15px] font-semibold text-[var(--exec-ink)]">{s.label}</p>
+                  <p className="exec-num text-[12px] text-[var(--exec-ink-dim)]">{s.publisher}</p>
                   <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
                     {s.covers}
                   </p>
                   <p className="mt-auto border-t border-[var(--exec-hairline)] pt-3 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-                    <span className="text-[var(--exec-ink-dim)]">Limits —</span>{" "}
-                    {s.limits}
+                    <span className="text-[var(--exec-ink-dim)]">Limits —</span> {s.limits}
                   </p>
                 </li>
               ))}
@@ -302,9 +284,7 @@ export default function Methodology() {
 
       <footer className="border-t border-[var(--exec-hairline)]">
         <div className="gm-width flex flex-wrap items-center justify-between gap-3 px-4 py-6 lg:px-8">
-          <span className="exec-label text-[var(--exec-ink-dim)]">
-            GlobalMatrix · methodology
-          </span>
+          <span className="exec-label text-[var(--exec-ink-dim)]">GlobalMatrix · methodology</span>
           <div className="flex flex-wrap items-center gap-4">
             <Link
               to="/app/data"
@@ -312,9 +292,7 @@ export default function Methodology() {
             >
               Source register
             </Link>
-            <span className="exec-label text-[var(--exec-ink-dim)]">
-              {CORPUS_LABEL}
-            </span>
+            <span className="exec-label text-[var(--exec-ink-dim)]">{CORPUS_LABEL}</span>
           </div>
         </div>
       </footer>

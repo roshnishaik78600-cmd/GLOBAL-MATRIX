@@ -30,12 +30,8 @@ export default function Industries() {
   }
 
   const { industries: allIndustries, watchlistSize } = data;
-  const industries = watchedOnly
-    ? allIndustries.filter((i) => i.watched)
-    : allIndustries;
-  const mostConcentrated = [...allIndustries].sort(
-    (a, b) => b.concentration - a.concentration,
-  )[0];
+  const industries = watchedOnly ? allIndustries.filter((i) => i.watched) : allIndustries;
+  const mostConcentrated = [...allIndustries].sort((a, b) => b.concentration - a.concentration)[0];
   const leastSubstitutable = [...allIndustries].sort(
     (a, b) => b.substitutionMonths - a.substitutionMonths,
   )[0];
@@ -46,7 +42,6 @@ export default function Industries() {
       title="Industries"
       lede="Sector concentration, substitution lead time and the events that reach each one."
     >
-
       <div className="border-b border-rule bg-card">
         <dl className="grid grid-cols-2 divide-x divide-rule px-4 py-3 lg:grid-cols-4 lg:px-6">
           <Stat
@@ -57,24 +52,20 @@ export default function Industries() {
           <Stat
             caption="Most exposed sector"
             value={allIndustries[0]?.id ?? "—"}
-            note={allIndustries[0] ? `${allIndustries[0].label} · ${pct(allIndustries[0].load)}` : ""}
+            note={
+              allIndustries[0] ? `${allIndustries[0].label} · ${pct(allIndustries[0].load)}` : ""
+            }
           />
           <Stat
             caption="Most concentrated"
             value={mostConcentrated ? pct(mostConcentrated.concentration) : "—"}
-            note={
-              mostConcentrated
-                ? `Largest producer share in ${mostConcentrated.label}`
-                : ""
-            }
+            note={mostConcentrated ? `Largest producer share in ${mostConcentrated.label}` : ""}
           />
           <Stat
             caption="Longest substitution lead"
             value={leastSubstitutable ? `${leastSubstitutable.substitutionMonths}m` : "—"}
             note={
-              leastSubstitutable
-                ? `${leastSubstitutable.label} — the sector's real constraint`
-                : ""
+              leastSubstitutable ? `${leastSubstitutable.label} — the sector's real constraint` : ""
             }
           />
         </dl>
@@ -85,41 +76,35 @@ export default function Industries() {
           <span className="label text-muted-foreground">
             Showing {industries.length} of {allIndustries.length} sectors
           </span>
-          <FilterToggle
-            active={watchedOnly}
-            onClick={() => setWatchedOnly((v) => !v)}
-          >
+          <FilterToggle active={watchedOnly} onClick={() => setWatchedOnly((v) => !v)}>
             Watchlist ({watchlistSize})
           </FilterToggle>
         </div>
       </div>
 
       <Panel
-          caption={`Sectors · ${industries.length}`}
-          aside="Ranked by live exposure to the current corpus"
-        >
-          {industries.length === 0 ? (
-            // Not an absence of data: every sector is still in the corpus, the
-            // filter is simply excluding all of them. Say that, and offer the way
-            // back, rather than showing an unexplained blank list.
-            <div className="flex flex-col items-start gap-2 px-4 py-8">
-              <p className="label text-muted-foreground">
-                Nothing on this watchlist yet
-              </p>
-              <p className="max-w-prose text-[13px] leading-relaxed text-muted-foreground">
-                None of the {allIndustries.length} modelled sectors is saved to
-                your watchlist, so this filter has nothing to show. All of them
-                are still listed without it.
-              </p>
-              <button
-                type="button"
-                onClick={() => setWatchedOnly(false)}
-                className="exec-label mt-1 border border-rule px-2 py-1 transition-colors hover:border-foreground/30"
-              >
-                Show all {allIndustries.length} sectors
-              </button>
-            </div>
-          ) : (
+        caption={`Sectors · ${industries.length}`}
+        aside="Ranked by live exposure to the current corpus"
+      >
+        {industries.length === 0 ? (
+          // Not an absence of data: every sector is still in the corpus, the
+          // filter is simply excluding all of them. Say that, and offer the way
+          // back, rather than showing an unexplained blank list.
+          <div className="flex flex-col items-start gap-2 px-4 py-8">
+            <p className="label text-muted-foreground">Nothing on this watchlist yet</p>
+            <p className="max-w-prose text-[13px] leading-relaxed text-muted-foreground">
+              None of the {allIndustries.length} modelled sectors is saved to your watchlist, so
+              this filter has nothing to show. All of them are still listed without it.
+            </p>
+            <button
+              type="button"
+              onClick={() => setWatchedOnly(false)}
+              className="exec-label mt-1 border border-rule px-2 py-1 transition-colors hover:border-foreground/30"
+            >
+              Show all {allIndustries.length} sectors
+            </button>
+          </div>
+        ) : (
           <ul className="divide-y divide-rule">
             {industries.map((row, i) => (
               <motion.li
@@ -164,9 +149,12 @@ export default function Industries() {
                       {pct(row.load)}
                     </p>
                     <ChannelBars
-                      pressure={Object.fromEntries(
-                        row.byChannel.map((c) => [c.channel, c.load]),
-                      ) as Record<Channel, number>}
+                      pressure={
+                        Object.fromEntries(row.byChannel.map((c) => [c.channel, c.load])) as Record<
+                          Channel,
+                          number
+                        >
+                      }
                       className="mt-2.5"
                     />
                     <p className="mt-1 text-[12px] text-muted-foreground">
@@ -181,9 +169,7 @@ export default function Industries() {
                           <span className="label text-[12px] text-muted-foreground">
                             Concentration
                           </span>
-                          <span className="num text-[12px]">
-                            {pct(row.concentration)}
-                          </span>
+                          <span className="num text-[12px]">{pct(row.concentration)}</span>
                         </div>
                         <Meter
                           value={row.concentration}
@@ -199,9 +185,7 @@ export default function Industries() {
                           <span className="label text-[12px] text-muted-foreground">
                             Structural fragility
                           </span>
-                          <span className="num text-[12px]">
-                            {pct(row.fragility)}
-                          </span>
+                          <span className="num text-[12px]">{pct(row.fragility)}</span>
                         </div>
                         <Meter value={row.fragility} tone="ink" className="mt-1.5" />
                         <p className="mt-1 text-[12px] text-muted-foreground">
@@ -220,14 +204,11 @@ export default function Industries() {
                         </p>
                         <p className="num mt-1 text-[12px] text-muted-foreground">
                           {CHANNEL_LABEL[row.topEvent.channel]} ·{" "}
-                          {row.topEvent.contribution.toFixed(3)} ·{" "}
-                          {row.eventCount} events
+                          {row.topEvent.contribution.toFixed(3)} · {row.eventCount} events
                         </p>
                       </>
                     ) : (
-                      <p className="mt-1 text-[12px] text-muted-foreground">
-                        None
-                      </p>
+                      <p className="mt-1 text-[12px] text-muted-foreground">None</p>
                     )}
                   </div>
 
@@ -243,49 +224,35 @@ export default function Industries() {
                   </div>
                 </div>
 
-                  <button
-                    type="button"
-                    aria-label={
-                      row.watched ? "Remove from watchlist" : "Add to watchlist"
-                    }
-                    onClick={() =>
-                      toggleWatch(`SECTOR:${row.id}`)
-                    }
-                    className="absolute top-4 right-3 p-1.5 text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {row.watched ? (
-                      <BookmarkCheck className="size-4 text-signal" />
-                    ) : (
-                      <Bookmark className="size-4" />
-                    )}
-                  </button>
-                </motion.li>
+                <button
+                  type="button"
+                  aria-label={row.watched ? "Remove from watchlist" : "Add to watchlist"}
+                  onClick={() => toggleWatch(`SECTOR:${row.id}`)}
+                  className="absolute top-4 right-3 p-1.5 text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {row.watched ? (
+                    <BookmarkCheck className="size-4 text-signal" />
+                  ) : (
+                    <Bookmark className="size-4" />
+                  )}
+                </button>
+              </motion.li>
             ))}
           </ul>
-          )}
-        </Panel>
-  </PageFrame>
+        )}
+      </Panel>
+    </PageFrame>
   );
 }
 
-function Stat({
-  caption,
-  value,
-  note,
-}: {
-  caption: string;
-  value: string;
-  note: string;
-}) {
+function Stat({ caption, value, note }: { caption: string; value: string; note: string }) {
   return (
     <div className="border-b border-rule py-5 last:border-b-0 lg:border-b-0 lg:px-6 lg:first:pl-0">
       <dt className="label text-muted-foreground">{caption}</dt>
       <dd className="exec-num mt-2 text-[1.5rem] leading-none font-bold text-[var(--exec-ink)]">
         {value}
       </dd>
-      <dd className="mt-1.5 text-[12px] leading-snug text-muted-foreground">
-        {note}
-      </dd>
+      <dd className="mt-1.5 text-[12px] leading-snug text-muted-foreground">{note}</dd>
     </div>
   );
 }

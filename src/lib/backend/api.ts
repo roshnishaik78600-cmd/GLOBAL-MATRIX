@@ -71,7 +71,8 @@ function topNodesOf(a: EventAssessment, limit: number) {
     for (const exposure of pathway.exposures) {
       byNode.set(
         exposure.nodeId,
-        (byNode.get(exposure.nodeId) ?? 0) + exposure.impact * pathway.magnitude * pathway.confidence,
+        (byNode.get(exposure.nodeId) ?? 0) +
+          exposure.impact * pathway.magnitude * pathway.confidence,
       );
     }
   }
@@ -93,13 +94,11 @@ const watchedEvent = (watched: Set<string>, id: string) =>
 /* intel.*                                                              */
 /* ------------------------------------------------------------------ */
 
-async function detectionFeed(args: {
-  channel?: Channel;
-  stage?: Stage;
-  watchlistOnly?: boolean;
-}) {
+async function detectionFeed(args: { channel?: Channel; stage?: Stage; watchlistOnly?: boolean }) {
   const watched = await watchedKeys();
-  const eventKeyCount = [...watched].filter((k) => k.startsWith("EVENT:") || !k.includes(":")).length;
+  const eventKeyCount = [...watched].filter(
+    (k) => k.startsWith("EVENT:") || !k.includes(":"),
+  ).length;
 
   const all = allAssessments(SCENARIOS);
   const rows = all
@@ -147,7 +146,13 @@ async function eventDetail(args: { eventId: string }) {
   const userId = await currentUserId();
   let watched = false;
   let annotations: { id: string; body: string; createdAt: number }[] = [];
-  let brief: { thesis: string; channels: string[]; caveats: string[]; model: string; createdAt: number } | null = null;
+  let brief: {
+    thesis: string;
+    channels: string[];
+    caveats: string[];
+    model: string;
+    createdAt: number;
+  } | null = null;
 
   if (userId) {
     const { data: w } = await supabase
@@ -162,7 +167,11 @@ async function eventDetail(args: { eventId: string }) {
       .select("*")
       .eq("user_id", userId)
       .eq("event_id", args.eventId);
-    annotations = (a ?? []).map((r) => ({ id: r.id, body: r.body, createdAt: Date.parse(r.created_at) }));
+    annotations = (a ?? []).map((r) => ({
+      id: r.id,
+      body: r.body,
+      createdAt: Date.parse(r.created_at),
+    }));
 
     const { data: b } = await supabase
       .from("briefs")
@@ -171,7 +180,13 @@ async function eventDetail(args: { eventId: string }) {
       .eq("event_id", args.eventId)
       .maybeSingle();
     brief = b
-      ? { thesis: b.thesis, channels: b.channels, caveats: b.caveats, model: b.model, createdAt: Date.parse(b.created_at) }
+      ? {
+          thesis: b.thesis,
+          channels: b.channels,
+          caveats: b.caveats,
+          model: b.model,
+          createdAt: Date.parse(b.created_at),
+        }
       : null;
   }
 
@@ -223,7 +238,8 @@ async function signalMatrix() {
   const countries = countryIndex(all);
   const corridors = corridorIndex(all).filter((c) => c.kind !== "institution");
   const profiles = new Map<string, ExposureProfile>();
-  for (const row of [...countries, ...corridors]) profiles.set(row.nodeId, nodeExposure(all, row.nodeId));
+  for (const row of [...countries, ...corridors])
+    profiles.set(row.nodeId, nodeExposure(all, row.nodeId));
 
   const SUPPLY_CEILING = 0.5;
   const rows = countries.map((country) => {
@@ -276,7 +292,11 @@ async function eventChain(args: { eventId: string }) {
       )
       .sort((a, b) => b.impact * b.confidence - a.impact * a.confidence);
 
-  const everyNode = byChannel("trade").concat(byChannel("energy"), byChannel("finance"), byChannel("diplomatic"));
+  const everyNode = byChannel("trade").concat(
+    byChannel("energy"),
+    byChannel("finance"),
+    byChannel("diplomatic"),
+  );
 
   const countries = everyNode
     .reduce<Array<{ nodeId: string; label: string; short: string; load: number }>>((acc, row) => {
@@ -284,7 +304,13 @@ async function eventChain(args: { eventId: string }) {
       if (kind === "chokepoint" || kind === "corridor" || kind === "institution") return acc;
       const found = acc.find((a) => a.nodeId === row.nodeId);
       if (found) found.load += row.impact * row.confidence;
-      else acc.push({ nodeId: row.nodeId, label: row.label, short: row.short, load: row.impact * row.confidence });
+      else
+        acc.push({
+          nodeId: row.nodeId,
+          label: row.label,
+          short: row.short,
+          load: row.impact * row.confidence,
+        });
       return acc;
     }, [])
     .sort((a, b) => b.load - a.load);
@@ -300,10 +326,16 @@ async function eventChain(args: { eventId: string }) {
     })
     .sort((a, b) => b.impact * b.confidence - a.impact * a.confidence)
     .slice(0, 8)
-    .map((c) => ({ ...c, kind: getNode(c.nodeId).kind, region: getNode(c.nodeId).region, criticality: getNode(c.nodeId).criticality }));
+    .map((c) => ({
+      ...c,
+      kind: getNode(c.nodeId).kind,
+      region: getNode(c.nodeId).region,
+      criticality: getNode(c.nodeId).criticality,
+    }));
 
   const infrastructureProfiles = new Map<string, ExposureProfile>();
-  for (const node of infrastructure) infrastructureProfiles.set(node.nodeId, nodeExposure(all, node.nodeId));
+  for (const node of infrastructure)
+    infrastructureProfiles.set(node.nodeId, nodeExposure(all, node.nodeId));
   const pressByNode = new Map<string, number>();
   for (const pathway of assessment.scenario.pathways) {
     for (const exposure of pathway.exposures) {
@@ -311,7 +343,8 @@ async function eventChain(args: { eventId: string }) {
       if (node.kind !== "chokepoint" && node.kind !== "corridor") continue;
       pressByNode.set(
         exposure.nodeId,
-        (pressByNode.get(exposure.nodeId) ?? 0) + exposure.impact * pathway.magnitude * pathway.confidence,
+        (pressByNode.get(exposure.nodeId) ?? 0) +
+          exposure.impact * pathway.magnitude * pathway.confidence,
       );
     }
   }
@@ -384,8 +417,10 @@ async function eventChain(args: { eventId: string }) {
 async function countryTrends() {
   const all = allAssessments(SCENARIOS);
   let latest = "";
-  for (const a of all) for (const s of a.scenario.signals) if (s.observedAt > latest) latest = s.observedAt;
-  if (latest === "") return { days: [], latest: "", nodes: [] as { nodeId: string; values: number[] }[] };
+  for (const a of all)
+    for (const s of a.scenario.signals) if (s.observedAt > latest) latest = s.observedAt;
+  if (latest === "")
+    return { days: [], latest: "", nodes: [] as { nodeId: string; values: number[] }[] };
 
   const dayMs = 24 * 60 * 60 * 1000;
   const end = Date.parse(latest);
@@ -414,19 +449,29 @@ async function countryTrends() {
     }
   }
 
-  return { days, latest, nodes: [...byNode.entries()].map(([nodeId, values]) => ({ nodeId, values })) };
+  return {
+    days,
+    latest,
+    nodes: [...byNode.entries()].map(([nodeId, values]) => ({ nodeId, values })),
+  };
 }
 
 async function countryProfile(args: { nodeId: string }) {
   if (!isKnownNode(args.nodeId)) return null;
   const watched = await watchedKeys();
-  return { ...countryProfilePayload(allAssessments(SCENARIOS), args.nodeId), watched: watched.has(`NODE:${args.nodeId}`) };
+  return {
+    ...countryProfilePayload(allAssessments(SCENARIOS), args.nodeId),
+    watched: watched.has(`NODE:${args.nodeId}`),
+  };
 }
 
 async function industryDirectory() {
   const watched = await watchedKeys();
   return {
-    industries: industryIndex(allAssessments(SCENARIOS)).map((r) => ({ ...r, watched: watched.has(`SECTOR:${r.id}`) })),
+    industries: industryIndex(allAssessments(SCENARIOS)).map((r) => ({
+      ...r,
+      watched: watched.has(`SECTOR:${r.id}`),
+    })),
     watchlistSize: [...watched].filter((k) => k.startsWith("SECTOR:")).length,
   };
 }
@@ -464,7 +509,8 @@ async function overview() {
     .slice(0, 14);
 
   const profiles = new Map<string, ExposureProfile>();
-  for (const row of [...countries, ...corridors]) profiles.set(row.nodeId, nodeExposure(all, row.nodeId));
+  for (const row of [...countries, ...corridors])
+    profiles.set(row.nodeId, nodeExposure(all, row.nodeId));
   const flows: { from: string; to: string; weight: number }[] = [];
   for (const corridor of corridors) {
     if (corridor.kind === "institution") continue;
@@ -481,7 +527,11 @@ async function overview() {
 
   return {
     mapNodes: [
-      ...countries.map((r) => ({ ...r, kind: "economy" as const, criticality: getNode(r.nodeId).criticality })),
+      ...countries.map((r) => ({
+        ...r,
+        kind: "economy" as const,
+        criticality: getNode(r.nodeId).criticality,
+      })),
       ...corridors,
     ].map((r) => ({
       nodeId: r.nodeId,
@@ -524,18 +574,31 @@ async function overview() {
       topNodes: topNodesOf(a, 3),
     })),
     hottestCountries: countries.slice(0, 6),
-    supplyPressure: corridors.filter((c) => c.kind === "chokepoint" || c.kind === "corridor").slice(0, 6),
+    supplyPressure: corridors
+      .filter((c) => c.kind === "chokepoint" || c.kind === "corridor")
+      .slice(0, 6),
     policyEvents: all
-      .filter((a) => a.scenario.tags.some((t) => /export control|tariff|sanction|carbon|regulation|industrial policy/i.test(t)))
+      .filter((a) =>
+        a.scenario.tags.some((t) =>
+          /export control|tariff|sanction|carbon|regulation|industrial policy/i.test(t),
+        ),
+      )
       .slice(0, 6)
-      .map((a) => ({ id: a.scenario.id, title: a.scenario.title, tags: a.scenario.tags, score: a.risk[30].score })),
+      .map((a) => ({
+        id: a.scenario.id,
+        title: a.scenario.title,
+        tags: a.scenario.tags,
+        score: a.risk[30].score,
+      })),
     hottestIndustries: industryIndex(all).slice(0, 6),
     summary: networkSummary(all),
     stats: {
       events: all.length,
       signals: all.reduce((s, a) => s + a.scenario.signals.length, 0),
       actors: new Set(all.flatMap((a) => a.scenario.actors)).size,
-      nodes: new Set(all.flatMap((a) => a.scenario.pathways.flatMap((p) => p.exposures.map((e) => e.nodeId)))).size,
+      nodes: new Set(
+        all.flatMap((a) => a.scenario.pathways.flatMap((p) => p.exposures.map((e) => e.nodeId))),
+      ).size,
     },
   };
 }
@@ -551,8 +614,18 @@ async function eventGraph(args: { eventId: string }) {
 
   for (const pathway of assessment.scenario.pathways) {
     const channelId = `ch:${pathway.channel}`;
-    nodes.push({ id: channelId, label: CHANNEL_LABEL[pathway.channel], kind: "Channel", weight: pathway.magnitude });
-    edges.push({ from: assessment.scenario.id, to: channelId, weight: pathway.magnitude, label: "propagates via" });
+    nodes.push({
+      id: channelId,
+      label: CHANNEL_LABEL[pathway.channel],
+      kind: "Channel",
+      weight: pathway.magnitude,
+    });
+    edges.push({
+      from: assessment.scenario.id,
+      to: channelId,
+      weight: pathway.magnitude,
+      label: "propagates via",
+    });
     for (const exposure of pathway.exposures) {
       nodes.push({
         id: exposure.nodeId,
@@ -560,7 +633,12 @@ async function eventGraph(args: { eventId: string }) {
         kind: getNode(exposure.nodeId).kind === "chokepoint" ? "Corridor" : "Country",
         weight: exposure.impact,
       });
-      edges.push({ from: channelId, to: exposure.nodeId, weight: exposure.impact * pathway.magnitude, label: "exposes" });
+      edges.push({
+        from: channelId,
+        to: exposure.nodeId,
+        weight: exposure.impact * pathway.magnitude,
+        label: "exposes",
+      });
     }
   }
 
@@ -579,7 +657,9 @@ async function supplyFlow(args: { industryId: string }) {
   const all = allAssessments(SCENARIOS);
   const exposure = industryExposure(all, industry);
   const weightOf = (nodeId: string) =>
-    exposure.contributions.filter((c) => c.viaNodeId === nodeId).reduce((s, c) => s + c.contribution, 0);
+    exposure.contributions
+      .filter((c) => c.viaNodeId === nodeId)
+      .reduce((s, c) => s + c.contribution, 0);
 
   const stages = [
     { id: "input", label: "Input", nodeIds: industry.inputs.map((i) => i.nodeId) },
@@ -615,7 +695,13 @@ async function scenarioMeta() {
   return {
     events: allAssessments(SCENARIOS)
       .slice(0, 12)
-      .map((a) => ({ id: a.scenario.id, reference: a.scenario.reference, title: a.scenario.title, stage: a.scenario.stage, score: a.risk[30].score })),
+      .map((a) => ({
+        id: a.scenario.id,
+        reference: a.scenario.reference,
+        title: a.scenario.title,
+        stage: a.scenario.stage,
+        score: a.risk[30].score,
+      })),
     modes: (Object.keys(SHOCK_LABEL) as (keyof typeof SHOCK_LABEL)[]).map((mode) => ({
       mode,
       label: SHOCK_LABEL[mode],
@@ -656,7 +742,9 @@ async function corpusStats() {
     }).length,
     meanScore: all.reduce((s, a) => s + a.overall, 0) / all.length,
     bands,
-    nodes: new Set(all.flatMap((a) => a.scenario.pathways.flatMap((p) => p.exposures.map((e) => e.nodeId)))).size,
+    nodes: new Set(
+      all.flatMap((a) => a.scenario.pathways.flatMap((p) => p.exposures.map((e) => e.nodeId))),
+    ).size,
   };
 }
 
@@ -666,13 +754,20 @@ async function corpusStats() {
 
 function exposedEconomies(assessments: EventAssessment[], profile: ExposureProfile) {
   const byEvent = new Map<string, number>();
-  for (const c of profile.contributions) byEvent.set(c.eventId, (byEvent.get(c.eventId) ?? 0) + c.contribution);
+  for (const c of profile.contributions)
+    byEvent.set(c.eventId, (byEvent.get(c.eventId) ?? 0) + c.contribution);
   return countryIndex(assessments)
     .map((country) => {
       const other = nodeExposure(assessments, country.nodeId);
       let shared = 0;
-      for (const c of other.contributions) shared += Math.min(c.contribution, byEvent.get(c.eventId) ?? 0);
-      return { nodeId: country.nodeId, label: country.label, load: country.load, coupling: Math.min(1, shared / COUPLING_CEILING) };
+      for (const c of other.contributions)
+        shared += Math.min(c.contribution, byEvent.get(c.eventId) ?? 0);
+      return {
+        nodeId: country.nodeId,
+        label: country.label,
+        load: country.load,
+        coupling: Math.min(1, shared / COUPLING_CEILING),
+      };
     })
     .filter((r) => r.coupling > 0.01)
     .sort((a, b) => b.coupling - a.coupling)
@@ -681,7 +776,9 @@ function exposedEconomies(assessments: EventAssessment[], profile: ExposureProfi
 
 async function chokepointBoard() {
   const all = allAssessments(SCENARIOS);
-  const corridors = corridorIndex(all).filter((c) => c.kind === "chokepoint" || c.kind === "corridor");
+  const corridors = corridorIndex(all).filter(
+    (c) => c.kind === "chokepoint" || c.kind === "corridor",
+  );
   if (corridors.length === 0) return { rows: [] };
 
   const profiles = new Map<string, ExposureProfile>();
@@ -725,7 +822,11 @@ async function chokepointBoard() {
         load: c.load,
         criticality: c.criticality,
         eventCount: c.eventCount,
-        byChannel: (c.byChannel ?? []).map((ch) => ({ channel: ch.channel, label: CHANNEL_LABEL[ch.channel], load: ch.load })),
+        byChannel: (c.byChannel ?? []).map((ch) => ({
+          channel: ch.channel,
+          label: CHANNEL_LABEL[ch.channel],
+          load: ch.load,
+        })),
         industries,
         events,
         exposed,
@@ -772,20 +873,29 @@ function tailChange(values: number[]): number {
 
 async function macroTopology(): Promise<TopologyResult> {
   const all = allAssessments(SCENARIOS);
-  const empty: TopologyResult = { days: [], latest: "", categories: [], fragility: { values: [], ceiling: 0, latest: 0, change: 0, measure: "" } };
+  const empty: TopologyResult = {
+    days: [],
+    latest: "",
+    categories: [],
+    fragility: { values: [], ceiling: 0, latest: 0, change: 0, measure: "" },
+  };
   if (all.length === 0) return empty;
 
   let latest = "";
-  for (const a of all) for (const s of a.scenario.signals) if (s.observedAt > latest) latest = s.observedAt;
+  for (const a of all)
+    for (const s of a.scenario.signals) if (s.observedAt > latest) latest = s.observedAt;
   if (latest === "") return empty;
 
   const end = Date.parse(latest);
   const days: string[] = [];
-  for (let i = WINDOW_DAYS - 1; i >= 0; i--) days.push(new Date(end - i * DAY_MS).toISOString().slice(0, 10));
+  for (let i = WINDOW_DAYS - 1; i >= 0; i--)
+    days.push(new Date(end - i * DAY_MS).toISOString().slice(0, 10));
   const slot = new Map(days.map((d, i) => [d, i]));
 
   const infrastructure = new Set(
-    corridorIndex(all).filter((c) => c.kind === "chokepoint" || c.kind === "corridor").map((c) => c.nodeId),
+    corridorIndex(all)
+      .filter((c) => c.kind === "chokepoint" || c.kind === "corridor")
+      .map((c) => c.nodeId),
   );
   const fragilityOf = new Map(countryIndex(all).map((c) => [c.nodeId, c.fragility]));
 
@@ -800,13 +910,19 @@ async function macroTopology(): Promise<TopologyResult> {
   for (const a of all) {
     const channelMass = {} as Record<Channel, number>;
     for (const channel of CHANNELS) {
-      channelMass[channel] = a.scenario.pathways.filter((p) => p.channel === channel).reduce((sum, p) => sum + p.magnitude * p.confidence, 0);
+      channelMass[channel] = a.scenario.pathways
+        .filter((p) => p.channel === channel)
+        .reduce((sum, p) => sum + p.magnitude * p.confidence, 0);
     }
 
     const nodeWeight = new Map<string, number>();
     for (const pathway of a.scenario.pathways) {
       for (const exposure of pathway.exposures) {
-        nodeWeight.set(exposure.nodeId, (nodeWeight.get(exposure.nodeId) ?? 0) + exposure.impact * pathway.magnitude * pathway.confidence);
+        nodeWeight.set(
+          exposure.nodeId,
+          (nodeWeight.get(exposure.nodeId) ?? 0) +
+            exposure.impact * pathway.magnitude * pathway.confidence,
+        );
       }
     }
     let supplyMass = 0;
@@ -834,12 +950,45 @@ async function macroTopology(): Promise<TopologyResult> {
   }
 
   const raw = [
-    { id: "trade-bottlenecks", label: "Trade bottlenecks", measure: "Corpus pathway mass on the trade channel, stamped on each day an event was observed.", values: byChannel.trade },
-    { id: "energy", label: "Energy", measure: "Corpus pathway mass on the energy channel.", values: byChannel.energy },
-    { id: "geopolitical", label: "Geopolitical stress", measure: "Corpus pathway mass on the diplomatic channel.", values: byChannel.diplomatic },
-    { id: "financial", label: "Financial stress", measure: "Corpus pathway mass on the finance channel.", values: byChannel.finance },
-    { id: "supply-chain", label: "Supply chain", measure: "Weighted exposure landing on tracked chokepoints and corridors rather than on economies.", values: supply },
-    { id: "policy", label: "Policy", measure: "Corpus events carrying a tariff, sanctions, export-control, carbon or industrial-policy tag.", values: policy },
+    {
+      id: "trade-bottlenecks",
+      label: "Trade bottlenecks",
+      measure:
+        "Corpus pathway mass on the trade channel, stamped on each day an event was observed.",
+      values: byChannel.trade,
+    },
+    {
+      id: "energy",
+      label: "Energy",
+      measure: "Corpus pathway mass on the energy channel.",
+      values: byChannel.energy,
+    },
+    {
+      id: "geopolitical",
+      label: "Geopolitical stress",
+      measure: "Corpus pathway mass on the diplomatic channel.",
+      values: byChannel.diplomatic,
+    },
+    {
+      id: "financial",
+      label: "Financial stress",
+      measure: "Corpus pathway mass on the finance channel.",
+      values: byChannel.finance,
+    },
+    {
+      id: "supply-chain",
+      label: "Supply chain",
+      measure:
+        "Weighted exposure landing on tracked chokepoints and corridors rather than on economies.",
+      values: supply,
+    },
+    {
+      id: "policy",
+      label: "Policy",
+      measure:
+        "Corpus events carrying a tariff, sanctions, export-control, carbon or industrial-policy tag.",
+      values: policy,
+    },
   ];
 
   const categories: TopologyCategory[] = raw.map((c) => {
@@ -858,7 +1007,9 @@ async function macroTopology(): Promise<TopologyResult> {
     };
   });
 
-  const dailyMean = days.map((_, i) => (fragilityMass[i] > 0 ? fragilityWeighted[i] / fragilityMass[i] : 0));
+  const dailyMean = days.map((_, i) =>
+    fragilityMass[i] > 0 ? fragilityWeighted[i] / fragilityMass[i] : 0,
+  );
   const fragilityCeiling = Math.max(...dailyMean, 0.0001);
 
   return {
@@ -870,7 +1021,8 @@ async function macroTopology(): Promise<TopologyResult> {
       ceiling: fragilityCeiling,
       latest: dailyMean.length > 0 ? dailyMean[dailyMean.length - 1] / fragilityCeiling : 0,
       change: tailChange(dailyMean.map((v) => v / fragilityCeiling)),
-      measure: "Structural fragility of tracked economies, weighted by the exposure they carry that day.",
+      measure:
+        "Structural fragility of tracked economies, weighted by the exposure they carry that day.",
     },
   };
 }
@@ -887,7 +1039,11 @@ async function toggleWatch(args: { eventId: string }) {
   const bare = eventId.startsWith("EVENT:") ? eventId.slice("EVENT:".length) : eventId;
   const forms = isEventKey ? [...new Set([eventId, bare, `EVENT:${bare}`])] : [eventId];
 
-  const { data: rows } = await supabase.from("watchlist").select("id, event_id").eq("user_id", userId).in("event_id", forms);
+  const { data: rows } = await supabase
+    .from("watchlist")
+    .select("id, event_id")
+    .eq("user_id", userId)
+    .in("event_id", forms);
   const existing = rows?.[0];
 
   if (existing) {
@@ -895,7 +1051,9 @@ async function toggleWatch(args: { eventId: string }) {
     return { watched: false };
   }
 
-  await supabase.from("watchlist").insert({ user_id: userId, event_id: isEventKey ? `EVENT:${bare}` : eventId });
+  await supabase
+    .from("watchlist")
+    .insert({ user_id: userId, event_id: isEventKey ? `EVENT:${bare}` : eventId });
   return { watched: true };
 }
 
@@ -905,14 +1063,20 @@ async function addAnnotation(args: { eventId: string; body: string }) {
   const body = args.body.trim();
   if (!body) throw new Error("Annotation cannot be empty.");
   if (body.length > 2000) throw new Error("Annotation is limited to 2000 characters.");
-  const { error } = await supabase.from("annotations").insert({ user_id: userId, event_id: eventId, body });
+  const { error } = await supabase
+    .from("annotations")
+    .insert({ user_id: userId, event_id: eventId, body });
   if (error) throw error;
   return { ok: true };
 }
 
 async function deleteAnnotation(args: { annotationId: string }) {
   const userId = await requireUserId("You must be signed in to edit annotations.");
-  const { data: row } = await supabase.from("annotations").select("user_id").eq("id", args.annotationId).maybeSingle();
+  const { data: row } = await supabase
+    .from("annotations")
+    .select("user_id")
+    .eq("id", args.annotationId)
+    .maybeSingle();
   if (!row || row.user_id !== userId) throw new Error("Not your annotation.");
   const { error } = await supabase.from("annotations").delete().eq("id", args.annotationId);
   if (error) throw error;
@@ -929,7 +1093,11 @@ async function watchlist() {
 async function annotations(args: { eventId: string }) {
   const userId = await currentUserId();
   if (!userId) return [];
-  const { data } = await supabase.from("annotations").select("*").eq("user_id", userId).eq("event_id", args.eventId);
+  const { data } = await supabase
+    .from("annotations")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("event_id", args.eventId);
   return data ?? [];
 }
 
@@ -944,15 +1112,27 @@ export interface ExposureProfileEntry {
   match: DependencyMatch | null;
 }
 
-async function listProfile(): Promise<{ signedIn: boolean; entries: ExposureProfileEntry[]; declaredCount: number }> {
+async function listProfile(): Promise<{
+  signedIn: boolean;
+  entries: ExposureProfileEntry[];
+  declaredCount: number;
+}> {
   const userId = await currentUserId();
   if (!userId) return { signedIn: false, entries: [], declaredCount: 0 };
 
-  const { data: rows, error } = await supabase.from("exposure_deps").select("*").eq("user_id", userId);
+  const { data: rows, error } = await supabase
+    .from("exposure_deps")
+    .select("*")
+    .eq("user_id", userId);
   if (error) throw error;
 
-  const declared: DeclaredDependency[] = (rows ?? []).map((r) => ({ kind: r.kind as "node" | "industry", refId: r.ref_id }));
-  const matched = new Map(matchDependencies(declared, allAssessments(SCENARIOS)).map((m) => [`${m.kind}:${m.refId}`, m]));
+  const declared: DeclaredDependency[] = (rows ?? []).map((r) => ({
+    kind: r.kind as "node" | "industry",
+    refId: r.ref_id,
+  }));
+  const matched = new Map(
+    matchDependencies(declared, allAssessments(SCENARIOS)).map((m) => [`${m.kind}:${m.refId}`, m]),
+  );
 
   const entries: ExposureProfileEntry[] = (rows ?? [])
     .map((r) => ({
@@ -969,8 +1149,10 @@ async function listProfile(): Promise<{ signedIn: boolean; entries: ExposureProf
 async function addDependency(args: { kind: "node" | "industry"; refId: string }) {
   const userId = await requireUserId("You must be signed in to save an exposure profile.");
   const refId = args.refId.trim();
-  if (!refId || refId.length > MAX_DEPENDENCY_ID) throw new Error("That is not a valid GlobalMatrix reference.");
-  if (!resolveDependency(args.kind, refId)) throw new Error("That dependency is not tracked by the model, so it cannot be saved.");
+  if (!refId || refId.length > MAX_DEPENDENCY_ID)
+    throw new Error("That is not a valid GlobalMatrix reference.");
+  if (!resolveDependency(args.kind, refId))
+    throw new Error("That dependency is not tracked by the model, so it cannot be saved.");
 
   const { data: existing } = await supabase
     .from("exposure_deps")
@@ -981,8 +1163,12 @@ async function addDependency(args: { kind: "node" | "industry"; refId: string })
     .maybeSingle();
   if (existing) return { ok: true, id: existing.id, added: false };
 
-  const { count } = await supabase.from("exposure_deps").select("id", { count: "exact", head: true }).eq("user_id", userId);
-  if ((count ?? 0) >= MAX_DEPENDENCIES) throw new Error(`An exposure profile is limited to ${MAX_DEPENDENCIES} dependencies.`);
+  const { count } = await supabase
+    .from("exposure_deps")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId);
+  if ((count ?? 0) >= MAX_DEPENDENCIES)
+    throw new Error(`An exposure profile is limited to ${MAX_DEPENDENCIES} dependencies.`);
 
   const { data: inserted, error } = await supabase
     .from("exposure_deps")
@@ -995,7 +1181,11 @@ async function addDependency(args: { kind: "node" | "industry"; refId: string })
 
 async function removeDependency(args: { id: string }) {
   const userId = await requireUserId("You must be signed in to edit your profile.");
-  const { data: row } = await supabase.from("exposure_deps").select("user_id").eq("id", args.id).maybeSingle();
+  const { data: row } = await supabase
+    .from("exposure_deps")
+    .select("user_id")
+    .eq("id", args.id)
+    .maybeSingle();
   if (!row || row.user_id !== userId) throw new Error("Not your exposure profile entry.");
   const { error } = await supabase.from("exposure_deps").delete().eq("id", args.id);
   if (error) throw error;
@@ -1053,7 +1243,10 @@ function toObservation(row: {
 }
 
 async function observationsQuery(args: { sourceId: string }): Promise<Observation[]> {
-  const { data: rows } = await supabase.from("observations").select("*").eq("source_id", args.sourceId);
+  const { data: rows } = await supabase
+    .from("observations")
+    .select("*")
+    .eq("source_id", args.sourceId);
   const latest = new Map<string, Observation>();
   for (const r of rows ?? []) {
     if (!r.ok) continue;
@@ -1083,9 +1276,19 @@ export type SourceStatus = {
 async function sourceStatus(args: { sourceId: string }): Promise<SourceStatus | null> {
   if (!(args.sourceId in SOURCES)) return null;
 
-  const { data: readings } = await supabase.from("observations").select("*").eq("source_id", args.sourceId);
-  const { data: attempts } = await supabase.from("source_runs").select("*").eq("source_id", args.sourceId);
-  const { data: lock } = await supabase.from("source_locks").select("*").eq("source_id", args.sourceId).maybeSingle();
+  const { data: readings } = await supabase
+    .from("observations")
+    .select("*")
+    .eq("source_id", args.sourceId);
+  const { data: attempts } = await supabase
+    .from("source_runs")
+    .select("*")
+    .eq("source_id", args.sourceId);
+  const { data: lock } = await supabase
+    .from("source_locks")
+    .select("*")
+    .eq("source_id", args.sourceId)
+    .maybeSingle();
 
   const keys = new Set<string>();
   let lastVerifiedAt = 0;
@@ -1218,7 +1421,8 @@ async function sourceHealth() {
 
 async function setDisplayName(args: { name: string }) {
   const name = args.name.trim().replace(/\s+/g, " ");
-  if (name.length < 2 || name.length > 80) throw new Error("Name must be between 2 and 80 characters.");
+  if (name.length < 2 || name.length > 80)
+    throw new Error("Name must be between 2 and 80 characters.");
   const { error } = await supabase.auth.updateUser({ data: { name } });
   if (error) throw new Error(error.message);
   return { ok: true };
@@ -1321,10 +1525,18 @@ export const api = {
     sourceHealth: defineFn("observations.sourceHealth", sourceHealth),
   },
   sources: {
-    refreshMacro: defineFn("sources.refreshMacro", (args: { force?: boolean }) => refreshWith(serverFns.refreshMacro, args)),
-    refreshTrade: defineFn("sources.refreshTrade", (args: { force?: boolean }) => refreshWith(serverFns.refreshTrade, args)),
-    refreshAttention: defineFn("sources.refreshAttention", (args: { force?: boolean }) => refreshWith(serverFns.refreshAttention, args)),
-    refreshEcb: defineFn("sources.refreshEcb", (args: { force?: boolean }) => refreshWith(serverFns.refreshEcb, args)),
+    refreshMacro: defineFn("sources.refreshMacro", (args: { force?: boolean }) =>
+      refreshWith(serverFns.refreshMacro, args),
+    ),
+    refreshTrade: defineFn("sources.refreshTrade", (args: { force?: boolean }) =>
+      refreshWith(serverFns.refreshTrade, args),
+    ),
+    refreshAttention: defineFn("sources.refreshAttention", (args: { force?: boolean }) =>
+      refreshWith(serverFns.refreshAttention, args),
+    ),
+    refreshEcb: defineFn("sources.refreshEcb", (args: { force?: boolean }) =>
+      refreshWith(serverFns.refreshEcb, args),
+    ),
   },
   research: {
     toggleWatch: defineFn("research.toggleWatch", toggleWatch),

@@ -27,9 +27,11 @@ export function NavLink({
   to,
   className,
   children,
+  end,
   ...rest
 }: {
   to: string;
+  end?: boolean;
   className?: string | ((opts: { isActive: boolean }) => string);
   children?: ReactNode | ((opts: { isActive: boolean }) => ReactNode);
   [key: string]: unknown;
@@ -37,11 +39,9 @@ export function NavLink({
   const location = useTsLocation();
   const isActive =
     location.pathname === to ||
-    (to !== "/" && location.pathname.startsWith(`${to}/`));
-  const resolved =
-    typeof className === "function" ? className({ isActive }) : className;
-  const resolvedChildren =
-    typeof children === "function" ? children({ isActive }) : children;
+    (!end && to !== "/" && location.pathname.startsWith(`${to}/`));
+  const resolved = typeof className === "function" ? className({ isActive }) : className;
+  const resolvedChildren = typeof children === "function" ? children({ isActive }) : children;
   return (
     <TsLink to={to} className={resolved} {...rest}>
       {resolvedChildren}
@@ -84,19 +84,13 @@ export function Navigate({ to, replace }: { to: string; replace?: boolean }) {
 
 export function useSearchParams(): [
   URLSearchParams,
-  (
-    next: URLSearchParams | Record<string, string>,
-    opts?: { replace?: boolean },
-  ) => void,
+  (next: URLSearchParams | Record<string, string>, opts?: { replace?: boolean }) => void,
 ] {
   const location = useTsLocation();
   const navigate = useTsNavigate();
   const params = new URLSearchParams(location.searchStr ?? "");
   const setParams = useCallback(
-    (
-      next: URLSearchParams | Record<string, string>,
-      opts?: { replace?: boolean },
-    ) => {
+    (next: URLSearchParams | Record<string, string>, opts?: { replace?: boolean }) => {
       const sp =
         next instanceof URLSearchParams
           ? next

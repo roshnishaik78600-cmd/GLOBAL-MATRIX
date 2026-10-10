@@ -140,9 +140,7 @@ export function WhatsChanging({ events }: { events: TimelineEvent[] }) {
                 {event.summary}
               </p>
               <p className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">
-                {event.regions.length > 0
-                  ? event.regions.join(" · ")
-                  : "no region recorded"}
+                {event.regions.length > 0 ? event.regions.join(" · ") : "no region recorded"}
               </p>
 
               {/* Impact and status on the baseline, so the eye gets a number and
@@ -173,9 +171,7 @@ export function WhatsChanging({ events }: { events: TimelineEvent[] }) {
                   <span className="min-w-0 flex-1 truncate" title={event.source}>
                     {event.source}
                   </span>
-                  <span className="exec-num shrink-0">
-                    {eventStamp(event.updatedAt)}
-                  </span>
+                  <span className="exec-num shrink-0">{eventStamp(event.updatedAt)}</span>
                 </p>
               </div>
             </Link>
@@ -268,9 +264,7 @@ export function TrendingCountries({ rows }: { rows: TrendingCountry[] }) {
 
                   <p className="border-t border-[var(--exec-hairline)] pt-3 text-[13px] leading-snug text-[var(--exec-ink-dim)]">
                     Top driver —{" "}
-                    <span className="text-[var(--exec-ink)]">
-                      {row.topChannel} pressure
-                    </span>
+                    <span className="text-[var(--exec-ink)]">{row.topChannel} pressure</span>
                     {row.eventCount > 0
                       ? `, across ${row.eventCount} ${row.eventCount === 1 ? "event" : "events"}.`
                       : ". No event currently exposes this economy."}
@@ -321,10 +315,7 @@ export function TopIndustries({ rows }: { rows: IndustryTile[] }) {
   const shown = rows.slice(0, 6);
   return (
     <ExecCard>
-      <SectionTitle
-        meta="structural share × live contribution"
-        right={<BasisTag basis="model" />}
-      >
+      <SectionTitle meta="structural share × live contribution" right={<BasisTag basis="model" />}>
         Most exposed industries
       </SectionTitle>
 
@@ -364,8 +355,8 @@ export function TopIndustries({ rows }: { rows: IndustryTile[] }) {
                   <ExposureBar value={row.load} />
                 </span>
                 <p className="border-t border-[var(--exec-hairline)] pt-3 text-[13px] leading-snug text-[var(--exec-ink-dim)]">
-                  {row.topChannel} is the dominant channel, across{" "}
-                  {row.eventCount} {row.eventCount === 1 ? "event" : "events"}.
+                  {row.topChannel} is the dominant channel, across {row.eventCount}{" "}
+                  {row.eventCount === 1 ? "event" : "events"}.
                 </p>
               </Link>
             </motion.div>

@@ -2,20 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "@/lib/router-shim";
 import { useMutation, useQuery, useConvex } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  Bookmark,
-  BookmarkCheck,
-  Sparkles,
-  Trash2,
-  ExternalLink,
-} from "lucide-react";
-import {
-  DataType,
-  ErrorState,
-  PageFrame,
-  PageLoading,
-} from "@/components/viz/exec/design";
+import { ArrowLeft, Bookmark, BookmarkCheck, Sparkles, Trash2, ExternalLink } from "lucide-react";
+import { DataType, ErrorState, PageFrame, PageLoading } from "@/components/viz/exec/design";
 import { SectionTitle } from "@/components/viz/exec/system";
 import { api } from "@/lib/backend/api";
 import { useToggleWatch, useAuthAction } from "@/hooks/use-auth-action";
@@ -47,18 +35,9 @@ import {
 export default function EventAnalysis() {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
-  const data = useQuery(
-    api.intel.eventDetail,
-    eventId ? { eventId } : "skip",
-  );
-  const graph = useQuery(
-    api.intel.eventGraph,
-    eventId ? { eventId } : "skip",
-  );
-  const chain = useQuery(
-    api.intel.eventChain,
-    eventId ? { eventId } : "skip",
-  );
+  const data = useQuery(api.intel.eventDetail, eventId ? { eventId } : "skip");
+  const graph = useQuery(api.intel.eventGraph, eventId ? { eventId } : "skip");
+  const chain = useQuery(api.intel.eventChain, eventId ? { eventId } : "skip");
   const toggleWatch = useToggleWatch();
   const addAnnotation = useMutation(api.research.addAnnotation);
   const deleteAnnotation = useMutation(api.research.deleteAnnotation);
@@ -121,9 +100,7 @@ export default function EventAnalysis() {
   );
   const risk7 = risk.find((r) => r.horizonDays === 7) ?? risk[0];
   const risk90 = risk.find((r) => r.horizonDays === 90) ?? risk[risk.length - 1];
-  const dominantPathway = s.pathways.find(
-    (p) => p.channel === assessment.dominantChannel,
-  );
+  const dominantPathway = s.pathways.find((p) => p.channel === assessment.dominantChannel);
   const lagWindow = dominantPathway
     ? `${dominantPathway.lagDays[0]}–${dominantPathway.lagDays[1]} days`
     : null;
@@ -168,11 +145,7 @@ export default function EventAnalysis() {
             onClick={() => toggleWatch(`EVENT:${s.id}`)}
             className="inline-flex items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3.5 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
           >
-            {watched ? (
-              <BookmarkCheck className="size-3.5" />
-            ) : (
-              <Bookmark className="size-3.5" />
-            )}
+            {watched ? <BookmarkCheck className="size-3.5" /> : <Bookmark className="size-3.5" />}
             {watched ? "Tracking" : "Track"}
           </button>
           <Link
@@ -254,10 +227,7 @@ export default function EventAnalysis() {
 
       {/* ------------------------------------------------------ IMPACT SNAPSHOT -- */}
       <div className="lg:col-span-12">
-        <SectionTitle
-          meta="30-day composite · 80% interval"
-          right={<DataType type="scenario" />}
-        >
+        <SectionTitle meta="30-day composite · 80% interval" right={<DataType type="scenario" />}>
           Impact snapshot
         </SectionTitle>
 
@@ -286,8 +256,8 @@ export default function EventAnalysis() {
               className="h-7"
             />
             <p className="exec-num text-[13px] text-[var(--exec-ink-dim)]">
-              80% interval {primary.low.toFixed(0)}–{primary.high.toFixed(0)} ·
-              wider means less certain, not worse
+              80% interval {primary.low.toFixed(0)}–{primary.high.toFixed(0)} · wider means less
+              certain, not worse
             </p>
           </div>
 
@@ -333,17 +303,11 @@ export default function EventAnalysis() {
           </SectionTitle>
           <div className="grid grid-cols-1 divide-y divide-[var(--exec-hairline)] md:grid-cols-2 xl:grid-cols-5 xl:divide-x xl:divide-y-0">
             <div className="flex min-w-0 flex-col gap-2 p-4">
-              <span className="exec-label text-[var(--exec-emerald)]">
-                OBSERVED
-              </span>
+              <span className="exec-label text-[var(--exec-emerald)]">OBSERVED</span>
               <p className="text-[14px] leading-snug text-[var(--exec-ink)]">
                 {s.signals.length} observations across {sourceCount} source
-                {sourceCount === 1 ? "" : "s"} · first{" "}
-                {shortDate(s.firstSignalAt)} · latest{" "}
-                {latestObservation
-                  ? shortDate(latestObservation.observedAt)
-                  : "not dated"}
-                .
+                {sourceCount === 1 ? "" : "s"} · first {shortDate(s.firstSignalAt)} · latest{" "}
+                {latestObservation ? shortDate(latestObservation.observedAt) : "not dated"}.
               </p>
               <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">
                 What the corpus has actually recorded. Nothing here is inferred.
@@ -351,13 +315,11 @@ export default function EventAnalysis() {
             </div>
 
             <div className="flex min-w-0 flex-col gap-2 p-4">
-              <span className="exec-label text-[var(--exec-amber)]">
-                CURRENT IMPACT
-              </span>
+              <span className="exec-label text-[var(--exec-amber)]">CURRENT IMPACT</span>
               <p className="text-[14px] leading-snug text-[var(--exec-ink)]">
-                Stage {STAGE_LABEL[s.stage]} · 30-day composite{" "}
-                {primary.score.toFixed(1)} ({BAND_LABEL[primary.band]}), landing
-                hardest on {primaryPlace ?? "no resolved place"}.
+                Stage {STAGE_LABEL[s.stage]} · 30-day composite {primary.score.toFixed(1)} (
+                {BAND_LABEL[primary.band]}), landing hardest on{" "}
+                {primaryPlace ?? "no resolved place"}.
               </p>
               <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">
                 Where the modelled exposure already sits.
@@ -365,20 +327,17 @@ export default function EventAnalysis() {
             </div>
 
             <div className="flex min-w-0 flex-col gap-2 p-4">
-              <span className="exec-label text-[var(--exec-cyan)]">
-                POTENTIAL NEXT EFFECTS
-              </span>
+              <span className="exec-label text-[var(--exec-cyan)]">POTENTIAL NEXT EFFECTS</span>
               <p className="text-[14px] leading-snug text-[var(--exec-ink)]">
-                Composite at {risk7.score.toFixed(1)} (7d),{" "}
-                {primary.score.toFixed(1)} (30d), {risk90.score.toFixed(1)} (90d)
+                Composite at {risk7.score.toFixed(1)} (7d), {primary.score.toFixed(1)} (30d),{" "}
+                {risk90.score.toFixed(1)} (90d)
                 {lagWindow
                   ? `; ${CHANNEL_LABEL[assessment.dominantChannel].toLowerCase()} transmits with a ${lagWindow} lag`
                   : ""}
                 .
               </p>
               <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">
-                MODEL OUTPUT — possibilities under current pathways, not
-                predictions.
+                MODEL OUTPUT — possibilities under current pathways, not predictions.
               </p>
             </div>
 
@@ -386,27 +345,23 @@ export default function EventAnalysis() {
               <span className="exec-label text-[var(--exec-cyan)]">WATCH</span>
               <p className="text-[14px] leading-snug text-[var(--exec-ink)]">
                 {CHANNEL_LABEL[assessment.dominantChannel]} pressure on{" "}
-                {primaryPlace ?? "the top exposed place"} over the next{" "}
-                {lagWindow ?? "coming days"}.
+                {primaryPlace ?? "the top exposed place"} over the next {lagWindow ?? "coming days"}
+                .
               </p>
               <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">
-                A move there confirms the modelled path; a flat reading weakens
-                it.
+                A move there confirms the modelled path; a flat reading weakens it.
               </p>
             </div>
 
             <div className="flex min-w-0 flex-col gap-2 p-4">
-              <span className="exec-label text-[var(--exec-ink-dim)]">
-                CONFIDENCE
-              </span>
+              <span className="exec-label text-[var(--exec-ink-dim)]">CONFIDENCE</span>
               <p className="text-[14px] leading-snug text-[var(--exec-ink)]">
-                {pct(s.confidence)} model confidence on{" "}
-                {pct(assessment.evidenceStrength)} evidence strength · band{" "}
-                {BAND_LABEL[primary.band]}.
+                {pct(s.confidence)} model confidence on {pct(assessment.evidenceStrength)} evidence
+                strength · band {BAND_LABEL[primary.band]}.
               </p>
               <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">
-                80% interval {primary.low.toFixed(0)}–{primary.high.toFixed(0)}
-                {' '}— width is uncertainty, not severity.
+                80% interval {primary.low.toFixed(0)}–{primary.high.toFixed(0)} — width is
+                uncertainty, not severity.
               </p>
             </div>
           </div>
@@ -452,9 +407,7 @@ export default function EventAnalysis() {
                           {(value * 100).toFixed(0)}%
                         </span>
                         <span className="exec-num w-16 shrink-0 text-right text-[12px] text-[var(--exec-ink-dim)]">
-                          {pathway
-                            ? `${pathway.lagDays[0]}–${pathway.lagDays[1]}d`
-                            : "no lag"}
+                          {pathway ? `${pathway.lagDays[0]}–${pathway.lagDays[1]}d` : "no lag"}
                         </span>
                       </li>
                     );
@@ -469,10 +422,7 @@ export default function EventAnalysis() {
       {/* ---------------------------------------------------------- TIMELINE -- */}
       <div className="lg:col-span-5">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle
-            meta="central estimate with 80% interval"
-            right={<DataType type="model" />}
-          >
+          <SectionTitle meta="central estimate with 80% interval" right={<DataType type="model" />}>
             Timeline
           </SectionTitle>
           <ol className="flex min-w-0 flex-col p-4">
@@ -506,12 +456,7 @@ export default function EventAnalysis() {
                     {r.score.toFixed(1)}
                   </span>
                 </div>
-                <IntervalBar
-                  score={r.score}
-                  low={r.low}
-                  high={r.high}
-                  band={r.band}
-                />
+                <IntervalBar score={r.score} low={r.low} high={r.high} band={r.band} />
                 <div className="flex items-center gap-3">
                   <BandChip band={r.band} />
                   <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
@@ -529,10 +474,7 @@ export default function EventAnalysis() {
           chain the Impact page renders — one shared model, two surfaces. */}
       <div className="lg:col-span-7">
         <div className="card flex min-w-0 flex-col">
-          <SectionTitle
-            meta="structural share · model output"
-            right={<DataType type="model" />}
-          >
+          <SectionTitle meta="structural share · model output" right={<DataType type="model" />}>
             Industry exposure
           </SectionTitle>
           {chain === undefined ? (
@@ -554,9 +496,7 @@ export default function EventAnalysis() {
                   </Link>
                   <span className="flex shrink-0 items-baseline gap-3">
                     {row.channel ? (
-                      <span className="exec-label">
-                        {CHANNEL_LABEL[row.channel]}
-                      </span>
+                      <span className="exec-label">{CHANNEL_LABEL[row.channel]}</span>
                     ) : null}
                     <span className="exec-num text-[13px] font-semibold text-[var(--exec-ink)]">
                       {pct(Math.min(1, row.share), 1)}
@@ -572,10 +512,7 @@ export default function EventAnalysis() {
       {/* ------------------------------------------------ MARKET CONNECTIONS -- */}
       <div className="lg:col-span-7">
         <div className="card flex min-w-0 flex-col">
-          <SectionTitle
-            meta="finance channel · model output"
-            right={<DataType type="model" />}
-          >
+          <SectionTitle meta="finance channel · model output" right={<DataType type="model" />}>
             Market connections
           </SectionTitle>
           {chain === undefined ? (
@@ -586,15 +523,12 @@ export default function EventAnalysis() {
             <ul className="divide-y divide-[var(--exec-hairline)]">
               {chain.market.map((row) => (
                 <li key={`${row.nodeId}-${row.channel}`} className="min-w-0 px-4 py-3">
-                  <p className="truncate text-[14px] text-[var(--exec-ink)]">
-                    {row.label}
-                  </p>
+                  <p className="truncate text-[14px] text-[var(--exec-ink)]">{row.label}</p>
                   <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-[var(--exec-ink-dim)]">
                     {row.mechanism}
                   </p>
                   <p className="exec-label mt-1">
-                    lag {row.lagDays[0]}–{row.lagDays[1]}d · confidence{" "}
-                    {pct(row.confidence)}
+                    lag {row.lagDays[0]}–{row.lagDays[1]}d · confidence {pct(row.confidence)}
                   </p>
                 </li>
               ))}
@@ -610,8 +544,7 @@ export default function EventAnalysis() {
         <div className="card flex min-w-0 flex-col">
           <SectionTitle meta="not measured by this build">Companies</SectionTitle>
           <p className="p-4 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-            {chain?.companyReason ??
-              "Company-level exposure is not measured by this build."}
+            {chain?.companyReason ?? "Company-level exposure is not measured by this build."}
           </p>
         </div>
       </div>
@@ -653,12 +586,8 @@ export default function EventAnalysis() {
                     {signal.headline}
                   </p>
                   <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[var(--exec-hairline)] pt-3">
-                    <span className="exec-label">
-                      {SOURCE_CLASS_LABEL[signal.sourceClass]}
-                    </span>
-                    <span className="exec-label">
-                      {CHANNEL_LABEL[signal.channel]}
-                    </span>
+                    <span className="exec-label">{SOURCE_CLASS_LABEL[signal.sourceClass]}</span>
+                    <span className="exec-label">{CHANNEL_LABEL[signal.channel]}</span>
                     <span
                       className="exec-num ml-auto text-[12px] text-[var(--exec-ink-dim)]"
                       title="Reliability × corroborations, and the anomaly z-score against this source's own history"
@@ -676,9 +605,7 @@ export default function EventAnalysis() {
       {/* Risk decomposition: the arithmetic behind the score, term by term. */}
       <div className="lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
-          <SectionTitle meta="share of the 0–100 composite">
-            Risk decomposition
-          </SectionTitle>
+          <SectionTitle meta="share of the 0–100 composite">Risk decomposition</SectionTitle>
           <ul className="grid grid-cols-1 divide-y divide-[var(--exec-hairline)] lg:grid-cols-3 lg:divide-x lg:divide-y-0">
             {assessment.risk[30].drivers.map((driver) => (
               <li key={driver.id} className="flex flex-col gap-2 p-4">
@@ -696,15 +623,11 @@ export default function EventAnalysis() {
                     style={{
                       width: `${Math.min(100, Math.abs((driver.contribution / 30) * 100))}%`,
                       background:
-                        driver.channel === "energy"
-                          ? "var(--exec-crimson)"
-                          : "var(--exec-ink-dim)",
+                        driver.channel === "energy" ? "var(--exec-crimson)" : "var(--exec-ink-dim)",
                     }}
                   />
                 </span>
-                <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">
-                  {driver.note}
-                </p>
+                <p className="text-[13px] leading-snug text-[var(--exec-ink-dim)]">{driver.note}</p>
               </li>
             ))}
           </ul>
@@ -714,23 +637,22 @@ export default function EventAnalysis() {
       {/* Brief and annotations: the two account-gated surfaces on this page. */}
       <div className="lg:col-span-7">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle
-            meta={brief ? `Generated ${timestamp(brief.createdAt)}` : "Not generated"}
-          >
+          <SectionTitle meta={brief ? `Generated ${timestamp(brief.createdAt)}` : "Not generated"}>
             Analyst brief
           </SectionTitle>
           <div className="flex min-w-0 flex-1 flex-col gap-4 p-4">
             {brief ? (
               <>
-                <p className="text-[15px] leading-relaxed text-[var(--exec-ink)]">
-                  {brief.thesis}
-                </p>
+                <p className="text-[15px] leading-relaxed text-[var(--exec-ink)]">{brief.thesis}</p>
                 {brief.channels.length > 0 ? (
                   <div>
                     <p className="exec-label">Transmission reading</p>
                     <ul className="mt-2 flex flex-col gap-2">
                       {brief.channels.map((c, i) => (
-                        <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-[var(--exec-ink-dim)]">
+                        <li
+                          key={i}
+                          className="flex gap-3 text-[14px] leading-relaxed text-[var(--exec-ink-dim)]"
+                        >
                           <span className="exec-num shrink-0 text-[12px] text-[var(--exec-cyan)]">
                             {String(i + 1).padStart(2, "0")}
                           </span>
@@ -745,7 +667,10 @@ export default function EventAnalysis() {
                     <p className="exec-label">Caveats &amp; falsifiers</p>
                     <ul className="mt-2 flex flex-col gap-2">
                       {brief.caveats.map((c, i) => (
-                        <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-[var(--exec-ink-dim)]">
+                        <li
+                          key={i}
+                          className="flex gap-3 text-[14px] leading-relaxed text-[var(--exec-ink-dim)]"
+                        >
                           <span aria-hidden>—</span>
                           <span>{c}</span>
                         </li>
@@ -786,9 +711,7 @@ export default function EventAnalysis() {
 
       <div className="lg:col-span-5">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle meta={`${annotations.length} notes`}>
-            Research annotations
-          </SectionTitle>
+          <SectionTitle meta={`${annotations.length} notes`}>Research annotations</SectionTitle>
           <div className="flex min-w-0 flex-1 flex-col p-4">
             <textarea
               value={draft}
@@ -851,8 +774,8 @@ export default function EventAnalysis() {
       <div className="lg:col-span-12">
         <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[var(--exec-ink-dim)]">
           <ExternalLink className="size-3.5 shrink-0" aria-hidden />
-          Every figure on this page is model output over a scenario corpus. Check
-          the evidence cards above for the signals it was computed from.
+          Every figure on this page is model output over a scenario corpus. Check the evidence cards
+          above for the signals it was computed from.
         </p>
       </div>
     </PageFrame>
@@ -882,17 +805,7 @@ function topExposures(assessment: EventAssessment, limit: number) {
     .map(([nodeId, load]) => ({ nodeId, load: load / max }));
 }
 
-
-
-function Readout({
-  caption,
-  value,
-  note,
-}: {
-  caption: string;
-  value: string;
-  note: string;
-}) {
+function Readout({ caption, value, note }: { caption: string; value: string; note: string }) {
   return (
     <div className="flex flex-col gap-1">
       <span className="exec-label">{caption}</span>

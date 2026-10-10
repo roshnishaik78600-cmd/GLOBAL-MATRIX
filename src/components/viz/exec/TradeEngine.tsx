@@ -5,12 +5,7 @@ import { getNode } from "@/lib/intel/nodes";
 import { cn } from "@/lib/utils";
 import { compact } from "@/lib/numbers";
 import type { TradeFlow } from "@/hooks/use-verified-data";
-import {
-  BasisTag,
-  FreshnessTag,
-  NoDataAvailable,
-  SectionTitle,
-} from "./system";
+import { BasisTag, FreshnessTag, NoDataAvailable, SectionTitle } from "./system";
 
 /**
  * The trade flow engine.
@@ -105,14 +100,8 @@ export function TradeSankey({ flows }: { flows: TradeFlow[] }) {
             const dim = hover !== null && hover !== row.reporter;
             return (
               <g key={row.reporter} opacity={dim ? 0.18 : 1}>
-                <path
-                  d={ribbon(y, y + expH, SINK_X, expY, expH)}
-                  fill="url(#gm-exp)"
-                />
-                <path
-                  d={ribbon(y + expH, y + h, SINK_X, impY, impH)}
-                  fill="url(#gm-imp)"
-                />
+                <path d={ribbon(y, y + expH, SINK_X, expY, expH)} fill="url(#gm-exp)" />
+                <path d={ribbon(y + expH, y + h, SINK_X, impY, impH)} fill="url(#gm-imp)" />
               </g>
             );
           })}
@@ -134,7 +123,12 @@ export function TradeSankey({ flows }: { flows: TradeFlow[] }) {
                 textAnchor="end"
                 className="exec-num"
                 fill="var(--exec-ink)"
-                style={{ fontSize: 12, paintOrder: "stroke", stroke: "var(--exec-base)", strokeWidth: 3 }}
+                style={{
+                  fontSize: 12,
+                  paintOrder: "stroke",
+                  stroke: "var(--exec-base)",
+                  strokeWidth: 3,
+                }}
               >
                 {row.node.label}
               </text>
@@ -144,7 +138,12 @@ export function TradeSankey({ flows }: { flows: TradeFlow[] }) {
                 textAnchor="end"
                 className="exec-num"
                 fill="var(--exec-ink-dim)"
-                style={{ fontSize: 12, paintOrder: "stroke", stroke: "var(--exec-base)", strokeWidth: 3 }}
+                style={{
+                  fontSize: 12,
+                  paintOrder: "stroke",
+                  stroke: "var(--exec-base)",
+                  strokeWidth: 3,
+                }}
               >
                 {usd(row.total)}
               </text>
@@ -178,7 +177,12 @@ export function TradeSankey({ flows }: { flows: TradeFlow[] }) {
                 textAnchor="end"
                 className="exec-num"
                 fill="var(--exec-ink-dim)"
-                style={{ fontSize: 12, paintOrder: "stroke", stroke: "var(--exec-base)", strokeWidth: 3 }}
+                style={{
+                  fontSize: 12,
+                  paintOrder: "stroke",
+                  stroke: "var(--exec-base)",
+                  strokeWidth: 3,
+                }}
               >
                 {usd(s.value)}
               </text>
@@ -208,20 +212,33 @@ export function TradeSankey({ flows }: { flows: TradeFlow[] }) {
             <span className="text-[12px] font-medium text-[var(--exec-ink)]">
               {getNode(hover).label}
             </span>
-            <Readout label="Exports" value={rows.find((r) => r.reporter === hover)?.exportsUsd ?? 0} colour={EXPORT_COLOUR} />
-            <Readout label="Imports" value={rows.find((r) => r.reporter === hover)?.importsUsd ?? 0} colour={IMPORT_COLOUR} />
+            <Readout
+              label="Exports"
+              value={rows.find((r) => r.reporter === hover)?.exportsUsd ?? 0}
+              colour={EXPORT_COLOUR}
+            />
+            <Readout
+              label="Imports"
+              value={rows.find((r) => r.reporter === hover)?.importsUsd ?? 0}
+              colour={IMPORT_COLOUR}
+            />
             <Readout
               label="Balance"
-              value={(rows.find((r) => r.reporter === hover)?.exportsUsd ?? 0) - (rows.find((r) => r.reporter === hover)?.importsUsd ?? 0)}
+              value={
+                (rows.find((r) => r.reporter === hover)?.exportsUsd ?? 0) -
+                (rows.find((r) => r.reporter === hover)?.importsUsd ?? 0)
+              }
               signed
             />
-            <span className="exec-label">period {rows.find((r) => r.reporter === hover)?.period}</span>
+            <span className="exec-label">
+              period {rows.find((r) => r.reporter === hover)?.period}
+            </span>
           </>
         ) : (
           <span className="exec-label normal-case">
-            Hover a reporter to isolate its two reported streams. Every ribbon
-            width is a published merchandise value; the counterparty is always
-            World, because that is all this source reports.
+            Hover a reporter to isolate its two reported streams. Every ribbon width is a published
+            merchandise value; the counterparty is always World, because that is all this source
+            reports.
           </span>
         )}
       </div>
@@ -251,10 +268,11 @@ function Readout({
               ? "var(--exec-crimson)"
               : signed
                 ? "var(--exec-emerald)"
-                : colour ?? "var(--exec-ink)",
+                : (colour ?? "var(--exec-ink)"),
         }}
       >
-        {signed && value > 0 ? "+" : ""}{usd(value)}
+        {signed && value > 0 ? "+" : ""}
+        {usd(value)}
       </span>
     </span>
   );
@@ -331,7 +349,7 @@ function layoutSankey<R extends { exportsUsd: number; total: number }>(
   return { W, SINK_X, NODE_W, leftNodes, sinks: [exportSink, importSink], ribbons };
 }
 
-/** A cubic band from a source edge to a target edge. */function ribbon(
+/** A cubic band from a source edge to a target edge. */ function ribbon(
   y0: number,
   y1: number,
   tx: number,
@@ -385,10 +403,7 @@ export function TradeBalance({ flows }: { flows: TradeFlow[] }) {
 
   return (
     <div>
-      <SectionTitle
-        meta="exports minus imports"
-        right={<BasisTag basis="observed" />}
-      >
+      <SectionTitle meta="exports minus imports" right={<BasisTag basis="observed" />}>
         Trade balance
       </SectionTitle>
       <ul className="divide-y divide-[var(--exec-hairline)]">
@@ -431,17 +446,17 @@ export function TradeBalance({ flows }: { flows: TradeFlow[] }) {
                   color: surplus ? "var(--exec-emerald)" : "var(--exec-crimson)",
                 }}
               >
-                {surplus ? "+" : "-"}{usd(r.balance)}
+                {surplus ? "+" : "-"}
+                {usd(r.balance)}
               </span>
             </li>
           );
         })}
       </ul>
       <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        Mirrored flows do not sum to a world total: Comtrade records each
-        direction as reported by its own reporter, so summing surpluses across
-        countries is not a meaningful aggregate. The ranking is the claim here,
-        not the sum.
+        Mirrored flows do not sum to a world total: Comtrade records each direction as reported by
+        its own reporter, so summing surpluses across countries is not a meaningful aggregate. The
+        ranking is the claim here, not the sum.
       </p>
     </div>
   );
@@ -471,7 +486,11 @@ export function TradeOpenness() {
   if (rows.length === 0) {
     return (
       <NoDataAvailable
-        title={macro.data === null ? "World Bank has not returned a reading" : "No openness series stored"}
+        title={
+          macro.data === null
+            ? "World Bank has not returned a reading"
+            : "No openness series stored"
+        }
         reason={
           macro.problem ??
           "Trade share of GDP is the World Bank's own indicator. Where it has not been retrieved for an economy, that economy is absent from this ranking rather than estimated."
@@ -516,9 +535,8 @@ export function TradeOpenness() {
         ))}
       </ul>
       <p className="border-t border-[var(--exec-hairline)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        Merchandise trade as a share of GDP, as reported by the World Bank. This
-        is an annual national-account indicator, so it is never live — it
-        describes a closed year.
+        Merchandise trade as a share of GDP, as reported by the World Bank. This is an annual
+        national-account indicator, so it is never live — it describes a closed year.
       </p>
     </div>
   );

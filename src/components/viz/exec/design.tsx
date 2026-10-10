@@ -1,10 +1,4 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  type ReactElement,
-  type ReactNode,
-} from "react";
+import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
 import { Link } from "@/lib/router-shim";
 import { AlertTriangle, Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,12 +11,7 @@ import {
   SectionTitle,
 } from "@/components/viz/exec/system";
 import { delta, num } from "@/lib/numbers";
-import {
-  BASIS_COLOUR,
-  BASIS_HELP,
-  BASIS_LABEL,
-  type Basis,
-} from "@/lib/basis";
+import { BASIS_COLOUR, BASIS_HELP, BASIS_LABEL, type Basis } from "@/lib/basis";
 
 /**
  * The presentation system.
@@ -194,8 +183,7 @@ export function Region({
         <section
           className="card flex h-full min-w-0 flex-col"
           style={{
-            borderColor:
-              "color-mix(in srgb, var(--exec-cyan) 45%, var(--exec-hairline))",
+            borderColor: "color-mix(in srgb, var(--exec-cyan) 45%, var(--exec-hairline))",
           }}
         >
           {children}
@@ -234,9 +222,7 @@ export function PanelHead({
           </h2>
           {meta ? <span className="exec-label min-w-0 truncate">{meta}</span> : null}
         </div>
-        {actions ? (
-          <div className="flex shrink-0 items-center gap-1.5">{actions}</div>
-        ) : null}
+        {actions ? <div className="flex shrink-0 items-center gap-1.5">{actions}</div> : null}
       </div>
       {children}
     </>
@@ -342,11 +328,7 @@ export function MetricGrid({
 export function Trend({ value }: { value: number }) {
   const up = value > 0.0005;
   const down = value < -0.0005;
-  const colour = up
-    ? "var(--exec-crimson)"
-    : down
-      ? "var(--exec-emerald)"
-      : "var(--exec-ink-dim)";
+  const colour = up ? "var(--exec-crimson)" : down ? "var(--exec-emerald)" : "var(--exec-ink-dim)";
   return (
     <span
       className="exec-num ml-auto shrink-0 text-[12px] font-semibold"
@@ -399,9 +381,7 @@ export function FilterBar({ children, scope }: { children: ReactNode; scope?: Re
     <div className="flex min-w-0 flex-wrap items-center gap-2 py-3">
       <div className="flex min-w-0 flex-wrap items-center gap-2">{children}</div>
       {scope ? (
-        <div className="exec-label ml-auto flex min-w-0 items-center gap-2 truncate">
-          {scope}
-        </div>
+        <div className="exec-label ml-auto flex min-w-0 items-center gap-2 truncate">{scope}</div>
       ) : null}
     </div>
   );
@@ -658,9 +638,7 @@ export function EmptyState({
         <span className="exec-label text-[var(--exec-ink)]">NO VERIFIED DATA</span>
       </div>
       <p className="t-card text-[var(--exec-ink)]">{title}</p>
-      <p className="max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-        {reason}
-      </p>
+      <p className="max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">{reason}</p>
       {action}
     </div>
   );
@@ -679,17 +657,12 @@ export function ErrorState({
   return (
     <div className="flex min-h-[180px] flex-col justify-center gap-2 p-6">
       <div className="flex items-center gap-2">
-        <AlertTriangle
-          className="size-4 shrink-0 text-[var(--exec-crimson)]"
-          aria-hidden
-        />
+        <AlertTriangle className="size-4 shrink-0 text-[var(--exec-crimson)]" aria-hidden />
         <span className="exec-label text-[var(--exec-crimson)]">UNAVAILABLE</span>
       </div>
       <p className="t-card text-[var(--exec-ink)]">{title}</p>
       {reason ? (
-        <p className="max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-          {reason}
-        </p>
+        <p className="max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">{reason}</p>
       ) : null}
       {action}
     </div>
@@ -697,7 +670,6 @@ export function ErrorState({
 }
 
 /* ------------------------------------------------------------ Typography -- */
-
 
 /** Re-export so pages never import from two places for one number. */
 export { num };

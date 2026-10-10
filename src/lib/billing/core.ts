@@ -10,7 +10,10 @@ export type ProductId = "analyst" | "business" | "custom_report";
 /** Daily AI-analyst brief allowance per plan — enforced on the server. */
 export const BRIEF_DAILY_LIMIT: Record<PlanId, number> = { free: 5, analyst: 50, business: 200 };
 
-export const PLANS: Record<PlanId, { name: string; price: number; period: "month" | null; features: string[]; limits: string[] }> = {
+export const PLANS: Record<
+  PlanId,
+  { name: string; price: number; period: "month" | null; features: string[]; limits: string[] }
+> = {
   free: {
     name: "Free Explorer",
     price: 0,
@@ -21,13 +24,19 @@ export const PLANS: Record<PlanId, { name: string; price: number; period: "month
       "Watchlist, notes and one saved exposure profile",
       "Sample intelligence report",
     ],
-    limits: [`${BRIEF_DAILY_LIMIT.free} AI analyst briefs per day`, "Demonstration event corpus, not live news"],
+    limits: [
+      `${BRIEF_DAILY_LIMIT.free} AI analyst briefs per day`,
+      "Demonstration event corpus, not live news",
+    ],
   },
   analyst: {
     name: "Analyst",
     price: 999,
     period: "month",
-    features: ["Everything in Free Explorer", `${BRIEF_DAILY_LIMIT.analyst} AI analyst briefs per day`],
+    features: [
+      "Everything in Free Explorer",
+      `${BRIEF_DAILY_LIMIT.analyst} AI analyst briefs per day`,
+    ],
     limits: ["Same data coverage as Free Explorer", "Renewal is manual — no automatic charge"],
   },
   business: {
@@ -70,7 +79,11 @@ export type PaymentMode = "demo" | "manual_upi" | "gateway";
  * Live modes also need their own configuration (verified UPI QR / gateway
  * keys); until those exist this returns demo even if the variable says otherwise.
  */
-export function resolvePaymentMode(env: { PAYMENT_MODE?: string; UPI_VERIFICATION_READY?: string; GATEWAY_READY?: string }): PaymentMode {
+export function resolvePaymentMode(env: {
+  PAYMENT_MODE?: string;
+  UPI_VERIFICATION_READY?: string;
+  GATEWAY_READY?: string;
+}): PaymentMode {
   const m = env.PAYMENT_MODE?.trim().toLowerCase();
   if (m === "manual_upi" && env.UPI_VERIFICATION_READY === "true") return "manual_upi";
   if (m === "gateway" && env.GATEWAY_READY === "true") return "gateway";
@@ -80,8 +93,15 @@ export function resolvePaymentMode(env: { PAYMENT_MODE?: string; UPI_VERIFICATIO
 /* Order state machine ---------------------------------------------- */
 
 export type OrderStatus =
-  | "draft" | "pending_payment" | "pending_verification" | "verified"
-  | "rejected" | "failed" | "cancelled" | "expired" | "refunded";
+  | "draft"
+  | "pending_payment"
+  | "pending_verification"
+  | "verified"
+  | "rejected"
+  | "failed"
+  | "cancelled"
+  | "expired"
+  | "refunded";
 
 export const OPEN_STATUSES: OrderStatus[] = ["draft", "pending_payment", "pending_verification"];
 
@@ -108,7 +128,11 @@ export function canVerify(order: { status: OrderStatus; payment_mode: PaymentMod
 
 /* Entitlements ------------------------------------------------------ */
 
-export type SubscriptionRow = { plan: PlanId; status: "active" | "cancelled" | "expired"; expires_at: string | null } | null;
+export type SubscriptionRow = {
+  plan: PlanId;
+  status: "active" | "cancelled" | "expired";
+  expires_at: string | null;
+} | null;
 
 /** Effective plan from trusted persisted state only. */
 export function effectivePlan(sub: SubscriptionRow, now: Date = new Date()): PlanId {
@@ -120,7 +144,12 @@ export function effectivePlan(sub: SubscriptionRow, now: Date = new Date()): Pla
 
 /* Gateway event validation (for the future adapter) ----------------- */
 
-export type GatewayEvent = { order_reference: string; amount: number; currency: string; status: string };
+export type GatewayEvent = {
+  order_reference: string;
+  amount: number;
+  currency: string;
+  status: string;
+};
 
 export function validateGatewayEvent(
   ev: GatewayEvent,

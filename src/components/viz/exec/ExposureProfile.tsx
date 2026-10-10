@@ -82,9 +82,7 @@ export function ExposureProfile() {
       await add({ kind: kind as "node" | "industry", refId });
       setSelected("");
     } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "That dependency could not be saved.",
-      );
+      setError(e instanceof Error ? e.message : "That dependency could not be saved.");
     } finally {
       setPending(false);
     }
@@ -112,11 +110,7 @@ export function ExposureProfile() {
               ? `${total} of ${MAX_DEPENDENCIES} declared`
               : "sign in to declare"
         }
-        right={
-          <span className="exec-label text-[var(--exec-violet)]">
-            USER-PROVIDED
-          </span>
-        }
+        right={<span className="exec-label text-[var(--exec-violet)]">USER-PROVIDED</span>}
       >
         Your exposure profile
       </SectionTitle>
@@ -129,10 +123,10 @@ export function ExposureProfile() {
       ) : !isAuthenticated ? (
         <div className="flex flex-col items-start gap-3 p-4">
           <p className="max-w-xl text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-            Tell GlobalMatrix what <em>you</em> depend on — the countries,
-            chokepoints and industries your work actually touches — and it will
-            show which events in the corpus reach them. Nothing is inferred: only
-            what you declare is reported, and it is stored against your account.
+            Tell GlobalMatrix what <em>you</em> depend on — the countries, chokepoints and
+            industries your work actually touches — and it will show which events in the corpus
+            reach them. Nothing is inferred: only what you declare is reported, and it is stored
+            against your account.
           </p>
           <button
             type="button"
@@ -163,11 +157,7 @@ export function ExposureProfile() {
                 {groups.map(([group, items]) => (
                   <optgroup key={group} label={group}>
                     {items.map((o) => (
-                      <option
-                        key={o.value}
-                        value={o.value}
-                        className="bg-[var(--exec-base)]"
-                      >
+                      <option key={o.value} value={o.value} className="bg-[var(--exec-base)]">
                         {o.label}
                       </option>
                     ))}
@@ -186,22 +176,18 @@ export function ExposureProfile() {
             </div>
             {total >= MAX_DEPENDENCIES ? (
               <p className="text-[12px] leading-relaxed text-[var(--exec-amber)]">
-                A profile is limited to {MAX_DEPENDENCIES} dependencies. Remove
-                one to add another.
+                A profile is limited to {MAX_DEPENDENCIES} dependencies. Remove one to add another.
               </p>
             ) : null}
             {error ? (
-              <p className="text-[12px] leading-relaxed text-[var(--exec-crimson)]">
-                {error}
-              </p>
+              <p className="text-[12px] leading-relaxed text-[var(--exec-crimson)]">{error}</p>
             ) : null}
           </div>
 
           {entries.length === 0 ? (
             <p className="p-4 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-              Nothing declared yet. Pick something above and GlobalMatrix will
-              show every event in the corpus that reaches it, with the channel
-              and the expected lag.
+              Nothing declared yet. Pick something above and GlobalMatrix will show every event in
+              the corpus that reaches it, with the channel and the expected lag.
             </p>
           ) : (
             <ul className="divide-y divide-[var(--exec-hairline)]">
@@ -213,8 +199,7 @@ export function ExposureProfile() {
                         {entry.match?.label ?? entry.refId}
                       </p>
                       <p className="exec-label mt-0.5">
-                        {entry.kind === "node" ? "Node" : "Industry"} ·{" "}
-                        {entry.refId}
+                        {entry.kind === "node" ? "Node" : "Industry"} · {entry.refId}
                       </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-1">
@@ -243,15 +228,9 @@ export function ExposureProfile() {
                   {entry.match ? (
                     <>
                       <div className="mt-2 flex items-center gap-3">
-                        <span className="exec-label w-16 shrink-0">
-                          exposure
-                        </span>
+                        <span className="exec-label w-16 shrink-0">exposure</span>
                         <div className="min-w-0 flex-1">
-                          <Bar
-                            value={entry.match.load}
-                            tone="var(--exec-cyan)"
-                            height={5}
-                          />
+                          <Bar value={entry.match.load} tone="var(--exec-cyan)" height={5} />
                         </div>
                         <span className="exec-num w-10 shrink-0 text-right text-[12px] font-semibold text-[var(--exec-ink)]">
                           {pct(entry.match.load)}
@@ -260,9 +239,8 @@ export function ExposureProfile() {
 
                       {entry.match.topEvents.length === 0 ? (
                         <p className="mt-2 border-l-2 border-[var(--exec-hairline-strong)] pl-3 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-                          No event in the current corpus reaches this
-                          dependency. It is tracked, and nothing is shown in its
-                          place.
+                          No event in the current corpus reaches this dependency. It is tracked, and
+                          nothing is shown in its place.
                         </p>
                       ) : (
                         <ul className="mt-2 space-y-1.5">
@@ -278,9 +256,8 @@ export function ExposureProfile() {
                                 {ev.title}
                               </Link>
                               <p className="exec-label-muted mt-0.5">
-                                {CHANNEL_LABEL[ev.channel]} · via{" "}
-                                {ev.viaNodeLabel} · lag {ev.lagDays[0]}–
-                                {ev.lagDays[1]}d · contribution{" "}
+                                {CHANNEL_LABEL[ev.channel]} · via {ev.viaNodeLabel} · lag{" "}
+                                {ev.lagDays[0]}–{ev.lagDays[1]}d · contribution{" "}
                                 {pct(ev.contribution)}
                               </p>
                             </li>
@@ -300,13 +277,10 @@ export function ExposureProfile() {
 
           <p className="border-t border-[var(--exec-hairline)] px-4 py-3 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
             These dependencies are{" "}
-            <strong className="font-semibold text-[var(--exec-ink)]">
-              user-provided
-            </strong>{" "}
-            — you declared them, the product did not infer them. Exposure and
-            events are MODEL OUTPUT resolved from the scenario corpus against the
-            entity you named; no company or supplier feed is connected, and no
-            dependency you did not declare is ever assumed.
+            <strong className="font-semibold text-[var(--exec-ink)]">user-provided</strong> — you
+            declared them, the product did not infer them. Exposure and events are MODEL OUTPUT
+            resolved from the scenario corpus against the entity you named; no company or supplier
+            feed is connected, and no dependency you did not declare is ever assumed.
           </p>
         </>
       )}

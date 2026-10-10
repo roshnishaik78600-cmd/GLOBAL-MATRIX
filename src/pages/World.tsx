@@ -85,10 +85,7 @@ interface MatrixRow {
 
 type BadgeBasis = "observed" | "model" | "scenario" | "unavailable";
 
-const BASIS_META: Record<
-  BadgeBasis,
-  { label: string; colour: string; help: string }
-> = {
+const BASIS_META: Record<BadgeBasis, { label: string; colour: string; help: string }> = {
   observed: {
     label: "OBSERVED",
     colour: "var(--exec-emerald)",
@@ -112,20 +109,11 @@ const BASIS_META: Record<
 };
 
 /** The one data-type chip used across this page: dot + text, never colour alone. */
-function BasisChip({
-  basis,
-  className,
-}: {
-  basis: BadgeBasis;
-  className?: string;
-}) {
+function BasisChip({ basis, className }: { basis: BadgeBasis; className?: string }) {
   const meta = BASIS_META[basis];
   return (
     <span
-      className={cn(
-        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap",
-        className,
-      )}
+      className={cn("inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap", className)}
       title={meta.help}
     >
       <span
@@ -154,17 +142,10 @@ function StatusTag({
 }) {
   return (
     <span
-      className={cn(
-        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap",
-        className,
-      )}
+      className={cn("inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap", className)}
       title={help}
     >
-      <span
-        className="size-1.5 shrink-0 rounded-full"
-        style={{ background: colour }}
-        aria-hidden
-      />
+      <span className="size-1.5 shrink-0 rounded-full" style={{ background: colour }} aria-hidden />
       <span className="exec-label" style={{ color: colour }}>
         {label}
       </span>
@@ -230,13 +211,7 @@ function bandWord(score: number): string {
 /* -------------------------------------------------------------- Motion -- */
 
 /** One subtle section entrance, disabled entirely under reduced motion. */
-function Reveal({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+function Reveal({ className, children }: { className?: string; children: ReactNode }) {
   const reduce = useReducedMotion();
   return (
     <motion.section
@@ -305,14 +280,9 @@ export default function World() {
   // rendering a page about nothing.
   const requested = searchParams.get("event");
   const eventId =
-    requested && rows.some((r) => r.id === requested)
-      ? requested
-      : (rows[0]?.id ?? null);
+    requested && rows.some((r) => r.id === requested) ? requested : (rows[0]?.id ?? null);
 
-  const chain = useQuery(
-    api.intel.eventChain,
-    eventId ? { eventId } : "skip",
-  );
+  const chain = useQuery(api.intel.eventChain, eventId ? { eventId } : "skip");
 
   const selectEvent = (id: string) => {
     const next = new URLSearchParams(searchParams);
@@ -322,31 +292,21 @@ export default function World() {
 
   const selectedRow = rows.find((r) => r.id === eventId) ?? null;
 
-  const stages = useMemo<ChainStage[]>(
-    () => (chain ? buildStages(chain) : []),
-    [chain],
-  );
+  const stages = useMemo<ChainStage[]>(() => (chain ? buildStages(chain) : []), [chain]);
 
   const mapEvents = useMemo(
     () => (overview?.mapEvents ?? []).filter((e) => e.nodeId !== ""),
     [overview],
   );
   const plottedCount = useMemo(
-    () =>
-      (overview?.mapNodes ?? []).filter((n) => isPlottable(n.nodeId)).length,
+    () => (overview?.mapNodes ?? []).filter((n) => isPlottable(n.nodeId)).length,
     [overview],
   );
   const matrixRows = useMemo(
-    () =>
-      [...((matrix?.rows ?? []) as MatrixRow[])].sort(
-        (a, b) => b.overall - a.overall,
-      ),
+    () => [...((matrix?.rows ?? []) as MatrixRow[])].sort((a, b) => b.overall - a.overall),
     [matrix],
   );
-  const growth = useMemo(
-    () => (macro.data ? macroSeries(macro.data) : null),
-    [macro.data],
-  );
+  const growth = useMemo(() => (macro.data ? macroSeries(macro.data) : null), [macro.data]);
 
   useEffect(() => {
     if (!selectedNode) return;
@@ -354,9 +314,7 @@ export default function World() {
       const target = event.target as HTMLElement | null;
       if (
         target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.isContentEditable)
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
       ) {
         return;
       }
@@ -366,8 +324,7 @@ export default function World() {
     return () => document.removeEventListener("keydown", onKey);
   }, [selectedNode]);
 
-  const toggleNode = (id: string) =>
-    setSelectedNode((current) => (current === id ? null : id));
+  const toggleNode = (id: string) => setSelectedNode((current) => (current === id ? null : id));
 
   if (!feed || !overview || !matrix) {
     return (
@@ -446,12 +403,8 @@ export default function World() {
             <article className="card min-w-0 p-5">
               <div className="flex min-w-0 flex-wrap items-start justify-between gap-x-8 gap-y-4">
                 <div className="min-w-0 flex-1 basis-72">
-                  <p className="exec-label text-[var(--exec-cyan)]">
-                    Selected event
-                  </p>
-                  <h2 className="t-card mt-1.5 text-[var(--exec-ink)]">
-                    {selectedRow.title}
-                  </h2>
+                  <p className="exec-label text-[var(--exec-cyan)]">Selected event</p>
+                  <h2 className="t-card mt-1.5 text-[var(--exec-ink)]">{selectedRow.title}</h2>
                   <dl className="mt-3.5 flex flex-wrap gap-x-6 gap-y-2.5">
                     <div>
                       <dt className="exec-label-muted">Event ID</dt>
@@ -494,8 +447,7 @@ export default function World() {
                             color: riskColorForScore(selectedRow.score30),
                           }}
                         >
-                          {selectedRow.score30.toFixed(0)} ·{" "}
-                          {BAND_LABEL[selectedRow.band]}
+                          {selectedRow.score30.toFixed(0)} · {BAND_LABEL[selectedRow.band]}
                         </span>
                         <BasisChip basis="model" />
                       </dd>
@@ -506,9 +458,7 @@ export default function World() {
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-col items-start gap-2.5">
-                  <Action to={`/app/event/${selectedRow.id}`}>
-                    Open event intelligence →
-                  </Action>
+                  <Action to={`/app/event/${selectedRow.id}`}>Open event intelligence →</Action>
                   <span className="exec-label-muted">
                     Full signals, propagation graph and analyst notes
                   </span>
@@ -578,9 +528,7 @@ export default function World() {
                   <p className="exec-num text-[2rem] leading-none font-bold tracking-[-0.025em] text-[var(--exec-ink)] lg:text-[2.25rem]">
                     {kpi.value}
                   </p>
-                  <p className="text-[13px] font-semibold text-[var(--exec-ink)]">
-                    {kpi.label}
-                  </p>
+                  <p className="text-[13px] font-semibold text-[var(--exec-ink)]">{kpi.label}</p>
                   <span className="exec-label-muted">{kpi.hint}</span>
                 </div>
               ))}
@@ -652,10 +600,7 @@ export default function World() {
                 reason="The selected event id is not in the corpus, so its country exposure cannot be resolved."
               />
             ) : (
-              <ExposureList
-                stages={stages}
-                selected={selectedNode}
-              />
+              <ExposureList stages={stages} selected={selectedNode} />
             )}
           </div>
         </Reveal>
@@ -685,8 +630,7 @@ export default function World() {
           />
           <EvidenceCard
             companyReason={
-              chain?.companyReason ??
-              "Company exposure is not measured by this build."
+              chain?.companyReason ?? "Company exposure is not measured by this build."
             }
             growthSource={growthSource}
           />
@@ -751,17 +695,14 @@ function PropagationPath({
   const measured = stages.filter((s) => s.rows.length > 0).length;
 
   return (
-    <nav
-      aria-label="Propagation path, event to market"
-      className="card min-w-0 overflow-hidden"
-    >
+    <nav aria-label="Propagation path, event to market" className="card min-w-0 overflow-hidden">
       <div className="flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[var(--exec-hairline)] px-4 py-3">
         <span className="exec-label text-[var(--exec-ink)]">
           {measured} of {stages.length} stages measured for this event
         </span>
         <span className="exec-label-muted">
-          event → country → trade → energy → infrastructure → supply chain →
-          industry → company → market
+          event → country → trade → energy → infrastructure → supply chain → industry → company →
+          market
         </span>
       </div>
 
@@ -792,9 +733,7 @@ function PropagationPath({
                 <div
                   className={cn(
                     "flex h-full min-w-0 flex-col rounded-lg border border-[var(--exec-hairline)] border-t-2 p-3",
-                    hasRows
-                      ? "border-t-[var(--exec-cyan)]"
-                      : "border-t-[var(--exec-ink-muted)]",
+                    hasRows ? "border-t-[var(--exec-cyan)]" : "border-t-[var(--exec-ink-muted)]",
                   )}
                 >
                   <span className="exec-label-muted exec-num">
@@ -812,9 +751,7 @@ function PropagationPath({
                         className="mt-2 truncate text-[13px] text-[var(--exec-ink-dim)]"
                         title={top.label}
                       >
-                        {stage.id === "event" && eventReference
-                          ? eventReference
-                          : top.label}
+                        {stage.id === "event" && eventReference ? eventReference : top.label}
                       </span>
                       <span
                         className="exec-num mt-0.5 text-[14px] font-semibold"
@@ -822,9 +759,7 @@ function PropagationPath({
                           color: riskColorForScore((top.weight ?? 0) * 100),
                         }}
                       >
-                        {top.weight !== undefined
-                          ? Math.round(top.weight * 100)
-                          : "—"}
+                        {top.weight !== undefined ? Math.round(top.weight * 100) : "—"}
                       </span>
                     </>
                   ) : (
@@ -835,9 +770,7 @@ function PropagationPath({
                       >
                         Not measured
                       </span>
-                      <span className="sr-only">
-                        {stage.unmeasured?.reason}
-                      </span>
+                      <span className="sr-only">{stage.unmeasured?.reason}</span>
                     </>
                   )}
                 </div>
@@ -909,8 +842,7 @@ function MapLegendRow() {
             className="inline-block size-2.5 border border-current text-[var(--exec-ink-dim)]"
             style={{
               borderRadius: g.glyph === "circle" ? "9999px" : 0,
-              transform:
-                g.glyph === "diamond" ? "rotate(45deg) scale(0.8)" : undefined,
+              transform: g.glyph === "diamond" ? "rotate(45deg) scale(0.8)" : undefined,
             }}
             aria-hidden
           />
@@ -928,11 +860,7 @@ function MapLegendRow() {
       <span className="flex items-center gap-2">
         <span className="exec-label-muted">Load</span>
         {RAMP.map((r) => (
-          <span
-            key={r.label}
-            className="flex items-center gap-1"
-            title={`${r.label} load band`}
-          >
+          <span key={r.label} className="flex items-center gap-1" title={`${r.label} load band`}>
             <span
               className="inline-block size-2"
               style={{ background: riskColorForScore(r.score) }}
@@ -943,8 +871,7 @@ function MapLegendRow() {
         ))}
       </span>
       <span className="exec-label-muted w-full sm:ml-auto sm:w-auto">
-        Click a location to inspect exposure. Arcs are shared-event couplings,
-        not shipping lanes.
+        Click a location to inspect exposure. Arcs are shared-event couplings, not shipping lanes.
       </span>
     </div>
   );
@@ -1023,9 +950,7 @@ function PlacePanel({
                 <span
                   className="exec-num text-[2rem] leading-none font-bold tracking-[-0.025em]"
                   style={{
-                    color: riskColorForScore(
-                      (matrixRow?.overall ?? mapNode.load) * 100,
-                    ),
+                    color: riskColorForScore((matrixRow?.overall ?? mapNode.load) * 100),
                   }}
                 >
                   {Math.round((matrixRow?.overall ?? mapNode.load) * 100)}
@@ -1043,13 +968,8 @@ function PlacePanel({
                   <p className="exec-label-muted">CHANNELS · MODEL OUTPUT</p>
                   <dl className="mt-2 flex flex-col gap-1.5">
                     {PLACE_CHANNELS.map((c) => (
-                      <div
-                        key={c.key}
-                        className="flex items-center justify-between gap-2"
-                      >
-                        <dt className="text-[13px] text-[var(--exec-ink-dim)]">
-                          {c.label}
-                        </dt>
+                      <div key={c.key} className="flex items-center justify-between gap-2">
+                        <dt className="text-[13px] text-[var(--exec-ink-dim)]">{c.label}</dt>
                         <dd
                           className="text-[13px] font-semibold"
                           style={{
@@ -1076,15 +996,10 @@ function PlacePanel({
               )}
             </div>
 
-            <NodeEvidence
-              nodeId={nodeId}
-              className="border-t border-[var(--exec-hairline)]"
-            />
+            <NodeEvidence nodeId={nodeId} className="border-t border-[var(--exec-hairline)]" />
 
             <div className="mt-auto border-t border-[var(--exec-hairline)] px-4 py-3">
-              <Action to={`/app/country/${nodeId}`}>
-                Open country profile →
-              </Action>
+              <Action to={`/app/country/${nodeId}`}>Open country profile →</Action>
             </div>
           </motion.div>
         ) : nodeId && !mapNode ? (
@@ -1095,12 +1010,9 @@ function PlacePanel({
             exit={{ opacity: 1 }}
             className="flex flex-1 flex-col justify-center gap-2 px-4 py-6"
           >
-            <span className="exec-label text-[var(--exec-crimson)]">
-              UNAVAILABLE
-            </span>
+            <span className="exec-label text-[var(--exec-crimson)]">UNAVAILABLE</span>
             <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-              This place is not in the tracked corpus, so there is nothing
-              verified to show for it.
+              This place is not in the tracked corpus, so there is nothing verified to show for it.
             </p>
           </motion.div>
         ) : (
@@ -1113,12 +1025,12 @@ function PlacePanel({
           >
             <p className="exec-label text-[var(--exec-ink)]">SELECT A PLACE</p>
             <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-              Click any country or chokepoint on the map to read its exposure,
-              channels and reported evidence right here.
+              Click any country or chokepoint on the map to read its exposure, channels and reported
+              evidence right here.
             </p>
             <p className="text-[12px] leading-relaxed text-[var(--exec-ink-muted)]">
-              Every economy also appears in the ranked list below, so nothing on
-              the map is reachable by pointer only.
+              Every economy also appears in the ranked list below, so nothing on the map is
+              reachable by pointer only.
             </p>
           </motion.div>
         )}
@@ -1130,13 +1042,7 @@ function PlacePanel({
 /* -------------------------------------------------- Country exposure -- */
 
 /** The ranked list: one row per exposed economy, straight through to the profile. */
-function ExposureList({
-  stages,
-  selected,
-}: {
-  stages: ChainStage[];
-  selected: string | null;
-}) {
+function ExposureList({ stages, selected }: { stages: ChainStage[]; selected: string | null }) {
   const rows = stages.find((s) => s.id === "country")?.rows ?? [];
 
   if (rows.length === 0) {
@@ -1175,11 +1081,7 @@ function ExposureList({
                   {r.label}
                 </span>
                 <span className="hidden w-32 shrink-0 sm:block md:w-48">
-                  <Bar
-                    value={weight}
-                    tone={riskColorForScore(weight * 100)}
-                    height={4}
-                  />
+                  <Bar value={weight} tone={riskColorForScore(weight * 100)} height={4} />
                 </span>
                 <span
                   className="exec-num w-9 shrink-0 text-right text-[13px] font-semibold"
@@ -1195,9 +1097,8 @@ function ExposureList({
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-[var(--exec-hairline)] px-4 py-3">
         <BasisChip basis="model" />
         <span className="exec-label-muted">
-          Weighted exposure = summed impact × pathway confidence across this
-          event&apos;s measured channels, capped at 100. Rows link to the full
-          country profile.
+          Weighted exposure = summed impact × pathway confidence across this event&apos;s measured
+          channels, capped at 100. Rows link to the full country profile.
         </span>
       </div>
     </>
@@ -1266,20 +1167,18 @@ function RiskTable({
     <div className="card min-w-0 overflow-hidden">
       <div className="flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-[var(--exec-hairline)] px-4 py-3">
         <span className="exec-label text-[var(--exec-ink)]">
-          {rows.length} economies · five modelled channels + one reported
-          figure
+          {rows.length} economies · five modelled channels + one reported figure
         </span>
         <span className="exec-label-muted">
-          Scroll the table sideways on narrow screens — the page itself never
-          scrolls.
+          Scroll the table sideways on narrow screens — the page itself never scrolls.
         </span>
       </div>
 
       <div className="max-h-[560px] min-w-0 overflow-auto">
         <table className="w-full min-w-[720px] border-collapse text-left">
           <caption className="sr-only">
-            Risk signals per economy. Geopolitical, Trade, Energy, Supply and
-            Market are model output; Economic is reported real GDP growth.
+            Risk signals per economy. Geopolitical, Trade, Energy, Supply and Market are model
+            output; Economic is reported real GDP growth.
           </caption>
           <thead>
             <tr>
@@ -1306,9 +1205,7 @@ function RiskTable({
                 className="sticky top-0 z-10 border-b border-[var(--exec-hairline-strong)] bg-[var(--card)] px-3 py-3 exec-label whitespace-nowrap"
               >
                 Economic
-                <span className="sr-only">
-                  {" "}— reported real GDP growth from the World Bank.
-                </span>
+                <span className="sr-only"> — reported real GDP growth from the World Bank.</span>
               </th>
             </tr>
           </thead>
@@ -1328,9 +1225,7 @@ function RiskTable({
                     scope="row"
                     className={cn(
                       "sticky left-0 z-10 border-r border-[var(--exec-hairline)] px-4 py-2.5 text-left font-normal",
-                      active
-                        ? "bg-[var(--exec-surface)]"
-                        : "bg-[var(--card)]",
+                      active ? "bg-[var(--exec-surface)]" : "bg-[var(--card)]",
                     )}
                   >
                     <Link
@@ -1381,9 +1276,7 @@ function RiskTable({
                           className="exec-num block text-[13px] font-semibold"
                           style={{
                             color:
-                              obs.latest.value >= 0
-                                ? "var(--exec-emerald)"
-                                : "var(--exec-crimson)",
+                              obs.latest.value >= 0 ? "var(--exec-emerald)" : "var(--exec-crimson)",
                           }}
                           title={`Reported real GDP growth, ${obs.latest.period}`}
                         >
@@ -1412,10 +1305,9 @@ function RiskTable({
 
       <div className="space-y-2 border-t border-[var(--exec-hairline)] px-4 py-3">
         <p className="text-[12px] leading-relaxed text-[var(--exec-ink-muted)]">
-          Geopolitical, Trade, Energy, Supply and Market are GlobalMatrix&apos;s
-          own channel load for that economy. Economic is reported real GDP
-          growth — a direction, not a risk score, and never mixed into the
-          modelled columns.
+          Geopolitical, Trade, Energy, Supply and Market are GlobalMatrix&apos;s own channel load
+          for that economy. Economic is reported real GDP growth — a direction, not a risk score,
+          and never mixed into the modelled columns.
         </p>
         {source ? (
           <SourceLine provenance={source} />
@@ -1494,17 +1386,13 @@ function EvidenceCard({
             className="flex min-w-0 flex-wrap items-start gap-x-5 gap-y-2 px-4 py-3.5"
           >
             <div className="w-44 shrink-0 min-w-0">
-              <p className="text-[13px] font-semibold text-[var(--exec-ink)]">
-                {r.title}
-              </p>
+              <p className="text-[13px] font-semibold text-[var(--exec-ink)]">{r.title}</p>
               <BasisChip basis={r.basis} className="mt-1" />
             </div>
             <p className="min-w-0 flex-1 basis-64 text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
               {r.body}
             </p>
-            {r.source ? (
-              <SourceLine provenance={r.source} className="w-full" />
-            ) : null}
+            {r.source ? <SourceLine provenance={r.source} className="w-full" /> : null}
           </div>
         ))}
       </div>
@@ -1515,10 +1403,7 @@ function EvidenceCard({
         >
           Full methodology →
         </Link>
-        <Link
-          to="/app/data"
-          className="exec-label transition-colors hover:text-[var(--exec-ink)]"
-        >
+        <Link to="/app/data" className="exec-label transition-colors hover:text-[var(--exec-ink)]">
           Data sources →
         </Link>
         <span className="exec-num ml-auto text-[12px] text-[var(--exec-ink-muted)]">

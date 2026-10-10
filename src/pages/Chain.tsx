@@ -22,8 +22,7 @@ export default function ChainPage() {
   const navigate = useNavigate();
   const { focus, toggle, clear } = useFocus();
   const selected = focus?.kind === "node" ? focus.id : null;
-  const setSelected = (id: string | null) =>
-    id === null ? clear() : toggle({ kind: "node", id });
+  const setSelected = (id: string | null) => (id === null ? clear() : toggle({ kind: "node", id }));
 
   if (!overview) {
     return (
@@ -42,12 +41,11 @@ export default function ChainPage() {
   const topEvent = overview.topEvents[0];
 
   return (
-      <PageFrame
+    <PageFrame
       eyebrow="Impact"
       title="Impact graph"
       lede="How one event travels from detection through countries, trade, energy and supply chains into market exposure."
     >
-
       <QuestionStrip
         className="border-b border-rule"
         answers={[
@@ -85,8 +83,7 @@ export default function ChainPage() {
               <div className="panel-head">
                 <span className="label">The same model, from above</span>
                 <span className="label text-muted-foreground">
-                  {plottablePlaces} places ·{" "}
-                  {overview.mapEvents?.length ?? 0} events ·{" "}
+                  {plottablePlaces} places · {overview.mapEvents?.length ?? 0} events ·{" "}
                   {overview.flows.length} couplings
                 </span>
               </div>
@@ -114,9 +111,8 @@ export default function ChainPage() {
                   <span className="label">Pick a place</span>
                 </div>
                 <p className="p-3 text-[13px] leading-relaxed text-muted-foreground">
-                  Select any country, bloc or chokepoint on the map to see its
-                  live load, its reported growth and its reported trade — each
-                  with the source it came from.
+                  Select any country, bloc or chokepoint on the map to see its live load, its
+                  reported growth and its reported trade — each with the source it came from.
                 </p>
               </div>
             )}

@@ -21,23 +21,15 @@ export function NoVerifiedData({
   action?: ReactNode;
 }) {
   return (
-    <div
-      className={cn(
-        "flex flex-col items-start gap-2 p-4",
-        className,
-      )}
-    >
+    <div className={cn("flex flex-col items-start gap-2 p-4", className)}>
       <div className="flex items-center gap-2">
         <Database className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
         <span className="label text-foreground/85">{title}</span>
       </div>
-      <p className="text-[13px] font-medium">
-        No verified data available.
-      </p>
+      <p className="text-[13px] font-medium">No verified data available.</p>
       <p className="max-w-md text-[13px] leading-relaxed text-muted-foreground">
-        GlobalMatrix has no {domain} data source connected. Rather than show
-        estimates or placeholders, this panel stays empty until a real feed is
-        connected.
+        GlobalMatrix has no {domain} data source connected. Rather than show estimates or
+        placeholders, this panel stays empty until a real feed is connected.
       </p>
       {action}
     </div>
@@ -53,21 +45,14 @@ export function QuestionStrip({
   className?: string;
 }) {
   return (
-    <ol
-      className={cn(
-        "grid grid-cols-1 gap-px bg-rule sm:grid-cols-2 lg:grid-cols-5",
-        className,
-      )}
-    >
+    <ol className={cn("grid grid-cols-1 gap-px bg-rule sm:grid-cols-2 lg:grid-cols-5", className)}>
       {answers.map((item, i) => {
         const body = (
           <>
             <span className="label text-muted-foreground">
               {String(i + 1).padStart(2, "0")} · {item.q}
             </span>
-            <span className="mt-1.5 block text-[13px] leading-snug">
-              {item.a}
-            </span>
+            <span className="mt-1.5 block text-[13px] leading-snug">{item.a}</span>
           </>
         );
         return (

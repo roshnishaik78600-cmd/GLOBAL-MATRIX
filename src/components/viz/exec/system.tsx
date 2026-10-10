@@ -21,13 +21,7 @@ import { sourceById } from "@/lib/sources";
 
 /* ---------------------------------------------------------------- Layout -- */
 
-export function ExecPage({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function ExecPage({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
       className={cn("min-w-0", className)}
@@ -39,19 +33,10 @@ export function ExecPage({
 }
 
 /** Strict 12-column grid with one gutter, used by every page body. */
-export function ExecGrid({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function ExecGrid({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn(
-        "gm-width grid grid-cols-4 gap-3 px-4 py-4 lg:grid-cols-12 lg:px-8",
-        className,
-      )}
+      className={cn("gm-width grid grid-cols-4 gap-3 px-4 py-4 lg:grid-cols-12 lg:px-8", className)}
     >
       {children}
     </div>
@@ -191,8 +176,7 @@ export function DominantCard({
     <section
       className={cn("card flex min-w-0 flex-col", className)}
       style={{
-        borderColor:
-          "color-mix(in srgb, var(--exec-cyan) 45%, var(--exec-hairline))",
+        borderColor: "color-mix(in srgb, var(--exec-cyan) 45%, var(--exec-hairline))",
       }}
     >
       <SectionTitle meta={meta} right={right}>
@@ -217,20 +201,14 @@ export function FreshnessTag({
   return (
     <span
       title={FRESHNESS_HELP[freshness]}
-      className={cn(
-        "inline-flex items-center gap-1.5 whitespace-nowrap",
-        className,
-      )}
+      className={cn("inline-flex items-center gap-1.5 whitespace-nowrap", className)}
     >
       <span
         className={cn("size-1.5 shrink-0 rounded-full", freshness === "live" && "live-dot")}
         style={{ background: colour }}
         aria-hidden
       />
-      <span
-        className="exec-label"
-        style={{ color: colour }}
-      >
+      <span className="exec-label" style={{ color: colour }}>
         {FRESHNESS_LABEL[freshness]}
       </span>
     </span>
@@ -275,9 +253,7 @@ export function ProvenanceFoot({
       ) : null}
       <FreshnessTag freshness={freshness} className="ml-auto" />
       {note ? (
-        <span className="w-full text-[12px] leading-snug text-[var(--exec-ink-dim)]">
-          {note}
-        </span>
+        <span className="w-full text-[12px] leading-snug text-[var(--exec-ink-dim)]">{note}</span>
       ) : null}
     </div>
   );
@@ -298,11 +274,7 @@ export function BasisTag({
         ? "var(--exec-cyan)"
         : "var(--exec-amber)";
   const label =
-    basis === "observed"
-      ? "OBSERVED DATA"
-      : basis === "model"
-        ? "MODEL OUTPUT"
-        : "SCENARIO";
+    basis === "observed" ? "OBSERVED DATA" : basis === "model" ? "MODEL OUTPUT" : "SCENARIO";
   return (
     <span
       className={cn("exec-label whitespace-nowrap", className)}
@@ -366,9 +338,7 @@ export function StatTile({
         >
           {value}
         </span>
-        {unit ? (
-          <span className="exec-label">{unit}</span>
-        ) : null}
+        {unit ? <span className="exec-label">{unit}</span> : null}
       </span>
       {trend && trend.length > 1 ? (
         <svg viewBox="0 0 100 16" preserveAspectRatio="none" className="h-4 w-full">
@@ -376,10 +346,9 @@ export function StatTile({
             points={trend
               .map(
                 (v, i) =>
-                  `${((i / (trend.length - 1)) * 100).toFixed(1)},${(
-                    15 -
-                    (v / max) * 14
-                  ).toFixed(1)}`,
+                  `${((i / (trend.length - 1)) * 100).toFixed(1)},${(15 - (v / max) * 14).toFixed(
+                    1,
+                  )}`,
               )
               .join(" ")}
             fill="none"
@@ -389,9 +358,7 @@ export function StatTile({
           />
         </svg>
       ) : null}
-      {note ? (
-        <span className="exec-label mt-0.5 block truncate normal-case">{note}</span>
-      ) : null}
+      {note ? <span className="exec-label mt-0.5 block truncate normal-case">{note}</span> : null}
     </button>
   );
 }
@@ -424,9 +391,7 @@ export function NoDataAvailable({
         <span className="exec-label text-[var(--exec-ink)]">NO VERIFIED DATA AVAILABLE</span>
       </div>
       <p className="text-[13px] font-medium text-[var(--exec-ink)]">{title}</p>
-      <p className="max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-        {reason}
-      </p>
+      <p className="max-w-md text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">{reason}</p>
       {hint}
     </div>
   );
@@ -446,10 +411,7 @@ export function SegmentedControl<T extends string>({
   className?: string;
 }) {
   return (
-    <div
-      className={cn("flex min-w-0 items-center gap-px overflow-x-auto", className)}
-      role="group"
-    >
+    <div className={cn("flex min-w-0 items-center gap-px overflow-x-auto", className)} role="group">
       {options.map((o) => (
         <button
           key={o.id}
@@ -483,10 +445,7 @@ export function ExecLink({
   return (
     <Link
       to={to}
-      className={cn(
-        "exec-label transition-colors hover:text-[var(--exec-ink)]",
-        className,
-      )}
+      className={cn("exec-label transition-colors hover:text-[var(--exec-ink)]", className)}
     >
       {children}
     </Link>

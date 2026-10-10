@@ -29,7 +29,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-08-20",
         channel: "trade",
         headline: "Full-season published transit schedule",
-        detail: "A schedule is a commercial commitment; prior transits were opportunistic and unpublished.",
+        detail:
+          "A schedule is a commercial commitment; prior transits were opportunistic and unpublished.",
         reliability: 0.88,
         weight: 0.68,
         corroborations: 3,
@@ -55,7 +56,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-06",
         channel: "trade",
         headline: "Ice-class orderbook extends to 2029",
-        detail: "Fleet investment is the only durable signal here; transits are weather-dependent noise.",
+        detail:
+          "Fleet investment is the only durable signal here; transits are weather-dependent noise.",
         reliability: 0.8,
         weight: 0.66,
         corroborations: 3,
@@ -68,7 +70,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-14",
         channel: "diplomatic",
         headline: "Transit governance rules extended to a further vessel class",
-        detail: "Procedural recognition by a non-routing state reduces the geopolitical discount on the route.",
+        detail:
+          "Procedural recognition by a non-routing state reduces the geopolitical discount on the route.",
         reliability: 0.84,
         weight: 0.5,
         corroborations: 2,
@@ -85,11 +88,41 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Substitution, not disruption. The effect is a small permanent discount on Asia–Europe routing, which requires enough tonnage to matter and enough reliability to schedule around.",
         exposures: [
-          { nodeId: "ARCTIC", exposure: 0.8, impact: 0.44, lagDays: 120, note: "Route normalised in scheduling systems" },
-          { nodeId: "RU", exposure: 0.72, impact: 0.38, lagDays: 140, note: "Transit revenue and port fees accrue" },
-          { nodeId: "SG", exposure: 0.58, impact: 0.26, lagDays: 160, note: "Transhipment volume shifts to northern routing" },
-          { nodeId: "EU", exposure: 0.5, impact: 0.21, lagDays: 150, note: "Rotterdam and Hamburg call patterns change" },
-          { nodeId: "SUZK", exposure: 0.42, impact: 0.2, lagDays: 170, note: "Suez economics pressured by diversion" },
+          {
+            nodeId: "ARCTIC",
+            exposure: 0.8,
+            impact: 0.44,
+            lagDays: 120,
+            note: "Route normalised in scheduling systems",
+          },
+          {
+            nodeId: "RU",
+            exposure: 0.72,
+            impact: 0.38,
+            lagDays: 140,
+            note: "Transit revenue and port fees accrue",
+          },
+          {
+            nodeId: "SG",
+            exposure: 0.58,
+            impact: 0.26,
+            lagDays: 160,
+            note: "Transhipment volume shifts to northern routing",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.5,
+            impact: 0.21,
+            lagDays: 150,
+            note: "Rotterdam and Hamburg call patterns change",
+          },
+          {
+            nodeId: "SUZK",
+            exposure: 0.42,
+            impact: 0.2,
+            lagDays: 170,
+            note: "Suez economics pressured by diversion",
+          },
         ],
       },
       {
@@ -100,8 +133,20 @@ export const SCENARIOS_3: Scenario[] = [
         confidence: 0.5,
         mechanism: "Asset values and insurance pricing shift before freight economics do.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.36, impact: 0.15, lagDays: 110, note: "Ice-class asset revaluation" },
-          { nodeId: "RU", exposure: 0.42, impact: 0.19, lagDays: 130, note: "Arctic logistics credit expansion" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.36,
+            impact: 0.15,
+            lagDays: 110,
+            note: "Ice-class asset revaluation",
+          },
+          {
+            nodeId: "RU",
+            exposure: 0.42,
+            impact: 0.19,
+            lagDays: 130,
+            note: "Arctic logistics credit expansion",
+          },
         ],
       },
       {
@@ -113,8 +158,20 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Recognition without transit-rights equivalence. Governance participation and commercial access remain separable.",
         exposures: [
-          { nodeId: "RU", exposure: 0.5, impact: 0.22, lagDays: 130, note: "Sanctions perimeter applied to a new trade route" },
-          { nodeId: "EU", exposure: 0.4, impact: 0.16, lagDays: 160, note: "Position on non-Russian hulls under review" },
+          {
+            nodeId: "RU",
+            exposure: 0.5,
+            impact: 0.22,
+            lagDays: 130,
+            note: "Sanctions perimeter applied to a new trade route",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.4,
+            impact: 0.16,
+            lagDays: 160,
+            note: "Position on non-Russian hulls under review",
+          },
         ],
       },
       {
@@ -123,9 +180,16 @@ export const SCENARIOS_3: Scenario[] = [
         magnitude: 0.2,
         lagDays: [180, 500],
         confidence: 0.34,
-        mechanism: "Negligible on current volumes; relevant only if route reliability becomes structural.",
+        mechanism:
+          "Negligible on current volumes; relevant only if route reliability becomes structural.",
         exposures: [
-          { nodeId: "RU", exposure: 0.3, impact: 0.1, lagDays: 300, note: "Northern-of-Siberian output optionality only" },
+          {
+            nodeId: "RU",
+            exposure: 0.3,
+            impact: 0.1,
+            lagDays: 300,
+            note: "Northern-of-Siberian output optionality only",
+          },
         ],
       },
     ],
@@ -157,7 +221,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-12",
         channel: "energy",
         headline: "Coordinated targeting of port and grid-adjacent operators declared",
-        detail: "Advisory identifies a shared initial-access vector across at least nine organisations in two jurisdictions.",
+        detail:
+          "Advisory identifies a shared initial-access vector across at least nine organisations in two jurisdictions.",
         reliability: 0.92,
         weight: 0.82,
         corroborations: 4,
@@ -170,7 +235,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-19",
         channel: "trade",
         headline: "Unscheduled berth closure of 31 hours",
-        detail: "Closure attributed to a systems fault; the advisory's initial-access date falls three days prior.",
+        detail:
+          "Closure attributed to a systems fault; the advisory's initial-access date falls three days prior.",
         reliability: 0.88,
         weight: 0.74,
         corroborations: 3,
@@ -213,9 +279,27 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Cyber impacts the energy channel only when it becomes physical. Outage duration, not intrusion count, is the model input; restoration time is bounded by equipment lead times.",
         exposures: [
-          { nodeId: "EU", exposure: 0.8, impact: 0.48, lagDays: 15, note: "Redundancy absorbed both outages; a third exceeds it" },
-          { nodeId: "TR", exposure: 0.66, impact: 0.38, lagDays: 22, note: "Grid operator and port systems share identity infrastructure" },
-          { nodeId: "RU", exposure: 0.58, impact: 0.31, lagDays: 18, note: "Attribution contested, capability assumed symmetric" },
+          {
+            nodeId: "EU",
+            exposure: 0.8,
+            impact: 0.48,
+            lagDays: 15,
+            note: "Redundancy absorbed both outages; a third exceeds it",
+          },
+          {
+            nodeId: "TR",
+            exposure: 0.66,
+            impact: 0.38,
+            lagDays: 22,
+            note: "Grid operator and port systems share identity infrastructure",
+          },
+          {
+            nodeId: "RU",
+            exposure: 0.58,
+            impact: 0.31,
+            lagDays: 18,
+            note: "Attribution contested, capability assumed symmetric",
+          },
         ],
       },
       {
@@ -227,9 +311,27 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Port disruption propagates as schedule unreliability, which is costlier than lost volume and persists after the outage ends because recovery backlogs take weeks to clear.",
         exposures: [
-          { nodeId: "EU", exposure: 0.76, impact: 0.44, lagDays: 25, note: "Berth scheduling backlog propagates inland" },
-          { nodeId: "TR", exposure: 0.62, impact: 0.34, lagDays: 28, note: "Transhipment reliability premium" },
-          { nodeId: "NL", exposure: 0.54, impact: 0.28, lagDays: 30, note: "Distribution centre throughput disruption" },
+          {
+            nodeId: "EU",
+            exposure: 0.76,
+            impact: 0.44,
+            lagDays: 25,
+            note: "Berth scheduling backlog propagates inland",
+          },
+          {
+            nodeId: "TR",
+            exposure: 0.62,
+            impact: 0.34,
+            lagDays: 28,
+            note: "Transhipment reliability premium",
+          },
+          {
+            nodeId: "NL",
+            exposure: 0.54,
+            impact: 0.28,
+            lagDays: 30,
+            note: "Distribution centre throughput disruption",
+          },
         ],
       },
       {
@@ -241,8 +343,20 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Operational and counterparty risk pricing for utilities and logistics operators; small in absolute terms, persistent in duration.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.44, impact: 0.2, lagDays: 20, note: "Utility and logistics risk premia widen" },
-          { nodeId: "EU", exposure: 0.4, impact: 0.18, lagDays: 25, note: "Corporate cyber-insurance repricing" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.44,
+            impact: 0.2,
+            lagDays: 20,
+            note: "Utility and logistics risk premia widen",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.4,
+            impact: 0.18,
+            lagDays: 25,
+            note: "Corporate cyber-insurance repricing",
+          },
         ],
       },
       {
@@ -254,9 +368,27 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Contested attribution removes the accountability channel that normally suppresses escalation. Each disputed claim raises the risk of a misattributed retaliatory response.",
         exposures: [
-          { nodeId: "RU", exposure: 0.6, impact: 0.32, lagDays: 20, note: "Attribution denials keep the channel open" },
-          { nodeId: "US", exposure: 0.54, impact: 0.27, lagDays: 18, note: "Retaliatory-response thresholds lowered" },
-          { nodeId: "EU", exposure: 0.48, impact: 0.22, lagDays: 25, note: "Unified attribution position not achievable" },
+          {
+            nodeId: "RU",
+            exposure: 0.6,
+            impact: 0.32,
+            lagDays: 20,
+            note: "Attribution denials keep the channel open",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.54,
+            impact: 0.27,
+            lagDays: 18,
+            note: "Retaliatory-response thresholds lowered",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.48,
+            impact: 0.22,
+            lagDays: 25,
+            note: "Unified attribution position not achievable",
+          },
         ],
       },
     ],
@@ -288,7 +420,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-16",
         channel: "diplomatic",
         headline: "Water-cannon use during law-enforcement approach",
-        detail: "Characterised as lawful enforcement; the counterpart characterises it as unprovoked use of force.",
+        detail:
+          "Characterised as lawful enforcement; the counterpart characterises it as unprovoked use of force.",
         reliability: 0.89,
         weight: 0.68,
         corroborations: 4,
@@ -301,7 +434,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-22",
         channel: "trade",
         headline: "Supply vessels rerouted away from the approach corridor",
-        detail: "Commercial operators self-separate from the area without any instruction to do so.",
+        detail:
+          "Commercial operators self-separate from the area without any instruction to do so.",
         reliability: 0.83,
         weight: 0.72,
         corroborations: 4,
@@ -314,7 +448,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-25",
         channel: "diplomatic",
         headline: "Consultation requested under a prior incident framework",
-        detail: "Using an established framework signals the incident is treated as a precedent, not an isolated event.",
+        detail:
+          "Using an established framework signals the incident is treated as a precedent, not an isolated event.",
         reliability: 0.85,
         weight: 0.6,
         corroborations: 3,
@@ -327,7 +462,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-29",
         channel: "finance",
         headline: "Mutual-defence understanding cited in allied briefing",
-        detail: "If cited in briefing rather than in a statement, the commitment is being read as applicable.",
+        detail:
+          "If cited in briefing rather than in a statement, the commitment is being read as applicable.",
         reliability: 0.71,
         weight: 0.56,
         corroborations: 2,
@@ -344,11 +480,41 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Grey-zone escalation is ratcheting: each step is individually defensible and collectively degrading. Absence of a formal threshold is precisely what allows the ratchet to operate.",
         exposures: [
-          { nodeId: "CN", exposure: 0.82, impact: 0.52, lagDays: 15, note: "Position hardened; retreat read as concession" },
-          { nodeId: "PH", exposure: 0.7, impact: 0.45, lagDays: 14, note: "Alliance reliance tested against a direct incident" },
-          { nodeId: "US", exposure: 0.62, impact: 0.36, lagDays: 18, note: "Treaty scope becomes the operative question" },
-          { nodeId: "JP", exposure: 0.56, impact: 0.31, lagDays: 20, note: "Domestic political constraint sharpens" },
-          { nodeId: "EU", exposure: 0.44, impact: 0.22, lagDays: 25, note: "Economic exposure acknowledged without a legal position" },
+          {
+            nodeId: "CN",
+            exposure: 0.82,
+            impact: 0.52,
+            lagDays: 15,
+            note: "Position hardened; retreat read as concession",
+          },
+          {
+            nodeId: "PH",
+            exposure: 0.7,
+            impact: 0.45,
+            lagDays: 14,
+            note: "Alliance reliance tested against a direct incident",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.62,
+            impact: 0.36,
+            lagDays: 18,
+            note: "Treaty scope becomes the operative question",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.56,
+            impact: 0.31,
+            lagDays: 20,
+            note: "Domestic political constraint sharpens",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.44,
+            impact: 0.22,
+            lagDays: 25,
+            note: "Economic exposure acknowledged without a legal position",
+          },
         ],
       },
       {
@@ -360,8 +526,20 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Voluntary commercial separation from a contested corridor is fast, cheap and reversible — which means it can appear and disappear without any official decision.",
         exposures: [
-          { nodeId: "PH", exposure: 0.66, impact: 0.36, lagDays: 22, note: "Approach corridor abandoned by commercial traffic" },
-          { nodeId: "TW", exposure: 0.5, impact: 0.24, lagDays: 25, note: "Adjacent routing adjusted" },
+          {
+            nodeId: "PH",
+            exposure: 0.66,
+            impact: 0.36,
+            lagDays: 22,
+            note: "Approach corridor abandoned by commercial traffic",
+          },
+          {
+            nodeId: "TW",
+            exposure: 0.5,
+            impact: 0.24,
+            lagDays: 25,
+            note: "Adjacent routing adjusted",
+          },
         ],
       },
       {
@@ -373,8 +551,20 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Indirect through rerouting of LNG and agricultural bulk, where the region absorbs a premium rather than a volume loss.",
         exposures: [
-          { nodeId: "JP", exposure: 0.4, impact: 0.2, lagDays: 80, note: "Regional sourcing premium" },
-          { nodeId: "TW", exposure: 0.32, impact: 0.15, lagDays: 85, note: "Transhipment surcharge" },
+          {
+            nodeId: "JP",
+            exposure: 0.4,
+            impact: 0.2,
+            lagDays: 80,
+            note: "Regional sourcing premium",
+          },
+          {
+            nodeId: "TW",
+            exposure: 0.32,
+            impact: 0.15,
+            lagDays: 85,
+            note: "Transhipment surcharge",
+          },
         ],
       },
       {
@@ -385,8 +575,20 @@ export const SCENARIOS_3: Scenario[] = [
         confidence: 0.6,
         mechanism: "Tail-risk pricing: skew steepens without a corresponding move in spot levels.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.5, impact: 0.23, lagDays: 15, note: "Regional equity skew and volatility steepening" },
-          { nodeId: "TW", exposure: 0.42, impact: 0.19, lagDays: 14, note: "Defence and shipping repricing" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.5,
+            impact: 0.23,
+            lagDays: 15,
+            note: "Regional equity skew and volatility steepening",
+          },
+          {
+            nodeId: "TW",
+            exposure: 0.42,
+            impact: 0.19,
+            lagDays: 14,
+            note: "Defence and shipping repricing",
+          },
         ],
       },
     ],
@@ -418,7 +620,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-18",
         channel: "energy",
         headline: "Turnaround deferred at three assets in the same quarter",
-        detail: "Deferrals were individually justified on economics and collectively remove regional slack.",
+        detail:
+          "Deferrals were individually justified on economics and collectively remove regional slack.",
         reliability: 0.9,
         weight: 0.76,
         corroborations: 3,
@@ -431,7 +634,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-24",
         channel: "energy",
         headline: "Regional middle-distillate crack at a three-year high",
-        detail: "Crack strength with flat crude differentials isolates refining rather than crude as the binding constraint.",
+        detail:
+          "Crack strength with flat crude differentials isolates refining rather than crude as the binding constraint.",
         reliability: 0.86,
         weight: 0.72,
         corroborations: 4,
@@ -444,7 +648,8 @@ export const SCENARIOS_3: Scenario[] = [
         observedAt: "2026-09-29",
         channel: "trade",
         headline: "Net product imports up 31% over two months",
-        detail: "Import substitution is the market's own answer to the capacity shortfall, and it is already running.",
+        detail:
+          "Import substitution is the market's own answer to the capacity shortfall, and it is already running.",
         reliability: 0.82,
         weight: 0.64,
         corroborations: 3,
@@ -474,9 +679,27 @@ export const SCENARIOS_3: Scenario[] = [
         mechanism:
           "Refining capacity is not fungible across grades or regions on a 60-day horizon, so a small slack number becomes a large price response. Crude availability is not the constraint; distillation is.",
         exposures: [
-          { nodeId: "IN", exposure: 0.86, impact: 0.56, lagDays: 20, note: "Regional slack exhausted; import cover drawn down" },
-          { nodeId: "SG", exposure: 0.6, impact: 0.32, lagDays: 25, note: "Storage arbitrage widens" },
-          { nodeId: "KR", exposure: 0.52, impact: 0.26, lagDays: 30, note: "Product cargo competition for regional tenders" },
+          {
+            nodeId: "IN",
+            exposure: 0.86,
+            impact: 0.56,
+            lagDays: 20,
+            note: "Regional slack exhausted; import cover drawn down",
+          },
+          {
+            nodeId: "SG",
+            exposure: 0.6,
+            impact: 0.32,
+            lagDays: 25,
+            note: "Storage arbitrage widens",
+          },
+          {
+            nodeId: "KR",
+            exposure: 0.52,
+            impact: 0.26,
+            lagDays: 30,
+            note: "Product cargo competition for regional tenders",
+          },
         ],
       },
       {
@@ -485,10 +708,23 @@ export const SCENARIOS_3: Scenario[] = [
         magnitude: 0.42,
         lagDays: [20, 70],
         confidence: 0.66,
-        mechanism: "Import substitution and freight cost compound into landed product prices with a lag set by contract structure.",
+        mechanism:
+          "Import substitution and freight cost compound into landed product prices with a lag set by contract structure.",
         exposures: [
-          { nodeId: "IN", exposure: 0.64, impact: 0.33, lagDays: 35, note: "Landed-cost inflation on product imports" },
-          { nodeId: "US", exposure: 0.46, impact: 0.22, lagDays: 40, note: "Export cargo availability improves" },
+          {
+            nodeId: "IN",
+            exposure: 0.64,
+            impact: 0.33,
+            lagDays: 35,
+            note: "Landed-cost inflation on product imports",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.46,
+            impact: 0.22,
+            lagDays: 40,
+            note: "Export cargo availability improves",
+          },
         ],
       },
       {
@@ -499,7 +735,13 @@ export const SCENARIOS_3: Scenario[] = [
         confidence: 0.62,
         mechanism: "Crack-driven earnings dispersion rather than index-level impact.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.4, impact: 0.17, lagDays: 20, note: "Refining versus integrated earnings dispersion" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.4,
+            impact: 0.17,
+            lagDays: 20,
+            note: "Refining versus integrated earnings dispersion",
+          },
         ],
       },
       {
@@ -510,7 +752,13 @@ export const SCENARIOS_3: Scenario[] = [
         confidence: 0.52,
         mechanism: "Sourcing arrangements are commercial and rarely need state involvement.",
         exposures: [
-          { nodeId: "IN", exposure: 0.42, impact: 0.17, lagDays: 60, note: "Bilateral sourcing terms negotiated" },
+          {
+            nodeId: "IN",
+            exposure: 0.42,
+            impact: 0.17,
+            lagDays: 60,
+            note: "Bilateral sourcing terms negotiated",
+          },
         ],
       },
     ],

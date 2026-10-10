@@ -1,9 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  RISK_COLOR,
-  RISK_FILL,
-  riskColorForScore,
-} from "@/lib/intel/visual";
+import { RISK_COLOR, RISK_FILL, riskColorForScore } from "@/lib/intel/visual";
 import {
   BAND_LABEL,
   CHANNEL_LABEL,
@@ -16,16 +12,8 @@ import { cn } from "@/lib/utils";
 /* Shared primitives, re-pointed at the dark workstation tokens.
    Retained so existing pages inherit the new theme without a rewrite. */
 
-export function Label({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <span className={cn("label text-muted-foreground", className)}>{children}</span>
-  );
+export function Label({ children, className }: { children: ReactNode; className?: string }) {
+  return <span className={cn("label text-muted-foreground", className)}>{children}</span>;
 }
 
 export function Rule({ className }: { className?: string }) {
@@ -43,12 +31,15 @@ export function Figure({
   className?: string;
 }) {
   return (
-    <span className={cn("exec-num text-[1.75rem] leading-none font-semibold tracking-[-0.02em]", className)}>
+    <span
+      className={cn(
+        "exec-num text-[1.75rem] leading-none font-semibold tracking-[-0.02em]",
+        className,
+      )}
+    >
       {value}
       {suffix ? (
-        <span className="ml-1 text-[12px] font-normal text-muted-foreground">
-          {suffix}
-        </span>
+        <span className="ml-1 text-[12px] font-normal text-muted-foreground">{suffix}</span>
       ) : null}
     </span>
   );
@@ -141,10 +132,7 @@ export function IntervalBar({
           backgroundColor: RISK_COLOR[band],
         }}
       />
-      <div
-        className="absolute top-0 h-full w-[2px] bg-foreground"
-        style={{ left: `${marker}%` }}
-      />
+      <div className="absolute top-0 h-full w-[2px] bg-foreground" style={{ left: `${marker}%` }} />
     </div>
   );
 }
@@ -286,8 +274,7 @@ export function BandScale({ band }: { band: RiskBand }) {
           key={b}
           className="h-1.5 w-5"
           style={{
-            backgroundColor:
-              i <= index ? RISK_COLOR[b] : "var(--rule)",
+            backgroundColor: i <= index ? RISK_COLOR[b] : "var(--rule)",
           }}
           title={BAND_LABEL[b]}
         />

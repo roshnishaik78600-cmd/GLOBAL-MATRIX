@@ -40,9 +40,8 @@ export default function NotFound() {
 
           <h1 className="t-page mt-6">This page is not in the corpus.</h1>
           <p className="t-body mt-4 max-w-lg text-[var(--exec-ink-dim)]">
-            The address you followed does not resolve to a country, an event, an
-            industry or a board. It may have been renamed, or the link may be
-            from an older version of the site.
+            The address you followed does not resolve to a country, an event, an industry or a
+            board. It may have been renamed, or the link may be from an older version of the site.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

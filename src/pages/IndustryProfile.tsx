@@ -23,10 +23,7 @@ import { CHANNEL_LABEL, type Channel } from "@/lib/intel/types";
  */
 export default function IndustryProfile() {
   const { industryId } = useParams<{ industryId: string }>();
-  const data = useQuery(
-    api.intel.industryProfile,
-    industryId ? { industryId } : "skip",
-  );
+  const data = useQuery(api.intel.industryProfile, industryId ? { industryId } : "skip");
   const toggleWatch = useToggleWatch();
 
   if (!industryId || data === undefined) {
@@ -82,11 +79,7 @@ export default function IndustryProfile() {
             onClick={() => toggleWatch(`SECTOR:${industry.id}`)}
             className="inline-flex items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3.5 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
           >
-            {watched ? (
-              <BookmarkCheck className="size-3.5" />
-            ) : (
-              <Bookmark className="size-3.5" />
-            )}
+            {watched ? <BookmarkCheck className="size-3.5" /> : <Bookmark className="size-3.5" />}
             {watched ? "Tracking" : "Track"}
           </button>
           <Link
@@ -134,9 +127,7 @@ export default function IndustryProfile() {
               <span className="exec-num mt-1 text-[1.75rem] leading-none font-bold text-[var(--exec-ink)]">
                 {exposure.eventCount}
               </span>
-              <span className="exec-label mt-2">
-                {exposure.offAffinityCount} off-affinity
-              </span>
+              <span className="exec-label mt-2">{exposure.offAffinityCount} off-affinity</span>
             </div>
           </div>
         </div>
@@ -145,34 +136,32 @@ export default function IndustryProfile() {
       {/* -------------------------------------------------- STRUCTURAL PARAMETERS */}
       <div className="lg:col-span-8">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle meta="modelled · single-point-of-failure exposure" right={<DataType type="model" />}>
+          <SectionTitle
+            meta="modelled · single-point-of-failure exposure"
+            right={<DataType type="model" />}
+          >
             Structure
           </SectionTitle>
           <dl className="grid grid-cols-2 divide-x divide-y divide-[var(--exec-hairline)] lg:grid-cols-4 lg:divide-y-0">
             <Fact caption="Structural fragility" value={pct(industry.fragility)} />
-            <Fact
-              caption="Substitution lead time"
-              value={`${industry.substitutionMonths} mo`}
-            />
+            <Fact caption="Substitution lead time" value={`${industry.substitutionMonths} mo`} />
             <Fact caption="Top producer share" value={pct(topProducerShare)} />
-            <Fact
-              caption="Channel affinity"
-              value={`${industry.channelAffinity.length} of 4`}
-            />
+            <Fact caption="Channel affinity" value={`${industry.channelAffinity.length} of 4`} />
           </dl>
           <div className="border-t border-[var(--exec-hairline)] p-4">
             <p className="exec-label">Channel affinity</p>
             <div className="mt-3">
               <ChannelBars
-                pressure={Object.fromEntries(
-                  exposure.byChannel.map((c) => [c.channel, c.load]),
-                ) as Record<Channel, number>}
+                pressure={
+                  Object.fromEntries(exposure.byChannel.map((c) => [c.channel, c.load])) as Record<
+                    Channel,
+                    number
+                  >
+                }
               />
             </div>
             <p className="exec-label mt-3">
-              {industry.channelAffinity
-                .map((c) => CHANNEL_LABEL[c])
-                .join(" · ")}
+              {industry.channelAffinity.map((c) => CHANNEL_LABEL[c]).join(" · ")}
             </p>
           </div>
         </div>
@@ -215,7 +204,11 @@ export default function IndustryProfile() {
           </SectionTitle>
           <SectionGroup title="Producers" rows={producers} empty="No production nodes declared." />
           <div className="border-t border-[var(--exec-hairline)]">
-            <SectionGroup title="Upstream inputs" rows={inputs} empty="No upstream inputs declared." />
+            <SectionGroup
+              title="Upstream inputs"
+              rows={inputs}
+              empty="No upstream inputs declared."
+            />
           </div>
         </div>
       </div>
@@ -332,9 +325,7 @@ function SectionGroup({
 }) {
   return (
     <div>
-      <h3 className="exec-label border-b border-[var(--exec-hairline)] px-4 py-2.5">
-        {title}
-      </h3>
+      <h3 className="exec-label border-b border-[var(--exec-hairline)] px-4 py-2.5">{title}</h3>
       {rows.length === 0 ? (
         <p className="p-4 text-[13px] text-[var(--exec-ink-dim)]">{empty}</p>
       ) : (
@@ -363,8 +354,7 @@ function SectionGroup({
                   />
                 </span>
                 <span className="exec-label">
-                  {row.role} · {row.region} · criticality{" "}
-                  {pct(row.criticality)}
+                  {row.role} · {row.region} · criticality {pct(row.criticality)}
                 </span>
               </Link>
             </li>

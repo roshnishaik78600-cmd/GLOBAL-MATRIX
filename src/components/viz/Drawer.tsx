@@ -48,7 +48,12 @@ export function Drawer({
   return createPortal(
     <AnimatePresence>
       {open ? (
-        <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-label={title}>
+        <div
+          className="fixed inset-0 z-50 flex justify-end"
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+        >
           <motion.button
             type="button"
             aria-label="Close panel"
@@ -71,9 +76,7 @@ export function Drawer({
           >
             <header className="flex shrink-0 items-start gap-3 border-b border-rule px-4 py-3">
               <div className="min-w-0 flex-1">
-                {eyebrow ? (
-                  <div className="mb-1 flex items-center gap-2">{eyebrow}</div>
-                ) : null}
+                {eyebrow ? <div className="mb-1 flex items-center gap-2">{eyebrow}</div> : null}
                 <h2 className="text-[15px] leading-tight font-semibold">{title}</h2>
                 {subtitle ? (
                   <div className="mt-1 text-[13px] leading-relaxed text-muted-foreground">

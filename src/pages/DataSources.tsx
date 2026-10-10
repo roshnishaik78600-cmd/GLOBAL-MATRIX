@@ -128,9 +128,7 @@ type Health = {
  * nothing is indistinguishable from a broken button.
  */
 function RefreshAllButton() {
-  const [asked, setAsked] = useState<{ refused: number; total: number } | null>(
-    null,
-  );
+  const [asked, setAsked] = useState<{ refused: number; total: number } | null>(null);
   const [busy, setBusy] = useState(false);
   const convex = useConvex();
 
@@ -207,9 +205,7 @@ export default function DataSources() {
       {/* The four labels, before anything the reader has to interpret. */}
       <div className="lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
-          <SectionTitle meta="four kinds of number">
-            How to read a figure
-          </SectionTitle>
+          <SectionTitle meta="four kinds of number">How to read a figure</SectionTitle>
           <ul className="grid grid-cols-1 divide-y divide-[var(--exec-hairline)] md:grid-cols-2 md:divide-x md:divide-y-0 xl:grid-cols-4">
             {KINDS.map((row) => (
               <li key={row.status} className="flex flex-col gap-2 p-4">
@@ -224,9 +220,7 @@ export default function DataSources() {
                   />
                   {KINDS_LABEL[row.status]}
                 </span>
-                <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-                  {row.body}
-                </p>
+                <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">{row.body}</p>
               </li>
             ))}
           </ul>
@@ -236,9 +230,7 @@ export default function DataSources() {
       {/* ------------------------------------------------------- NOT CONNECTED -- */}
       <div className="lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
-          <SectionTitle meta="stated rather than hidden">
-            Not connected
-          </SectionTitle>
+          <SectionTitle meta="stated rather than hidden">Not connected</SectionTitle>
           <ul className="grid grid-cols-1 divide-y divide-[var(--exec-hairline)] md:grid-cols-2 md:divide-x md:divide-y-0">
             {NOT_CONNECTED.map((row) => (
               <li key={row.id} className="flex flex-col gap-2 p-4">
@@ -257,9 +249,7 @@ export default function DataSources() {
                     UNAVAILABLE
                   </span>
                 </span>
-                <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-                  {row.why}
-                </p>
+                <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">{row.why}</p>
               </li>
             ))}
           </ul>
@@ -267,12 +257,10 @@ export default function DataSources() {
           <div className="flex flex-wrap items-center gap-3 border-t border-[var(--exec-hairline)] px-4 py-3">
             <RefreshAllButton />
             <p className="min-w-0 flex-1 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-              Each source is polled on the schedule its publisher actually
-              keeps — weekly for the annual datasets, every 30 minutes for GDELT
-              — and a source that fails is backed off instead of retried in a
-              loop. Asking now is a request, not a command: the server refuses
-              it if a fetch is already running or the source is still in
-              backoff.
+              Each source is polled on the schedule its publisher actually keeps — weekly for the
+              annual datasets, every 30 minutes for GDELT — and a source that fails is backed off
+              instead of retried in a loop. Asking now is a request, not a command: the server
+              refuses it if a fetch is already running or the source is still in backoff.
             </p>
           </div>
         </div>
@@ -320,9 +308,7 @@ function SourceCard({
   const hasReading = !neverContacted && row.lastSuccessAt > 0 && row.asOf !== "";
   const throttled = hasReading && !row.ok;
 
-  const status: Freshness = hasReading
-    ? freshnessOf(row.lastSuccessAt, source.id)
-    : "unavailable";
+  const status: Freshness = hasReading ? freshnessOf(row.lastSuccessAt, source.id) : "unavailable";
 
   const word = neverContacted
     ? "NEVER CONTACTED"
@@ -414,9 +400,7 @@ function SourceCard({
         <div className="flex items-baseline justify-between gap-3">
           <dt className="exec-label shrink-0">Last attempt</dt>
           <dd className="exec-num min-w-0 truncate text-right text-[13px] text-[var(--exec-ink-dim)]">
-            {row && row.lastAttemptAt > 0
-              ? timestamp(row.lastAttemptAt)
-              : "Not yet attempted"}
+            {row && row.lastAttemptAt > 0 ? timestamp(row.lastAttemptAt) : "Not yet attempted"}
           </dd>
         </div>
         <div className="flex items-baseline justify-between gap-3">
@@ -438,11 +422,9 @@ function SourceCard({
           have *from the last time the connector answered*. */}
       {throttled ? (
         <p className="border border-[color-mix(in_srgb,var(--exec-amber)_35%,transparent)] bg-[color-mix(in_srgb,var(--exec-amber)_8%,transparent)] px-3 py-2 text-[12px] leading-relaxed text-[var(--exec-ink)]">
-          <span className="font-semibold text-[var(--exec-amber)]">DELAYED</span> —
-          the latest fetch attempt did not return a reading. The figures shown
-          are the last verified ones from{" "}
-          {formatAsOf(row.asOf) || "an earlier run"} and are kept rather than
-          discarded.
+          <span className="font-semibold text-[var(--exec-amber)]">DELAYED</span> — the latest fetch
+          attempt did not return a reading. The figures shown are the last verified ones from{" "}
+          {formatAsOf(row.asOf) || "an earlier run"} and are kept rather than discarded.
         </p>
       ) : (
         <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
@@ -455,8 +437,7 @@ function SourceCard({
       )}
 
       <p className="mt-auto border-t border-[var(--exec-hairline)] pt-3 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        <span className="text-[var(--exec-ink-dim)]">Limits —</span>{" "}
-        {source.limits}
+        <span className="text-[var(--exec-ink-dim)]">Limits —</span> {source.limits}
       </p>
 
       <a
@@ -489,9 +470,13 @@ const PROVENANCE: Record<string, string> = {
 
 /** One line of plain language per status word, on the card's tooltip. */
 const STATUS_HELP: Record<string, string> = {
-  VERIFIED: "Reporting inside its own refresh window. The reading shown is the last one it returned.",
-  DELAYED: "Reporting, but the last successful fetch is older than its refresh window, or the most recent attempt failed. The reading may be out of date.",
-  HISTORICAL: "Last reporting long enough ago that it is a historical record rather than a current one.",
-  UNAVAILABLE: "No usable reading has ever been stored. The figure is withheld rather than estimated.",
+  VERIFIED:
+    "Reporting inside its own refresh window. The reading shown is the last one it returned.",
+  DELAYED:
+    "Reporting, but the last successful fetch is older than its refresh window, or the most recent attempt failed. The reading may be out of date.",
+  HISTORICAL:
+    "Last reporting long enough ago that it is a historical record rather than a current one.",
+  UNAVAILABLE:
+    "No usable reading has ever been stored. The figure is withheld rather than estimated.",
   "NEVER CONTACTED": "This connector has not been called yet.",
 };

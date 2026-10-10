@@ -82,17 +82,14 @@ export function FocusProvider({ children }: { children: ReactNode }) {
 
   const toggle = useCallback((next: NonNullable<Focus>) => {
     setFocus((current) =>
-      current && current.kind === next.kind && current.id === next.id
-        ? null
-        : next,
+      current && current.kind === next.kind && current.id === next.id ? null : next,
     );
   }, []);
 
   const clear = useCallback(() => setFocus(null), []);
 
   const isFocused = useCallback(
-    (kind: NonNullable<Focus>["kind"], id: string) =>
-      focus?.kind === kind && focus.id === id,
+    (kind: NonNullable<Focus>["kind"], id: string) => focus?.kind === kind && focus.id === id,
     [focus],
   );
 
@@ -105,9 +102,7 @@ export function FocusProvider({ children }: { children: ReactNode }) {
       // Never steal Escape from a text field or an open dialog.
       if (
         target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.isContentEditable)
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
       ) {
         return;
       }

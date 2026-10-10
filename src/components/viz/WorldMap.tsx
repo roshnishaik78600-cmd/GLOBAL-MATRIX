@@ -190,15 +190,11 @@ export function WorldMap({
   })[];
 
   if (loading) {
-    return (
-      <Skeleton className={cn("w-full", className)} />
-    );
+    return <Skeleton className={cn("w-full", className)} />;
   }
 
   if (plotted.length === 0) {
-    return (
-      <NoData reason="No node in the current corpus carries a geographic position." />
-    );
+    return <NoData reason="No node in the current corpus carries a geographic position." />;
   }
 
   const maxLoad = Math.max(...plotted.map((n) => n.load), 0.01);
@@ -221,13 +217,8 @@ export function WorldMap({
     const match = n.byChannel?.find((c) => c.channel === channel);
     return match ? match.load : null;
   };
-  const channelMax = Math.max(
-    ...plotted.map((n) => loadFor(n) ?? 0),
-    0.01,
-  );
-  const visibleEvents = channel
-    ? events.filter((e) => e.channel === channel)
-    : events;
+  const channelMax = Math.max(...plotted.map((n) => loadFor(n) ?? 0), 0.01);
+  const visibleEvents = channel ? events.filter((e) => e.channel === channel) : events;
 
   const pointerToView = (clientX: number, clientY: number) => {
     const rect = svg.current?.getBoundingClientRect();
@@ -311,7 +302,7 @@ export function WorldMap({
 
         {/* Land: quiet everywhere, shaded where GlobalMatrix has a reading. */}
         <g stroke="var(--rule)" strokeWidth={0.4} strokeLinejoin="round">
-          {shapes.map((shape) => {
+          {shapes.map((shape, shapeIdx) => {
             const owner = plotted.find((p) => p.shape?.iso === shape.iso);
             const value = owner ? loadFor(owner) : null;
             const shaded = showLoad && value !== null;
@@ -323,7 +314,7 @@ export function WorldMap({
               : "color-mix(in oklch, var(--foreground) 6%, transparent)";
             return (
               <path
-                key={shape.iso}
+                key={shape.iso || `shape-${shapeIdx}`}
                 d={shape.d}
                 fill={fill}
                 stroke={shaded ? "var(--foreground)" : "var(--rule)"}
@@ -363,28 +354,28 @@ export function WorldMap({
         <g fill="none" opacity={showLinks ? 1 : 0.12}>
           {showLinks
             ? flows.map((f, i) => {
-            const a = getNode(f.from);
-            const b = getNode(f.to);
-            if (a.lat === undefined || a.lon === undefined) return null;
-            if (b.lat === undefined || b.lon === undefined) return null;
-            return (
-              <path
-                key={i}
-                d={arcPath(
-                  project(a.lat, a.lon, MAP_W, MAP_H),
-                  project(b.lat, b.lon, MAP_W, MAP_H),
-                  0.16,
-                )}
-                stroke={riskColorForScore(f.weight * 100)}
-                strokeWidth={(0.5 + f.weight * 2.4) / zoom}
-                opacity={selected && f.from !== selected && f.to !== selected ? 0.07 : 0.38}
-                strokeLinecap="round"
-                // Motion marks the coupling itself; magnitude stays encoded in
-                // width and colour, which never animate.
-                className={layer === "links" ? "flow-arc" : undefined}
-              />
-            );
-          })
+                const a = getNode(f.from);
+                const b = getNode(f.to);
+                if (a.lat === undefined || a.lon === undefined) return null;
+                if (b.lat === undefined || b.lon === undefined) return null;
+                return (
+                  <path
+                    key={i}
+                    d={arcPath(
+                      project(a.lat, a.lon, MAP_W, MAP_H),
+                      project(b.lat, b.lon, MAP_W, MAP_H),
+                      0.16,
+                    )}
+                    stroke={riskColorForScore(f.weight * 100)}
+                    strokeWidth={(0.5 + f.weight * 2.4) / zoom}
+                    opacity={selected && f.from !== selected && f.to !== selected ? 0.07 : 0.38}
+                    strokeLinecap="round"
+                    // Motion marks the coupling itself; magnitude stays encoded in
+                    // width and colour, which never animate.
+                    className={layer === "links" ? "flow-arc" : undefined}
+                  />
+                );
+              })
             : null}
         </g>
 
@@ -402,7 +393,9 @@ export function WorldMap({
               ? "var(--muted-foreground)"
               : riskColorForScore((value ?? 0) * 100);
             const active = selected === n.nodeId || hover === n.nodeId;
-            const dim = (selected && !active) || (channel !== null && channel !== undefined && unmeasured && !active);
+            const dim =
+              (selected && !active) ||
+              (channel !== null && channel !== undefined && unmeasured && !active);
             return (
               <g
                 key={n.nodeId}
@@ -500,8 +493,16 @@ export function WorldMap({
       {/* Zoom controls — deliberately buttons, so the page never hijacks scroll. */}
       <div className="absolute top-2 right-2 flex flex-col gap-px">
         {[
-          { icon: Plus, label: "Zoom in", fn: () => setView((v) => zoomAround(v, 0.72, v.x + v.w / 2, v.y + v.h / 2)) },
-          { icon: Minus, label: "Zoom out", fn: () => setView((v) => zoomAround(v, 1.4, v.x + v.w / 2, v.y + v.h / 2)) },
+          {
+            icon: Plus,
+            label: "Zoom in",
+            fn: () => setView((v) => zoomAround(v, 0.72, v.x + v.w / 2, v.y + v.h / 2)),
+          },
+          {
+            icon: Minus,
+            label: "Zoom out",
+            fn: () => setView((v) => zoomAround(v, 1.4, v.x + v.w / 2, v.y + v.h / 2)),
+          },
           { icon: RotateCcw, label: "Reset view", fn: () => setView(FULL) },
         ].map((c) => {
           const Icon = c.icon;
@@ -565,21 +566,14 @@ export function MapLegend() {
         Event
       </span>
       <span className="exec-label-muted">
-        Land shading = live load · click to inspect · double-click to open the
-        profile · drag to pan
+        Land shading = live load · click to inspect · double-click to open the profile · drag to pan
       </span>
     </div>
   );
 }
 
 /** Selected-node side panel entry, with whatever verified data exists for it. */
-export function MapSelection({
-  nodeId,
-  onClose,
-}: {
-  nodeId: string;
-  onClose: () => void;
-}) {
+export function MapSelection({ nodeId, onClose }: { nodeId: string; onClose: () => void }) {
   const node = getNode(nodeId);
   return (
     <aside className="panel w-full lg:w-80">
