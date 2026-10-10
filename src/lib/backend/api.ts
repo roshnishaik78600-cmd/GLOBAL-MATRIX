@@ -1238,8 +1238,17 @@ async function currentUser() {
 /* sources.* / brief.* — delegated to privileged server functions       */
 /* ------------------------------------------------------------------ */
 
-async function refreshWith(fn: (opts: { data: { force?: boolean } }) => Promise<unknown>, args: { force?: boolean }) {
-  return fn({ data: { force: !!args.force } });
+export interface RefreshResult {
+  skipped?: string;
+  ran?: boolean;
+  [key: string]: unknown;
+}
+
+async function refreshWith(
+  fn: (opts: { data: { force?: boolean } }) => Promise<unknown>,
+  args: { force?: boolean },
+): Promise<RefreshResult> {
+  return (await fn({ data: { force: !!args.force } })) as RefreshResult;
 }
 
 async function generateBriefAction(args: { eventId: string }) {
