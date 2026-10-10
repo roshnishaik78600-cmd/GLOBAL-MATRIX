@@ -14,7 +14,246 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      annotations: {
+        Row: {
+          body: string
+          created_at: string
+          event_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          event_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          event_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      brief_claims: {
+        Row: {
+          at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      briefs: {
+        Row: {
+          caveats: string[]
+          channels: string[]
+          corpus_version: string
+          created_at: string
+          event_id: string
+          id: string
+          model: string
+          thesis: string
+          user_id: string
+        }
+        Insert: {
+          caveats?: string[]
+          channels?: string[]
+          corpus_version: string
+          created_at?: string
+          event_id: string
+          id?: string
+          model: string
+          thesis: string
+          user_id: string
+        }
+        Update: {
+          caveats?: string[]
+          channels?: string[]
+          corpus_version?: string
+          created_at?: string
+          event_id?: string
+          id?: string
+          model?: string
+          thesis?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      exposure_deps: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          ref_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          ref_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          ref_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      observations: {
+        Row: {
+          as_of: string
+          id: string
+          key: string
+          note: string | null
+          ok: boolean
+          payload: string
+          problem: string | null
+          published_at: string | null
+          retrieved_at: string
+          source_id: string
+          status: string
+        }
+        Insert: {
+          as_of: string
+          id?: string
+          key: string
+          note?: string | null
+          ok?: boolean
+          payload: string
+          problem?: string | null
+          published_at?: string | null
+          retrieved_at?: string
+          source_id: string
+          status: string
+        }
+        Update: {
+          as_of?: string
+          id?: string
+          key?: string
+          note?: string | null
+          ok?: boolean
+          payload?: string
+          problem?: string | null
+          published_at?: string | null
+          retrieved_at?: string
+          source_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      source_locks: {
+        Row: {
+          attempts: number
+          consecutive_failures: number
+          failures: number
+          finished_at: string | null
+          id: string
+          next_allowed_at: string
+          source_id: string
+          started_at: string
+        }
+        Insert: {
+          attempts?: number
+          consecutive_failures?: number
+          failures?: number
+          finished_at?: string | null
+          id?: string
+          next_allowed_at?: string
+          source_id: string
+          started_at?: string
+        }
+        Update: {
+          attempts?: number
+          consecutive_failures?: number
+          failures?: number
+          finished_at?: string | null
+          id?: string
+          next_allowed_at?: string
+          source_id?: string
+          started_at?: string
+        }
+        Relationships: []
+      }
+      source_runs: {
+        Row: {
+          as_of: string
+          id: string
+          key: string
+          ok: boolean
+          problem: string | null
+          published_at: string | null
+          reading_count: number
+          retrieved_at: string
+          source_id: string
+          status: string
+        }
+        Insert: {
+          as_of: string
+          id?: string
+          key: string
+          ok: boolean
+          problem?: string | null
+          published_at?: string | null
+          reading_count?: number
+          retrieved_at?: string
+          source_id: string
+          status: string
+        }
+        Update: {
+          as_of?: string
+          id?: string
+          key?: string
+          ok?: boolean
+          problem?: string | null
+          published_at?: string | null
+          reading_count?: number
+          retrieved_at?: string
+          source_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      watchlist: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          note: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          note?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          note?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
