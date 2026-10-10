@@ -140,10 +140,10 @@
   --sidebar: #050a14;
   --sidebar-foreground: #f5f7fa;
   --sidebar-primary: #f5f7fa;
-  --sidebar-primary-foreground: #080b10;
-  --sidebar-accent: #141a22;
+  --sidebar-primary-foreground: #060b17;
+  --sidebar-accent: #111b31;
   --sidebar-accent-foreground: #f5f7fa;
-  --sidebar-border: #27313d;
+  --sidebar-border: #1f2c45;
   --sidebar-ring: #4fd1c5;
 
   /* Executive risk-surface tokens. Values mirror the tokens above; they are
@@ -151,11 +151,11 @@
      against `--exec-*`, and retuning one register must not silently retune the
      other. The mapping is enforced by the fact that both ramps resolve to the
      same six colours. */
-  --exec-base: #080b10;
-  --exec-panel: #0e131a;
-  --exec-surface: #141a22;
-  --exec-surface-strong: #1a222d;
-  --exec-hairline: #27313d;
+  --exec-base: #060b17;
+  --exec-panel: #0b1324;
+  --exec-surface: #111b31;
+  --exec-surface-strong: #16223b;
+  --exec-hairline: #1f2c45;
   --exec-hairline-strong: #35414f;
   --exec-ink: #f5f7fa;
   --exec-ink-dim: #a7b0bc;
