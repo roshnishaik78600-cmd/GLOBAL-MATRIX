@@ -48,6 +48,9 @@ export function HowItWorks() {
         ))}
       </ol>
 
+      <PropagationExample />
+
+
       <h3 className="mt-8 text-[15px] font-semibold text-[var(--exec-ink)]">Questions it helps you investigate</h3>
       <p className="mt-1 text-[12px] text-[var(--exec-ink-dim)]">Illustrative examples — not real findings or predictions.</p>
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
