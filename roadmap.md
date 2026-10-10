@@ -1,4 +1,7 @@
 # Roadmap
+- [ ] Non-blue design system and compact map-first homepage
+- [ ] Consistent app/map/graph styling and dummy QR checkout
+- [ ] Verify tests, responsive navigation and authenticated billing safety
 - [x] Sample intelligence report (printable)
 - [x] Business exposure assessment (saved per user)
 - [x] Pricing page + request report/pilot form
