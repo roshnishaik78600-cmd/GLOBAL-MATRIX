@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PRICING, formatINR } from "@/lib/commerce";
 import { RequestForm } from "@/components/commerce/RequestForm";
+import { PaymentSection } from "@/components/commerce/PaymentSection";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
