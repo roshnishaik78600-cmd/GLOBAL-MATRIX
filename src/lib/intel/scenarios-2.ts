@@ -29,7 +29,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-02",
         channel: "finance",
         headline: "Designation rests on reconstructed transaction chain",
-        detail: "Evidentiary basis is a chain of 41 shipments, not beneficial ownership of a single entity.",
+        detail:
+          "Evidentiary basis is a chain of 41 shipments, not beneficial ownership of a single entity.",
         reliability: 0.94,
         weight: 0.88,
         corroborations: 5,
@@ -42,7 +43,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-09",
         channel: "trade",
         headline: "Bonded warehousing facility placed under enhanced supervision",
-        detail: "Customs supervision escalates to continuous audit at a transshipment node used by both evasion routes.",
+        detail:
+          "Customs supervision escalates to continuous audit at a transshipment node used by both evasion routes.",
         reliability: 0.86,
         weight: 0.7,
         corroborations: 4,
@@ -55,7 +57,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-17",
         channel: "diplomatic",
         headline: "Relief from a separate measure requested as consideration",
-        detail: "Explicit linkage of two previously unrelated files signals a bargaining posture rather than a legal position.",
+        detail:
+          "Explicit linkage of two previously unrelated files signals a bargaining posture rather than a legal position.",
         reliability: 0.85,
         weight: 0.66,
         corroborations: 3,
@@ -68,7 +71,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-24",
         channel: "finance",
         headline: "Compliance cost on flagged corridors widens to 4.1% of face value",
-        detail: "Bank pricing for enhanced due diligence on affected corridors rises faster than compliance staffing.",
+        detail:
+          "Bank pricing for enhanced due diligence on affected corridors rises faster than compliance staffing.",
         reliability: 0.83,
         weight: 0.62,
         corroborations: 4,
@@ -85,11 +89,41 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Correspondent banking de-risks ahead of legal obligation. Once pricing moves, the commercial channel enforces the policy more strictly than the legal one — and it moves first.",
         exposures: [
-          { nodeId: "SWIFT", exposure: 0.82, impact: 0.54, lagDays: 12, note: "Correspondent relationships restructured on flagged corridors" },
-          { nodeId: "TR", exposure: 0.78, impact: 0.52, lagDays: 20, note: "Payment volumes diverted; domestic cost absorbed" },
-          { nodeId: "AE", exposure: 0.74, impact: 0.47, lagDays: 22, note: "Re-export hub volumes fall before rules change" },
-          { nodeId: "SG", exposure: 0.68, impact: 0.4, lagDays: 18, note: "Regional hub compliance premium" },
-          { nodeId: "INSTL", exposure: 0.5, impact: 0.24, lagDays: 25, note: "Emerging-market credit differentiation" },
+          {
+            nodeId: "SWIFT",
+            exposure: 0.82,
+            impact: 0.54,
+            lagDays: 12,
+            note: "Correspondent relationships restructured on flagged corridors",
+          },
+          {
+            nodeId: "TR",
+            exposure: 0.78,
+            impact: 0.52,
+            lagDays: 20,
+            note: "Payment volumes diverted; domestic cost absorbed",
+          },
+          {
+            nodeId: "AE",
+            exposure: 0.74,
+            impact: 0.47,
+            lagDays: 22,
+            note: "Re-export hub volumes fall before rules change",
+          },
+          {
+            nodeId: "SG",
+            exposure: 0.68,
+            impact: 0.4,
+            lagDays: 18,
+            note: "Regional hub compliance premium",
+          },
+          {
+            nodeId: "INSTL",
+            exposure: 0.5,
+            impact: 0.24,
+            lagDays: 25,
+            note: "Emerging-market credit differentiation",
+          },
         ],
       },
       {
@@ -101,9 +135,27 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Enforcement at one node raises inspection rates at adjacent nodes, which raises effective transit time for compliant cargo travelling the same corridors.",
         exposures: [
-          { nodeId: "TR", exposure: 0.72, impact: 0.45, lagDays: 28, note: "Transit time inflation for compliant traffic" },
-          { nodeId: "AE", exposure: 0.66, impact: 0.38, lagDays: 30, note: "Warehousing demand substitutes for re-export" },
-          { nodeId: "NL", exposure: 0.5, impact: 0.26, lagDays: 24, note: "Distribution node adds end-use attestation" },
+          {
+            nodeId: "TR",
+            exposure: 0.72,
+            impact: 0.45,
+            lagDays: 28,
+            note: "Transit time inflation for compliant traffic",
+          },
+          {
+            nodeId: "AE",
+            exposure: 0.66,
+            impact: 0.38,
+            lagDays: 30,
+            note: "Warehousing demand substitutes for re-export",
+          },
+          {
+            nodeId: "NL",
+            exposure: 0.5,
+            impact: 0.26,
+            lagDays: 24,
+            note: "Distribution node adds end-use attestation",
+          },
         ],
       },
       {
@@ -115,9 +167,27 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "The corridor state's bargaining move creates a template other intermediaries will attempt. Leverage rises for states with routing utility and falls for states without.",
         exposures: [
-          { nodeId: "TR", exposure: 0.72, impact: 0.44, lagDays: 30, note: "Pivot state gains leverage and exposure together" },
-          { nodeId: "EU", exposure: 0.55, impact: 0.29, lagDays: 35, note: "Relief precedents fragment the coalition" },
-          { nodeId: "US", exposure: 0.58, impact: 0.31, lagDays: 28, note: "Enforcement coherence under pressure" },
+          {
+            nodeId: "TR",
+            exposure: 0.72,
+            impact: 0.44,
+            lagDays: 30,
+            note: "Pivot state gains leverage and exposure together",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.55,
+            impact: 0.29,
+            lagDays: 35,
+            note: "Relief precedents fragment the coalition",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.58,
+            impact: 0.31,
+            lagDays: 28,
+            note: "Enforcement coherence under pressure",
+          },
         ],
       },
       // A channel that was assessed and ruled out.
@@ -168,7 +238,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-20",
         channel: "trade",
         headline: "Exercise area declared outside the published calendar",
-        detail: "Declaration cites 'unannounced elements', which is a category of first resort in published notices.",
+        detail:
+          "Declaration cites 'unannounced elements', which is a category of first resort in published notices.",
         reliability: 0.9,
         weight: 0.84,
         corroborations: 4,
@@ -181,7 +252,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-23",
         channel: "trade",
         headline: "Regional carrier capacity withdrawn from four rotations",
-        detail: "Retirements are commercial and immediate; the carriers do not cite a security justification.",
+        detail:
+          "Retirements are commercial and immediate; the carriers do not cite a security justification.",
         reliability: 0.84,
         weight: 0.7,
         corroborations: 3,
@@ -194,7 +266,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-26",
         channel: "trade",
         headline: "Customers request buffer stock above standard safety stock",
-        detail: "Buffer-stock requests cluster among European and North American buyers rather than regionally biased ones.",
+        detail:
+          "Buffer-stock requests cluster among European and North American buyers rather than regionally biased ones.",
         reliability: 0.78,
         weight: 0.62,
         corroborations: 3,
@@ -207,7 +280,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-30",
         channel: "diplomatic",
         headline: "Presence affirmed, no date specified",
-        detail: "Deliberate ambiguity: presence is confirmed, timing is not, which is the ambiguity that moves prices.",
+        detail:
+          "Deliberate ambiguity: presence is confirmed, timing is not, which is the ambiguity that moves prices.",
         reliability: 0.89,
         weight: 0.6,
         corroborations: 4,
@@ -224,11 +298,41 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Voluntary commercial retreat is the transmission mechanism. Carriers and customers act on perceived risk before any official restriction, so trade volume moves without a rule changing.",
         exposures: [
-          { nodeId: "TAIWANSTR", exposure: 0.96, impact: 0.6, lagDays: 10, note: "Declared area sits on the primary east-west lane" },
-          { nodeId: "TW", exposure: 0.9, impact: 0.62, lagDays: 14, note: "Buffer-stock build by offshore customers" },
-          { nodeId: "JP", exposure: 0.68, impact: 0.36, lagDays: 18, note: "Southern service rotations cut" },
-          { nodeId: "SG", exposure: 0.62, impact: 0.33, lagDays: 20, note: "Transhipment bookings re-routed" },
-          { nodeId: "KR", exposure: 0.6, impact: 0.28, lagDays: 20, note: "Air cargo capacity absorbed" },
+          {
+            nodeId: "TAIWANSTR",
+            exposure: 0.96,
+            impact: 0.6,
+            lagDays: 10,
+            note: "Declared area sits on the primary east-west lane",
+          },
+          {
+            nodeId: "TW",
+            exposure: 0.9,
+            impact: 0.62,
+            lagDays: 14,
+            note: "Buffer-stock build by offshore customers",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.68,
+            impact: 0.36,
+            lagDays: 18,
+            note: "Southern service rotations cut",
+          },
+          {
+            nodeId: "SG",
+            exposure: 0.62,
+            impact: 0.33,
+            lagDays: 20,
+            note: "Transhipment bookings re-routed",
+          },
+          {
+            nodeId: "KR",
+            exposure: 0.6,
+            impact: 0.28,
+            lagDays: 20,
+            note: "Air cargo capacity absorbed",
+          },
         ],
       },
       {
@@ -240,9 +344,27 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Tail-risk pricing dominates: options skew, not spot prices. The market is pricing the exercise window's tail, so dispersion rises before any index moves materially.",
         exposures: [
-          { nodeId: "INSTL", exposure: 0.7, impact: 0.4, lagDays: 4, note: "Equity skew and volatility term structure steepen" },
-          { nodeId: "TW", exposure: 0.66, impact: 0.38, lagDays: 5, note: "Index discount to peers widens" },
-          { nodeId: "CN", exposure: 0.5, impact: 0.24, lagDays: 6, note: "Defensive sector rotation" },
+          {
+            nodeId: "INSTL",
+            exposure: 0.7,
+            impact: 0.4,
+            lagDays: 4,
+            note: "Equity skew and volatility term structure steepen",
+          },
+          {
+            nodeId: "TW",
+            exposure: 0.66,
+            impact: 0.38,
+            lagDays: 5,
+            note: "Index discount to peers widens",
+          },
+          {
+            nodeId: "CN",
+            exposure: 0.5,
+            impact: 0.24,
+            lagDays: 6,
+            note: "Defensive sector rotation",
+          },
         ],
       },
       {
@@ -254,10 +376,34 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Ambiguity is the escalation currency. Neither side can de-escalate a window that has no stated end, so the risk accumulates in the ambiguity itself.",
         exposures: [
-          { nodeId: "CN", exposure: 0.7, impact: 0.38, lagDays: 12, note: "Framing shifts from exercise to readiness verification" },
-          { nodeId: "US", exposure: 0.62, impact: 0.32, lagDays: 10, note: "Positioning decisions become the observable" },
-          { nodeId: "JP", exposure: 0.52, impact: 0.25, lagDays: 15, note: "Domestic political constraint on involvement" },
-          { nodeId: "EU", exposure: 0.42, impact: 0.19, lagDays: 18, note: "Economic exposure acknowledged without a position" },
+          {
+            nodeId: "CN",
+            exposure: 0.7,
+            impact: 0.38,
+            lagDays: 12,
+            note: "Framing shifts from exercise to readiness verification",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.62,
+            impact: 0.32,
+            lagDays: 10,
+            note: "Positioning decisions become the observable",
+          },
+          {
+            nodeId: "JP",
+            exposure: 0.52,
+            impact: 0.25,
+            lagDays: 15,
+            note: "Domestic political constraint on involvement",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.42,
+            impact: 0.19,
+            lagDays: 18,
+            note: "Economic exposure acknowledged without a position",
+          },
         ],
       },
       {
@@ -269,8 +415,20 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "LNG spot sourcing is the only meaningful link. Spot-buyer concentration in Northeast Asia makes short-run substitution imperfect.",
         exposures: [
-          { nodeId: "JP", exposure: 0.45, impact: 0.24, lagDays: 60, note: "Spot LNG sourcing premium" },
-          { nodeId: "KR", exposure: 0.4, impact: 0.21, lagDays: 62, note: "Winter procurement mix shifted to term" },
+          {
+            nodeId: "JP",
+            exposure: 0.45,
+            impact: 0.24,
+            lagDays: 60,
+            note: "Spot LNG sourcing premium",
+          },
+          {
+            nodeId: "KR",
+            exposure: 0.4,
+            impact: 0.21,
+            lagDays: 62,
+            note: "Winter procurement mix shifted to term",
+          },
         ],
       },
     ],
@@ -302,7 +460,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-08-26",
         channel: "trade",
         headline: "Objection to default carbon values on legal basis",
-        detail: "Objection argues the default values are not administratively determinable, which if upheld removes the mechanism entirely.",
+        detail:
+          "Objection argues the default values are not administratively determinable, which if upheld removes the mechanism entirely.",
         reliability: 0.91,
         weight: 0.7,
         corroborations: 3,
@@ -328,7 +487,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-08",
         channel: "finance",
         headline: "Domestic premium over imported held at 6% despite soft demand",
-        detail: "Premium persistence suggests anticipatory pricing rather than current-order strength.",
+        detail:
+          "Premium persistence suggests anticipatory pricing rather than current-order strength.",
         reliability: 0.8,
         weight: 0.58,
         corroborations: 3,
@@ -345,11 +505,41 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Implementation divergence fragments a single market into differently-treated segments, raising intra-bloc trade friction at the same time as raising the external barrier.",
         exposures: [
-          { nodeId: "EU", exposure: 0.86, impact: 0.42, lagDays: 60, note: "Intra-bloc customs friction replaces external friction" },
-          { nodeId: "IN", exposure: 0.7, impact: 0.36, lagDays: 70, note: "Covered-goods compliance cost front-loaded" },
-          { nodeId: "BR", exposure: 0.66, impact: 0.33, lagDays: 75, note: "Steel and aluminium diversion risk" },
-          { nodeId: "CN", exposure: 0.62, impact: 0.3, lagDays: 65, note: "Embedded-emissions reporting obligation" },
-          { nodeId: "TR", exposure: 0.52, impact: 0.26, lagDays: 80, note: "Preferential-access tension" },
+          {
+            nodeId: "EU",
+            exposure: 0.86,
+            impact: 0.42,
+            lagDays: 60,
+            note: "Intra-bloc customs friction replaces external friction",
+          },
+          {
+            nodeId: "IN",
+            exposure: 0.7,
+            impact: 0.36,
+            lagDays: 70,
+            note: "Covered-goods compliance cost front-loaded",
+          },
+          {
+            nodeId: "BR",
+            exposure: 0.66,
+            impact: 0.33,
+            lagDays: 75,
+            note: "Steel and aluminium diversion risk",
+          },
+          {
+            nodeId: "CN",
+            exposure: 0.62,
+            impact: 0.3,
+            lagDays: 65,
+            note: "Embedded-emissions reporting obligation",
+          },
+          {
+            nodeId: "TR",
+            exposure: 0.52,
+            impact: 0.26,
+            lagDays: 80,
+            note: "Preferential-access tension",
+          },
         ],
       },
       {
@@ -361,8 +551,20 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Procedural divergence is resolvable, but only slowly, and slow resolution is itself a cost to exporters planning capital investment.",
         exposures: [
-          { nodeId: "EU", exposure: 0.68, impact: 0.3, lagDays: 90, note: "Legal challenge threatens mechanism timeline" },
-          { nodeId: "BR", exposure: 0.48, impact: 0.21, lagDays: 110, note: "Third-country coalition forming" },
+          {
+            nodeId: "EU",
+            exposure: 0.68,
+            impact: 0.3,
+            lagDays: 90,
+            note: "Legal challenge threatens mechanism timeline",
+          },
+          {
+            nodeId: "BR",
+            exposure: 0.48,
+            impact: 0.21,
+            lagDays: 110,
+            note: "Third-country coalition forming",
+          },
         ],
       },
       {
@@ -373,8 +575,20 @@ export const SCENARIOS_2: Scenario[] = [
         confidence: 0.56,
         mechanism: "Sector-level margin effects; no systemic transmission.",
         exposures: [
-          { nodeId: "DE", exposure: 0.5, impact: 0.22, lagDays: 45, note: "Industrial compliance cost capitalised" },
-          { nodeId: "INSTL", exposure: 0.34, impact: 0.14, lagDays: 55, note: "Carbon-cost pass-through modelled into estimates" },
+          {
+            nodeId: "DE",
+            exposure: 0.5,
+            impact: 0.22,
+            lagDays: 45,
+            note: "Industrial compliance cost capitalised",
+          },
+          {
+            nodeId: "INSTL",
+            exposure: 0.34,
+            impact: 0.14,
+            lagDays: 55,
+            note: "Carbon-cost pass-through modelled into estimates",
+          },
         ],
       },
       {
@@ -386,7 +600,13 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Long-run only. The instrument changes relative cost of energy-intensive production, not near-term energy balances.",
         exposures: [
-          { nodeId: "EU", exposure: 0.4, impact: 0.15, lagDays: 200, note: "Decarbonisation capex deferred under legal uncertainty" },
+          {
+            nodeId: "EU",
+            exposure: 0.4,
+            impact: 0.15,
+            lagDays: 200,
+            note: "Decarbonisation capex deferred under legal uncertainty",
+          },
         ],
       },
     ],
@@ -418,7 +638,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-01",
         channel: "finance",
         headline: "Front-end spread widens 180bp, long end unmoved",
-        detail: "Curve steepening isolates the repricing to fiscal credibility rather than to growth or commodity expectations.",
+        detail:
+          "Curve steepening isolates the repricing to fiscal credibility rather than to growth or commodity expectations.",
         reliability: 0.93,
         weight: 0.9,
         corroborations: 6,
@@ -431,7 +652,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-02",
         channel: "diplomatic",
         headline: "Multilateral engagement requested within 72 hours of the result",
-        detail: "An unusually compressed timetable implies the funding calendar, not the political calendar, is driving the outreach.",
+        detail:
+          "An unusually compressed timetable implies the funding calendar, not the political calendar, is driving the outreach.",
         reliability: 0.86,
         weight: 0.66,
         corroborations: 4,
@@ -444,7 +666,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-03",
         channel: "finance",
         headline: "NDF basis widened against the forward curve",
-        detail: "Basis widening indicates hedging demand outstripping available local-currency supply.",
+        detail:
+          "Basis widening indicates hedging demand outstripping available local-currency supply.",
         reliability: 0.82,
         weight: 0.6,
         corroborations: 3,
@@ -457,7 +680,8 @@ export const SCENARIOS_2: Scenario[] = [
         observedAt: "2026-09-05",
         channel: "trade",
         headline: "Letter-of-credit confirmations lengthening on sovereign-linked facilities",
-        detail: "Confirmation lag is a leading indicator of sovereign stress, running roughly one quarter ahead of the spread.",
+        detail:
+          "Confirmation lag is a leading indicator of sovereign stress, running roughly one quarter ahead of the spread.",
         reliability: 0.77,
         weight: 0.64,
         corroborations: 2,
@@ -474,11 +698,41 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Domestic transmission first through the sovereign curve and the FX basis, then externally through creditor haircuts and programme conditionality.",
         exposures: [
-          { nodeId: "BR", exposure: 0.88, impact: 0.64, lagDays: 8, note: "Global risk appetite transmits through the region's benchmark" },
-          { nodeId: "AR", exposure: 0.94, impact: 0.71, lagDays: 5, note: "Front-end repricing anchored on fiscal credibility" },
-          { nodeId: "CBRICKS", exposure: 0.72, impact: 0.44, lagDays: 20, note: "Programme design and conditionality under negotiation" },
-          { nodeId: "INSTL", exposure: 0.6, impact: 0.29, lagDays: 12, note: "EM allocation trimmed at the sovereign level" },
-          { nodeId: "SWIFT", exposure: 0.48, impact: 0.24, lagDays: 10, note: "Cross-border funding cost repricing" },
+          {
+            nodeId: "BR",
+            exposure: 0.88,
+            impact: 0.64,
+            lagDays: 8,
+            note: "Global risk appetite transmits through the region's benchmark",
+          },
+          {
+            nodeId: "AR",
+            exposure: 0.94,
+            impact: 0.71,
+            lagDays: 5,
+            note: "Front-end repricing anchored on fiscal credibility",
+          },
+          {
+            nodeId: "CBRICKS",
+            exposure: 0.72,
+            impact: 0.44,
+            lagDays: 20,
+            note: "Programme design and conditionality under negotiation",
+          },
+          {
+            nodeId: "INSTL",
+            exposure: 0.6,
+            impact: 0.29,
+            lagDays: 12,
+            note: "EM allocation trimmed at the sovereign level",
+          },
+          {
+            nodeId: "SWIFT",
+            exposure: 0.48,
+            impact: 0.24,
+            lagDays: 10,
+            note: "Cross-border funding cost repricing",
+          },
         ],
       },
       {
@@ -490,8 +744,20 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Trade finance terms tighten before trade volumes fall. Import cover is the first macro aggregate to respond.",
         exposures: [
-          { nodeId: "AR", exposure: 0.7, impact: 0.36, lagDays: 35, note: "Import cover compresses on confirmation lag" },
-          { nodeId: "BR", exposure: 0.5, impact: 0.24, lagDays: 45, note: "Neighbouring trade-credit terms follow regional risk" },
+          {
+            nodeId: "AR",
+            exposure: 0.7,
+            impact: 0.36,
+            lagDays: 35,
+            note: "Import cover compresses on confirmation lag",
+          },
+          {
+            nodeId: "BR",
+            exposure: 0.5,
+            impact: 0.24,
+            lagDays: 45,
+            note: "Neighbouring trade-credit terms follow regional risk",
+          },
         ],
       },
       {
@@ -503,9 +769,27 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Compressed engagement timetable converts a domestic political outcome into a multilateral negotiation with a hard deadline.",
         exposures: [
-          { nodeId: "CBRICKS", exposure: 0.6, impact: 0.3, lagDays: 30, note: "Conditionality debate becomes the binding constraint" },
-          { nodeId: "US", exposure: 0.48, impact: 0.22, lagDays: 35, note: "Programme participation under domestic review" },
-          { nodeId: "EU", exposure: 0.42, impact: 0.18, lagDays: 40, note: "Exposure concentrated in one member" },
+          {
+            nodeId: "CBRICKS",
+            exposure: 0.6,
+            impact: 0.3,
+            lagDays: 30,
+            note: "Conditionality debate becomes the binding constraint",
+          },
+          {
+            nodeId: "US",
+            exposure: 0.48,
+            impact: 0.22,
+            lagDays: 35,
+            note: "Programme participation under domestic review",
+          },
+          {
+            nodeId: "EU",
+            exposure: 0.42,
+            impact: 0.18,
+            lagDays: 40,
+            note: "Exposure concentrated in one member",
+          },
         ],
       },
       {
@@ -517,7 +801,13 @@ export const SCENARIOS_2: Scenario[] = [
         mechanism:
           "Commodity export capacity is unchanged; only the fiscal take and repatriation schedule are at risk, which acts on price incentives over quarters.",
         exposures: [
-          { nodeId: "AR", exposure: 0.55, impact: 0.24, lagDays: 90, note: "Fiscal take compression discourages further output growth" },
+          {
+            nodeId: "AR",
+            exposure: 0.55,
+            impact: 0.24,
+            lagDays: 90,
+            note: "Fiscal take compression discourages further output growth",
+          },
         ],
       },
     ],

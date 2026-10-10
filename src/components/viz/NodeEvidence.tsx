@@ -2,11 +2,7 @@ import { Link } from "@/lib/router-shim";
 import { NoVerifiedData } from "@/components/viz/Unavailable";
 import { MiniSpark, usd } from "@/components/viz/VerifiedPanels";
 import { SourceLine, SourceNote } from "@/components/viz/Provenance";
-import {
-  macroSeries,
-  useMacroData,
-  useTradeData,
-} from "@/hooks/use-verified-data";
+import { macroSeries, useMacroData, useTradeData } from "@/hooks/use-verified-data";
 
 /**
  * "Show evidence" for one place.
@@ -17,19 +13,11 @@ import {
  * page is model output and says so. If a source has no reading for this place
  * the row is simply absent — the panel never falls back to a number we made up.
  */
-export function NodeEvidence({
-  nodeId,
-  className,
-}: {
-  nodeId: string;
-  className?: string;
-}) {
+export function NodeEvidence({ nodeId, className }: { nodeId: string; className?: string }) {
   const macro = useMacroData();
   const trade = useTradeData();
 
-  const series: ReturnType<typeof macroSeries> = macro.data
-    ? macroSeries(macro.data)
-    : new Map();
+  const series: ReturnType<typeof macroSeries> = macro.data ? macroSeries(macro.data) : new Map();
   const growth = series.get(`${nodeId}:gdpGrowth`);
   const flow = trade.data?.find((f) => f.reporter === nodeId);
 
@@ -45,30 +33,22 @@ export function NodeEvidence({
 
   return (
     <div className={className}>
-      <p className="label border-b border-rule px-3 py-2 text-muted-foreground">
-        Show evidence
-      </p>
+      <p className="label border-b border-rule px-3 py-2 text-muted-foreground">Show evidence</p>
 
       {growth ? (
         <div className="border-b border-rule px-3 py-2.5">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[12px]">Real GDP growth</span>
-            <span className="num text-[12px] font-semibold">
-              {growth.latest.value.toFixed(1)}%
-            </span>
+            <span className="num text-[12px] font-semibold">{growth.latest.value.toFixed(1)}%</span>
           </div>
           <div className="mt-1.5 flex items-center gap-2">
             <MiniSpark values={growth.history.map((h) => h.value)} width={96} />
             <span className="num text-[12px] text-muted-foreground">
-              {growth.history.length} reported years · latest{" "}
-              {growth.latest.period}
+              {growth.history.length} reported years · latest {growth.latest.period}
             </span>
           </div>
           <div className="mt-2">
-            <SourceLine
-              provenance={growth.latest.provenance}
-              className="text-[12px]"
-            />
+            <SourceLine provenance={growth.latest.provenance} className="text-[12px]" />
           </div>
         </div>
       ) : null}

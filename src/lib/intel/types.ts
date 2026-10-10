@@ -25,12 +25,7 @@ export const CHANNEL_CODE: Record<Channel, string> = {
 
 export type Stage = "emerging" | "escalating" | "active" | "de-escalating";
 
-export const STAGES: Stage[] = [
-  "emerging",
-  "escalating",
-  "active",
-  "de-escalating",
-];
+export const STAGES: Stage[] = ["emerging", "escalating", "active", "de-escalating"];
 
 export const STAGE_LABEL: Record<Stage, string> = {
   emerging: "Emerging",
@@ -126,13 +121,7 @@ export interface Driver {
 
 export type RiskBand = "low" | "moderate" | "elevated" | "high" | "severe";
 
-export const RISK_BANDS: RiskBand[] = [
-  "low",
-  "moderate",
-  "elevated",
-  "high",
-  "severe",
-];
+export const RISK_BANDS: RiskBand[] = ["low", "moderate", "elevated", "high", "severe"];
 
 export const BAND_LABEL: Record<RiskBand, string> = {
   low: "Low",

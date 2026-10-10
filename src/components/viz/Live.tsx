@@ -40,9 +40,7 @@ export function SourceHealthChip({ className }: { className?: string }) {
   const total = rows.length;
   const verified = rows.filter((r) => r.lastSuccessAt > 0).length;
   // Failing *now*: the latest attempt is no newer than the last verified read.
-  const held = rows.filter(
-    (r) => r.lastAttemptAt > 0 && r.lastAttemptAt > r.lastSuccessAt,
-  ).length;
+  const held = rows.filter((r) => r.lastAttemptAt > 0 && r.lastAttemptAt > r.lastSuccessAt).length;
 
   const tone =
     total === 0 || verified === 0
@@ -70,10 +68,7 @@ export function SourceHealthChip({ className }: { className?: string }) {
               r.lastSuccessAt === 0
                 ? "no verified reading yet"
                 : `last verified ${relativeAge(r.lastSuccessAt)}`;
-            const healthWord =
-              r.lastAttemptAt > r.lastSuccessAt
-                ? " · latest attempt failed"
-                : "";
+            const healthWord = r.lastAttemptAt > r.lastSuccessAt ? " · latest attempt failed" : "";
             return `${name}: ${state}${healthWord}`;
           })
           .join("\n");
@@ -89,10 +84,7 @@ export function SourceHealthChip({ className }: { className?: string }) {
       )}
     >
       <span
-        className={cn(
-          "size-1.5 shrink-0 rounded-full",
-          held === 0 && verified > 0 && "live-dot",
-        )}
+        className={cn("size-1.5 shrink-0 rounded-full", held === 0 && verified > 0 && "live-dot")}
         style={{ background: tone }}
         aria-hidden
       />
@@ -199,12 +191,7 @@ export function LiveSignal({
           : "var(--exec-ink-dim)";
 
   return (
-    <div
-      className={cn(
-        "flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5",
-        className,
-      )}
-    >
+    <div className={cn("flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5", className)}>
       {/* The status word. Colour plus the dot, never colour alone. */}
       <span
         className="inline-flex shrink-0 items-center gap-1.5"
@@ -231,21 +218,14 @@ export function LiveSignal({
       {/* The source itself, so a reader never has to scroll up to learn whose
           numbers these are. */}
       {source ? (
-        <span className="exec-label shrink-0 text-[var(--exec-ink-dim)]">
-          {source.label}
-        </span>
+        <span className="exec-label shrink-0 text-[var(--exec-ink-dim)]">{source.label}</span>
       ) : null}
 
       {/* The age. `aria-hidden` because it changes every second and would
           otherwise be announced continuously; the static title carries the
           precise time for anyone who needs it. */}
-      <span
-        className="exec-num min-w-0 text-[12px] text-[var(--exec-ink-dim)]"
-        aria-hidden
-      >
-        {never
-          ? "no successful fetch recorded"
-          : `updated ${relativeAge(lastVerifiedAt)}`}
+      <span className="exec-num min-w-0 text-[12px] text-[var(--exec-ink-dim)]" aria-hidden>
+        {never ? "no successful fetch recorded" : `updated ${relativeAge(lastVerifiedAt)}`}
       </span>
       <span className="sr-only">
         {never
@@ -266,15 +246,11 @@ export function LiveSignal({
       ) : null}
 
       {paused ? (
-        <span className="chip shrink-0 text-[var(--exec-ink-dim)]">
-          LIVE UPDATES PAUSED
-        </span>
+        <span className="chip shrink-0 text-[var(--exec-ink-dim)]">LIVE UPDATES PAUSED</span>
       ) : null}
 
       {skipped === "in_flight" ? (
-        <span className="chip shrink-0 text-[var(--exec-cyan)]">
-          A FETCH IS ALREADY RUNNING
-        </span>
+        <span className="chip shrink-0 text-[var(--exec-cyan)]">A FETCH IS ALREADY RUNNING</span>
       ) : null}
       {skipped === "cooling_down" && retryInMs ? (
         <span
@@ -309,10 +285,7 @@ export function LiveSignal({
           title="Ask this source for new data now. The server refuses if it is already running or backing off."
           className="inline-flex items-center gap-1.5 rounded-full border border-[var(--exec-hairline)] px-2.5 py-1 text-[12px] text-[var(--exec-ink-dim)] transition-colors hover:border-[var(--exec-hairline-strong)] hover:text-[var(--exec-ink)] disabled:opacity-50"
         >
-          <RefreshCw
-            className={cn("size-3", refreshing && "animate-spin")}
-            aria-hidden
-          />
+          <RefreshCw className={cn("size-3", refreshing && "animate-spin")} aria-hidden />
           {refreshing ? "Fetching" : "Refresh"}
         </button>
         <button

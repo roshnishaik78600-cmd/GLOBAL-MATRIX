@@ -173,7 +173,7 @@ function RootComponent() {
       reloadOnceForStaleChunk();
     };
     const onError = (e: ErrorEvent | PromiseRejectionEvent) => {
-      const reason = "reason" in e ? e.reason : e.error ?? e.message;
+      const reason = "reason" in e ? e.reason : (e.error ?? e.message);
       const msg = String(reason?.message ?? reason ?? "");
       if (isChunkLoadError(msg)) reloadOnceForStaleChunk();
     };

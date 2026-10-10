@@ -34,15 +34,15 @@ export default function NotAvailable() {
   const reason = module ? REASONS[module] : undefined;
 
   return (
-      <PageFrame
-        eyebrow={module ?? "Unavailable"}
-        title={module ?? "Unavailable"}
-        lede={
-          reason
-            ? "This module is intentionally empty rather than populated with invented data."
-            : "This module has no data source in the current build."
-        }
-      >
+    <PageFrame
+      eyebrow={module ?? "Unavailable"}
+      title={module ?? "Unavailable"}
+      lede={
+        reason
+          ? "This module is intentionally empty rather than populated with invented data."
+          : "This module has no data source in the current build."
+      }
+    >
       <QuestionStrip
         className="border-b border-rule"
         answers={[
@@ -73,9 +73,7 @@ export default function NotAvailable() {
           <Panel title="Status" meta="no data available">
             <div className="space-y-3 p-4">
               <div className="flex items-baseline justify-between border-b border-rule pb-2">
-                <span className="label text-muted-foreground">
-                  Required data source
-                </span>
+                <span className="label text-muted-foreground">Required data source</span>
                 <span className="text-[13px]">{reason?.data ?? "—"}</span>
               </div>
               <p className="text-[13px] leading-relaxed text-muted-foreground">
@@ -83,9 +81,8 @@ export default function NotAvailable() {
                   "No dataset is connected for this surface, so it renders nothing rather than plausible-looking placeholders."}
               </p>
               <p className="border-l-2 border-signal pl-3 text-[13px] leading-relaxed">
-                Every surface that <em>is</em> populated is driven by the
-                propagation engine and can be traced back to a signal, a
-                pathway or a stated coefficient.
+                Every surface that <em>is</em> populated is driven by the propagation engine and can
+                be traced back to a signal, a pathway or a stated coefficient.
               </p>
             </div>
           </Panel>
@@ -116,9 +113,7 @@ export default function NotAvailable() {
                     className="flex items-center justify-between gap-3 px-3 py-2.5 transition-colors hover:bg-[var(--exec-surface)]"
                   >
                     <span className="text-[13px]">{label}</span>
-                    <span className="text-[12px] text-muted-foreground">
-                      {note}
-                    </span>
+                    <span className="text-[12px] text-muted-foreground">{note}</span>
                   </a>
                 </li>
               ))}

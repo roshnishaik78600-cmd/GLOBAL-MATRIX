@@ -55,9 +55,7 @@ export function FlowDiagram({
           return (
             <div key={stage.id} className="flex flex-1 items-center gap-0">
               <div className="flex w-28 shrink-0 flex-col items-center gap-1.5 border border-rule bg-card px-2 py-3 text-center">
-                <span className="label leading-tight text-foreground/90">
-                  {stage.label}
-                </span>
+                <span className="label leading-tight text-foreground/90">{stage.label}</span>
                 <span className="num text-[12px] text-muted-foreground">
                   {stage.nodeIds.length} nodes
                 </span>
@@ -93,7 +91,10 @@ export function FlowDiagram({
                         }}
                       />
                       <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden>
-                        <path d="M0 0 L8 4 L0 8 Z" fill={riskColorForScore((e.weight / max) * 100)} />
+                        <path
+                          d="M0 0 L8 4 L0 8 Z"
+                          fill={riskColorForScore((e.weight / max) * 100)}
+                        />
                       </svg>
                     </div>
                   ))}
@@ -132,11 +133,7 @@ export function FlowMap({
           if (b.lat === undefined || b.lon === undefined) return null;
           return {
             ...f,
-            d: arcPath(
-              project(a.lat, a.lon, W, H),
-              project(b.lat, b.lon, W, H),
-              0.26,
-            ),
+            d: arcPath(project(a.lat, a.lon, W, H), project(b.lat, b.lon, W, H), 0.26),
           };
         })
         .filter(Boolean) as { d: string; weight: number }[],
@@ -222,7 +219,7 @@ export function GraphExplorer({
     let ci = 0;
     for (const [, list] of cols) {
       if (list.length === 0) continue;
-      const x = ((ci + 0.5) / (order.filter((k) => (cols.get(k)?.length ?? 0) > 0).length)) * W;
+      const x = ((ci + 0.5) / order.filter((k) => (cols.get(k)?.length ?? 0) > 0).length) * W;
       list.forEach((n, i) => {
         out.push({
           ...n,

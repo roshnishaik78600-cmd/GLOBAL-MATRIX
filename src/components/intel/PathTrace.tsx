@@ -29,8 +29,7 @@ export function PathTrace({
   if (contributions.length === 0) {
     return (
       <p className="px-4 py-10 text-center text-[13px] text-muted-foreground">
-        No pathway in the current corpus reaches this entity. That is a finding,
-        not missing data.
+        No pathway in the current corpus reaches this entity. That is a finding, not missing data.
       </p>
     );
   }
@@ -71,8 +70,7 @@ export function PathTrace({
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span className="label">{CHANNEL_LABEL[c.channel]}</span>
                 <span className="num text-[12px] text-muted-foreground">
-                  magnitude {pct(c.magnitude)} · confidence{" "}
-                  {pct(c.confidence)}
+                  magnitude {pct(c.magnitude)} · confidence {pct(c.confidence)}
                 </span>
                 <span className="num text-[12px] text-muted-foreground">
                   lag {c.lagDays[0]}–{c.lagDays[1]}d
@@ -119,9 +117,7 @@ export function PathTrace({
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-3">
                 <Label>Weighted contribution</Label>
-                <span className="num text-[13px] font-semibold">
-                  {c.contribution.toFixed(3)}
-                </span>
+                <span className="num text-[13px] font-semibold">{c.contribution.toFixed(3)}</span>
               </div>
               <Meter
                 value={c.contribution / ceiling}
@@ -129,9 +125,8 @@ export function PathTrace({
                 className="mt-1.5"
               />
               <p className="num mt-1 text-[12px] text-muted-foreground">
-                {c.impact.toFixed(2)} impact × {c.share.toFixed(2)} share ×{" "}
-                {c.magnitude.toFixed(2)} magnitude × {c.confidence.toFixed(2)}{" "}
-                confidence
+                {c.impact.toFixed(2)} impact × {c.share.toFixed(2)} share × {c.magnitude.toFixed(2)}{" "}
+                magnitude × {c.confidence.toFixed(2)} confidence
                 {c.affinity > 1 ? ` × ${c.affinity.toFixed(1)} affinity` : ""} ={" "}
                 {c.contribution.toFixed(3)}
               </p>
@@ -171,13 +166,9 @@ export function PathInline({
 }) {
   return (
     <span className="flex items-center gap-2">
-      <span className="label text-[12px] text-muted-foreground">
-        {channel}
-      </span>
+      <span className="label text-[12px] text-muted-foreground">{channel}</span>
       <ArrowRight className="size-3 text-muted-foreground" />
-      <span className="num text-[12px] font-semibold">
-        {contribution.toFixed(3)}
-      </span>
+      <span className="num text-[12px] font-semibold">{contribution.toFixed(3)}</span>
       <Meter
         value={contribution / (ceiling || 1)}
         tone={contribution / (ceiling || 1) > 0.55 ? "signal" : "ink"}

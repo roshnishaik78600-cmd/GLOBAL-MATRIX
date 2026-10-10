@@ -13,10 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { api } from "@/lib/backend/api";
-import type {
-  TopologyCategory,
-  TopologyResult,
-} from "@/lib/backend/api";
+import type { TopologyCategory, TopologyResult } from "@/lib/backend/api";
 import {
   buildStages,
   CHAIN_SUMMARY,
@@ -27,12 +24,7 @@ import {
 import { Skeleton } from "@/components/viz/core";
 import { cn } from "@/lib/utils";
 import { loadColour } from "@/components/viz/exec/Topology";
-import {
-  BasisTag,
-  ExecCard,
-  NoDataAvailable,
-  SectionTitle,
-} from "@/components/viz/exec/system";
+import { BasisTag, ExecCard, NoDataAvailable, SectionTitle } from "@/components/viz/exec/system";
 
 /**
  * The homepage's visual vocabulary.
@@ -71,10 +63,7 @@ const PULSE: { id: string; label: string; icon: LucideIcon }[] = [
  * across a desk is worth more here than perfect vertical alignment.
  */
 export function GlobalPulse({ data }: { data: TopologyResult | undefined }) {
-  const byId = useMemo(
-    () => new Map((data?.categories ?? []).map((c) => [c.id, c])),
-    [data],
-  );
+  const byId = useMemo(() => new Map((data?.categories ?? []).map((c) => [c.id, c])), [data]);
 
   if (!data || data.categories.length === 0) {
     return (
@@ -121,9 +110,7 @@ export function GlobalPulse({ data }: { data: TopologyResult | undefined }) {
                     >
                       {(cat.intensity * 100).toFixed(0)}
                     </span>
-                    <span className="exec-num text-[13px] text-[var(--exec-ink-dim)]">
-                      idx
-                    </span>
+                    <span className="exec-num text-[13px] text-[var(--exec-ink-dim)]">idx</span>
                     <span
                       className="exec-num ml-auto text-[13px] font-semibold"
                       style={{ color: trendColour(cat.change) }}
@@ -168,23 +155,14 @@ function trendColour(change: number): string {
  */
 function statusWord(cat: TopologyCategory): string {
   if (cat.intensity <= 0.001) return "no current reading";
-  return cat.trend === "rising"
-    ? "building"
-    : cat.trend === "falling"
-      ? "easing"
-      : "steady";
+  return cat.trend === "rising" ? "building" : cat.trend === "falling" ? "easing" : "steady";
 }
 
 /** 30-point sparkline, filled under the line so six of them read as one set. */
 function Sparkline({ values }: { values: number[] }) {
   if (values.length < 2) return <div className="h-8 w-full" />;
   return (
-    <svg
-      viewBox="0 0 100 28"
-      preserveAspectRatio="none"
-      className="h-8 w-full"
-      aria-hidden
-    >
+    <svg viewBox="0 0 100 28" preserveAspectRatio="none" className="h-8 w-full" aria-hidden>
       <polygon
         points={`0,28 ${values
           .map((v, i) => {
@@ -240,14 +218,8 @@ export function FollowTheShock({
   const [rowId, setRowId] = useState<string | null>(null);
 
   const active = eventId ?? events[0]?.id ?? null;
-  const chain = useQuery(
-    api.intel.eventChain,
-    active ? { eventId: active } : "skip",
-  );
-  const stages = useMemo<ChainStage[]>(
-    () => (chain ? buildStages(chain) : []),
-    [chain],
-  );
+  const chain = useQuery(api.intel.eventChain, active ? { eventId: active } : "skip");
+  const stages = useMemo<ChainStage[]>(() => (chain ? buildStages(chain) : []), [chain]);
 
   if (events.length === 0) {
     return (
@@ -308,7 +280,10 @@ export function FollowTheShock({
           {/* The nine nodes. Wrapping rather than scrolling, so every link is
               visible without interaction on every viewport — a chain you have to
               scroll to finish is not legible as a chain. */}
-          <nav aria-label="Propagation stages" className="border-b border-[var(--exec-hairline)] px-4 py-4">
+          <nav
+            aria-label="Propagation stages"
+            className="border-b border-[var(--exec-hairline)] px-4 py-4"
+          >
             <ol className="flex flex-wrap gap-2">
               {stages.map((s, i) => {
                 const isActive = s.id === stage?.id;
@@ -367,7 +342,10 @@ export function FollowTheShock({
               {stage && stage.rows.length > 0 ? (
                 <ul className="flex flex-col">
                   {stage.rows.map((r) => (
-                    <li key={r.id} className="border-b border-[var(--exec-hairline)] last:border-b-0">
+                    <li
+                      key={r.id}
+                      className="border-b border-[var(--exec-hairline)] last:border-b-0"
+                    >
                       <ChainRowButton
                         row={r}
                         selected={row?.id === r.id}
@@ -396,8 +374,7 @@ export function FollowTheShock({
                 a visible consequence rather than silently swapping text. */}
             <div className="min-w-0 bg-[var(--card)] lg:col-span-5">
               <p className="exec-label border-b border-[var(--exec-hairline)] px-4 py-2.5">
-                Step{" "}
-                {stage ? String(stages.indexOf(stage) + 1).padStart(2, "0") : "—"} ·{" "}
+                Step {stage ? String(stages.indexOf(stage) + 1).padStart(2, "0") : "—"} ·{" "}
                 {stage?.title}
               </p>
               <AnimatePresence mode="wait">
@@ -455,8 +432,8 @@ export function FollowTheShock({
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[var(--exec-hairline)] px-4 py-3">
             <span className="text-[13px] text-[var(--exec-ink-dim)]">
-              {measured} of {stages.length} links carry measured rows for this event. The
-              rest are stated as unmeasured, not zero.
+              {measured} of {stages.length} links carry measured rows for this event. The rest are
+              stated as unmeasured, not zero.
             </span>
             <Link
               to="/app/chain"
@@ -514,9 +491,7 @@ function ChainRowButton({
         />
       </span>
       {row.meta ? (
-        <span className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">
-          {row.meta}
-        </span>
+        <span className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">{row.meta}</span>
       ) : null}
     </button>
   );

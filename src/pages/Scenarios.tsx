@@ -58,12 +58,11 @@ export default function Scenarios() {
   const selectedMode = meta.modes.find((m) => m.mode === mode);
 
   return (
-      <PageFrame
+    <PageFrame
       eyebrow="Scenarios"
       title="Scenario lab"
       lede="Hypothetical perturbations of the corpus, with the range they imply and the observed baseline beside them."
     >
-
       {/* Builder */}
       <div className="border-b border-rule bg-card">
         <div className="grid grid-cols-1 gap-px bg-rule lg:grid-cols-4">
@@ -127,9 +126,7 @@ export default function Scenarios() {
           <div className="bg-card p-4">
             <div className="flex items-baseline justify-between">
               <p className="label text-muted-foreground">Magnitude</p>
-              <p className="num text-[13px] font-semibold">
-                {(magnitude * 100).toFixed(0)}%
-              </p>
+              <p className="num text-[13px] font-semibold">{(magnitude * 100).toFixed(0)}%</p>
             </div>
             <div className="mt-3 flex items-center gap-1">
               {[0, 0.25, 0.5, 0.75, 1].map((step) => (
@@ -196,11 +193,10 @@ export default function Scenarios() {
           <div className="flex items-center gap-2 border border-signal/40 bg-signal/10 px-3 py-2">
             <TriangleAlert className="size-4 shrink-0 text-signal" aria-hidden />
             <p className="text-[12px]">
-              <strong className="font-semibold">Scenario — not a forecast.</strong>{" "}
-              Every figure below is the existing model recomputed under the
-              assumption &ldquo;{selectedMode?.label.toLowerCase()}&rdquo; at{" "}
-              {(magnitude * 100).toFixed(0)}% intensity. It is not a prediction
-              that this will happen.
+              <strong className="font-semibold">Scenario — not a forecast.</strong> Every figure
+              below is the existing model recomputed under the assumption &ldquo;
+              {selectedMode?.label.toLowerCase()}&rdquo; at {(magnitude * 100).toFixed(0)}%
+              intensity. It is not a prediction that this will happen.
             </p>
           </div>
 
@@ -219,9 +215,7 @@ export default function Scenarios() {
                 <div className="space-y-4 p-3">
                   <div>
                     <div className="flex items-baseline justify-between">
-                      <span className="label text-muted-foreground">
-                        Baseline
-                      </span>
+                      <span className="label text-muted-foreground">Baseline</span>
                       <span className="num text-[15px] font-semibold">
                         {result.baselineEventScore.toFixed(1)}
                       </span>
@@ -233,8 +227,7 @@ export default function Scenarios() {
                       className="mt-1.5"
                     />
                     <p className="num mt-1 text-[12px] text-muted-foreground">
-                      80% interval {result.baselineLow.toFixed(0)}–
-                      {result.baselineHigh.toFixed(0)}
+                      80% interval {result.baselineLow.toFixed(0)}–{result.baselineHigh.toFixed(0)}
                     </p>
                   </div>
                   <div>
@@ -253,8 +246,7 @@ export default function Scenarios() {
                       className="mt-1.5"
                     />
                     <p className="num mt-1 text-[12px] text-muted-foreground">
-                      80% interval {result.scenarioLow.toFixed(0)}–
-                      {result.scenarioHigh.toFixed(0)}
+                      80% interval {result.scenarioLow.toFixed(0)}–{result.scenarioHigh.toFixed(0)}
                     </p>
                   </div>
                   <p className="border-t border-rule pt-3 text-[13px] leading-relaxed text-muted-foreground">
@@ -289,11 +281,7 @@ export default function Scenarios() {
                             </span>
                           </div>
                           <div className="mt-1.5 flex gap-px">
-                            <Bar
-                              value={c.baseline}
-                              tone="var(--muted-foreground)"
-                              height={5}
-                            />
+                            <Bar value={c.baseline} tone="var(--muted-foreground)" height={5} />
                           </div>
                           <Bar
                             value={c.scenario}
@@ -335,10 +323,7 @@ export default function Scenarios() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
-            <Panel
-              title="Most affected countries"
-              meta="largest live-load change"
-            >
+            <Panel title="Most affected countries" meta="largest live-load change">
               {result.countryDeltas.length === 0 ? (
                 <NoData reason="No country load moved under this assumption." />
               ) : (
@@ -350,10 +335,7 @@ export default function Scenarios() {
               )}
             </Panel>
 
-            <Panel
-              title="Most affected industries"
-              meta="largest live-load change"
-            >
+            <Panel title="Most affected industries" meta="largest live-load change">
               {result.industryDeltas.length === 0 ? (
                 <NoData reason="No sector load moved under this assumption." />
               ) : (
@@ -386,18 +368,12 @@ function DeltaRow({
           to={to}
           className="flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-[var(--exec-surface)]"
         >
-          <span className="min-w-0 flex-1 truncate text-[13px]">
-            {d.label}
-          </span>
+          <span className="min-w-0 flex-1 truncate text-[13px]">{d.label}</span>
           <span className="num w-12 shrink-0 text-right text-[12px] text-muted-foreground">
             {(d.baseline * 100).toFixed(0)}%
           </span>
           <span className="w-16 shrink-0">
-            <Bar
-              value={d.scenario}
-              tone={riskColorForScore(d.scenario * 100)}
-              height={4}
-            />
+            <Bar value={d.scenario} tone={riskColorForScore(d.scenario * 100)} height={4} />
           </span>
           <span
             className="num w-14 shrink-0 text-right text-[12px] font-semibold"

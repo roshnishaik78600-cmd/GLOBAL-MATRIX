@@ -87,9 +87,7 @@ export function SourceLine({
         </a>
       ) : null}
       {asOf ? (
-        <span className="label whitespace-nowrap text-muted-foreground">
-          as of {asOf}
-        </span>
+        <span className="label whitespace-nowrap text-muted-foreground">as of {asOf}</span>
       ) : null}
       <span className="label whitespace-nowrap text-muted-foreground/70">
         fetched {timestamp(provenance.retrievedAt)}

@@ -22,13 +22,7 @@ import { cn } from "@/lib/utils";
  * than borrowing a neighbouring number.
  */
 
-type ColumnId =
-  | "geopolitical"
-  | "trade"
-  | "energy"
-  | "supply"
-  | "market"
-  | "economic";
+type ColumnId = "geopolitical" | "trade" | "energy" | "supply" | "market" | "economic";
 
 const COLUMNS: {
   id: ColumnId;
@@ -55,10 +49,7 @@ export function SignalMatrix({ className }: { className?: string }) {
   const { focus, toggle, isFocused } = useFocus();
   const [sort, setSort] = useState<ColumnId | "overall">("overall");
 
-  const growth = useMemo(
-    () => (macro.data ? macroSeries(macro.data) : new Map()),
-    [macro.data],
-  );
+  const growth = useMemo(() => (macro.data ? macroSeries(macro.data) : new Map()), [macro.data]);
 
   const rows = matrix?.rows ?? [];
 
@@ -84,10 +75,7 @@ export function SignalMatrix({ className }: { className?: string }) {
   }, [rows, sort, growth]);
 
   const ordered = focused
-    ? [
-        ...sorted.filter((r) => r.nodeId === focused),
-        ...sorted.filter((r) => r.nodeId !== focused),
-      ]
+    ? [...sorted.filter((r) => r.nodeId === focused), ...sorted.filter((r) => r.nodeId !== focused)]
     : sorted;
 
   if (!matrix) {
@@ -98,9 +86,7 @@ export function SignalMatrix({ className }: { className?: string }) {
     );
   }
 
-  const reportingPeriod = growth.size > 0
-    ? [...growth.values()][0].latest.period
-    : "";
+  const reportingPeriod = growth.size > 0 ? [...growth.values()][0].latest.period : "";
 
   return (
     <Panel
@@ -191,10 +177,7 @@ export function SignalMatrix({ className }: { className?: string }) {
                       <span
                         className="num block text-center text-[13px] font-semibold"
                         style={{
-                          color:
-                            observed.latest.value >= 0
-                              ? "var(--stable)"
-                              : "var(--critical)",
+                          color: observed.latest.value >= 0 ? "var(--stable)" : "var(--critical)",
                         }}
                         title={`Reported growth in ${observed.latest.period}`}
                       >
@@ -248,11 +231,12 @@ export function SignalMatrix({ className }: { className?: string }) {
           />
         )}
         <p className="text-[12px] leading-relaxed text-muted-foreground">
-          {COLUMNS.filter((c) => !c.observed).map((c) => c.label).join(", ")} are
-          this model&apos;s own load on each channel for that economy.{" "}
-          {CHANNEL_LABEL.finance} carries the Market column. Economic growth is
-          reported, not modelled, and growth is a direction — a high number is
-          not the same kind of thing as a high risk score.
+          {COLUMNS.filter((c) => !c.observed)
+            .map((c) => c.label)
+            .join(", ")}{" "}
+          are this model&apos;s own load on each channel for that economy. {CHANNEL_LABEL.finance}{" "}
+          carries the Market column. Economic growth is reported, not modelled, and growth is a
+          direction — a high number is not the same kind of thing as a high risk score.
         </p>
       </div>
     </Panel>

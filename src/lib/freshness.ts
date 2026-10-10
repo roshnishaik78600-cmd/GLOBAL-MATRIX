@@ -45,10 +45,7 @@ const DAY = 24 * HOUR;
  * fetched minutes ago still describes a closed historical period. Saying LIVE
  * there would be the exact kind of claim this platform refuses to make.
  */
-export function freshnessOf(
-  retrievedAt: number | undefined,
-  sourceId: string,
-): Freshness {
+export function freshnessOf(retrievedAt: number | undefined, sourceId: string): Freshness {
   if (!retrievedAt) return "unavailable";
   const window = STALE_AFTER_MS[sourceId];
   if (!window) return "delayed";
@@ -68,9 +65,7 @@ export function utcStamp(ms: number | undefined): string {
   if (!ms) return "—";
   const d = new Date(ms);
   const pad = (n: number) => String(n).padStart(2, "0");
-  return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(
-    d.getUTCSeconds(),
-  )} UTC`;
+  return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC`;
 }
 
 export function utcDateTime(ms: number | undefined): string {

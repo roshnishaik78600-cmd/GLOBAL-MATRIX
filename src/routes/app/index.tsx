@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/")({
       { title: "Overview — GlobalMatrix Console" },
       {
         name: "description",
-        content: "A real-time overview of global events, exposure shifts and emerging risks across countries and industries.",
+        content:
+          "A real-time overview of global events, exposure shifts and emerging risks across countries and industries.",
       },
       { property: "og:title", content: "Overview — GlobalMatrix Console" },
       {
         property: "og:description",
-        content: "A real-time overview of global events, exposure shifts and emerging risks across countries and industries.",
+        content:
+          "A real-time overview of global events, exposure shifts and emerging risks across countries and industries.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

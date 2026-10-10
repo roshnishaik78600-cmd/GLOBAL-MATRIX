@@ -31,10 +31,7 @@ export function cleanKey(raw: string): string {
 export async function watchedKeys(): Promise<Set<string>> {
   const userId = await currentUserId();
   if (!userId) return new Set();
-  const { data, error } = await supabase
-    .from("watchlist")
-    .select("event_id")
-    .eq("user_id", userId);
+  const { data, error } = await supabase.from("watchlist").select("event_id").eq("user_id", userId);
   if (error) throw error;
   return new Set((data ?? []).map((r) => r.event_id));
 }

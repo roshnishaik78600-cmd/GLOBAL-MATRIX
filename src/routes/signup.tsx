@@ -7,12 +7,14 @@ export const Route = createFileRoute("/signup")({
       { title: "Create account — GlobalMatrix" },
       {
         name: "description",
-        content: "Create a GlobalMatrix account to build your personal view of global events and exposure.",
+        content:
+          "Create a GlobalMatrix account to build your personal view of global events and exposure.",
       },
       { property: "og:title", content: "Create account — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Create a GlobalMatrix account to build your personal view of global events and exposure.",
+        content:
+          "Create a GlobalMatrix account to build your personal view of global events and exposure.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

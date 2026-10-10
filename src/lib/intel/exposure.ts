@@ -1,11 +1,7 @@
 import { COUNTRIES, getCountry } from "./countries";
 import { INDUSTRIES, getIndustry, type Industry } from "./industries";
 import { getNode } from "./nodes";
-import {
-  CHANNELS,
-  type Channel,
-  type EventAssessment,
-} from "./types";
+import { CHANNELS, type Channel, type EventAssessment } from "./types";
 
 /**
  * Country and industry exposure.
@@ -88,10 +84,7 @@ function normalise(raw: number, ceiling: number): number {
 
 function accumulate(
   assessments: EventAssessment[],
-  matches: (
-    exposure: { nodeId: string; impact: number },
-    channel: Channel,
-  ) => Match | null,
+  matches: (exposure: { nodeId: string; impact: number }, channel: Channel) => Match | null,
   ceiling: number,
 ): ExposureProfile {
   const byChannelRaw: Record<Channel, number> = {
@@ -110,8 +103,7 @@ function accumulate(
 
         const weight = exposure.impact * match.share;
         const affinity = match.affinity ? AFFINITY_BOOST : 1;
-        const contribution =
-          weight * pathway.magnitude * pathway.confidence * affinity;
+        const contribution = weight * pathway.magnitude * pathway.confidence * affinity;
         byChannelRaw[pathway.channel] += contribution;
 
         contributions.push({
@@ -159,28 +151,20 @@ function accumulate(
 }
 
 /** Exposure of a single country, bloc or corridor node. */
-export function nodeExposure(
-  assessments: EventAssessment[],
-  nodeId: string,
-): ExposureProfile {
+export function nodeExposure(assessments: EventAssessment[], nodeId: string): ExposureProfile {
   const country = getCountry(nodeId);
   const affinity = new Set<Channel>(country?.primaryChannels ?? []);
 
   return accumulate(
     assessments,
     (exposure, channel) =>
-      exposure.nodeId === nodeId
-        ? { share: 1, affinity: affinity.has(channel) }
-        : null,
+      exposure.nodeId === nodeId ? { share: 1, affinity: affinity.has(channel) } : null,
     COUNTRY_CEILING,
   );
 }
 
 /** Structural share a node holds within an industry. */
-export function industryRole(
-  industry: Industry,
-  nodeId: string,
-): { share: number; basis: string } {
+export function industryRole(industry: Industry, nodeId: string): { share: number; basis: string } {
   const producer = industry.producers.find((p) => p.nodeId === nodeId);
   if (producer) return { share: producer.share, basis: "Production share" };
   const consumer = industry.consumers.find((c) => c.nodeId === nodeId);
@@ -270,9 +254,7 @@ export function corridorIndex(assessments: EventAssessment[]): CorridorRow[] {
             // infrastructure layer — chokepoints, corridors and rails.
             if (getCountry(e.nodeId)) return false;
             return (
-              node.kind === "chokepoint" ||
-              node.kind === "institution" ||
-              node.kind === "corridor"
+              node.kind === "chokepoint" || node.kind === "institution" || node.kind === "corridor"
             );
           })
           .map((e) => e.nodeId),
@@ -303,10 +285,7 @@ export function corridorIndex(assessments: EventAssessment[]): CorridorRow[] {
  * Profile payloads
  * ------------------------------------------------------------------ */
 
-export function countryProfilePayload(
-  assessments: EventAssessment[],
-  nodeId: string,
-) {
+export function countryProfilePayload(assessments: EventAssessment[], nodeId: string) {
   const country = getCountry(nodeId);
   const node = getNode(nodeId);
   const exposure = nodeExposure(assessments, nodeId);
@@ -316,9 +295,7 @@ export function countryProfilePayload(
     // The live figure must come from *this industry's* exposure profile, not
     // the node's — otherwise every row inherits the same top event.
     const sectorExposure = industryExposure(assessments, industry);
-    const via = sectorExposure.contributions.find(
-      (c) => c.viaNodeId === nodeId,
-    );
+    const via = sectorExposure.contributions.find((c) => c.viaNodeId === nodeId);
     return {
       id: industry.id,
       label: industry.label,
@@ -435,10 +412,7 @@ export function industryIndex(assessments: EventAssessment[]): IndustryRow[] {
   }).sort((a, b) => b.load - a.load);
 }
 
-export function industryProfilePayload(
-  assessments: EventAssessment[],
-  industryId: string,
-) {
+export function industryProfilePayload(assessments: EventAssessment[], industryId: string) {
   const industry = getIndustry(industryId);
   if (!industry) return null;
 

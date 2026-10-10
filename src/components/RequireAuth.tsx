@@ -77,11 +77,7 @@ export function RequireAuth({
             <Button className="w-full" onClick={() => navigate(signInHref)}>
               Sign in
             </Button>
-            <Button
-              variant="ghost"
-              className="w-full"
-              onClick={() => navigate("/")}
-            >
+            <Button variant="ghost" className="w-full" onClick={() => navigate("/")}>
               Back to home
             </Button>
           </CardFooter>

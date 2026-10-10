@@ -141,10 +141,7 @@ function p_stability(direction: Scenario["pathways"][number]["direction"]): numb
  */
 export function severityOf(scenario: Scenario): number {
   const pressure = channelPressureOf(scenario);
-  const weighted = CHANNELS.reduce(
-    (sum, c) => sum + pressure[c] * CHANNEL_WEIGHT[c],
-    0,
-  );
+  const weighted = CHANNELS.reduce((sum, c) => sum + pressure[c] * CHANNEL_WEIGHT[c], 0);
   const normalised = CHANNELS.reduce((sum, c) => sum + CHANNEL_WEIGHT[c], 0);
   const pressureTerm = weighted / normalised;
 
@@ -157,10 +154,7 @@ export function severityOf(scenario: Scenario): number {
   // ones do not score lower, they score more uncertain.
   const evidential = 0.82 + 0.18 * evidence;
 
-  const score =
-    100 *
-    evidential *
-    (0.4 * pressureTerm + 0.22 * centrality + 0.2 * stage);
+  const score = 100 * evidential * (0.4 * pressureTerm + 0.22 * centrality + 0.2 * stage);
 
   return clamp(score, 0, 100);
 }
@@ -177,15 +171,8 @@ export function uncertaintyOf(scenario: Scenario, horizonDays: number): number {
   const evidence = evidenceStrengthOf(scenario);
   const confidence = scenario.confidence;
   const centrality = centralityOf(scenario);
-  const base =
-    6 +
-    26 * (1 - evidence) +
-    10 * (1 - confidence) +
-    4 * (1 - centrality);
-  return Math.min(
-    36,
-    base + HORIZON_UNCERTAINTY_GROWTH[horizonDays as 7 | 30 | 90],
-  );
+  const base = 6 + 26 * (1 - evidence) + 10 * (1 - confidence) + 4 * (1 - centrality);
+  return Math.min(36, base + HORIZON_UNCERTAINTY_GROWTH[horizonDays as 7 | 30 | 90]);
 }
 
 /**
@@ -347,8 +334,7 @@ export function networkSummary(assessments: EventAssessment[]) {
         const key = `${pathway.channel}:${exposure.nodeId}`;
         nodeLoad.set(
           key,
-          (nodeLoad.get(key) ?? 0) +
-            exposure.impact * pathway.magnitude * pathway.confidence,
+          (nodeLoad.get(key) ?? 0) + exposure.impact * pathway.magnitude * pathway.confidence,
         );
       }
     }
@@ -363,8 +349,7 @@ export function networkSummary(assessments: EventAssessment[]) {
     .slice(0, 8);
 
   const meanUncertainty =
-    assessments.reduce((sum, a) => sum + a.uncertainty, 0) /
-    Math.max(1, assessments.length);
+    assessments.reduce((sum, a) => sum + a.uncertainty, 0) / Math.max(1, assessments.length);
 
   return { byChannel, hottest, meanUncertainty };
 }

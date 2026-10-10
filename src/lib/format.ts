@@ -17,9 +17,7 @@ export function dayMonth(iso: string): string {
 }
 
 export function relativeDays(iso: string, from = new Date()): string {
-  const diff = Math.round(
-    (Date.parse(iso) - from.getTime()) / (1000 * 60 * 60 * 24),
-  );
+  const diff = Math.round((Date.parse(iso) - from.getTime()) / (1000 * 60 * 60 * 24));
   const abs = Math.abs(diff);
   if (abs === 0) return "today";
   if (abs === 1) return diff < 0 ? "yesterday" : "tomorrow";

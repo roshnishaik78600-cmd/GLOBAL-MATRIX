@@ -5,11 +5,7 @@ import type { ChokepointRow } from "@/lib/backend/api";
 import { getNode } from "@/lib/intel/nodes";
 import { cn } from "@/lib/utils";
 import { pct } from "@/lib/format";
-import {
-  BasisTag,
-  NoDataAvailable,
-  SegmentedControl,
-} from "./system";
+import { BasisTag, NoDataAvailable, SegmentedControl } from "./system";
 import { loadColour } from "./Topology";
 
 /**
@@ -84,7 +80,11 @@ export function ChokepointBoard({
         <SegmentedControl
           options={[
             { id: "dependency", label: "WHO DEPENDS ON IT", hint: "Declared sector dependencies" },
-            { id: "exposure", label: "WHAT IT EXPOSES", hint: "Economies sharing this node's events" },
+            {
+              id: "exposure",
+              label: "WHAT IT EXPOSES",
+              hint: "Economies sharing this node's events",
+            },
           ]}
           value={stage}
           onChange={setStage}
@@ -109,14 +109,7 @@ function Meter({ label, value, note }: { label: string; value: number; note: str
   return (
     <div className="flex items-center gap-2">
       <svg viewBox="0 0 40 40" className="size-9 shrink-0" aria-hidden>
-        <circle
-          cx="20"
-          cy="20"
-          r={R}
-          fill="none"
-          stroke="var(--exec-hairline)"
-          strokeWidth="4"
-        />
+        <circle cx="20" cy="20" r={R} fill="none" stroke="var(--exec-hairline)" strokeWidth="4" />
         <circle
           cx="20"
           cy="20"
@@ -221,9 +214,7 @@ function DependencyFlow({ row }: { row: Row }) {
                 return (
                   <li key={m.id} className="px-3 py-1.5">
                     <div className="flex items-baseline justify-between gap-2">
-                      <span className="truncate text-[13px] text-[var(--exec-ink)]">
-                        {m.label}
-                      </span>
+                      <span className="truncate text-[13px] text-[var(--exec-ink)]">{m.label}</span>
                       <span
                         className="exec-num shrink-0 text-[12px]"
                         style={{ color: critical ? "var(--exec-crimson)" : "var(--exec-ink-dim)" }}
@@ -241,10 +232,7 @@ function DependencyFlow({ row }: { row: Row }) {
       </div>
       <div className="flex flex-wrap items-center gap-3 border-t border-[var(--exec-hairline)] px-3 py-1.5">
         <span className="exec-label flex items-center gap-1.5">
-          <span
-            className="inline-block h-0.5 w-4"
-            style={{ background: "var(--exec-crimson)" }}
-          />
+          <span className="inline-block h-0.5 w-4" style={{ background: "var(--exec-crimson)" }} />
           critical dependency (≥20% of the node&apos;s declared input share)
         </span>
         <span className="exec-label flex items-center gap-1.5">
@@ -263,17 +251,11 @@ function DependencyFlow({ row }: { row: Row }) {
 /* ----------------------------------------------------------- Exposure flow */
 
 /** What a shock here actually reaches, ranked by shared-event coupling. */
-function ExposureFlow({
-  row,
-  onSelect,
-}: {
-  row: Row;
-  onSelect: (nodeId: string) => void;
-}) {
+function ExposureFlow({ row, onSelect }: { row: Row; onSelect: (nodeId: string) => void }) {
   if (row.exposed.length === 0) {
     return (
       <NoDataAvailable
-        title="No tracked economy shares this node&apos;s events"
+        title="No tracked economy shares this node's events"
         reason="Coupling is measured by the events both places are exposed to. Nothing in the current corpus touches this node and an economy at the same time, so no economy is listed as downstream."
       />
     );
@@ -317,9 +299,9 @@ function ExposureFlow({
       </ul>
       <div className="border-t border-[var(--exec-hairline)] px-3 py-1.5">
         <p className="exec-label normal-case">
-          Left bar: shared-event coupling with this chokepoint. Right figure:
-          that economy&apos;s own live load. Coupling is not a trade flow and not
-          a shipping lane — it says these two are pulled by the same events.
+          Left bar: shared-event coupling with this chokepoint. Right figure: that economy&apos;s
+          own live load. Coupling is not a trade flow and not a shipping lane — it says these two
+          are pulled by the same events.
         </p>
       </div>
     </div>
@@ -364,9 +346,7 @@ export function ChokepointRoster({
               {r.short}
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[12px] text-[var(--exec-ink)]">
-                {r.label}
-              </span>
+              <span className="block truncate text-[12px] text-[var(--exec-ink)]">{r.label}</span>
               <span className="exec-label mt-0.5 block truncate">
                 {r.region} · {r.industries.length} sectors · {r.exposed.length} economies
               </span>

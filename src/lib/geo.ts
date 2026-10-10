@@ -110,10 +110,7 @@ export function shapesByNode(): Map<string, CountryShape> {
 }
 
 /** Nearest plotted node to a map point, used for click-to-inspect on land. */
-export function nearestNode(
-  mx: number,
-  my: number,
-): { id: string; distance: number } | null {
+export function nearestNode(mx: number, my: number): { id: string; distance: number } | null {
   let best: { id: string; distance: number } | null = null;
   for (const node of GEO_NODES) {
     if (node.lat === undefined || node.lon === undefined) continue;

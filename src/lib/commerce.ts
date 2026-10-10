@@ -36,7 +36,11 @@ export const PRICING = {
 } as const;
 
 export function formatINR(n: number) {
-  return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n);
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(n);
 }
 
 export const INQUIRY_KINDS = ["sample", "report", "pilot", "contact"] as const;

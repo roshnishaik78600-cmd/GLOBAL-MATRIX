@@ -148,9 +148,7 @@ export function CompositeGauge({
 function Sparkline({ values, colour }: { values: number[]; colour: string }) {
   if (values.length < 2) {
     return (
-      <p className="exec-label text-[12px] normal-case">
-        No series available for this window.
-      </p>
+      <p className="exec-label text-[12px] normal-case">No series available for this window.</p>
     );
   }
   const max = Math.max(...values, 0.0001);
@@ -163,12 +161,7 @@ function Sparkline({ values, colour }: { values: number[]; colour: string }) {
     .join(" ");
   const last = values[values.length - 1];
   return (
-    <svg
-      viewBox="0 0 100 28"
-      preserveAspectRatio="none"
-      className="h-7 w-full"
-      aria-hidden
-    >
+    <svg viewBox="0 0 100 28" preserveAspectRatio="none" className="h-7 w-full" aria-hidden>
       <title>{`30-day trace. Peak ${(max * 100).toFixed(0)} index points.`}</title>
       <polyline
         points={points}
@@ -178,12 +171,7 @@ function Sparkline({ values, colour }: { values: number[]; colour: string }) {
         vectorEffect="non-scaling-stroke"
         opacity={0.85}
       />
-      <circle
-        cx={100}
-        cy={26 - (last / max) * 22}
-        r={1.8}
-        fill={colour}
-      />
+      <circle cx={100} cy={26 - (last / max) * 22} r={1.8} fill={colour} />
     </svg>
   );
 }
@@ -214,9 +202,7 @@ export function GaugeCluster({ data }: { data: TopologyResult }) {
           change={supply?.change ?? 0}
           note={supply?.measure ?? "No series."}
           active={active === "supply-chain"}
-          onClick={() =>
-            setActive((a) => (a === "supply-chain" ? null : "supply-chain"))
-          }
+          onClick={() => setActive((a) => (a === "supply-chain" ? null : "supply-chain"))}
         />
         <CompositeGauge
           label="Trade velocity"
@@ -225,9 +211,7 @@ export function GaugeCluster({ data }: { data: TopologyResult }) {
           change={trade?.change ?? 0}
           note={trade?.measure ?? "No series."}
           active={active === "trade-bottlenecks"}
-          onClick={() =>
-            setActive((a) => (a === "trade-bottlenecks" ? null : "trade-bottlenecks"))
-          }
+          onClick={() => setActive((a) => (a === "trade-bottlenecks" ? null : "trade-bottlenecks"))}
         />
         <CompositeGauge
           label="Sovereign fragility"
@@ -240,11 +224,10 @@ export function GaugeCluster({ data }: { data: TopologyResult }) {
         />
       </div>
       <p className="px-3 pb-2.5 text-[12px] leading-relaxed text-[var(--exec-ink-dim)]">
-        Each dial is scaled to its own 30-day peak, so a high reading means
-        &ldquo;near the top of its own recent range&rdquo; rather than &ldquo;high
-        in absolute terms&rdquo;. These are indices derived from the scenario
-        corpus, not published statistics, and no probability of anything is
-        implied by them.
+        Each dial is scaled to its own 30-day peak, so a high reading means &ldquo;near the top of
+        its own recent range&rdquo; rather than &ldquo;high in absolute terms&rdquo;. These are
+        indices derived from the scenario corpus, not published statistics, and no probability of
+        anything is implied by them.
       </p>
     </div>
   );
@@ -375,9 +358,7 @@ function HeatTile({
         <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
           {category.values.length}d trace
         </span>
-        <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
-          {latest}
-        </span>
+        <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">{latest}</span>
       </span>
     </button>
   );
@@ -467,8 +448,8 @@ export function ThreatTicker({
                 {e.location} · {e.at}
               </span>
               <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
-                impact {e.score.toFixed(0)} · confidence{" "}
-                {(e.confidence * 100).toFixed(0)}% · {e.source}
+                impact {e.score.toFixed(0)} · confidence {(e.confidence * 100).toFixed(0)}% ·{" "}
+                {e.source}
               </span>
               {!e.inWindow ? (
                 <span className="exec-label text-[12px] text-[var(--exec-amber)]">

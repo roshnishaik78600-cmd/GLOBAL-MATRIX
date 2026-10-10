@@ -29,7 +29,13 @@ export interface ScenarioResult {
   }[];
   topDrivers: { id: string; label: string; contribution: number; note?: string }[];
   countryDeltas: { id: string; label: string; baseline: number; scenario: number; delta: number }[];
-  industryDeltas: { id: string; label: string; baseline: number; scenario: number; delta: number }[];
+  industryDeltas: {
+    id: string;
+    label: string;
+    baseline: number;
+    scenario: number;
+    delta: number;
+  }[];
   eventId?: string;
 }
 
@@ -62,12 +68,9 @@ function Step({
 }
 
 export function PropagationRibbon({ result }: { result: ScenarioResult }) {
-  const moved = result.affectedChannels.filter(
-    (c) => Math.abs(c.scenario - c.baseline) > 0.001,
-  );
+  const moved = result.affectedChannels.filter((c) => Math.abs(c.scenario - c.baseline) > 0.001);
   const widened =
-    result.scenarioHigh - result.scenarioLow -
-    (result.baselineHigh - result.baselineLow);
+    result.scenarioHigh - result.scenarioLow - (result.baselineHigh - result.baselineLow);
   const topCountries = [...result.countryDeltas]
     .filter((d) => Math.abs(d.delta) > 0.0005)
     .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))
@@ -266,8 +269,8 @@ export function PropagationRibbon({ result }: { result: ScenarioResult }) {
           </div>
           <p className="text-[12px] leading-relaxed text-muted-foreground">
             {widened >= 0 ? "Wider by " : "Narrower by "}
-            {Math.abs(widened).toFixed(1)} points than the baseline. A wider band
-            means the model is less sure about this world, not that it is worse.
+            {Math.abs(widened).toFixed(1)} points than the baseline. A wider band means the model is
+            less sure about this world, not that it is worse.
           </p>
         </div>
       </Step>

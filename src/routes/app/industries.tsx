@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/industries")({
       { title: "Industries — GlobalMatrix" },
       {
         name: "description",
-        content: "Browse every industry tracked by GlobalMatrix, with exposure to current geopolitical events.",
+        content:
+          "Browse every industry tracked by GlobalMatrix, with exposure to current geopolitical events.",
       },
       { property: "og:title", content: "Industries — GlobalMatrix" },
       {
         property: "og:description",
-        content: "Browse every industry tracked by GlobalMatrix, with exposure to current geopolitical events.",
+        content:
+          "Browse every industry tracked by GlobalMatrix, with exposure to current geopolitical events.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

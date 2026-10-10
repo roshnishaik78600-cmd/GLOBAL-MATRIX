@@ -50,9 +50,7 @@ import { period as periodLabel } from "@/lib/numbers";
  */
 export default function Overview() {
   const data = useQuery(api.intel.overview);
-  const topology = useQuery(api.macroTopology.macroTopology) as
-    | TopologyResult
-    | undefined;
+  const topology = useQuery(api.macroTopology.macroTopology) as TopologyResult | undefined;
   const stats = useQuery(api.intel.corpusStats);
   const navigate = useNavigate();
   const { focus, toggle, clear, isFocused, window: timeWindow, setWindow } = useFocus();
@@ -62,8 +60,7 @@ export default function Overview() {
   const [topologyFilter, setTopologyFilter] = useState<string | null>(null);
 
   const selected = focus?.kind === "node" ? focus.id : null;
-  const setSelected = (id: string | null) =>
-    id === null ? clear() : toggle({ kind: "node", id });
+  const setSelected = (id: string | null) => (id === null ? clear() : toggle({ kind: "node", id }));
 
   // The time window is measured against the corpus's own clock, not the wall
   // clock. The corpus is a scenario with a latest observation date, and treating
@@ -111,7 +108,9 @@ export default function Overview() {
         </>
       }
       controls={
-        <FilterBar scope={`${mappable.length} places · ${data.flows.length} couplings · ${mapEvents.length} events`}>
+        <FilterBar
+          scope={`${mappable.length} places · ${data.flows.length} couplings · ${mapEvents.length} events`}
+        >
           <span className="exec-label shrink-0">Window</span>
           <Segmented
             label="Time window"
@@ -158,11 +157,7 @@ export default function Overview() {
             value={hottest?.short ?? "—"}
             basis="model"
             tone={loadColour(hottest?.load ?? 0)}
-            hint={
-              hottest
-                ? `${hottest.label} at ${pct(hottest.load)}`
-                : "No exposure resolved"
-            }
+            hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
           />
           <Metric
             label="Corpus events"

@@ -37,13 +37,11 @@ export function useAuth() {
       setIsLoading(false);
     });
 
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, nextSession) => {
-        if (!active) return;
-        setSession(nextSession);
-        setIsLoading(false);
-      },
-    );
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      if (!active) return;
+      setSession(nextSession);
+      setIsLoading(false);
+    });
 
     return () => {
       active = false;

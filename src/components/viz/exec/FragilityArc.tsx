@@ -109,13 +109,7 @@ export function FragilityArc({
         >
           {(clamped * 100).toFixed(0)}%
         </text>
-        <text
-          x={cx}
-          y={cy + 8}
-          textAnchor="middle"
-          className="exec-label"
-          style={{ fontSize: 12 }}
-        >
+        <text x={cx} y={cy + 8} textAnchor="middle" className="exec-label" style={{ fontSize: 12 }}>
           {BAND_LABEL[band]}
           {direction ? ` · ${direction}` : ""}
         </text>

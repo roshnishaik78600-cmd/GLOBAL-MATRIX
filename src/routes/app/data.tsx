@@ -7,12 +7,14 @@ export const Route = createFileRoute("/app/data")({
       { title: "Data Sources — GlobalMatrix" },
       {
         name: "description",
-        content: "The sources, feeds and verification standards behind every figure in GlobalMatrix.",
+        content:
+          "The sources, feeds and verification standards behind every figure in GlobalMatrix.",
       },
       { property: "og:title", content: "Data Sources — GlobalMatrix" },
       {
         property: "og:description",
-        content: "The sources, feeds and verification standards behind every figure in GlobalMatrix.",
+        content:
+          "The sources, feeds and verification standards behind every figure in GlobalMatrix.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

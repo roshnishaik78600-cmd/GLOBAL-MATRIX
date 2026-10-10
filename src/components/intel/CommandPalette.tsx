@@ -16,14 +16,7 @@ import { STAGE_LABEL } from "@/lib/intel/types";
 import { pct } from "@/lib/format";
 
 type Entry = {
-  kind:
-    | "event"
-    | "country"
-    | "industry"
-    | "company"
-    | "infrastructure"
-    | "source"
-    | "screen";
+  kind: "event" | "country" | "industry" | "company" | "infrastructure" | "source" | "screen";
   id: string;
   label: string;
   hint: string;
@@ -148,9 +141,7 @@ export function CommandPalette({
         const target = event.target as HTMLElement | null;
         if (
           target &&
-          (target.tagName === "INPUT" ||
-            target.tagName === "TEXTAREA" ||
-            target.isContentEditable)
+          (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
         ) {
           return;
         }
@@ -235,9 +226,7 @@ export function CommandPalette({
       />
       <CommandList className="max-h-[440px]">
         <CommandEmpty>
-          <span className="label text-muted-foreground">
-            Nothing in the corpus matches that.
-          </span>
+          <span className="label text-muted-foreground">Nothing in the corpus matches that.</span>
         </CommandEmpty>
         {GROUPS.map((group, gi) => {
           const items = entries.filter((e) => e.kind === group.kind);
@@ -263,16 +252,10 @@ export function CommandPalette({
                       {group.tag}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[13px] font-medium">
-                        {entry.label}
-                      </span>
-                      <span className="block truncate text-[12px] opacity-70">
-                        {entry.hint}
-                      </span>
+                      <span className="block truncate text-[13px] font-medium">{entry.label}</span>
+                      <span className="block truncate text-[12px] opacity-70">{entry.hint}</span>
                     </span>
-                    <span className="num shrink-0 text-[12px] opacity-70">
-                      {entry.meta}
-                    </span>
+                    <span className="num shrink-0 text-[12px] opacity-70">{entry.meta}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -281,9 +264,7 @@ export function CommandPalette({
         })}
       </CommandList>
       <div className="flex items-center justify-between border-t border-rule px-3 py-2">
-        <span className="label text-muted-foreground">
-          {entries.length} indexed entities
-        </span>
+        <span className="label text-muted-foreground">{entries.length} indexed entities</span>
         <span className="label text-muted-foreground">
           ⌘K or / to search · esc to close · esc anywhere clears a selection
         </span>

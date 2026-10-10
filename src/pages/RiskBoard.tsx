@@ -115,9 +115,7 @@ export default function RiskBoard() {
   // The map reuses the overview payload's node and flow set rather than
   // re-deriving one: it is the same network, and a second derivation would be a
   // second thing that can drift from the picture on the homepage.
-  const mapNodes = (overview?.mapNodes ?? []).filter((n) =>
-    isPlottable(n.nodeId),
-  );
+  const mapNodes = (overview?.mapNodes ?? []).filter((n) => isPlottable(n.nodeId));
 
   return (
     <PageFrame
@@ -134,14 +132,13 @@ export default function RiskBoard() {
       }
     >
       {/* ------------------------------------------------------------- HERO -- */}
-      <div className="lg:col-span-12">
+      <div className="min-w-0 lg:col-span-12">
         <div className="card flex flex-col gap-6 p-6 lg:flex-row lg:items-center lg:gap-10 lg:p-8">
           <div className="min-w-0">
             <p className="exec-label text-[var(--exec-cyan)]">Composite board</p>
             <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
-              Every event in the corpus, scored on a 0–100 composite at 7, 30 and
-              90 days, always published as a central estimate inside an 80%
-              interval.
+              Every event in the corpus, scored on a 0–100 composite at 7, 30 and 90 days, always
+              published as a central estimate inside an 80% interval.
             </p>
           </div>
           <div className="flex flex-wrap items-end gap-x-10 gap-y-4 lg:ml-auto">
@@ -152,16 +149,13 @@ export default function RiskBoard() {
               tone={severe > 0 ? "var(--exec-crimson)" : undefined}
             />
             <Hero figure={`±${mean.toFixed(1)}`} label="Mean interval" />
-            <Hero
-              figure={String(summary.hottest.length)}
-              label="Loaded nodes"
-            />
+            <Hero figure={String(summary.hottest.length)} label="Loaded nodes" />
           </div>
         </div>
       </div>
 
       {/* -------------------------------------------------------------- MAP -- */}
-      <div className="lg:col-span-12">
+      <div className="min-w-0 lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
           <SectionTitle
             meta={`${mapNodes.length} tracked places · click to open a profile`}
@@ -174,36 +168,23 @@ export default function RiskBoard() {
               in a tooltip: the lens changes what the picture *means*, so the
               claim being made must be readable without hovering. */}
           <div className="flex min-w-0 flex-col gap-2 border-b border-[var(--exec-hairline)] px-4 py-3 xl:flex-row xl:items-center xl:justify-between">
-            <SegmentedControl
-              options={LENS_OPTIONS}
-              value={domain}
-              onChange={setDomain}
-            />
+            <SegmentedControl options={LENS_OPTIONS} value={domain} onChange={setDomain} />
             <p className="min-w-0 text-[12px] leading-snug text-[var(--exec-ink-dim)] xl:max-w-[52ch] xl:text-right">
               {LENS_OPTIONS.find((o) => o.id === domain)?.hint}
             </p>
           </div>
 
-          {mapNodes.length > 0 &&
-          (domain !== "supply" || supplyNodes.length > 0) ? (
+          {mapNodes.length > 0 && (domain !== "supply" || supplyNodes.length > 0) ? (
             <>
               <WorldMap
-                nodes={
-                  domain === "supply"
-                    ? supplyNodes
-                    : (overview?.mapNodes ?? [])
-                }
+                nodes={domain === "supply" ? supplyNodes : (overview?.mapNodes ?? [])}
                 flows={overview?.flows ?? []}
                 events={
                   domain === "supply"
                     ? []
-                    : (overview?.mapEvents ?? []).filter(
-                        (e) => e.nodeId !== "",
-                      )
+                    : (overview?.mapEvents ?? []).filter((e) => e.nodeId !== "")
                 }
-                channel={
-                  domain === "risk" || domain === "supply" ? null : domain
-                }
+                channel={domain === "risk" || domain === "supply" ? null : domain}
                 className="map-frame"
                 selected={selected}
                 onSelect={setSelected}
@@ -224,7 +205,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ---------------------------------------------------- RISK DRIVERS -- */}
-      <div className="lg:col-span-5">
+      <div className="min-w-0 lg:col-span-5">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle meta="mean pressure across the corpus" right={<DataType type="model" />}>
             Risk drivers
@@ -233,9 +214,7 @@ export default function RiskBoard() {
             {channels.map((c) => (
               <li key={c} className="flex flex-col gap-2">
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-[14px] text-[var(--exec-ink)]">
-                    {CHANNEL_LABEL[c]}
-                  </span>
+                  <span className="text-[14px] text-[var(--exec-ink)]">{CHANNEL_LABEL[c]}</span>
                   <span className="exec-num text-[15px] font-semibold text-[var(--exec-ink)]">
                     {(summary.byChannel[c] * 100).toFixed(0)}
                   </span>
@@ -256,11 +235,9 @@ export default function RiskBoard() {
       </div>
 
       {/* ----------------------------------------------- AFFECTED REGIONS -- */}
-      <div className="lg:col-span-7">
+      <div className="min-w-0 lg:col-span-7">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle meta="summed across all events">
-            Most loaded network nodes
-          </SectionTitle>
+          <SectionTitle meta="summed across all events">Most loaded network nodes</SectionTitle>
           {summary.hottest.length === 0 ? (
             <NoData reason="No node carries weighted exposure in this corpus." />
           ) : (
@@ -294,8 +271,8 @@ export default function RiskBoard() {
                     />
                   </span>
                   <span className="exec-label mt-1.5 block">
-                    {CHANNEL_LABEL[entry.channel]} · {entry.node.region} ·
-                    criticality {(entry.node.criticality * 100).toFixed(0)}
+                    {CHANNEL_LABEL[entry.channel]} · {entry.node.region} · criticality{" "}
+                    {(entry.node.criticality * 100).toFixed(0)}
                   </span>
                 </li>
               ))}
@@ -305,7 +282,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ------------------------------------------ HISTORICAL MOVEMENT -- */}
-      <div className="lg:col-span-12">
+      <div className="min-w-0 lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
           <SectionTitle
             meta="each row is one event; the bar is its 80% interval"
@@ -357,8 +334,7 @@ export default function RiskBoard() {
                           {row.title}
                         </span>
                         <span className="exec-label mt-0.5 block">
-                          {STAGE_LABEL[row.stage]} · dominant{" "}
-                          {CHANNEL_LABEL[row.dominantChannel]}
+                          {STAGE_LABEL[row.stage]} · dominant {CHANNEL_LABEL[row.dominantChannel]}
                         </span>
                       </button>
                     </td>
@@ -425,19 +401,16 @@ export default function RiskBoard() {
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--exec-hairline)] px-4 py-3">
             <HeatLegend />
             <span className="exec-label">
-              Cell value = channel pressure, 0–100 · band colours are the engine's
-              own thresholds
+              Cell value = channel pressure, 0–100 · band colours are the engine's own thresholds
             </span>
           </div>
         </div>
       </div>
 
       {/* ------------------------------------------------ TRENDING SIGNALS -- */}
-      <div className="lg:col-span-7">
+      <div className="min-w-0 lg:col-span-7">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle meta="beyond the 90-day interval">
-            Tail scenarios
-          </SectionTitle>
+          <SectionTitle meta="beyond the 90-day interval">Tail scenarios</SectionTitle>
           {rows.length === 0 ? (
             <NoData reason="No event resolves a tail scenario in this corpus." />
           ) : (
@@ -466,7 +439,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ------------------------------------------------------- EVIDENCE -- */}
-      <div className="lg:col-span-5">
+      <div className="min-w-0 lg:col-span-5">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle meta="how to read a figure">Evidence</SectionTitle>
           <ul className="flex flex-col divide-y divide-[var(--exec-hairline)]">
@@ -493,15 +466,10 @@ export default function RiskBoard() {
               },
             ].map((row) => (
               <li key={row.label} className="flex flex-col gap-1.5 p-4">
-                <span
-                  className="text-[14px] font-semibold"
-                  style={{ color: row.tone }}
-                >
+                <span className="text-[14px] font-semibold" style={{ color: row.tone }}>
                   {row.label}
                 </span>
-                <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-                  {row.body}
-                </p>
+                <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">{row.body}</p>
               </li>
             ))}
           </ul>
@@ -521,15 +489,7 @@ export default function RiskBoard() {
 
 /* ------------------------------------------------------------------ parts -- */
 
-function Hero({
-  figure,
-  label,
-  tone,
-}: {
-  figure: string;
-  label: string;
-  tone?: string;
-}) {
+function Hero({ figure, label, tone }: { figure: string; label: string; tone?: string }) {
   return (
     <div className="flex flex-col">
       <span

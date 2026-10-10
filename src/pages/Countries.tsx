@@ -14,12 +14,7 @@ import {
 } from "@/components/viz/exec/ExecStatusBar";
 import { QuestionStrip } from "@/components/viz/Unavailable";
 import { NoVerifiedData } from "@/components/viz/Unavailable";
-import {
-  DataType,
-  FilterBar,
-  PageFrame,
-  PageLoading,
-} from "@/components/viz/exec/design";
+import { DataType, FilterBar, PageFrame, PageLoading } from "@/components/viz/exec/design";
 import { CHANNEL_LABEL, type Channel } from "@/lib/intel/types";
 import { pct } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -72,16 +67,10 @@ export default function Countries() {
     [directory],
   );
 
-  const regions = useMemo(
-    () => [...new Set(countries.map((c) => c.region))].sort(),
-    [countries],
-  );
+  const regions = useMemo(() => [...new Set(countries.map((c) => c.region))].sort(), [countries]);
 
   const visible = useMemo(
-    () =>
-      countries.filter(
-        (c) => (!region || c.region === region) && (!watchedOnly || c.watched),
-      ),
+    () => countries.filter((c) => (!region || c.region === region) && (!watchedOnly || c.watched)),
     [countries, region, watchedOnly],
   );
 
@@ -97,8 +86,7 @@ export default function Countries() {
             corridorCount: localCorridors.length,
             corridorLoad:
               localCorridors.length > 0
-                ? localCorridors.reduce((s, c) => s + c.load, 0) /
-                  localCorridors.length
+                ? localCorridors.reduce((s, c) => s + c.load, 0) / localCorridors.length
                 : 0,
           };
         })
@@ -119,14 +107,14 @@ export default function Countries() {
   const watchCount = directory.watchlistSize;
   const hottest = countries[0];
   const mostFragile = [...countries].sort((a, b) => b.fragility - a.fragility)[0];
-  const busiestChannel = (
-    ["trade", "energy", "finance", "diplomatic"] as Channel[]
-  )
+  const busiestChannel = (["trade", "energy", "finance", "diplomatic"] as Channel[])
     .map((channel) => ({
       channel,
       value:
-        countries.reduce((s, c) => s + (c.byChannel.find((x) => x.channel === channel)?.load ?? 0), 0) /
-        Math.max(1, countries.length),
+        countries.reduce(
+          (s, c) => s + (c.byChannel.find((x) => x.channel === channel)?.load ?? 0),
+          0,
+        ) / Math.max(1, countries.length),
     }))
     .sort((a, b) => b.value - a.value)[0];
   const stressedCorridor = [...corridors].sort((a, b) => b.load - a.load)[0];
@@ -147,35 +135,34 @@ export default function Countries() {
       }
       controls={
         <FilterBar>
-        <ExecFilters
-          regions={regions}
-          region={region}
-          onRegion={setRegion}
-          watchedOnly={watchedOnly}
-          onWatched={setWatchedOnly}
-          watchCount={watchCount}
-          onSearch={() =>
-            // The shell owns the palette; this is the same path the
-            // keyboard shortcut takes.
-            window.dispatchEvent(new CustomEvent("gm:open-search"))
-          }
-        />
-        <div className="flex flex-wrap items-center gap-2">
-          <ExecIconLink
-            to="/app/chain"
-            label="Impact graph"
-            icon={<Compass className="size-3.5" />}
+          <ExecFilters
+            regions={regions}
+            region={region}
+            onRegion={setRegion}
+            watchedOnly={watchedOnly}
+            onWatched={setWatchedOnly}
+            watchCount={watchCount}
+            onSearch={() =>
+              // The shell owns the palette; this is the same path the
+              // keyboard shortcut takes.
+              window.dispatchEvent(new CustomEvent("gm:open-search"))
+            }
           />
-          <ExecIconLink
-            to="/app/risk"
-            label="Risk board"
-            icon={<RadarIcon className="size-3.5" />}
-          />
-        </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <ExecIconLink
+              to="/app/chain"
+              label="Impact graph"
+              icon={<Compass className="size-3.5" />}
+            />
+            <ExecIconLink
+              to="/app/risk"
+              label="Risk board"
+              icon={<RadarIcon className="size-3.5" />}
+            />
+          </div>
         </FilterBar>
       }
     >
-
       {/* Plain-language orientation */}
       <QuestionStrip
         className="border-b border-[var(--exec-hairline)] [&_*]:text-[var(--exec-ink)] [&_.label]:text-[var(--exec-ink-dim)]"
@@ -236,8 +223,7 @@ export default function Countries() {
         <ExecStat
           label="Mean fragility"
           value={pct(
-            countries.reduce((s, c) => s + c.fragility, 0) /
-              Math.max(1, countries.length),
+            countries.reduce((s, c) => s + c.fragility, 0) / Math.max(1, countries.length),
           )}
           tone="var(--exec-amber)"
           note="structural parameter"
@@ -253,9 +239,7 @@ export default function Countries() {
         />
         <ExecStat
           label="Off-channel arrivals"
-          value={String(
-            countries.reduce((s, c) => s + c.offAffinityCount, 0),
-          )}
+          value={String(countries.reduce((s, c) => s + c.offAffinityCount, 0))}
           tone="var(--exec-cyan)"
           note="shocks arriving off the expected channel"
         />
@@ -294,14 +278,9 @@ export default function Countries() {
                   aria-expanded={!isCollapsed}
                   className="glass glass-hover flex h-7 items-center gap-1.5 px-2"
                 >
-                  <span className="exec-label">
-                    {isCollapsed ? "Expand" : "Collapse"}
-                  </span>
+                  <span className="exec-label">{isCollapsed ? "Expand" : "Collapse"}</span>
                   <ChevronDown
-                    className={cn(
-                      "size-3 transition-transform",
-                      isCollapsed && "-rotate-90",
-                    )}
+                    className={cn("size-3 transition-transform", isCollapsed && "-rotate-90")}
                     aria-hidden
                   />
                 </button>
@@ -327,9 +306,7 @@ export default function Countries() {
                 <span className="exec-num text-[12px] font-semibold text-[var(--exec-ink)]">
                   {corridors.length} nodes
                 </span>
-                <span className="exec-label">
-                  Transmit shocks rather than absorbing them
-                </span>
+                <span className="exec-label">Transmit shocks rather than absorbing them</span>
               </div>
               <ExecLegend />
             </div>
@@ -377,10 +354,9 @@ export default function Countries() {
 
         {trends ? (
           <p className="exec-label max-w-3xl normal-case leading-relaxed">
-            The 14-day trace on each card is corpus observation pressure for that
-            node, measured over the last 14 days of the corpus timeline
-            (latest observation {trends.latest}). It is scenario material, not a
-            live news feed, and it is labelled as such wherever it appears.
+            The 14-day trace on each card is corpus observation pressure for that node, measured
+            over the last 14 days of the corpus timeline (latest observation {trends.latest}). It is
+            scenario material, not a live news feed, and it is labelled as such wherever it appears.
           </p>
         ) : null}
 

@@ -57,9 +57,7 @@ import {
 export default function Landing() {
   const data = useQuery(api.intel.overview);
   const feed = useQuery(api.intel.detectionFeed, {});
-  const topology = useQuery(api.macroTopology.macroTopology) as
-    | TopologyResult
-    | undefined;
+  const topology = useQuery(api.macroTopology.macroTopology) as TopologyResult | undefined;
 
   // Client-side navigation, so inspecting a country on the map does not throw
   // away the SPA and the shared selection along with it.
@@ -163,9 +161,7 @@ export default function Landing() {
             }}
             right={{
               label: "Reporters",
-              value: String(
-                (data?.mapNodes ?? []).filter((n) => n.kind === "economy").length,
-              ),
+              value: String((data?.mapNodes ?? []).filter((n) => n.kind === "economy").length),
             }}
           />
         ) : (
@@ -179,12 +175,7 @@ export default function Landing() {
         blurb: "Critical routes and the pressure moving through them.",
         // Routes first, sectors second: the corridor board is the primary
         // object on that page, with sector concentration as its context.
-        preview:
-          supply.length > 0 ? (
-            <BarPreview rows={supply} />
-          ) : (
-            <BarPreview rows={industry} />
-          ),
+        preview: supply.length > 0 ? <BarPreview rows={supply} /> : <BarPreview rows={industry} />,
       },
       {
         to: "/app/markets",
@@ -212,8 +203,7 @@ export default function Landing() {
         icon: Landmark,
         blurb: "Policy and regulatory change.",
         preview: <UnavailablePreview />,
-        unavailable:
-          "No policy registry is connected. Policy events are tagged in the corpus.",
+        unavailable: "No policy registry is connected. Policy events are tagged in the corpus.",
       },
     ];
   }, [data, topology]);
@@ -275,7 +265,8 @@ export default function Landing() {
             transition={{ duration: 0.4, delay: 0.12 }}
             className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[var(--exec-ink-dim)] sm:text-[18px]"
           >
-            Discover geopolitical disruptions, understand potential supply-chain impacts, and investigate risks using evidence-backed global intelligence.
+            Discover geopolitical disruptions, understand potential supply-chain impacts, and
+            investigate risks using evidence-backed global intelligence.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -437,9 +428,7 @@ export default function Landing() {
             >
               Sources
             </Link>
-            <span className="exec-label text-[var(--exec-ink-dim)]">
-              {CORPUS_LABEL}
-            </span>
+            <span className="exec-label text-[var(--exec-ink-dim)]">{CORPUS_LABEL}</span>
           </div>
         </div>
       </footer>
@@ -528,15 +517,10 @@ function HeroStats({ regions, links }: { regions: number; links: number }) {
 
   const liveReadings = (health ?? []).reduce((sum, h) => {
     if (!h.readingCount) return sum;
-    return freshnessOf(h.lastSuccessAt, h.sourceId) === "live"
-      ? sum + h.readingCount
-      : sum;
+    return freshnessOf(h.lastSuccessAt, h.sourceId) === "live" ? sum + h.readingCount : sum;
   }, 0);
 
-  const lastUpdate = (health ?? []).reduce(
-    (max, h) => Math.max(max, h.lastSuccessAt),
-    0,
-  );
+  const lastUpdate = (health ?? []).reduce((max, h) => Math.max(max, h.lastSuccessAt), 0);
 
   const cells = [
     { label: "Live signals", value: String(liveReadings) },
@@ -554,13 +538,8 @@ function HeroStats({ regions, links }: { regions: number; links: number }) {
   return (
     <dl className="mt-9 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-hairline)] sm:grid-cols-4">
       {cells.map((cell) => (
-        <div
-          key={cell.label}
-          className="flex min-w-0 flex-col gap-1 bg-[var(--card)] px-4 py-3"
-        >
-          <dt className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">
-            {cell.label}
-          </dt>
+        <div key={cell.label} className="flex min-w-0 flex-col gap-1 bg-[var(--card)] px-4 py-3">
+          <dt className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">{cell.label}</dt>
           <dd
             className="exec-num truncate text-[1.35rem] leading-none font-semibold tracking-[-0.02em] text-[var(--exec-ink)]"
             title={cell.note}
@@ -605,8 +584,8 @@ function WhatToWatch({ rows }: { rows: WatchRow[] }) {
       {rows.length === 0 ? (
         <div className="card p-5">
           <p className="text-[13px] leading-relaxed text-[var(--exec-ink-dim)]">
-            No event in the current corpus sits at an early stage. GlobalMatrix
-            does not fill this space with speculation about what might happen.
+            No event in the current corpus sits at an early stage. GlobalMatrix does not fill this
+            space with speculation about what might happen.
           </p>
         </div>
       ) : (
@@ -666,16 +645,14 @@ function DataAndEvidence() {
           </p>
         ) : health.length === 0 ? (
           <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
-            No connector has returned a reading yet. This page shows no
-            estimates while that is true.
+            No connector has returned a reading yet. This page shows no estimates while that is
+            true.
           </p>
         ) : (
           <ul className="divide-y divide-[var(--exec-hairline)]">
             {health.map((h) => {
               const def = SOURCES[h.sourceId as keyof typeof SOURCES];
-              const name =
-                def?.label ??
-                h.sourceId.charAt(0).toUpperCase() + h.sourceId.slice(1);
+              const name = def?.label ?? h.sourceId.charAt(0).toUpperCase() + h.sourceId.slice(1);
               return (
                 <li
                   key={h.sourceId}
@@ -684,9 +661,7 @@ function DataAndEvidence() {
                   <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-[var(--exec-ink)]">
                     {name}
                   </span>
-                  <FreshnessTag
-                    freshness={freshnessOf(h.lastSuccessAt, h.sourceId)}
-                  />
+                  <FreshnessTag freshness={freshnessOf(h.lastSuccessAt, h.sourceId)} />
                   <span className="exec-label">
                     {h.lastSuccessAt
                       ? `updated ${relativeAge(h.lastSuccessAt)}`
@@ -727,10 +702,7 @@ function MapLegend() {
         </span>
       ))}
       <span className="flex items-center gap-2">
-        <span
-          className="inline-block size-2 rounded-full bg-[var(--exec-crimson)]"
-          aria-hidden
-        />
+        <span className="inline-block size-2 rounded-full bg-[var(--exec-crimson)]" aria-hidden />
         <span className="exec-label">Event</span>
       </span>
       <span className="exec-label ml-auto text-[var(--exec-ink-dim)]">
@@ -760,40 +732,26 @@ function AccessBand() {
     <section className="card p-6 lg:p-8">
       <h2 className="t-section text-[var(--exec-ink)]">Explore GlobalMatrix freely.</h2>
       <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
-        The map, events, countries, trade, markets and all public intelligence are
-        open to anyone. No account, no email verification, no card. An account is
-        only for the things you want to keep.
+        The map, events, countries, trade, markets and all public intelligence are open to anyone.
+        No account, no email verification, no card. An account is only for the things you want to
+        keep.
       </p>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {[
           {
             title: "No sign-in needed",
-            items: [
-              "World map",
-              "Events",
-              "Countries",
-              "Trade",
-              "Markets",
-              "Public intelligence",
-            ],
+            items: ["World map", "Events", "Countries", "Trade", "Markets", "Public intelligence"],
           },
           {
             title: "Sign in only to save",
-            items: [
-              "Watchlists",
-              "Comments and reviews",
-              "Saved analysis",
-            ],
+            items: ["Watchlists", "Comments and reviews", "Saved analysis"],
           },
         ].map((col) => (
           <div key={col.title}>
             <p className="exec-label text-[var(--exec-ink)]">{col.title}</p>
             <ul className="mt-3 flex flex-wrap gap-2">
               {col.items.map((item) => (
-                <li
-                  key={item}
-                  className="chip text-[var(--exec-ink-dim)]"
-                >
+                <li key={item} className="chip text-[var(--exec-ink-dim)]">
                   {item}
                 </li>
               ))}

@@ -161,17 +161,13 @@ export function TemporalSlider({
           className="h-1 w-full cursor-pointer appearance-none bg-rule accent-[var(--signal)]"
         />
         <div className="mt-1.5 flex items-baseline justify-between">
-          <span className="num text-[12px] text-muted-foreground">
-            {shortTime(points[0].at)}
-          </span>
+          <span className="num text-[12px] text-muted-foreground">{shortTime(points[0].at)}</span>
           <span className="label text-muted-foreground">{series.axisLabel}</span>
           <span className="num text-[12px] text-muted-foreground">
             {shortTime(points[points.length - 1].at)}
           </span>
         </div>
-        <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">
-          {series.caption}
-        </p>
+        <p className="mt-2 text-[12px] leading-relaxed text-muted-foreground">{series.caption}</p>
       </div>
     </Panel>
   );

@@ -96,5 +96,4 @@ export const POLL: Record<string, SourcePoll> = {
   },
 };
 
-export const pollPolicyFor = (sourceId: string): SourcePoll | undefined =>
-  POLL[sourceId];
+export const pollPolicyFor = (sourceId: string): SourcePoll | undefined => POLL[sourceId];

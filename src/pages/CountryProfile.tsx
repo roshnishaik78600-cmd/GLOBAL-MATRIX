@@ -27,10 +27,7 @@ import { CHANNEL_LABEL, type Channel } from "@/lib/intel/types";
  */
 export default function CountryProfile() {
   const { nodeId } = useParams<{ nodeId: string }>();
-  const data = useQuery(
-    api.intel.countryProfile,
-    nodeId ? { nodeId } : "skip",
-  );
+  const data = useQuery(api.intel.countryProfile, nodeId ? { nodeId } : "skip");
   const trends = useQuery(api.intel.countryTrends);
   const toggleWatch = useToggleWatch();
 
@@ -69,8 +66,7 @@ export default function CountryProfile() {
     );
   }
 
-  const { node, country, exposure, industries, peers, dependents, watched } =
-    data;
+  const { node, country, exposure, industries, peers, dependents, watched } = data;
   const flag = flagFor(nodeId);
 
   // The trend is the corpus's own 14-day series for this node, not a percentage
@@ -114,11 +110,7 @@ export default function CountryProfile() {
             onClick={() => toggleWatch(`NODE:${nodeId}`)}
             className="inline-flex items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3.5 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
           >
-            {watched ? (
-              <BookmarkCheck className="size-3.5" />
-            ) : (
-              <Bookmark className="size-3.5" />
-            )}
+            {watched ? <BookmarkCheck className="size-3.5" /> : <Bookmark className="size-3.5" />}
             {watched ? "Tracking" : "Track"}
           </button>
           <Link
@@ -171,8 +163,8 @@ export default function CountryProfile() {
                     No reading
                   </span>
                   <span className="mt-2 max-w-[16rem] text-[12px] leading-snug text-[var(--exec-ink-dim)]">
-                    No event in the current corpus reaches this node, so no
-                    exposure has been computed for it.
+                    No event in the current corpus reaches this node, so no exposure has been
+                    computed for it.
                   </span>
                 </>
               ) : (
@@ -216,8 +208,7 @@ export default function CountryProfile() {
                           : "var(--exec-ink-dim)",
                   }}
                 >
-                  {delta > 0 ? "↑" : delta < 0 ? "↓" : "—"}{" "}
-                  {Math.abs(delta * 100).toFixed(1)}%
+                  {delta > 0 ? "↑" : delta < 0 ? "↓" : "—"} {Math.abs(delta * 100).toFixed(1)}%
                 </span>
               )}
               <span className="exec-num mt-1 text-[12px] text-[var(--exec-ink-dim)]">
@@ -239,10 +230,7 @@ export default function CountryProfile() {
           this page; nothing is added or rescaled. */}
       <div className="lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
-          <SectionTitle
-            meta="what this place is exposed to"
-            right={<DataType type="model" />}
-          >
+          <SectionTitle meta="what this place is exposed to" right={<DataType type="model" />}>
             Exposure snapshot
           </SectionTitle>
           <div className="grid grid-cols-2 divide-y divide-[var(--exec-hairline)] md:grid-cols-3 xl:grid-cols-5 xl:divide-x xl:divide-y-0">
@@ -256,10 +244,7 @@ export default function CountryProfile() {
             ).map((cell) => {
               const value = channelLoad(cell.channel);
               return (
-                <div
-                  key={cell.channel}
-                  className="flex min-w-0 flex-col gap-1.5 p-4"
-                >
+                <div key={cell.channel} className="flex min-w-0 flex-col gap-1.5 p-4">
                   <span className="exec-label">{cell.label}</span>
                   {value === null ? (
                     <span className="text-[1.25rem] leading-none font-bold text-[var(--exec-ink-dim)]">
@@ -337,9 +322,12 @@ export default function CountryProfile() {
           </SectionTitle>
           <div className="p-4">
             <ChannelBars
-              pressure={Object.fromEntries(
-                exposure.byChannel.map((c) => [c.channel, c.load]),
-              ) as Record<Channel, number>}
+              pressure={
+                Object.fromEntries(exposure.byChannel.map((c) => [c.channel, c.load])) as Record<
+                  Channel,
+                  number
+                >
+              }
             />
           </div>
           <ul className="flex flex-col divide-y divide-[var(--exec-hairline)] border-t border-[var(--exec-hairline)]">
@@ -363,9 +351,7 @@ export default function CountryProfile() {
       {/* ------------------------------------------------- MAJOR CONNECTIONS -- */}
       <div className="lg:col-span-6">
         <div className="card flex h-full min-w-0 flex-col">
-          <SectionTitle meta="declared strength × live load">
-            Major connections
-          </SectionTitle>
+          <SectionTitle meta="declared strength × live load">Major connections</SectionTitle>
           {peers.length === 0 ? (
             <NoData reason="No structural dependency is declared for this node." />
           ) : (
@@ -407,7 +393,11 @@ export default function CountryProfile() {
       <div className="lg:col-span-6">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle
-            meta={dependents.length > 0 ? `${dependents.length} depend on this node` : "no dependents recorded"}
+            meta={
+              dependents.length > 0
+                ? `${dependents.length} depend on this node`
+                : "no dependents recorded"
+            }
           >
             Who depends on this
           </SectionTitle>
@@ -458,7 +448,10 @@ export default function CountryProfile() {
               <dl className="grid grid-cols-2 divide-x divide-y divide-[var(--exec-hairline)]">
                 <Macro caption="Share of global output" value={pct(country.macro.outputShare)} />
                 <Macro caption="Trade openness" value={pct(country.macro.tradeOpenness)} />
-                <Macro caption="Energy import dependence" value={pct(country.macro.energyImportDependence)} />
+                <Macro
+                  caption="Energy import dependence"
+                  value={pct(country.macro.energyImportDependence)}
+                />
                 <Macro caption="External buffer" value={pct(country.macro.externalBuffer)} />
               </dl>
             </div>
@@ -485,9 +478,7 @@ export default function CountryProfile() {
                         className="block h-full rounded-full"
                         style={{
                           width: `${Math.max(2, source.share * 100)}%`,
-                          background: source.nodeId
-                            ? "var(--exec-crimson)"
-                            : "var(--exec-ink-dim)",
+                          background: source.nodeId ? "var(--exec-crimson)" : "var(--exec-ink-dim)",
                         }}
                       />
                     </span>
@@ -540,8 +531,7 @@ export default function CountryProfile() {
                       />
                     </span>
                     <span className="exec-label">
-                      {industry.basis || "No declared role"} · fragility{" "}
-                      {pct(industry.fragility)}
+                      {industry.basis || "No declared role"} · fragility {pct(industry.fragility)}
                     </span>
                   </Link>
                 </li>

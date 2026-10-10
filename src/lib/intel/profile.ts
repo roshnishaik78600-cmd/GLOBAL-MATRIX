@@ -68,10 +68,7 @@ export interface DependencyMatch {
  * here rather than resolved to `getNode`'s placeholder, so a reader can never
  * store a dependency that renders as a bare code with every metric at zero.
  */
-export function resolveDependency(
-  kind: DependencyKind,
-  refId: string,
-): { label: string } | null {
+export function resolveDependency(kind: DependencyKind, refId: string): { label: string } | null {
   if (kind === "node") {
     return isKnownNode(refId) ? { label: getNode(refId).label } : null;
   }

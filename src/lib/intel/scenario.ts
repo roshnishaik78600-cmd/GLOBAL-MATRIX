@@ -25,7 +25,8 @@ export const SHOCK_LABEL: Record<ShockMode, string> = {
 export const SHOCK_DESCRIPTION: Record<ShockMode, string> = {
   amplify: "Scale every pathway magnitude on the selected event, then re-score the whole corpus.",
   suppress: "Scale pathway magnitude down, simulating de-escalation, then re-score.",
-  remove_node: "Delete the selected node from the graph entirely and measure what stops propagating.",
+  remove_node:
+    "Delete the selected node from the graph entirely and measure what stops propagating.",
   decay: "Lower pathway confidence to test how much of the estimate rests on soft evidence.",
 };
 
@@ -60,9 +61,7 @@ function cloneWithShock(params: ScenarioParams): Scenario[] {
               ? pathway.magnitude * (1 - intensity)
               : pathway.magnitude;
         const decayed =
-          params.mode === "decay"
-            ? pathway.confidence * (1 - intensity)
-            : pathway.confidence;
+          params.mode === "decay" ? pathway.confidence * (1 - intensity) : pathway.confidence;
 
         return {
           ...pathway,
@@ -166,9 +165,7 @@ export function runScenario(params: ScenarioParams): ScenarioResult {
     .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))
     .slice(0, 12);
 
-  const affectedChannels = (
-    ["trade", "energy", "finance", "diplomatic"] as Channel[]
-  )
+  const affectedChannels = (["trade", "energy", "finance", "diplomatic"] as Channel[])
     .map((channel) => ({
       channel,
       baseline: baseEvent.channelPressure[channel],
