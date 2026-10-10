@@ -1,32 +1,52 @@
 # GlobalMatrix
-### Geopolitical & Supply-Chain Exposure Intelligence
+### AI-Powered Geopolitical Risk & Supply-Chain Intelligence
 
-**GlobalMatrix transforms geopolitical events into traceable supply-chain risk assessments.**
+**From global events to explainable, data-driven risk insights.**
 
-Tariffs, sanctions, export controls, conflicts, and shipping disruptions rarely affect one country or industry in isolation. GlobalMatrix connects these events to economic channels, countries, industries, and trade flows to help analysts and businesses understand **what changed, how the impact may propagate, and where exposure could emerge.**
+GlobalMatrix is an AI-assisted intelligence platform designed to analyze how geopolitical disruptions can affect countries, industries, and international supply chains.
 
-## Core Capabilities
+It combines external economic data, structured event evidence, deterministic risk scoring, impact propagation, and AI-generated analytical briefs to help users understand **what happened, where exposure may emerge, how impacts could spread, and what evidence supports the assessment.**
 
-- **Geopolitical Event Intelligence** — Explore events, countries, industries, trade flows, markets, and risk scenarios.
-- **Impact Propagation Engine** — Trace modeled risk across interconnected economic relationships.
-- **Evidence Provenance** — Track source attribution, timestamps, reliability indicators, and corroborating signals.
-- **Deterministic Risk Assessment** — Calculate channel pressure and 30/90-day risk scores using configurable analytical weights.
-- **Personalized Intelligence Workspace** — Save watchlists, annotations, business exposure profiles, and analytical briefs.
-- **AI-Assisted Briefings** — Generate structured assessments grounded in available evidence and engine outputs.
-- **External Data Integrations** — Connect to World Bank, UN Comtrade, GDELT, and ECB data sources.
+## Core Intelligence Capabilities
 
-## How It Works
+- **AI-Assisted Risk Analysis:** Generate structured intelligence briefs grounded in available event evidence and analytical outputs.
+- **Explainable Risk Engine:** Transform event signals into channel-level pressure and 30/90-day risk assessments using configurable scoring rules.
+- **Impact Propagation Modeling:** Trace potential disruption pathways across countries, industries, and trade relationships.
+- **Evidence-Aware Intelligence:** Track source attribution, timestamps, reliability indicators, and corroborating signals to improve transparency.
+- **Economic Data Integration:** Connect external data sources, including World Bank, UN Comtrade, GDELT, and ECB.
+- **Personalized Risk Monitoring:** Maintain watchlists, annotations, exposure profiles, and saved analytical briefs.
 
-`Geopolitical Event → Evidence Signals → Channel Pressure → Impact Propagation → Exposure Assessment`
+## Intelligence Pipeline
 
-GlobalMatrix combines a versioned event corpus, source metadata, a deterministic scoring engine, and linked economic relationships to produce explainable assessments rather than opaque risk scores.
+```mermaid id="63720"
+flowchart TD
+    A[Geopolitical Events & Economic Data] --> B[Data Ingestion and Evidence Tracking]
+    B --> C[Feature and Signal Extraction]
+    C --> D[Risk Scoring Engine]
+    D --> E[Impact Propagation Across Economic Networks]
+    E --> F[Exposure Assessment]
+    F --> G[AI-Assisted Intelligence Briefs]
+    G --> H[Interactive Analyst Dashboard]
+```
+
+## AI/ML Engineering Direction
+
+The platform establishes a foundation for more advanced machine learning capabilities:
+
+- **Risk Prediction:** Future development of supervised models trained and evaluated on historical disruption data.
+- **Anomaly Detection:** Identify unusual changes in economic indicators and trade patterns.
+- **Graph-Based Learning:** Explore graph machine learning to model dependencies and potential risk propagation.
+- **NLP for Event Intelligence:** Extract entities, event types, and relationships from news and policy documents.
+- **Model Evaluation:** Introduce historical backtesting, baseline comparisons, calibration, and drift monitoring.
+
+*These advanced ML capabilities are planned extensions, not claims about the current implementation.*
 
 ## Technology Stack
 
-- **Frontend:** React 19, TypeScript, TanStack Router, Tailwind CSS v4, shadcn/ui
+- **Frontend:** React 19, TypeScript, Tailwind CSS v4, shadcn/ui
 - **Backend:** TanStack Start, server functions, Cloudflare Workers
 - **Database & Authentication:** PostgreSQL, Lovable Cloud, row-level security
-- **AI:** Lovable AI Gateway
+- **AI Integration:** Lovable AI Gateway, structured AI outputs
 - **Data Sources:** World Bank, UN Comtrade, GDELT, ECB SDMX
 - **Testing:** Vitest
 
@@ -34,51 +54,34 @@ GlobalMatrix combines a versioned event corpus, source metadata, a deterministic
 
 Requirements: Node.js 20+ or Bun.
 
-```bash
+```bash id="m6qs2b"
 git clone <YOUR_REPOSITORY_URL>
 cd <YOUR_PROJECT_DIRECTORY>
 bun install
 bun run dev
 ```
 
-Run tests and production checks:
+Run validation checks:
 
-```bash
+```bash id="c3sm2a"
 bun run test
 bunx tsgo --noEmit
 bun run build
 ```
 
-Configure environment variables through your deployment settings. Never commit secrets or service-role credentials.
+Configure environment variables through deployment settings. Never commit API keys or privileged credentials.
 
-## Architecture
+## Reliability & Responsible Analysis
 
-```mermaid
-flowchart TD
-    A[Geopolitical Events & Source Signals] --> B[Versioned Intelligence Corpus]
-    B --> C[Deterministic Risk Engine]
-    C --> D[Channel Pressure & Impact Propagation]
-    D --> E[Country, Industry & Trade Exposure]
-    E --> F[Analyst Workspace & AI Briefings]
-    G[External Data Connectors] --> H[Server Functions]
-    H --> B
-    F --> H
-    H --> I[(PostgreSQL)]
-```
-
-## Reliability & Limitations
-
-Risk weights are manually configured, and reported intervals are not statistically calibrated confidence intervals. Assessments should be treated as structured analytical estimates, not validated forecasts. AI briefs are interpretations, not independent verification of facts. Data freshness depends on source availability.
-
-Company intelligence, policy analysis, and historical analogues still require further data integration.
+Risk assessments currently use configurable, manually defined weights; their intervals are not statistically calibrated confidence intervals. AI-generated briefs interpret available evidence and do not independently verify facts. Data freshness depends on external source availability.
 
 ## Roadmap
 
-- Calibrate risk assessments through historical backtesting.
-- Expand verified data coverage and economic relationship mapping.
-- Develop company-level exposure intelligence.
-- Strengthen automated testing and production monitoring.
+- Build and evaluate historical-event ML datasets.
+- Develop validated risk prediction and anomaly detection models.
+- Introduce graph-based exposure analysis and NLP event extraction.
+- Add backtesting, model calibration, and monitoring.
 
 ---
 
-**GlobalMatrix — From global disruption to explainable economic exposure.**
+**GlobalMatrix — AI-assisted intelligence for understanding how global disruption propagates through the economy.**
