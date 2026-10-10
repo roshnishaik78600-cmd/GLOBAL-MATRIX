@@ -4,7 +4,7 @@ import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
 import { api } from "@/lib/backend/api";
-import type { TopologyResult } from "@/convex/macroTopology";
+import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import {
   BAND_LABEL,

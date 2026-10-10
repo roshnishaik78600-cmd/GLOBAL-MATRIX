@@ -6,7 +6,7 @@ import { CHANNEL_COLOR } from "@/lib/intel/visual";
 import { CHANNEL_LABEL, type Channel } from "@/lib/intel/types";
 import { cn } from "@/lib/utils";
 import { BasisTag, FreshnessTag, SectionTitle, SegmentedControl } from "./system";
-import type { TopologyCategory, TopologyResult } from "@/convex/macroTopology";
+import type { TopologyCategory, TopologyResult } from "@/lib/backend/api";
 
 /**
  * The Overview's three visual instruments: a composite gauge cluster, a macro

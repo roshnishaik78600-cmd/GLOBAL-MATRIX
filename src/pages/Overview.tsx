@@ -3,7 +3,7 @@ import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { ArrowUpRight } from "lucide-react";
 import { api } from "@/lib/backend/api";
-import type { TopologyResult } from "@/convex/macroTopology";
+import type { TopologyResult } from "@/lib/backend/api";
 import { useFocus, type TimeWindow } from "@/lib/focus";
 import { CHANNEL_LABEL, type Channel } from "@/lib/intel/types";
 import { riskColorForScore } from "@/lib/intel/visual";
