@@ -47,7 +47,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    if (isChunkLoadError(String(error?.message ?? ""))) {
+    if (isChunkLoadError(String((error as Error | undefined)?.message ?? ""))) {
       reloadOnceForStaleChunk();
       return;
     }
