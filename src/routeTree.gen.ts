@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LoginRouteImport } from './routes/login'
@@ -20,6 +21,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppAnaloguesRouteImport } from './routes/app/analogues'
 import { Route as AppAnalystRouteImport } from './routes/app/analyst'
 import { Route as AppAssessRouteImport } from './routes/app/assess'
+import { Route as AppBillingRouteImport } from './routes/app/billing'
 import { Route as AppChainRouteImport } from './routes/app/chain'
 import { Route as AppCompaniesRouteImport } from './routes/app/companies'
 import { Route as AppCountriesRouteImport } from './routes/app/countries'
@@ -35,6 +37,7 @@ import { Route as AppSupplyRouteImport } from './routes/app/supply'
 import { Route as AppTradeRouteImport } from './routes/app/trade'
 import { Route as AppWatchlistRouteImport } from './routes/app/watchlist'
 import { Route as AppWorldRouteImport } from './routes/app/world'
+import { Route as AppCheckoutProductRouteImport } from './routes/app/checkout/$product'
 import { Route as AppCountryNodeIdRouteImport } from './routes/app/country/$nodeId'
 import { Route as AppEventEventIdRouteImport } from './routes/app/event/$eventId'
 import { Route as AppIndustryIndustryIdRouteImport } from './routes/app/industry/$industryId'
@@ -43,6 +46,11 @@ import { Route as AppReportEventIdRouteImport } from './routes/app/report/$event
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
@@ -93,6 +101,11 @@ const AppAnalystRoute = AppAnalystRouteImport.update({
 const AppAssessRoute = AppAssessRouteImport.update({
   id: '/assess',
   path: '/assess',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => AppRoute,
 } as any)
 const AppChainRoute = AppChainRouteImport.update({
@@ -170,6 +183,11 @@ const AppWorldRoute = AppWorldRouteImport.update({
   path: '/world',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCheckoutProductRoute = AppCheckoutProductRouteImport.update({
+  id: '/checkout/$product',
+  path: '/checkout/$product',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCountryNodeIdRoute = AppCountryNodeIdRouteImport.update({
   id: '/country/$nodeId',
   path: '/country/$nodeId',
@@ -193,6 +211,7 @@ const AppReportEventIdRoute = AppReportEventIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
@@ -202,6 +221,7 @@ export interface FileRoutesByFullPath {
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
   '/app/assess': typeof AppAssessRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/chain': typeof AppChainRoute
   '/app/companies': typeof AppCompaniesRoute
   '/app/countries': typeof AppCountriesRoute
@@ -218,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/app/watchlist': typeof AppWatchlistRoute
   '/app/world': typeof AppWorldRoute
   '/app/': typeof AppIndexRoute
+  '/app/checkout/$product': typeof AppCheckoutProductRoute
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
@@ -225,6 +246,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/methodology': typeof MethodologyRoute
@@ -233,6 +255,7 @@ export interface FileRoutesByTo {
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
   '/app/assess': typeof AppAssessRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/chain': typeof AppChainRoute
   '/app/companies': typeof AppCompaniesRoute
   '/app/countries': typeof AppCountriesRoute
@@ -249,6 +272,7 @@ export interface FileRoutesByTo {
   '/app/watchlist': typeof AppWatchlistRoute
   '/app/world': typeof AppWorldRoute
   '/app': typeof AppIndexRoute
+  '/app/checkout/$product': typeof AppCheckoutProductRoute
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
@@ -257,6 +281,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
@@ -266,6 +291,7 @@ export interface FileRoutesById {
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
   '/app/assess': typeof AppAssessRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/chain': typeof AppChainRoute
   '/app/companies': typeof AppCompaniesRoute
   '/app/countries': typeof AppCountriesRoute
@@ -282,6 +308,7 @@ export interface FileRoutesById {
   '/app/watchlist': typeof AppWatchlistRoute
   '/app/world': typeof AppWorldRoute
   '/app/': typeof AppIndexRoute
+  '/app/checkout/$product': typeof AppCheckoutProductRoute
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
@@ -291,6 +318,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/app'
     | '/auth'
     | '/login'
@@ -300,6 +328,7 @@ export interface FileRouteTypes {
     | '/app/analogues'
     | '/app/analyst'
     | '/app/assess'
+    | '/app/billing'
     | '/app/chain'
     | '/app/companies'
     | '/app/countries'
@@ -316,6 +345,7 @@ export interface FileRouteTypes {
     | '/app/watchlist'
     | '/app/world'
     | '/app/'
+    | '/app/checkout/$product'
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
@@ -323,6 +353,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/auth'
     | '/login'
     | '/methodology'
@@ -331,6 +362,7 @@ export interface FileRouteTypes {
     | '/app/analogues'
     | '/app/analyst'
     | '/app/assess'
+    | '/app/billing'
     | '/app/chain'
     | '/app/companies'
     | '/app/countries'
@@ -347,6 +379,7 @@ export interface FileRouteTypes {
     | '/app/watchlist'
     | '/app/world'
     | '/app'
+    | '/app/checkout/$product'
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
@@ -354,6 +387,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/app'
     | '/auth'
     | '/login'
@@ -363,6 +397,7 @@ export interface FileRouteTypes {
     | '/app/analogues'
     | '/app/analyst'
     | '/app/assess'
+    | '/app/billing'
     | '/app/chain'
     | '/app/companies'
     | '/app/countries'
@@ -379,6 +414,7 @@ export interface FileRouteTypes {
     | '/app/watchlist'
     | '/app/world'
     | '/app/'
+    | '/app/checkout/$product'
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
@@ -387,6 +423,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
   LoginRoute: typeof LoginRoute
@@ -402,6 +439,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app': {
@@ -472,6 +516,13 @@ declare module '@tanstack/react-router' {
       path: '/assess'
       fullPath: '/app/assess'
       preLoaderRoute: typeof AppAssessRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/chain': {
@@ -579,6 +630,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppWorldRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/checkout/$product': {
+      id: '/app/checkout/$product'
+      path: '/checkout/$product'
+      fullPath: '/app/checkout/$product'
+      preLoaderRoute: typeof AppCheckoutProductRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/country/$nodeId': {
       id: '/app/country/$nodeId'
       path: '/country/$nodeId'
@@ -614,6 +672,7 @@ interface AppRouteChildren {
   AppAnaloguesRoute: typeof AppAnaloguesRoute
   AppAnalystRoute: typeof AppAnalystRoute
   AppAssessRoute: typeof AppAssessRoute
+  AppBillingRoute: typeof AppBillingRoute
   AppChainRoute: typeof AppChainRoute
   AppCompaniesRoute: typeof AppCompaniesRoute
   AppCountriesRoute: typeof AppCountriesRoute
@@ -630,6 +689,7 @@ interface AppRouteChildren {
   AppWatchlistRoute: typeof AppWatchlistRoute
   AppWorldRoute: typeof AppWorldRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppCheckoutProductRoute: typeof AppCheckoutProductRoute
   AppCountryNodeIdRoute: typeof AppCountryNodeIdRoute
   AppEventEventIdRoute: typeof AppEventEventIdRoute
   AppIndustryIndustryIdRoute: typeof AppIndustryIndustryIdRoute
@@ -640,6 +700,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAnaloguesRoute: AppAnaloguesRoute,
   AppAnalystRoute: AppAnalystRoute,
   AppAssessRoute: AppAssessRoute,
+  AppBillingRoute: AppBillingRoute,
   AppChainRoute: AppChainRoute,
   AppCompaniesRoute: AppCompaniesRoute,
   AppCountriesRoute: AppCountriesRoute,
@@ -656,6 +717,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppWatchlistRoute: AppWatchlistRoute,
   AppWorldRoute: AppWorldRoute,
   AppIndexRoute: AppIndexRoute,
+  AppCheckoutProductRoute: AppCheckoutProductRoute,
   AppCountryNodeIdRoute: AppCountryNodeIdRoute,
   AppEventEventIdRoute: AppEventEventIdRoute,
   AppIndustryIndustryIdRoute: AppIndustryIndustryIdRoute,
@@ -666,6 +728,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
   LoginRoute: LoginRoute,

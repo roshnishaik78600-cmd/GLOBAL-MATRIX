@@ -134,6 +134,8 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { to: "/app/data", label: "Sources", icon: Database },
       { to: "/methodology", label: "Methodology", icon: GitBranch },
+      { to: "/pricing", label: "Pricing", icon: ScrollText },
+      { to: "/app/billing", label: "Billing", icon: User },
     ],
   },
 ];
@@ -161,6 +163,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { to: "/app/scenarios", label: "Scenarios", icon: Radar },
   { to: "/app/watchlist", label: "Watchlist", icon: Bookmark },
   { to: "/app/analyst", label: "AI analyst", icon: TrendingUp },
+  { to: "/pricing", label: "Pricing", icon: ScrollText },
 ];
 
 /** Index in `PRIMARY_NAV` from which the bar waits for `xl` before showing. */
