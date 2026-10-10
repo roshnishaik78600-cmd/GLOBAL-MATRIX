@@ -1,87 +1,139 @@
-# GlobalMatrix
+# 🌐 GlobalMatrix
 ### AI-Powered Geopolitical Risk & Supply-Chain Intelligence
 
-**From global events to explainable, data-driven risk insights.**
+> **Understand global events. Trace their impact. Identify potential exposure.**
 
-GlobalMatrix is an AI-assisted intelligence platform designed to analyze how geopolitical disruptions can affect countries, industries, and international supply chains.
+GlobalMatrix is an intelligence platform that connects geopolitical disruptions with economic data and supply-chain relationships. It combines evidence-based risk scoring, impact propagation, external data integrations, and AI-assisted analysis to explain how events may affect countries, industries, and international trade.
 
-It combines external economic data, structured event evidence, deterministic risk scoring, impact propagation, and AI-generated analytical briefs to help users understand **what happened, where exposure may emerge, how impacts could spread, and what evidence supports the assessment.**
+## 🧠 How GlobalMatrix Works
 
-## Core Intelligence Capabilities
-
-- **AI-Assisted Risk Analysis:** Generate structured intelligence briefs grounded in available event evidence and analytical outputs.
-- **Explainable Risk Engine:** Transform event signals into channel-level pressure and 30/90-day risk assessments using configurable scoring rules.
-- **Impact Propagation Modeling:** Trace potential disruption pathways across countries, industries, and trade relationships.
-- **Evidence-Aware Intelligence:** Track source attribution, timestamps, reliability indicators, and corroborating signals to improve transparency.
-- **Economic Data Integration:** Connect external data sources, including World Bank, UN Comtrade, GDELT, and ECB.
-- **Personalized Risk Monitoring:** Maintain watchlists, annotations, exposure profiles, and saved analytical briefs.
-
-## Intelligence Pipeline
-
-```mermaid id="63720"
+```mermaid
 flowchart TD
-    A[Geopolitical Events & Economic Data] --> B[Data Ingestion and Evidence Tracking]
-    B --> C[Feature and Signal Extraction]
-    C --> D[Risk Scoring Engine]
-    D --> E[Impact Propagation Across Economic Networks]
-    E --> F[Exposure Assessment]
-    F --> G[AI-Assisted Intelligence Briefs]
-    G --> H[Interactive Analyst Dashboard]
+    A["🌍 Global Events<br/>Tariffs · Sanctions · Conflicts"] --> C["📥 Evidence & Data Layer"]
+    B["📊 Economic Data<br/>Trade · Countries · Indicators"] --> C
+    C --> D["⚙️ Risk Analysis Engine"]
+    D --> E["🔗 Impact Propagation"]
+    E --> F["🎯 Exposure Assessment"]
+    F --> G["🤖 AI-Assisted Brief"]
+    G --> H["📈 Analyst Dashboard"]
+
+    style A fill:#172554,color:#fff,stroke:#3b82f6
+    style B fill:#172554,color:#fff,stroke:#3b82f6
+    style D fill:#312e81,color:#fff,stroke:#818cf8
+    style E fill:#312e81,color:#fff,stroke:#818cf8
+    style G fill:#064e3b,color:#fff,stroke:#10b981
+    style H fill:#0f172a,color:#fff,stroke:#64748b
 ```
 
-## AI/ML Engineering Direction
+## ✨ Core Capabilities
 
-The platform establishes a foundation for more advanced machine learning capabilities:
+| Capability | What it does |
+|---|---|
+| 🌍 Geopolitical Intelligence | Explore events, countries, industries, markets, and trade flows |
+| ⚙️ Risk Scoring | Calculate channel pressure and 30/90-day risk assessments |
+| 🔗 Impact Propagation | Model how disruptions may spread through economic relationships |
+| 🔎 Evidence Tracking | Inspect source attribution, timestamps, reliability, and corroboration |
+| 🤖 AI-Assisted Analysis | Generate structured intelligence briefs from available evidence |
+| 📌 Personalized Monitoring | Save watchlists, annotations, and exposure profiles |
 
-- **Risk Prediction:** Future development of supervised models trained and evaluated on historical disruption data.
-- **Anomaly Detection:** Identify unusual changes in economic indicators and trade patterns.
-- **Graph-Based Learning:** Explore graph machine learning to model dependencies and potential risk propagation.
-- **NLP for Event Intelligence:** Extract entities, event types, and relationships from news and policy documents.
-- **Model Evaluation:** Introduce historical backtesting, baseline comparisons, calibration, and drift monitoring.
+## 🤖 AI/ML Roadmap
 
-*These advanced ML capabilities are planned extensions, not claims about the current implementation.*
+The current system combines deterministic risk scoring with AI-assisted interpretation. These planned extensions would introduce evaluated machine-learning models.
 
-## Technology Stack
+```mermaid
+flowchart LR
+    A["Historical Data"] --> B["Feature Engineering"]
+    B --> C["ML Models"]
+    C --> D["Model Evaluation"]
+    D --> E["Risk Insights"]
 
-- **Frontend:** React 19, TypeScript, Tailwind CSS v4, shadcn/ui
+    F["Event Text"] --> G["NLP Extraction"]
+    G --> H["Entity & Event Graph"]
+    H --> I["Graph-Based Analysis"]
+    I --> E
+
+    style C fill:#312e81,color:#fff,stroke:#818cf8
+    style G fill:#312e81,color:#fff,stroke:#818cf8
+    style I fill:#312e81,color:#fff,stroke:#818cf8
+    style E fill:#064e3b,color:#fff,stroke:#10b981
+```
+
+**Planned ML capabilities**
+- **Risk prediction:** Train and evaluate models on historical disruptions.
+- **Anomaly detection:** Identify unusual changes in trade and economic indicators.
+- **Natural language processing:** Extract events, entities, and relationships from text.
+- **Graph machine learning:** Investigate connected economic dependencies and exposure pathways.
+- **Model validation:** Backtesting, baseline comparisons, calibration, and drift monitoring.
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TB
+    UI["React 19 Frontend"] <--> API["TanStack Start Server Functions"]
+    API <--> DB[("PostgreSQL")]
+    API --> AI["Lovable AI Gateway"]
+    API --> EXT["External Data Connectors"]
+    EXT --> WB["World Bank"]
+    EXT --> UC["UN Comtrade"]
+    EXT --> GD["GDELT"]
+    EXT --> ECB["ECB SDMX"]
+    CORPUS["Versioned Event Corpus"] --> ENGINE["Deterministic Risk Engine"]
+    ENGINE --> PROP["Impact Propagation"]
+    PROP --> API
+
+    style UI fill:#172554,color:#fff
+    style API fill:#1e293b,color:#fff
+    style ENGINE fill:#312e81,color:#fff
+    style AI fill:#064e3b,color:#fff
+```
+
+## 🛠️ Technology Stack
+
+- **Frontend:** React 19, TypeScript, TanStack Router, Tailwind CSS v4, shadcn/ui
 - **Backend:** TanStack Start, server functions, Cloudflare Workers
-- **Database & Authentication:** PostgreSQL, Lovable Cloud, row-level security
-- **AI Integration:** Lovable AI Gateway, structured AI outputs
-- **Data Sources:** World Bank, UN Comtrade, GDELT, ECB SDMX
+- **Database & Auth:** PostgreSQL, Lovable Cloud, row-level security
+- **AI:** Lovable AI Gateway with structured output validation
+- **Data:** World Bank, UN Comtrade, GDELT, ECB SDMX
 - **Testing:** Vitest
 
-## Getting Started
+## 🚀 Run Locally
 
-Requirements: Node.js 20+ or Bun.
+**Requirements:** Node.js 20+ or Bun.
 
-```bash id="m6qs2b"
+```bash
 git clone <YOUR_REPOSITORY_URL>
 cd <YOUR_PROJECT_DIRECTORY>
 bun install
 bun run dev
 ```
 
-Run validation checks:
+Validate the project:
 
-```bash id="c3sm2a"
+```bash
 bun run test
 bunx tsgo --noEmit
 bun run build
 ```
 
-Configure environment variables through deployment settings. Never commit API keys or privileged credentials.
+Configure required environment variables using deployment settings. Never commit API keys or privileged credentials.
 
-## Reliability & Responsible Analysis
+## 🔐 Engineering & Reliability
 
-Risk assessments currently use configurable, manually defined weights; their intervals are not statistically calibrated confidence intervals. AI-generated briefs interpret available evidence and do not independently verify facts. Data freshness depends on external source availability.
+- Row-level security for user-owned records.
+- Server-side handling of privileged credentials and AI requests.
+- Input validation and structured AI responses.
+- Source-refresh throttling and explicit handling of unavailable data.
 
-## Roadmap
+**Methodology:** Current risk scores use manually configured weights. Reported intervals are not statistically calibrated confidence intervals, and AI-generated briefs are interpretations rather than independently verified facts.
 
-- Build and evaluate historical-event ML datasets.
-- Develop validated risk prediction and anomaly detection models.
-- Introduce graph-based exposure analysis and NLP event extraction.
-- Add backtesting, model calibration, and monitoring.
+## 🗺️ Development Roadmap
+
+- [ ] Build historical datasets for ML training and evaluation.
+- [ ] Implement and benchmark predictive and anomaly-detection models.
+- [ ] Add NLP-based event extraction and graph-based analysis.
+- [ ] Backtest and calibrate risk assessments.
+- [ ] Expand verified company-level exposure intelligence.
 
 ---
 
-**GlobalMatrix — AI-assisted intelligence for understanding how global disruption propagates through the economy.**
+**GlobalMatrix | Connecting geopolitical events to explainable economic risk.**
