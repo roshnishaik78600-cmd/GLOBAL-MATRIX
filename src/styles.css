@@ -562,3 +562,16 @@
     }
   }
 }
+/* Display typography — headings use Sora for an editorial, product-grade voice. */
+@layer base {
+  h1, h2, h3, .font-display {
+    font-family: "Sora", var(--font-sans);
+  }
+  h1 { letter-spacing: -0.03em; }
+  h2 { letter-spacing: -0.015em; }
+}
+@utility gm-hero-glow {
+  background:
+    radial-gradient(60% 50% at 20% 0%, color-mix(in srgb, var(--exec-cyan) 18%, transparent), transparent 70%),
+    radial-gradient(50% 40% at 90% 10%, color-mix(in srgb, var(--exec-violet) 16%, transparent), transparent 70%);
+}

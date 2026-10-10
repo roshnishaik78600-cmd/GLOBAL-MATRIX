@@ -7,6 +7,7 @@ import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import { PricingTeaser } from "@/components/landing/PricingTeaser";
 import {
   BAND_LABEL,
   CHANNEL_LABEL,
@@ -246,63 +247,60 @@ export default function Landing() {
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--exec-base)]/40 via-[var(--exec-base)]/80 to-[var(--exec-base)]" />
         </div>
 
-        <div className="gm-width relative px-4 pt-16 pb-14 lg:px-8 lg:pt-24 lg:pb-20">
+        <div aria-hidden className="gm-hero-glow pointer-events-none absolute inset-0" />
+        <div className="gm-width relative px-4 pt-16 pb-14 lg:px-8 lg:pt-28 lg:pb-20">
           <motion.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="exec-label text-[var(--exec-cyan)]"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/70 px-3 py-1 text-[12px] font-medium text-[var(--exec-ink-dim)] backdrop-blur"
           >
-            Global event intelligence
+            <span className="size-1.5 rounded-full bg-[var(--exec-cyan)]" aria-hidden />
+            Geopolitical & supply-chain intelligence
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
-            className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] font-semibold tracking-[-0.03em] text-[var(--exec-ink)] sm:text-[3.25rem]"
+            transition={{ duration: 0.45, delay: 0.05 }}
+            className="mt-5 max-w-4xl text-[2.4rem] leading-[1.02] font-semibold text-[var(--exec-ink)] sm:text-[3.5rem] lg:text-[4.25rem]"
           >
-            Understand Global Risks. Protect Your Supply Chain.
+            Understand global risks{" "}
+            <span className="bg-gradient-to-r from-[var(--exec-cyan)] to-[var(--exec-violet)] bg-clip-text text-transparent">
+              before they reach your business.
+            </span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="mt-5 max-w-2xl text-[1.05rem] leading-snug font-medium text-[var(--exec-ink)] sm:text-[1.2rem]"
+            transition={{ duration: 0.4, delay: 0.12 }}
+            className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[var(--exec-ink-dim)] sm:text-[18px]"
           >
-            For importers, manufacturers and procurement teams.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]"
-          >
-            GlobalMatrix connects geopolitical events, trade disruptions, tariffs, and sanctions to the countries, industries, and supply chains they may affect—helping businesses investigate risks and make better-informed decisions.
+            Connect geopolitical events to trade disruptions, industry exposure, and supply-chain risks—all in one intelligence platform.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="mt-7 flex flex-wrap gap-3"
+            className="mt-8 flex flex-wrap gap-3"
           >
             <Link
               to="/app"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--exec-cyan)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-base)] transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--exec-cyan)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-base)] shadow-[0_8px_30px_-8px_var(--exec-cyan)] transition-opacity hover:opacity-90"
             >
-              Explore Global Intelligence
+              Explore Global Risks
               <ArrowRight className="size-4" />
             </Link>
-            <a
-              href="#world-map"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
+            <Link
+              to="/app/data"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
             >
-              View Impact Map
-            </a>
+              View Live Intelligence
+            </Link>
             <Link
               to="/pricing"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
             >
-              See plans & pricing
+              Explore Pricing
             </Link>
           </motion.div>
 
@@ -408,6 +406,8 @@ export default function Landing() {
             <ExploreGrid panels={panels} />
           </section>
 
+          <PricingTeaser />
+
           <AccessBand />
         </div>
       </main>
@@ -479,6 +479,7 @@ function LandingNav() {
             { to: "/app/world", label: "World" },
             { to: "/app/events", label: "Events" },
             { to: "/app/markets", label: "Markets" },
+            { to: "/pricing", label: "Pricing" },
           ].map((item) => (
             <Link
               key={item.to}
