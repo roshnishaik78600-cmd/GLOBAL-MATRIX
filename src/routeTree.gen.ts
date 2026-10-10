@@ -19,6 +19,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppAnaloguesRouteImport } from './routes/app/analogues'
 import { Route as AppAnalystRouteImport } from './routes/app/analyst'
+import { Route as AppAssessRouteImport } from './routes/app/assess'
 import { Route as AppChainRouteImport } from './routes/app/chain'
 import { Route as AppCompaniesRouteImport } from './routes/app/companies'
 import { Route as AppCountriesRouteImport } from './routes/app/countries'
@@ -87,6 +88,11 @@ const AppAnaloguesRoute = AppAnaloguesRouteImport.update({
 const AppAnalystRoute = AppAnalystRouteImport.update({
   id: '/analyst',
   path: '/analyst',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessRoute = AppAssessRouteImport.update({
+  id: '/assess',
+  path: '/assess',
   getParentRoute: () => AppRoute,
 } as any)
 const AppChainRoute = AppChainRouteImport.update({
@@ -195,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
+  '/app/assess': typeof AppAssessRoute
   '/app/chain': typeof AppChainRoute
   '/app/companies': typeof AppCompaniesRoute
   '/app/countries': typeof AppCountriesRoute
@@ -225,6 +232,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
+  '/app/assess': typeof AppAssessRoute
   '/app/chain': typeof AppChainRoute
   '/app/companies': typeof AppCompaniesRoute
   '/app/countries': typeof AppCountriesRoute
@@ -257,6 +265,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
+  '/app/assess': typeof AppAssessRoute
   '/app/chain': typeof AppChainRoute
   '/app/companies': typeof AppCompaniesRoute
   '/app/countries': typeof AppCountriesRoute
@@ -290,6 +299,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/analogues'
     | '/app/analyst'
+    | '/app/assess'
     | '/app/chain'
     | '/app/companies'
     | '/app/countries'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/analogues'
     | '/app/analyst'
+    | '/app/assess'
     | '/app/chain'
     | '/app/companies'
     | '/app/countries'
@@ -351,6 +362,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/app/analogues'
     | '/app/analyst'
+    | '/app/assess'
     | '/app/chain'
     | '/app/companies'
     | '/app/countries'
@@ -453,6 +465,13 @@ declare module '@tanstack/react-router' {
       path: '/analyst'
       fullPath: '/app/analyst'
       preLoaderRoute: typeof AppAnalystRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/assess': {
+      id: '/app/assess'
+      path: '/assess'
+      fullPath: '/app/assess'
+      preLoaderRoute: typeof AppAssessRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/chain': {
@@ -594,6 +613,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAnaloguesRoute: typeof AppAnaloguesRoute
   AppAnalystRoute: typeof AppAnalystRoute
+  AppAssessRoute: typeof AppAssessRoute
   AppChainRoute: typeof AppChainRoute
   AppCompaniesRoute: typeof AppCompaniesRoute
   AppCountriesRoute: typeof AppCountriesRoute
@@ -619,6 +639,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAnaloguesRoute: AppAnaloguesRoute,
   AppAnalystRoute: AppAnalystRoute,
+  AppAssessRoute: AppAssessRoute,
   AppChainRoute: AppChainRoute,
   AppCompaniesRoute: AppCompaniesRoute,
   AppCountriesRoute: AppCountriesRoute,
