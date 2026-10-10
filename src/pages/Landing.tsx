@@ -254,9 +254,9 @@ export default function Landing() {
             transition={{ duration: 0.45, delay: 0.05 }}
             className="mt-5 max-w-4xl text-[2.4rem] leading-[1.02] font-semibold text-[var(--exec-ink)] sm:text-[3.5rem] lg:text-[4.25rem]"
           >
-            Understand global risks{" "}
+            See the connections{" "}
             <span className="bg-gradient-to-r from-[var(--exec-cyan)] to-[var(--exec-violet)] bg-clip-text text-transparent">
-              before they reach your business.
+              behind global risk.
             </span>
           </motion.h1>
           <motion.p
@@ -292,7 +292,7 @@ export default function Landing() {
               hash="compare"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
             >
-              Compare Plans
+              View Pricing
             </Link>
           </motion.div>
 
