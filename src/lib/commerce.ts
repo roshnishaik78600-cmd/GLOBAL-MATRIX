@@ -59,3 +59,19 @@ export const profileSchema = z.object({
   products: z.string().trim().max(1000).optional(),
   concerns: z.string().trim().max(1000).optional(),
 });
+
+/**
+ * Manual UPI payment configuration.
+ *
+ * DEMO_PAYMENT_MODE keeps every real payment path switched off: the payment
+ * section shows a decorative, non-functional QR placeholder and the
+ * payment-submission control stays disabled.
+ *
+ * When the genuine UPI QR arrives: set DEMO_PAYMENT_MODE to false and point
+ * PAYMENT_QR at the real QR image — nothing else needs to change. Never put a
+ * UPI ID, bank account or payment destination in this file.
+ */
+export const DEMO_PAYMENT_MODE = true;
+
+/** Real UPI QR image URL — null until the genuine QR is provided. */
+export const PAYMENT_QR: string | null = null;
