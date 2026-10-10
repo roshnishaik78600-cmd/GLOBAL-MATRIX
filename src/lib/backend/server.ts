@@ -159,6 +159,23 @@ export const generateBrief = createServerFn({ method: "POST" })
         };
       }
     }
+    // Plan entitlement: daily brief allowance from trusted subscription state.
+    const { effectivePlan, BRIEF_DAILY_LIMIT } = await import("@/lib/billing/core");
+    const { data: sub } = await supabaseAdmin
+      .from("subscriptions").select("plan,status,expires_at").eq("user_id", userId).maybeSingle();
+    const plan = effectivePlan(sub as never);
+    const dayStart = new Date(now);
+    dayStart.setUTCHours(0, 0, 0, 0);
+    const { count } = await supabaseAdmin
+      .from("brief_claims").select("id", { count: "exact", head: true })
+      .eq("user_id", userId).gte("at", dayStart.toISOString());
+    if ((count ?? 0) >= BRIEF_DAILY_LIMIT[plan]) {
+      return {
+        ok: false,
+        reason: "rate_limited",
+        message: `Your plan allows ${BRIEF_DAILY_LIMIT[plan]} AI briefs per day. See Pricing to upgrade, or try again tomorrow.`,
+      };
+    }
     await supabaseAdmin.from("brief_claims").insert({ user_id: userId, at: new Date(now).toISOString() });
 
     const prompt = buildPrompt(assessment);
