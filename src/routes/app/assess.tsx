@@ -63,14 +63,14 @@ function Assess() {
   async function save() {
     if (!user) return;
     const p = profileSchema.safeParse({ ...form, company_name: form.company_name || undefined });
-    if (!p.success) return toast.error(p.error.issues[0]?.message ?? "Check the form");
+    if (!p.success) { toast.error(p.error.issues[0]?.message ?? "Check the form"); return; }
     setSaving(true);
     const { error } = await supabase.from("business_profiles").upsert(
       { ...p.data, company_name: p.data.company_name ?? null, products: p.data.products ?? null, concerns: p.data.concerns ?? null, user_id: user.id, updated_at: new Date().toISOString() },
       { onConflict: "user_id" },
     );
     setSaving(false);
-    error ? toast.error("Could not save your profile. Please try again.") : toast.success("Profile saved");
+    if (error) toast.error("Could not save your profile. Please try again."); else toast.success("Profile saved");
   }
 
   return (
