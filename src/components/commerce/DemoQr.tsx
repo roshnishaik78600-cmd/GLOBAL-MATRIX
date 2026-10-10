@@ -57,7 +57,7 @@ export function DemoQr({ className }: { className?: string }) {
       className={className}
       shapeRendering="crispEdges"
     >
-      <rect width={SIZE} height={SIZE} fill="white" />
+      <rect width={SIZE} height={SIZE} fill="var(--qr-paper)" />
       {MODULES.map((row, y) =>
         row.map((on, x) =>
           on ? (

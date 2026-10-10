@@ -30,7 +30,11 @@ export const getMyBilling = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const sb = context.supabase;
-    const [{ data: sub }, { data: orders }, { data: isAdmin }] = await Promise.all([
+    const [
+      { data: sub, error: subError },
+      { data: orders, error: ordersError },
+      { data: isAdmin, error: roleError },
+    ] = await Promise.all([
       sb
         .from("subscriptions")
         .select("plan,status,starts_at,expires_at")
@@ -46,6 +50,7 @@ export const getMyBilling = createServerFn({ method: "POST" })
         .limit(50),
       sb.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
     ]);
+    if (subError || ordersError || roleError) throw new Error("Could not load billing. Try again.");
     return {
       mode: mode(),
       plan: effectivePlan(sub as SubscriptionRow),
@@ -153,10 +158,15 @@ export const cancelOrder = createServerFn({ method: "POST" })
     if (!order || order.user_id !== context.userId) throw new Error("Order not found");
     if (!canTransition(order.status as OrderStatus, "cancelled"))
       throw new Error("This order can no longer be cancelled.");
-    await supabaseAdmin
+    const { data: updated, error: updateError } = await supabaseAdmin
       .from("orders")
       .update({ status: "cancelled", updated_at: new Date().toISOString() })
-      .eq("id", order.id);
+      .eq("id", order.id)
+      .eq("status", order.status)
+      .select("id")
+      .maybeSingle();
+    if (updateError || !updated)
+      throw new Error("Order changed or could not be cancelled. Reload billing.");
     await supabaseAdmin.from("payment_events").insert({
       order_id: order.id,
       user_id: context.userId,

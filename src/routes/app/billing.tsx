@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { formatINR } from "@/lib/commerce";
 import { PLANS, BRIEF_DAILY_LIMIT, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { getMyBilling, activateFree, cancelOrder } from "@/lib/billing/billing.functions";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/app/billing")({
   head: () => ({
@@ -36,6 +37,7 @@ function Billing() {
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(() => {
+    setError(null);
     load()
       .then(setData)
       .catch(() => setError("Could not load billing. Try again."));
@@ -59,9 +61,12 @@ function Billing() {
     );
   if (error)
     return (
-      <p role="alert" className="p-8 text-sm text-destructive">
+      <div role="alert" className="p-8 text-sm text-destructive">
         {error}
-      </p>
+        <Button variant="outline" onClick={refresh} className="ml-3">
+          Retry
+        </Button>
+      </div>
     );
   if (!data) return <p className="p-8 text-sm text-muted-foreground">Loading billing…</p>;
 
@@ -107,12 +112,17 @@ function Billing() {
         )}
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
           {!data.subscription && (
-            <button
-              onClick={() => free().then(refresh)}
+            <Button
+              variant="outline"
+              onClick={() =>
+                free()
+                  .then(refresh)
+                  .catch(() => setError("Could not activate Free Explorer. Try again."))
+              }
               className="rounded-md border border-border px-3 py-1.5 text-foreground hover:bg-accent"
             >
               Activate Free Explorer
-            </button>
+            </Button>
           )}
           {data.plan !== "business" && (
             <Link
@@ -158,16 +168,22 @@ function Billing() {
                     <td>{fmt(o.created_at)}</td>
                     <td>
                       {o.status === "pending_payment" && (
-                        <button
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           className="text-xs text-muted-foreground underline"
                           onClick={async () => {
                             if (!confirm("Cancel this order?")) return;
-                            await cancel({ data: { id: o.id } });
-                            refresh();
+                            try {
+                              await cancel({ data: { id: o.id } });
+                              refresh();
+                            } catch {
+                              setError("Could not cancel the order. Reload billing and try again.");
+                            }
                           }}
                         >
                           Cancel
-                        </button>
+                        </Button>
                       )}
                     </td>
                   </tr>

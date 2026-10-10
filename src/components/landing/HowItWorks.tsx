@@ -7,12 +7,12 @@ const STEPS = [
   {
     icon: Network,
     title: "Understand",
-    text: "Explore affected industries, trade routes, and potential impact pathways.",
+    text: "Trace routes and industry exposure.",
   },
   {
     icon: ShieldCheck,
     title: "Prepare",
-    text: "Know which suppliers to check and which indicators to watch next.",
+    text: "Identify what to investigate next.",
   },
 ];
 
@@ -42,7 +42,7 @@ export function HowItWorks() {
     <section
       id="how-it-works"
       aria-labelledby="how-heading"
-      className="card scroll-mt-20 p-5 sm:p-7"
+      className="scroll-mt-20 border-b border-border pb-8"
     >
       <h2 id="how-heading" className="t-card text-[var(--exec-ink)]">
         How GlobalMatrix works
@@ -64,40 +64,45 @@ export function HowItWorks() {
 
       <PropagationExample />
 
-      <h3 className="mt-8 text-[15px] font-semibold text-[var(--exec-ink)]">
-        Questions it helps you investigate
-      </h3>
-      <p className="mt-1 text-[12px] text-[var(--exec-ink-dim)]">
-        Illustrative examples — not real findings or predictions.
-      </p>
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        {EXAMPLES.map((e) => (
-          <div key={e.q} className="rounded-lg border border-[var(--exec-hairline)] p-4">
-            <p className="text-[14px] font-medium text-[var(--exec-ink)]">“{e.q}”</p>
-            <dl className="mt-3 space-y-2 text-[13px]">
-              <div>
-                <dt className="exec-label text-[var(--exec-cyan)]">Evidence</dt>
-                <dd className="text-[var(--exec-ink-dim)]">{e.fact}</dd>
-              </div>
-              <div>
-                <dt className="exec-label text-[var(--exec-ink)]">Analytical inference</dt>
-                <dd className="text-[var(--exec-ink-dim)]">{e.inference}</dd>
-              </div>
-              <div>
-                <dt className="exec-label text-[var(--exec-ink-dim)]">Hypothetical scenario</dt>
-                <dd className="text-[var(--exec-ink-dim)]">{e.scenario}</dd>
-              </div>
-            </dl>
-          </div>
-        ))}
-      </div>
-      <p className="mt-5 text-[12px] text-[var(--exec-ink-dim)]">
-        The current event set is a demonstration corpus, not live news. Live economic data (World
-        Bank, UN Comtrade, GDELT, ECB) shows its source and timestamp where connected.{" "}
-        <Link to="/methodology" className="text-[var(--exec-cyan)] hover:underline">
-          Read the methodology
-        </Link>
-      </p>
+      <details className="mt-6 border-t border-border pt-4">
+        <summary className="cursor-pointer text-sm font-medium text-muted-foreground">
+          Example questions &amp; evidence
+        </summary>
+        <h3 className="mt-4 text-[15px] font-semibold text-[var(--exec-ink)]">
+          Questions it helps you investigate
+        </h3>
+        <p className="mt-1 text-[12px] text-[var(--exec-ink-dim)]">
+          Illustrative examples — not real findings or predictions.
+        </p>
+        <div className="mt-4 grid gap-4 lg:grid-cols-3">
+          {EXAMPLES.map((e) => (
+            <div key={e.q} className="rounded-lg border border-[var(--exec-hairline)] p-4">
+              <p className="text-[14px] font-medium text-[var(--exec-ink)]">“{e.q}”</p>
+              <dl className="mt-3 space-y-2 text-[13px]">
+                <div>
+                  <dt className="exec-label text-[var(--exec-cyan)]">Evidence</dt>
+                  <dd className="text-[var(--exec-ink-dim)]">{e.fact}</dd>
+                </div>
+                <div>
+                  <dt className="exec-label text-[var(--exec-ink)]">Analytical inference</dt>
+                  <dd className="text-[var(--exec-ink-dim)]">{e.inference}</dd>
+                </div>
+                <div>
+                  <dt className="exec-label text-[var(--exec-ink-dim)]">Hypothetical scenario</dt>
+                  <dd className="text-[var(--exec-ink-dim)]">{e.scenario}</dd>
+                </div>
+              </dl>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 text-[12px] text-[var(--exec-ink-dim)]">
+          The current event set is a demonstration corpus, not live news. Live economic data (World
+          Bank, UN Comtrade, GDELT, ECB) shows its source and timestamp where connected.{" "}
+          <Link to="/methodology" className="text-[var(--exec-cyan)] hover:underline">
+            Read the methodology
+          </Link>
+        </p>
+      </details>
       <Link
         to="/pricing"
         className="mt-4 inline-flex items-center gap-1 text-[14px] font-semibold text-[var(--exec-cyan)] hover:underline"

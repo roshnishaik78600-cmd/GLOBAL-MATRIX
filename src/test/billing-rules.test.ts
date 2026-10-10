@@ -66,6 +66,10 @@ describe("entitlements", () => {
         now,
       ),
     ).toBe("business"));
+  it("invalid subscription expiry never unlocks paid access", () =>
+    expect(effectivePlan({ plan: "business", status: "active", expires_at: "invalid" }, now)).toBe(
+      "free",
+    ));
   it("brief limits: free 5, analyst 50, business 200", () =>
     expect(BRIEF_DAILY_LIMIT).toEqual({ free: 5, analyst: 50, business: 200 }));
 });

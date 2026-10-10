@@ -29,6 +29,13 @@
       "when": 1791622337432,
       "tag": "0003_billing_orders_subscriptions_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791625688895,
+      "tag": "0004_atomic_brief_reservation",
+      "breakpoints": true
     }
   ]
 }
