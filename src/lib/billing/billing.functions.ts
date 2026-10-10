@@ -181,12 +181,14 @@ export const cancelOrder = createServerFn({ method: "POST" })
 /* Admin -------------------------------------------------------------- */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- receives the request-scoped client from auth middleware
-async function assertAdmin(context: { supabase: any; userId: string }) {
+async function assertAdmin(context: { supabase: any; userId: string; claims: unknown }) {
   const { data } = await context.supabase.rpc("has_role", {
     _user_id: context.userId,
     _role: "admin",
   });
   if (!data) throw new Error("Forbidden");
+  // Admin actions require a verified second factor in this session.
+  if ((context.claims as { aal?: string })?.aal !== "aal2") throw new Error("MFA required");
 }
 
 export const adminOverview = createServerFn({ method: "POST" })

@@ -495,6 +495,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_mfa_admin: { Args: never; Returns: boolean }
       reserve_brief_claim: {
         Args: {
           p_daily_limit: number

@@ -3,6 +3,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { formatINR } from "@/lib/commerce";
+import { MfaGate } from "@/components/admin/MfaGate";
+import { supabase } from "@/integrations/supabase/client";
 import { adminOverview, adminDecideOrder } from "@/lib/billing/billing.functions";
 
 export const Route = createFileRoute("/admin")({
@@ -18,7 +20,7 @@ export const Route = createFileRoute("/admin")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: Admin,
+  component: AdminGate,
 });
 
 type Data = Awaited<ReturnType<typeof adminOverview>>;
@@ -30,6 +32,29 @@ const TABS = [
   "Audit history",
   "Settings",
 ] as const;
+
+function AdminGate() {
+  const { user, isLoading } = useAuth();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle()
+      .then(({ data }) => setIsAdmin(!!data));
+  }, [user]);
+  if (isLoading || (user && isAdmin === null)) return null;
+  if (user && isAdmin)
+    return (
+      <MfaGate>
+        <Admin />
+      </MfaGate>
+    );
+  return <Admin />;
+}
 
 function Admin() {
   const { user, isLoading: loading } = useAuth();

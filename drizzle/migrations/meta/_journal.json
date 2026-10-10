@@ -36,6 +36,13 @@
       "when": 1791625688895,
       "tag": "0004_atomic_brief_reservation",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791627079668,
+      "tag": "0005_admin_requires_mfa",
+      "breakpoints": true
     }
   ]
 }
