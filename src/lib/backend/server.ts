@@ -144,50 +144,50 @@ export const generateBrief = createServerFn({ method: "POST" })
       };
     }
 
-    // Throttle: one brief per MIN_BRIEF_INTERVAL_MS per user.
-    const now = Date.now();
-    const { data: prior } = await supabaseAdmin
-      .from("brief_claims")
-      .select("at")
-      .eq("user_id", userId)
-      .order("at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    if (prior) {
-      const wait = MIN_BRIEF_INTERVAL_MS - (now - Date.parse(prior.at));
-      if (wait > 0) {
-        return {
-          ok: false,
-          reason: "rate_limited",
-          message: `Briefs are limited to one every ${MIN_BRIEF_INTERVAL_MS / 1000} seconds. Try again in ${Math.ceil(wait / 1000)}s.`,
-        };
-      }
-    }
-    // Plan entitlement: daily brief allowance from trusted subscription state.
+    // Atomically reserve the allowance before contacting the AI service.
     const { effectivePlan, BRIEF_DAILY_LIMIT } = await import("@/lib/billing/core");
-    const { data: sub } = await supabaseAdmin
+    const { data: sub, error: subError } = await supabaseAdmin
       .from("subscriptions")
       .select("plan,status,expires_at")
       .eq("user_id", userId)
       .maybeSingle();
+    if (subError)
+      return {
+        ok: false,
+        reason: "upstream_error",
+        message: "Could not check your plan. Try again.",
+      };
     const plan = effectivePlan(sub as never);
-    const dayStart = new Date(now);
-    dayStart.setUTCHours(0, 0, 0, 0);
-    const { count } = await supabaseAdmin
-      .from("brief_claims")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", userId)
-      .gte("at", dayStart.toISOString());
-    if ((count ?? 0) >= BRIEF_DAILY_LIMIT[plan]) {
+    const { data: reservation, error: claimError } = await supabaseAdmin.rpc(
+      "reserve_brief_claim",
+      {
+        p_user_id: userId,
+        p_daily_limit: BRIEF_DAILY_LIMIT[plan],
+        p_interval_ms: MIN_BRIEF_INTERVAL_MS,
+      },
+    );
+    if (
+      claimError ||
+      !reservation ||
+      typeof reservation !== "object" ||
+      Array.isArray(reservation)
+    ) {
+      return {
+        ok: false,
+        reason: "upstream_error",
+        message: "Could not reserve a brief. Try again.",
+      };
+    }
+    if (reservation.ok !== true) {
       return {
         ok: false,
         reason: "rate_limited",
-        message: `Your plan allows ${BRIEF_DAILY_LIMIT[plan]} AI briefs per day. See Pricing to upgrade, or try again tomorrow.`,
+        message:
+          reservation.reason === "interval"
+            ? `Try again in ${reservation.wait_seconds} seconds.`
+            : `Your plan allows ${BRIEF_DAILY_LIMIT[plan]} AI briefs per day. Try again tomorrow.`,
       };
     }
-    await supabaseAdmin
-      .from("brief_claims")
-      .insert({ user_id: userId, at: new Date(now).toISOString() });
 
     const prompt = buildPrompt(assessment);
 

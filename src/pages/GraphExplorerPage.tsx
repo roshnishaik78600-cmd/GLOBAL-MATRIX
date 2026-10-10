@@ -7,6 +7,7 @@ import { GraphExplorer } from "@/components/viz/Flow";
 import { Bar, NoData, Panel, Skeleton } from "@/components/viz/core";
 import { getNode } from "@/lib/intel/nodes";
 import { riskColorForScore } from "@/lib/intel/visual";
+import { Button } from "@/components/ui/button";
 import { useFocus } from "@/lib/focus";
 
 /**
@@ -68,7 +69,7 @@ export default function GraphExplorerPage() {
     <PageFrame
       eyebrow="Knowledge graph"
       title="Knowledge graph"
-      lede="The transmission graph as a knowledge web: pick an entity and see everything it shares exposure with."
+      lede="Trace shared exposure. Demonstration events; modelled pathways."
       actions={
         <>
           <label className="flex items-center gap-2">
@@ -89,12 +90,14 @@ export default function GraphExplorerPage() {
       }
     >
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-        <section className="lg:col-span-9">
+        <section className="min-w-0 lg:col-span-9">
           <Panel
             title="Propagation graph"
             meta={`${view.nodes.length} of ${nodeCount} nodes · ${view.edges.length} edges`}
             actions={
-              <button
+              <Button
+                variant="outline"
+                size="sm"
                 type="button"
                 onClick={() => setIsolate((v) => !v)}
                 disabled={!selected}
@@ -106,7 +109,7 @@ export default function GraphExplorerPage() {
                 className="label flex items-center gap-1.5 border border-rule px-2 py-1 transition-colors enabled:hover:border-foreground disabled:opacity-40"
               >
                 {isolate ? "Show all" : "Isolate selection"}
-              </button>
+              </Button>
             }
           >
             {graph ? (
@@ -151,7 +154,7 @@ export default function GraphExplorerPage() {
           </Panel>
         </section>
 
-        <section className="space-y-3 lg:col-span-3">
+        <section className="min-w-0 space-y-3 lg:col-span-3">
           <Panel title="Selection" meta="click a node">
             {selected ? (
               <div className="space-y-3 p-3">

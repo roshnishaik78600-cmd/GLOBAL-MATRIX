@@ -218,31 +218,60 @@ export default function Landing() {
       <header className="relative border-b border-border">
         <div className="gm-width px-4 pt-9 lg:px-8 lg:pt-12">
           <p className="mb-4 flex items-center gap-3 text-sm font-medium text-primary">
-            <Globe2 className="size-4" /> GlobalMatrix <span className="text-muted-foreground">/ Connected intelligence</span>
+            <Globe2 className="size-4" /> GlobalMatrix{" "}
+            <span className="text-muted-foreground">/ Connected intelligence</span>
           </p>
-          <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-            className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]">
-            Global risk. <span className="text-primary">Connected.</span><br className="hidden sm:block" /> Understood.
+          <motion.h1
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]"
+          >
+            Global risk. <span className="text-primary">Connected.</span>
+            <br className="hidden sm:block" /> Understood.
           </motion.h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
             See how global events could affect trade and supply chains.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg"><Link to="/app">Explore Global Risks <ArrowRight /></Link></Button>
-            <Button asChild size="lg" variant="outline"><a href="#how-it-works">See How It Works</a></Button>
-            <Button asChild size="lg" variant="ghost"><Link to="/pricing">View Pricing <ArrowRight /></Link></Button>
+            <Button asChild size="lg">
+              <Link to="/app">
+                Explore Global Risks <ArrowRight />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="#how-it-works">See How It Works</a>
+            </Button>
+            <Button asChild size="lg" variant="ghost">
+              <Link to="/pricing">
+                View Pricing <ArrowRight />
+              </Link>
+            </Button>
           </div>
           <div className="mt-7 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 text-xs text-muted-foreground">
-            <span className="flex items-center gap-2"><Network className="size-4 text-primary" /> Global exposure network</span>
+            <span className="flex items-center gap-2">
+              <Network className="size-4 text-primary" /> Global exposure network
+            </span>
             <span>Demonstration events · modelled connections, not shipping routes</span>
           </div>
         </div>
         <div className="gm-width relative" id="world-map">
-          {data ? <WorldMap nodes={data.mapNodes} flows={data.flows} events={mapEvents}
-            className="gm-map-stage" selected={sharedNodeId} onSelect={selectNode}
-            onInspect={(id) => navigate(`/app/country/${id}`)} /> : <Skeleton className="gm-map-stage w-full" />}
+          {data ? (
+            <WorldMap
+              nodes={data.mapNodes}
+              flows={data.flows}
+              events={mapEvents}
+              className="gm-map-stage"
+              selected={sharedNodeId}
+              onSelect={selectNode}
+              onInspect={(id) => navigate(`/app/country/${id}`)}
+            />
+          ) : (
+            <Skeleton className="gm-map-stage w-full" />
+          )}
         </div>
-        <div className="gm-width px-4 pb-5 lg:px-8"><HeroStats regions={mappable.length} links={data?.flows.length ?? 0} /></div>
+        <div className="gm-width px-4 pb-5 lg:px-8">
+          <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
+        </div>
       </header>
 
       <main className="min-w-0">
@@ -259,54 +288,55 @@ export default function Landing() {
           <FollowTheShock events={feed?.rows ?? []} />
 
           <details className="border-t border-border pt-5">
-            <summary className="cursor-pointer text-lg font-semibold text-foreground">Explore exposure, sources &amp; methodology</summary>
+            <summary className="cursor-pointer text-lg font-semibold text-foreground">
+              Explore exposure, sources &amp; methodology
+            </summary>
             <div className="mt-6 flex flex-col gap-8">
-          {/* TRENDING COUNTRIES — pick one and go deep. */}
-          <TrendingCountries
-            rows={(data?.hottestCountries ?? []).map((r) => ({
-              nodeId: r.nodeId,
-              label: r.label,
-              short: r.short,
-              load: r.load,
-              topChannel: CHANNEL_LABEL[r.topChannel],
-              eventCount: r.eventCount,
-            }))}
-          />
+              {/* TRENDING COUNTRIES — pick one and go deep. */}
+              <TrendingCountries
+                rows={(data?.hottestCountries ?? []).map((r) => ({
+                  nodeId: r.nodeId,
+                  label: r.label,
+                  short: r.short,
+                  load: r.load,
+                  topChannel: CHANNEL_LABEL[r.topChannel],
+                  eventCount: r.eventCount,
+                }))}
+              />
 
-          {/* TOP INDUSTRIES — the same question asked of sectors. */}
-          <TopIndustries
-            rows={(data?.hottestIndustries ?? []).map((r) => ({
-              id: r.id,
-              label: r.label,
-              load: r.load,
-              topChannel: CHANNEL_LABEL[r.topChannel],
-              eventCount: r.eventCount,
-            }))}
-          />
+              {/* TOP INDUSTRIES — the same question asked of sectors. */}
+              <TopIndustries
+                rows={(data?.hottestIndustries ?? []).map((r) => ({
+                  id: r.id,
+                  label: r.label,
+                  load: r.load,
+                  topChannel: CHANNEL_LABEL[r.topChannel],
+                  eventCount: r.eventCount,
+                }))}
+              />
 
-          {/* WHAT TO WATCH — the earliest-stage events, ranked by their own
+              {/* WHAT TO WATCH — the earliest-stage events, ranked by their own
               composite. Stage and channel are corpus facts; the section claims
               nothing about the future beyond the horizons the analysis shows. */}
-          <WhatToWatch
-            rows={(feed?.rows ?? [])
-              .filter((r) => r.stage === "emerging" || r.stage === "escalating")
-              .sort((a, b) => b.score30 - a.score30)
-              .slice(0, 4)}
-          />
+              <WhatToWatch
+                rows={(feed?.rows ?? [])
+                  .filter((r) => r.stage === "emerging" || r.stage === "escalating")
+                  .sort((a, b) => b.score30 - a.score30)
+                  .slice(0, 4)}
+              />
 
-          {/* DATA & EVIDENCE — what every picture above is built from, with
+              {/* DATA & EVIDENCE — what every picture above is built from, with
               each connector's own freshness, stated on the page that uses it. */}
-          <DataAndEvidence />
+              <DataAndEvidence />
 
-          {/* EXPLORE — the six panels, each previewed from the board it opens. */}
-          <section>
-            <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-              <h2 className="t-section text-[var(--exec-ink)]">Explore</h2>
-              <span className="exec-label">six ways in</span>
-            </div>
-            <ExploreGrid panels={panels} />
-          </section>
-
+              {/* EXPLORE — the six panels, each previewed from the board it opens. */}
+              <section>
+                <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
+                  <h2 className="t-section text-[var(--exec-ink)]">Explore</h2>
+                  <span className="exec-label">six ways in</span>
+                </div>
+                <ExploreGrid panels={panels} />
+              </section>
             </div>
           </details>
 

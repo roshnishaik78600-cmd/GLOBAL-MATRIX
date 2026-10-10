@@ -138,7 +138,8 @@ export type SubscriptionRow = {
 export function effectivePlan(sub: SubscriptionRow, now: Date = new Date()): PlanId {
   if (!sub || sub.plan === "free") return "free";
   if (sub.status !== "active") return "free";
-  if (!sub.expires_at || Date.parse(sub.expires_at) <= now.getTime()) return "free";
+  const expiry = sub.expires_at ? Date.parse(sub.expires_at) : NaN;
+  if (!Number.isFinite(expiry) || expiry <= now.getTime()) return "free";
   return sub.plan;
 }
 

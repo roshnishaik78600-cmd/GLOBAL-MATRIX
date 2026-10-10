@@ -56,10 +56,10 @@
   --color-violet: var(--violet);
   --color-info: var(--info);
   --color-grid: var(--grid);
-  --font-sans: "Inter", "Helvetica Neue", Helvetica, ui-sans-serif, system-ui,
-    -apple-system, "Segoe UI", Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
-    monospace;
+  --font-sans:
+    "Inter", "Helvetica Neue", Helvetica, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
 /* ------------------------------------------------------------------ tokens --
@@ -81,15 +81,15 @@
   --radius: 0.5rem;
 
   --background: oklch(0.15155 0.00852 285.339);
-  --foreground: oklch(0.95877 0.01270 86.830);
+  --foreground: oklch(0.95877 0.0127 86.83);
   --card: oklch(0.18454 0.01013 285.365);
-  --card-foreground: oklch(0.95877 0.01270 86.830);
+  --card-foreground: oklch(0.95877 0.0127 86.83);
   --popover: oklch(0.20838 0.01576 284.951);
-  --popover-foreground: oklch(0.95877 0.01270 86.830);
+  --popover-foreground: oklch(0.95877 0.0127 86.83);
   --primary: oklch(0.81216 0.15398 162.669);
   --primary-foreground: oklch(0.15155 0.00852 285.339);
   --secondary: oklch(0.20838 0.01576 284.951);
-  --secondary-foreground: oklch(0.95877 0.01270 86.830);
+  --secondary-foreground: oklch(0.95877 0.0127 86.83);
   --muted: oklch(0.20838 0.01576 284.951);
   /* Secondary text. The overwhelming majority of supporting copy sits here. */
   --muted-foreground: oklch(0.71029 0.01104 81.791);
@@ -100,7 +100,7 @@
      hole in it. */
   --muted-text: oklch(0.63752 0.00951 84.583);
   --accent: oklch(0.20838 0.01576 284.951);
-  --accent-foreground: oklch(0.95877 0.01270 86.830);
+  --accent-foreground: oklch(0.95877 0.0127 86.83);
   --destructive: oklch(0.70908 0.18637 14.148);
   --border: oklch(0.29283 0.01625 285.353);
   --input: oklch(0.29283 0.01625 285.353);
@@ -138,11 +138,11 @@
   --chart-6: oklch(0.74839 0.14392 294.027);
 
   --sidebar: oklch(0.15155 0.00852 285.339);
-  --sidebar-foreground: oklch(0.95877 0.01270 86.830);
-  --sidebar-primary: oklch(0.95877 0.01270 86.830);
+  --sidebar-foreground: oklch(0.95877 0.0127 86.83);
+  --sidebar-primary: oklch(0.95877 0.0127 86.83);
   --sidebar-primary-foreground: oklch(0.15155 0.00852 285.339);
   --sidebar-accent: oklch(0.20838 0.01576 284.951);
-  --sidebar-accent-foreground: oklch(0.95877 0.01270 86.830);
+  --sidebar-accent-foreground: oklch(0.95877 0.0127 86.83);
   --sidebar-border: oklch(0.29283 0.01625 285.353);
   --sidebar-ring: oklch(0.81216 0.15398 162.669);
 
@@ -154,10 +154,10 @@
   --exec-base: oklch(0.15155 0.00852 285.339);
   --exec-panel: oklch(0.18454 0.01013 285.365);
   --exec-surface: oklch(0.20838 0.01576 284.951);
-  --exec-surface-strong: oklch(0.25591 0.01683 285.150);
+  --exec-surface-strong: oklch(0.25591 0.01683 285.15);
   --exec-hairline: oklch(0.29283 0.01625 285.353);
-  --exec-hairline-strong: oklch(0.38710 0.01851 285.503);
-  --exec-ink: oklch(0.95877 0.01270 86.830);
+  --exec-hairline-strong: oklch(0.3871 0.01851 285.503);
+  --exec-ink: oklch(0.95877 0.0127 86.83);
   --exec-ink-dim: oklch(0.71029 0.01104 81.791);
   --exec-ink-muted: oklch(0.63752 0.00951 84.583);
   --exec-cyan: oklch(0.81216 0.15398 162.669);
@@ -166,8 +166,7 @@
   --exec-crimson: oklch(0.70908 0.18637 14.148);
   --exec-emerald: oklch(0.81216 0.15398 162.669);
   --exec-info: oklch(0.74839 0.14392 294.027);
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
-    monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 /* The workstation is dark by default. These exist so a component that needs an
@@ -195,7 +194,11 @@
     overflow-x: clip;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "tnum" 0;
+    font-feature-settings:
+      "cv02",
+      "cv03",
+      "cv04",
+      "tnum" 0;
   }
   button:not([disabled]),
   [role="button"]:not([disabled]) {
@@ -223,34 +226,34 @@
      one-character-per-line column when its flex or grid parent is squeezed:
      text may wrap, but only between words, and never by breaking inside one. */
   :where(
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      p,
-      span,
-      div,
-      li,
-      ul,
-      ol,
-      dl,
-      dt,
-      dd,
-      td,
-      th,
-      a,
-      button,
-      label,
-      legend,
-      figcaption,
-      blockquote,
-      strong,
-      em,
-      small,
-      summary
-    ) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    div,
+    li,
+    ul,
+    ol,
+    dl,
+    dt,
+    dd,
+    td,
+    th,
+    a,
+    button,
+    label,
+    legend,
+    figcaption,
+    blockquote,
+    strong,
+    em,
+    small,
+    summary
+  ) {
     white-space: normal;
     overflow-wrap: break-word;
     word-break: normal;
@@ -564,11 +567,18 @@
 }
 /* Display typography — headings use Sora for an editorial, product-grade voice. */
 @layer base {
-  h1, h2, h3, .font-display {
+  h1,
+  h2,
+  h3,
+  .font-display {
     font-family: "Sora", var(--font-sans);
   }
-  h1 { letter-spacing: 0; }
-  h2 { letter-spacing: 0; }
+  h1 {
+    letter-spacing: 0;
+  }
+  h2 {
+    letter-spacing: 0;
+  }
 }
 /* Shared payment-paper tokens keep the QR readable independently of theme. */
 :root {
@@ -579,6 +589,16 @@
   --color-qr-paper: var(--qr-paper);
   --color-qr-ink: var(--qr-ink);
 }
-.gm-map-stage { height: 360px; }
-@media (min-width: 768px) { .gm-map-stage { height: 440px; } }
-.gm-editorial section.card { border: 0; border-radius: 0; background: transparent; }
+.gm-map-stage {
+  height: 360px;
+}
+@media (min-width: 768px) {
+  .gm-map-stage {
+    height: 440px;
+  }
+}
+.gm-editorial section.card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}

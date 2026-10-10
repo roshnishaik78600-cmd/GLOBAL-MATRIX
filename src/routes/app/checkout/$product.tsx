@@ -5,6 +5,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { formatINR } from "@/lib/commerce";
 import { isProduct, priceFor, PLANS, CUSTOM_REPORT, type ProductId } from "@/lib/billing/core";
 import { createOrder, cancelOrder } from "@/lib/billing/billing.functions";
+import { Button } from "@/components/ui/button";
+import { ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 import { DemoQr } from "@/components/commerce/DemoQr";
 
 export const Route = createFileRoute("/app/checkout/$product")({
@@ -54,6 +56,7 @@ function Checkout() {
   const [order, setOrder] = useState<Order | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [retryAction, setRetryAction] = useState<"place" | "cancel">("place");
 
   if (!isProduct(product)) {
     return (
@@ -70,6 +73,7 @@ function Checkout() {
   const name = p === "custom_report" ? CUSTOM_REPORT.name : PLANS[p].name;
 
   async function place() {
+    setRetryAction("place");
     setBusy(true);
     setError(null);
     try {
@@ -83,6 +87,8 @@ function Checkout() {
   }
   async function doCancel() {
     if (!order || !confirm("Cancel this order?")) return;
+    setRetryAction("cancel");
+    setError(null);
     setBusy(true);
     try {
       await cancel({ data: { id: order.id } });
@@ -95,101 +101,109 @@ function Checkout() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl p-6">
-      <Link to="/pricing" className="text-xs text-muted-foreground hover:text-foreground">
-        ← Pricing
-      </Link>
-      <h1 className="mt-3 text-2xl font-semibold text-foreground">Checkout</h1>
-
-      <div className="mt-6 rounded-xl border border-border bg-card p-6">
-        <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          Order summary
-        </p>
-        <div className="mt-3 flex items-baseline justify-between gap-4">
-          <span className="text-foreground">{name}</span>
-          <span className="text-xl font-semibold text-foreground">{formatINR(amount)}</span>
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+      <Button asChild variant="ghost" size="sm">
+        <Link to="/pricing">← Back to pricing</Link>
+      </Button>
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-medium text-primary">01 / REVIEW YOUR ORDER</p>
+          <h1 className="mt-2 text-3xl font-semibold">Checkout</h1>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {period === "month"
-            ? "Billed monthly · renewal is manual, nothing is charged automatically"
-            : "One-time payment · not a subscription"}
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <ShieldCheck className="size-4 text-primary" /> Account-linked order
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">Prices in INR. No other fees.</p>
       </div>
-
-      <div
-        role="status"
-        className="mt-4 rounded-md border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-foreground"
-      >
-        Payments are not enabled yet. No money will be collected. Orders placed now stay unpaid and
-        do not unlock anything.
-      </div>
-
-      {loading ? null : !user ? (
-        <div className="mt-6 rounded-xl border border-border bg-card p-6 text-sm">
-          <p className="text-foreground">Sign in to create an order linked to your account.</p>
-          <Link
-            to="/login"
-            className="mt-3 inline-flex rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground"
-          >
-            Sign in
-          </Link>
-        </div>
-      ) : !order ? (
-        <button
-          onClick={place}
-          disabled={busy}
-          className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-60"
-        >
-          {busy ? "Creating order…" : "Create order"}
-        </button>
-      ) : (
-        <div className="mt-6 grid gap-6 rounded-xl border border-border bg-card p-6 sm:grid-cols-[auto_1fr]">
-          <div className="relative w-fit rounded-lg border border-border bg-white p-3">
-            <DemoQr className="block size-40 text-neutral-900" />
-            <span className="absolute inset-x-3 top-3 rounded bg-warning px-2 py-0.5 text-center font-mono text-[10px] font-semibold uppercase tracking-wider text-warning-foreground">
-              Demo QR — not for payment
+      <div className="mt-7 grid gap-8 border-t border-border pt-7 md:grid-cols-[1fr_1fr]">
+        <section>
+          <h2 className="text-xl font-semibold">{name}</h2>
+          <p className="mt-5 text-4xl font-semibold text-foreground">
+            {formatINR(amount)}
+            <span className="ml-2 text-sm font-normal text-muted-foreground">
+              {period === "month" ? "/ month" : "one-time"}
             </span>
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            {period === "month"
+              ? "Manual renewal. No automatic charges."
+              : "One risk brief. Not a subscription."}
+          </p>
+          <p className="mt-2 text-xs text-muted-foreground">Prices in INR. No other fees.</p>
+          <ul className="mt-6 space-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
+            <li>01 · Review the plan and amount</li>
+            <li>02 · Save an order to your account</li>
+            <li>03 · Payment verification before paid access</li>
+          </ul>
+          <div
+            role="status"
+            className="mt-6 border-l-2 border-warning bg-warning/10 p-4 text-sm leading-relaxed"
+          >
+            Demo only. No money is collected and paid access stays locked.
           </div>
-          <div className="space-y-2 text-sm">
-            <p className="text-muted-foreground">Order reference</p>
-            <p className="font-mono text-lg text-foreground">{order.reference}</p>
-            <p>
-              <span className="text-muted-foreground">Status: </span>
-              <span className="font-medium text-foreground">
-                {STATUS_LABEL[order.status] ?? order.status}
-              </span>
-            </p>
-            <p className="text-muted-foreground">
-              This demo QR cannot accept payments. Your order is saved and will stay unpaid until
-              real payment verification is enabled.
-            </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link
-                to="/app/billing"
-                className="rounded-md border border-border px-3 py-1.5 text-foreground hover:bg-accent"
-              >
-                View billing
-              </Link>
-              {order.status === "pending_payment" && (
-                <button
-                  onClick={doCancel}
-                  disabled={busy}
-                  className="rounded-md border border-border px-3 py-1.5 text-muted-foreground hover:text-foreground"
-                >
-                  Cancel order
-                </button>
-              )}
+        </section>
+        <section className="min-w-0">
+          <div className="flex flex-col items-center gap-3 border-b border-border pb-5">
+            <div className="rounded-md bg-qr-paper p-4">
+              <DemoQr className="block size-44 text-qr-ink" />
             </div>
+            <p className="text-xs font-semibold text-warning">DEMO QR — NOT FOR PAYMENT</p>
           </div>
-        </div>
-      )}
+          {loading ? (
+            <p role="status" className="mt-5 flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="size-4 animate-spin" /> Checking your account…
+            </p>
+          ) : !user ? (
+            <div className="mt-5">
+              <p className="text-sm text-muted-foreground">Sign in to save an order.</p>
+              <Button asChild className="mt-4">
+                <Link to="/login">
+                  Sign in <ArrowRight />
+                </Link>
+              </Button>
+            </div>
+          ) : !order ? (
+            <Button onClick={place} disabled={busy} className="mt-5 w-full">
+              {busy ? <Loader2 className="animate-spin" /> : <ArrowRight />}
+              {busy ? "Creating order…" : "Create demo order"}
+            </Button>
+          ) : (
+            <div className="mt-5 space-y-3 text-sm">
+              <p className="text-muted-foreground">Order reference</p>
+              <p className="font-mono text-lg">{order.reference}</p>
+              <p className="flex justify-between gap-3">
+                <span className="text-muted-foreground">Status</span>
+                <span>{STATUS_LABEL[order.status] ?? order.status}</span>
+              </p>
+              <p className="text-muted-foreground">
+                This dummy QR has no payment destination. Your saved order does not activate a paid
+                plan.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <Button asChild variant="outline">
+                  <Link to="/app/billing">
+                    View billing <ArrowRight />
+                  </Link>
+                </Button>
+                {order.status === "pending_payment" && (
+                  <Button variant="ghost" onClick={doCancel} disabled={busy}>
+                    Cancel order
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
       {error && (
         <p role="alert" className="mt-3 text-sm text-destructive">
           {error}{" "}
-          <button onClick={place} className="underline">
+          <Button
+            variant="link"
+            onClick={retryAction === "cancel" ? doCancel : place}
+            disabled={busy}
+          >
             Retry
-          </button>
+          </Button>
         </p>
       )}
     </div>

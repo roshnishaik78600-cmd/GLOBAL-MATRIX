@@ -33,7 +33,7 @@ const NODES = [
 export function PropagationExample() {
   const reduce = useReducedMotion();
   return (
-    <div className="mt-8 rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/40 p-4 sm:p-6">
+    <div className="mt-7 border-t border-border pt-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h3 className="text-[15px] font-semibold text-[var(--exec-ink)]">
           How one event can travel
