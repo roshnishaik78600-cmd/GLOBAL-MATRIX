@@ -3,7 +3,7 @@ import { Link } from "@/lib/router-shim";
 import { useMutation, useQuery } from "@/lib/backend/shim";
 import { ArrowUpRight, LogIn, Plus, Trash2 } from "lucide-react";
 import { api } from "@/lib/backend/api";
-import type { Id } from "@/convex/_generated/dataModel";
+type Id<T extends string = string> = string;
 import { useAuthAction } from "@/hooks/use-auth-action";
 import { ExecCard, SectionTitle } from "@/components/viz/exec/system";
 import { Bar } from "@/components/viz/core";
