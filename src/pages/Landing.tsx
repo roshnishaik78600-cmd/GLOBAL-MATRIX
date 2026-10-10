@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
@@ -214,98 +215,38 @@ export default function Landing() {
     <ExecPage className="min-h-full">
       <LandingNav />
 
-      {/* Hero. Compact on purpose: the map is the headline, and a wall of type
-          above it would push the one thing worth seeing below the fold. The
-          world sits behind the type at low opacity on wide screens and below it
-          on narrow ones, rather than beside it — beside it would halve the width
-          of both. */}
-      <header className="relative overflow-hidden border-b border-[var(--exec-hairline)]">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-30 lg:h-full"
-        >
-          {data ? (
-            <WorldMap
-              nodes={data.mapNodes}
-              flows={data.flows.slice(0, 40)}
-              events={mapEvents}
-              className="h-[300px] sm:h-[380px] lg:h-full"
-              layers={false}
-            />
-          ) : null}
-          {/* Fade the map into the page rather than ending it at a hard edge. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--exec-base)]/40 via-[var(--exec-base)]/80 to-[var(--exec-base)]" />
-        </div>
-
-        <div aria-hidden className="gm-hero-glow pointer-events-none absolute inset-0" />
-        <div className="gm-width relative px-4 pt-16 pb-14 lg:px-8 lg:pt-28 lg:pb-20">
-          <motion.p
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/70 px-3 py-1 text-[12px] font-medium text-[var(--exec-ink-dim)] backdrop-blur"
-          >
-            <span className="size-1.5 rounded-full bg-[var(--exec-cyan)]" aria-hidden />
-            Geopolitical & supply-chain intelligence
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.05 }}
-            className="mt-5 max-w-4xl text-[2.4rem] leading-[1.02] font-semibold text-[var(--exec-ink)] sm:text-[3.5rem] lg:text-[4.25rem]"
-          >
-            See the connections{" "}
-            <span className="bg-gradient-to-r from-[var(--exec-cyan)] to-[var(--exec-violet)] bg-clip-text text-transparent">
-              behind global risk.
-            </span>
+      <header className="relative border-b border-border">
+        <div className="gm-width px-4 pt-9 lg:px-8 lg:pt-12">
+          <p className="mb-4 flex items-center gap-3 text-sm font-medium text-primary">
+            <Globe2 className="size-4" /> GlobalMatrix <span className="text-muted-foreground">/ Connected intelligence</span>
+          </p>
+          <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+            className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]">
+            Global risk. <span className="text-primary">Connected.</span><br className="hidden sm:block" /> Understood.
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.12 }}
-            className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[var(--exec-ink-dim)] sm:text-[18px]"
-          >
-            Discover geopolitical events, trace potential supply-chain impacts, and investigate
-            risks through connected global intelligence.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
-            <Link
-              to="/app"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--exec-cyan)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-base)] shadow-[0_8px_30px_-8px_var(--exec-cyan)] transition-opacity hover:opacity-90"
-            >
-              Explore Global Risks
-              <ArrowRight className="size-4" />
-            </Link>
-            <a
-              href="#how-it-works"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
-            >
-              See How It Works
-            </a>
-            <Link
-              to="/pricing"
-              hash="compare"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
-            >
-              View Pricing
-            </Link>
-          </motion.div>
-
-          {/* The four numbers, and the freshness of the layer behind them.
-              Kept flat and compact: this is a status readout, not a card
-              grid, so it sits under the call to action rather than competing
-              with the map for the first viewport. */}
-          <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            See how global events could affect trade and supply chains.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <Button asChild size="lg"><Link to="/app">Explore Global Risks <ArrowRight /></Link></Button>
+            <Button asChild size="lg" variant="outline"><a href="#how-it-works">See How It Works</a></Button>
+            <Button asChild size="lg" variant="ghost"><Link to="/pricing">View Pricing <ArrowRight /></Link></Button>
+          </div>
+          <div className="mt-7 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 text-xs text-muted-foreground">
+            <span className="flex items-center gap-2"><Network className="size-4 text-primary" /> Global exposure network</span>
+            <span>Demonstration events · modelled connections, not shipping routes</span>
+          </div>
         </div>
+        <div className="gm-width relative" id="world-map">
+          {data ? <WorldMap nodes={data.mapNodes} flows={data.flows} events={mapEvents}
+            className="gm-map-stage" selected={sharedNodeId} onSelect={selectNode}
+            onInspect={(id) => navigate(`/app/country/${id}`)} /> : <Skeleton className="gm-map-stage w-full" />}
+        </div>
+        <div className="gm-width px-4 pb-5 lg:px-8"><HeroStats regions={mappable.length} links={data?.flows.length ?? 0} /></div>
       </header>
 
       <main className="min-w-0">
-        <div className="gm-width flex flex-col gap-6 px-4 py-10 lg:gap-8 lg:px-8 lg:py-12">
+        <div className="gm-width gm-editorial flex flex-col gap-8 px-4 py-8 lg:gap-10 lg:px-8">
           <HowItWorks />
 
           {/* GLOBAL PULSE — the six numbers that summarise the world. */}
@@ -314,44 +255,12 @@ export default function Landing() {
           {/* HAPPENING NOW — the events behind those numbers. */}
           {feed ? <WhatsChanging events={timeline} /> : <PulseSkeleton />}
 
-          {/* THE MAP. A major visual section, not a supporting one: it is the
-              largest single object on the page and everything else is sized
-              around it. */}
-          <section id="world-map" className="card scroll-mt-24 overflow-hidden">
-            <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
-              <h2 className="t-card text-[var(--exec-ink)]">World map</h2>
-              <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
-                {data
-                  ? `${mappable.length} places · ${mapEvents.length} events · ${data.flows.length} couplings`
-                  : "resolving"}
-                {" · "}
-                <FreshnessTag freshness="historical" />
-              </span>
-            </div>
-
-            {data ? (
-              <>
-                <WorldMap
-                  nodes={data.mapNodes}
-                  flows={data.flows}
-                  events={mapEvents}
-                  className="map-frame"
-                  selected={sharedNodeId}
-                  onSelect={selectNode}
-                  onInspect={(id) => {
-                    navigate(`/app/country/${id}`);
-                  }}
-                />
-                <MapLegend />
-              </>
-            ) : (
-              <Skeleton className="map-frame w-full" />
-            )}
-          </section>
-
           {/* FOLLOW THE SHOCK — the mechanism, drawn rather than asserted. */}
           <FollowTheShock events={feed?.rows ?? []} />
 
+          <details className="border-t border-border pt-5">
+            <summary className="cursor-pointer text-lg font-semibold text-foreground">Explore exposure, sources &amp; methodology</summary>
+            <div className="mt-6 flex flex-col gap-8">
           {/* TRENDING COUNTRIES — pick one and go deep. */}
           <TrendingCountries
             rows={(data?.hottestCountries ?? []).map((r) => ({
@@ -397,6 +306,9 @@ export default function Landing() {
             </div>
             <ExploreGrid panels={panels} />
           </section>
+
+            </div>
+          </details>
 
           <PricingTeaser />
 
@@ -536,12 +448,12 @@ function HeroStats({ regions, links }: { regions: number; links: number }) {
   ];
 
   return (
-    <dl className="mt-9 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-hairline)] sm:grid-cols-4">
+    <dl className="grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4">
       {cells.map((cell) => (
-        <div key={cell.label} className="flex min-w-0 flex-col gap-1 bg-[var(--card)] px-4 py-3">
+        <div key={cell.label} className="flex min-w-0 flex-col gap-2 px-1 py-1">
           <dt className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">{cell.label}</dt>
           <dd
-            className="exec-num truncate text-[1.35rem] leading-none font-semibold tracking-[-0.02em] text-[var(--exec-ink)]"
+            className="exec-num truncate text-[1.35rem] leading-none font-semibold text-[var(--exec-ink)]"
             title={cell.note}
           >
             {cell.value}
@@ -681,37 +593,6 @@ function DataAndEvidence() {
   );
 }
 
-/** The map's encoding, stated once, under the map that uses it. */
-function MapLegend() {
-  return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[var(--exec-hairline)] px-4 py-3">
-      {[
-        { label: "Economy / corridor", shape: "circle" },
-        { label: "Chokepoint", shape: "diamond" },
-      ].map((g) => (
-        <span key={g.label} className="flex items-center gap-2">
-          <span
-            className="inline-block size-3 border border-current"
-            style={{
-              borderRadius: g.shape === "circle" ? "9999px" : 0,
-              transform: g.shape === "diamond" ? "rotate(45deg) scale(0.8)" : undefined,
-            }}
-            aria-hidden
-          />
-          <span className="exec-label">{g.label}</span>
-        </span>
-      ))}
-      <span className="flex items-center gap-2">
-        <span className="inline-block size-2 rounded-full bg-[var(--exec-crimson)]" aria-hidden />
-        <span className="exec-label">Event</span>
-      </span>
-      <span className="exec-label ml-auto text-[var(--exec-ink-dim)]">
-        Hover for a place · click for its intelligence · {CORPUS_LABEL}
-      </span>
-    </div>
-  );
-}
-
 /** Skeleton for the discovery rail while the feed resolves. */
 function PulseSkeleton() {
   return (
@@ -729,12 +610,10 @@ function PulseSkeleton() {
 /** The access band. What is public, and what an account is actually for. */
 function AccessBand() {
   return (
-    <section className="card p-6 lg:p-8">
+    <section className="border-t border-border py-6">
       <h2 className="t-section text-[var(--exec-ink)]">Explore GlobalMatrix freely.</h2>
       <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
-        The map, events, countries, trade, markets and all public intelligence are open to anyone.
-        No account, no email verification, no card. An account is only for the things you want to
-        keep.
+        Explore without signing in. Create an account to save your research.
       </p>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {[
