@@ -1,6 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "@/lib/router-shim";
-import { useMutation } from "@/lib/backend/shim";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
@@ -8,21 +7,17 @@ import {
   CircleAlert,
   Loader2,
   Mail,
-  UserX,
+  MailCheck,
 } from "lucide-react";
-import { api } from "@/lib/backend/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 
 interface AuthProps {
   redirectAfterAuth?: string;
-  /** Which face of the same flow to show. The backend is one email-code flow. */
+  /** Which face of the same flow to show. The backend is one email/password flow. */
   mode?: "login" | "signup";
 }
 
@@ -46,17 +41,10 @@ function resolveRedirectAfterAuth(
   return fallback;
 }
 
-/**
- * Auth failures are reported in plain language.
- *
- * The underlying error from the identity provider can carry provider names,
- * internal codes and request ids, none of which tell a reader what to do next.
- * It is logged to the console for diagnosis and never rendered.
- */
-const SEND_FAILURE =
-  "We couldn't send the code. Check the email address and try again.";
-const VERIFY_FAILURE =
-  "That code is not correct, or it has expired. Request a new one.";
+const SIGNIN_FAILURE =
+  "We couldn't sign you in. Check your email and password and try again.";
+const SIGNUP_FAILURE =
+  "We couldn't create your account. Check the details and try again.";
 const NETWORK_FAILURE =
   "We couldn't complete that request. Please try again.";
 
@@ -73,19 +61,13 @@ const CHAIN: { label: string; note: string }[] = [
 /**
  * The authentication surface.
  *
- * One backend flow — Convex Auth's email one-time code — presented as two
- * doors: sign in and create account. There is no password provider in this
- * deployment, so no password fields are drawn and no password recovery page
- * exists; inventing either would collect credentials the backend never uses.
- *
- * Signup additionally captures a display name, saved through
- * `account:setDisplayName` after the code verifies, which is the first piece of
- * the per-user architecture (watchlists, exposure profiles) later steps build
- * on.
+ * Supabase email/password auth, presented as two doors: sign in and create
+ * account. Google sign-in is offered as a shortcut on the sign-in door.
+ * Email confirmation is on, so a fresh signup without an immediate session
+ * lands on a "check your email" state instead of being redirected in.
  */
 function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
-  const { isLoading: authLoading, isAuthenticated, signIn } = useAuth();
-  const setDisplayName = useMutation(api.account.setDisplayName);
+  const { isLoading: authLoading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const reduceMotion = useReducedMotion();
@@ -105,16 +87,18 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
     return isSignup ? `/login${suffix}` : `/signup${suffix}`;
   })();
 
-  const [step, setStep] = useState<"form" | { email: string }>("form");
+  const [step, setStep] = useState<"form" | "check-email">("form");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
     email?: string;
+    password?: string;
   }>({});
 
   // A signed-in visitor never sees the form: straight to their destination.
@@ -125,7 +109,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
   }, [authLoading, isAuthenticated, navigate, redirect]);
 
   const validate = () => {
-    const next: { name?: string; email?: string } = {};
+    const next: { name?: string; email?: string; password?: string } = {};
     if (isSignup) {
       const trimmed = name.trim();
       if (trimmed.length < 2 || trimmed.length > 80) {
@@ -135,11 +119,13 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
     if (!EMAIL_RE.test(email.trim())) {
       next.email = "Enter a valid email address.";
     }
+    if (password.length < 6) {
+      next.password = "Password must be at least 6 characters.";
+    }
     setFieldErrors(next);
     return Object.keys(next).length === 0;
   };
 
-  /** Step 1 — send the code. */
   const handleFormSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
@@ -150,89 +136,49 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
     setError(null);
     setNotice(null);
     try {
-      const params = new FormData();
-      params.set("email", email.trim());
-      await signIn("email-otp", params);
-      setStep({ email: email.trim() });
-      setOtp("");
-      setNotice("A 6-digit code is on its way. It expires in 15 minutes.");
-    } catch (err) {
-      console.error("[auth] send code failed:", err);
-      setError(SEND_FAILURE);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  /** Step 2 — verify the code, then (on signup) save the display name. */
-  const handleOtpSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
-    event.preventDefault();
-    if (isLoading || otp.length !== 6) return;
-    // The OTP step is only reachable with an email in hand; this keeps the
-    // union narrow for TypeScript without asserting.
-    if (step === "form") return;
-    setIsLoading(true);
-    setError(null);
-    setNotice(null);
-    try {
-      const params = new FormData();
-      params.set("email", step.email);
-      params.set("code", otp);
-      await signIn("email-otp", params);
-    } catch (err) {
-      console.error("[auth] verify code failed:", err);
-      setError(VERIFY_FAILURE);
-      setIsLoading(false);
-      setOtp("");
-      return;
-    }
-
-    // The account exists now; the name is best-effort and must not block
-    // a successful sign-in if it fails.
-    if (isSignup && name.trim()) {
-      try {
-        await setDisplayName({ name: name.trim() });
-      } catch (err) {
-        console.error("[auth] display name not saved:", err);
+      if (isSignup) {
+        const { data, error: signUpError } = await supabase.auth.signUp({
+          email: email.trim(),
+          password,
+          options: {
+            data: { full_name: name.trim() },
+            emailRedirectTo: `${window.location.origin}${redirect}`,
+          },
+        });
+        if (signUpError) throw signUpError;
+        if (!data.session) {
+          setStep("check-email");
+          setNotice(null);
+        } else {
+          navigate(redirect);
+        }
+      } else {
+        const { error: signInError } = await supabase.auth.signInWithPassword(
+          { email: email.trim(), password },
+        );
+        if (signInError) throw signInError;
+        navigate(redirect);
       }
-    }
-    navigate(redirect);
-  };
-
-  /** Resend without leaving the code step. */
-  const handleResend = async () => {
-    if (isLoading) return;
-    if (step === "form") return;
-    setIsLoading(true);
-    setError(null);
-    setNotice(null);
-    try {
-      const params = new FormData();
-      params.set("email", step.email);
-      await signIn("email-otp", params);
-      setOtp("");
-      setNotice("A new code is on its way. It expires in 15 minutes.");
     } catch (err) {
-      console.error("[auth] resend failed:", err);
-      setError(SEND_FAILURE);
+      console.error("[auth] sign-in/sign-up failed:", err);
+      setError(isSignup ? SIGNUP_FAILURE : SIGNIN_FAILURE);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGuestLogin = async () => {
-    if (isLoading) return;
-    setIsLoading(true);
+  const handleGoogleLogin = async () => {
+    if (isGoogleLoading || isLoading) return;
+    setIsGoogleLoading(true);
     setError(null);
     try {
-      await signIn("anonymous");
-      navigate(redirect);
+      await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
     } catch (err) {
-      console.error("[auth] guest sign-in failed:", err);
+      console.error("[auth] google sign-in failed:", err);
       setError(NETWORK_FAILURE);
-      setIsLoading(false);
+      setIsGoogleLoading(false);
     }
   };
 
@@ -248,7 +194,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
     <div className="flex min-h-dvh flex-col bg-[var(--exec-base)] text-[var(--exec-ink)] lg:flex-row">
       {/* ------------------------------------------------ Left: identity panel.
           Hidden below lg so the form owns small screens; nothing decorative
-          stands between a phone and the code input. */}
+          stands between a phone and the form. */}
       <aside className="relative hidden overflow-hidden border-r border-[var(--exec-hairline)] bg-[var(--exec-panel)] lg:flex lg:w-[46%] lg:flex-col lg:justify-between xl:w-1/2">
         <div className="p-10 xl:p-14">
           <Link
@@ -306,8 +252,6 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                     className="relative ml-[3.5px] block h-5 w-px overflow-hidden bg-[var(--exec-hairline)]"
                     aria-hidden
                   >
-                    {/* One slow pulse travelling the path — the only ambient
-                        motion on the page, and it stops for reduced motion. */}
                     {!reduceMotion ? (
                       <motion.span
                         className="absolute inset-x-0 top-0 h-2 bg-[var(--exec-cyan)]"
@@ -349,7 +293,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                 ? isSignup
                   ? "Create account"
                   : "Sign in"
-                : "Verify code"}
+                : "Check your email"}
             </span>
           </div>
 
@@ -465,6 +409,40 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                     ) : null}
                   </div>
 
+                  <div className="flex flex-col gap-1.5">
+                    <label
+                      htmlFor="auth-password"
+                      className="text-[13px] font-medium text-[var(--exec-ink)]"
+                    >
+                      Password
+                    </label>
+                    <Input
+                      id="auth-password"
+                      name="password"
+                      type="password"
+                      autoComplete={isSignup ? "new-password" : "current-password"}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      disabled={isLoading}
+                      aria-invalid={fieldErrors.password ? true : undefined}
+                      aria-describedby={
+                        fieldErrors.password ? "auth-password-error" : undefined
+                      }
+                      className="h-11"
+                    />
+                    {fieldErrors.password ? (
+                      <p
+                        id="auth-password-error"
+                        role="alert"
+                        className="flex items-center gap-1.5 text-[13px] text-[var(--exec-crimson)]"
+                      >
+                        <CircleAlert className="size-3.5 shrink-0" />
+                        {fieldErrors.password}
+                      </p>
+                    ) : null}
+                  </div>
+
                   {error ? (
                     <p
                       role="alert"
@@ -490,34 +468,34 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                       "Create account"
                     ) : (
                       <>
-                        Send sign-in code
+                        Sign in
                         <ArrowRight className="size-4" aria-hidden />
                       </>
                     )}
                   </Button>
                 </form>
 
-                {!isSignup ? (
-                  <>
-                    <div className="my-5 flex items-center gap-3">
-                      <span className="h-px flex-1 bg-[var(--exec-hairline)]" />
-                      <span className="exec-label text-[var(--exec-ink-muted)]">
-                        or
-                      </span>
-                      <span className="h-px flex-1 bg-[var(--exec-hairline)]" />
-                    </div>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleGuestLogin}
-                      disabled={isLoading}
-                      className="h-11 w-full border-[var(--exec-hairline-strong)] text-[14px] text-[var(--exec-ink)] hover:border-[var(--exec-cyan)] hover:text-[var(--exec-ink)]"
-                    >
-                      <UserX className="size-4 mr-2" aria-hidden />
-                      Continue as guest — no email needed
-                    </Button>
-                  </>
-                ) : null}
+                <div className="my-5 flex items-center gap-3">
+                  <span className="h-px flex-1 bg-[var(--exec-hairline)]" />
+                  <span className="exec-label text-[var(--exec-ink-muted)]">
+                    or
+                  </span>
+                  <span className="h-px flex-1 bg-[var(--exec-hairline)]" />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleGoogleLogin}
+                  disabled={isLoading || isGoogleLoading}
+                  aria-busy={isGoogleLoading || undefined}
+                  className="h-11 w-full border-[var(--exec-hairline-strong)] text-[14px] text-[var(--exec-ink)] hover:border-[var(--exec-cyan)] hover:text-[var(--exec-ink)]"
+                >
+                  {isGoogleLoading ? (
+                    <Loader2 className="size-4 animate-spin" aria-hidden />
+                  ) : (
+                    "Continue with Google"
+                  )}
+                </Button>
 
                 <p className="mt-6 text-[13px] text-[var(--exec-ink-dim)]">
                   {isSignup ? (
@@ -550,118 +528,30 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                 </p>
                 <h1
                   id="auth-title"
-                  className="t-section mt-2 text-[var(--exec-ink)]"
+                  className="t-section mt-2 flex items-center gap-2 text-[var(--exec-ink)]"
                 >
+                  <MailCheck className="size-5 text-[var(--exec-cyan)]" aria-hidden />
                   Check your email
                 </h1>
                 <p className="mt-2 text-[14px] leading-relaxed text-[var(--exec-ink-dim)]">
-                  We sent a 6-digit code to{" "}
+                  We sent a confirmation link to{" "}
                   <span className="font-medium text-[var(--exec-ink)]">
-                    {step.email}
+                    {email.trim()}
                   </span>
-                  . It expires in 15 minutes.
+                  . Open it to confirm your account, then come back and sign in.
                 </p>
 
-                <form
-                  onSubmit={handleOtpSubmit}
-                  className="mt-6 flex flex-col gap-4"
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setStep("form");
+                    setError(null);
+                    setNotice(null);
+                  }}
+                  className="mt-6 h-11 w-full rounded-full bg-[var(--exec-cyan)] text-[14px] font-semibold text-[var(--exec-base)] hover:opacity-90"
                 >
-                  <input type="hidden" name="email" value={step.email} />
-                  <input type="hidden" name="code" value={otp} />
-
-                  <div className="flex justify-center">
-                    <InputOTP
-                      value={otp}
-                      onChange={setOtp}
-                      maxLength={6}
-                      disabled={isLoading}
-                      aria-label="6-digit verification code"
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          otp.length === 6 &&
-                          !isLoading
-                        ) {
-                          const form = (e.target as HTMLElement).closest(
-                            "form",
-                          );
-                          form?.requestSubmit();
-                        }
-                      }}
-                    >
-                      <InputOTPGroup>
-                        {Array.from({ length: 6 }).map((_, index) => (
-                          <InputOTPSlot key={index} index={index} />
-                        ))}
-                      </InputOTPGroup>
-                    </InputOTP>
-                  </div>
-
-                  {error ? (
-                    <p
-                      role="alert"
-                      className="flex items-start gap-2 rounded-lg border border-[var(--exec-crimson)]/40 bg-[var(--exec-crimson)]/10 px-3 py-2.5 text-[13px] leading-snug text-[var(--exec-ink)]"
-                    >
-                      <CircleAlert
-                        className="mt-0.5 size-4 shrink-0 text-[var(--exec-crimson)]"
-                        aria-hidden
-                      />
-                      {error}
-                    </p>
-                  ) : null}
-                  {notice ? (
-                    <p
-                      role="status"
-                      className="flex items-start gap-2 rounded-lg border border-[var(--exec-emerald)]/40 bg-[var(--exec-emerald)]/10 px-3 py-2.5 text-[13px] leading-snug text-[var(--exec-ink)]"
-                    >
-                      <span
-                        className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[var(--exec-emerald)]"
-                        aria-hidden
-                      />
-                      {notice}
-                    </p>
-                  ) : null}
-
-                  <Button
-                    type="submit"
-                    disabled={isLoading || otp.length !== 6}
-                    aria-busy={isLoading || undefined}
-                    className="h-11 w-full rounded-full bg-[var(--exec-cyan)] text-[14px] font-semibold text-[var(--exec-base)] hover:opacity-90"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="size-4 animate-spin" aria-hidden />
-                    ) : (
-                      <>
-                        Verify and continue
-                        <ArrowRight className="size-4" aria-hidden />
-                      </>
-                    )}
-                  </Button>
-
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <button
-                      type="button"
-                      onClick={handleResend}
-                      disabled={isLoading}
-                      className="text-[13px] text-[var(--exec-ink-dim)] underline-offset-4 transition-colors hover:text-[var(--exec-ink)] hover:underline disabled:opacity-50"
-                    >
-                      Resend code
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setStep("form");
-                        setOtp("");
-                        setError(null);
-                        setNotice(null);
-                      }}
-                      disabled={isLoading}
-                      className="text-[13px] text-[var(--exec-ink-dim)] underline-offset-4 transition-colors hover:text-[var(--exec-ink)] hover:underline disabled:opacity-50"
-                    >
-                      Use a different email
-                    </button>
-                  </div>
-                </form>
+                  Back to sign in
+                </Button>
               </>
             )}
           </motion.section>
@@ -677,9 +567,5 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
 }
 
 export default function AuthPage(props: AuthProps) {
-  return (
-    <Suspense fallback={null}>
-      <Auth {...props} />
-    </Suspense>
-  );
+  return <Auth {...props} />;
 }
