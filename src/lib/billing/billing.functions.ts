@@ -145,7 +145,7 @@ export const adminDecideOrder = createServerFn({ method: "POST" })
     if (data.decision === "verified" && !canVerify({ status, payment_mode: order.payment_mode as PaymentMode })) {
       throw new Error(order.payment_mode === "demo" ? "Demo orders can never be verified." : "Order is not awaiting verification.");
     }
-    if (!canTransition(status, data.decision)) throw new Error(`Cannot move from ${status} to ${data.decision}.`);
+    if (!canTransition(status, data.decision as OrderStatus)) throw new Error(`Cannot move from ${status} to ${data.decision}.`);
 
     const now = new Date();
     const { error } = await supabaseAdmin.from("orders")

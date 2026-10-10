@@ -25,7 +25,7 @@ type Data = Awaited<ReturnType<typeof adminOverview>>;
 const TABS = ["Overview", "Verification queue", "Orders", "Subscriptions", "Audit history", "Settings"] as const;
 
 function Admin() {
-  const { user, loading } = useAuth() as { user: unknown; loading: boolean };
+  const { user, isLoading: loading } = useAuth();
   const load = useServerFn(adminOverview);
   const decide = useServerFn(adminDecideOrder);
   const [data, setData] = useState<Data | null>(null);

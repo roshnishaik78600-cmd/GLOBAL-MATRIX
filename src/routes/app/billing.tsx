@@ -26,7 +26,7 @@ const fmt = (s: string | null | undefined) => (s ? new Date(s).toLocaleDateStrin
 const productName = (p: string) => (p === "custom_report" ? CUSTOM_REPORT.name : PLANS[p as PlanId]?.name ?? p);
 
 function Billing() {
-  const { user, loading } = useAuth() as { user: unknown; loading: boolean };
+  const { user, isLoading: loading } = useAuth();
   const load = useServerFn(getMyBilling);
   const free = useServerFn(activateFree);
   const cancel = useServerFn(cancelOrder);

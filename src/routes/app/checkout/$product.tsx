@@ -38,7 +38,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 function Checkout() {
   const { product } = Route.useParams();
-  const { user, loading } = useAuth() as { user: unknown; loading: boolean };
+  const { user, isLoading: loading } = useAuth();
   const create = useServerFn(createOrder);
   const cancel = useServerFn(cancelOrder);
   const [order, setOrder] = useState<Order | null>(null);
