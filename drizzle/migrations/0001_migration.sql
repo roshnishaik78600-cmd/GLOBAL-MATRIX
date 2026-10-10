@@ -1,0 +1,1 @@
+ALTER PUBLICATION supabase_realtime ADD TABLE public.observations, public.source_runs, public.watchlist, public.annotations, public.briefs, public.exposure_deps;
