@@ -2,7 +2,8 @@ import { useState } from "react";
 import { PRICING, formatINR, DEMO_PAYMENT_MODE } from "@/lib/commerce";
 import { DemoQr } from "@/components/commerce/DemoQr";
 
-type PlanId = keyof typeof PRICING;
+const PLANS = ["report", "monitoring"] as const;
+type PlanId = (typeof PLANS)[number];
 
 const PLAN_LABEL: Record<PlanId, string> = {
   report: "One-time report",
@@ -23,7 +24,7 @@ export function PaymentSection() {
   return (
     <div className="rounded-lg border border-border bg-card p-6">
       <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Plan to pay for">
-        {(Object.keys(PRICING) as PlanId[]).map((id) => (
+        {PLANS.map((id) => (
           <button
             key={id}
             type="button"
