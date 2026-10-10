@@ -7,6 +7,7 @@ import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import { PricingTeaser } from "@/components/landing/PricingTeaser";
 import {
   BAND_LABEL,
   CHANNEL_LABEL,
@@ -405,6 +406,8 @@ export default function Landing() {
             <ExploreGrid panels={panels} />
           </section>
 
+          <PricingTeaser />
+
           <AccessBand />
         </div>
       </main>
@@ -476,6 +479,7 @@ function LandingNav() {
             { to: "/app/world", label: "World" },
             { to: "/app/events", label: "Events" },
             { to: "/app/markets", label: "Markets" },
+            { to: "/pricing", label: "Pricing" },
           ].map((item) => (
             <Link
               key={item.to}
