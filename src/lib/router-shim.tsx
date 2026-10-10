@@ -66,7 +66,7 @@ export function useNavigate() {
 }
 
 export function useParams<T extends Record<string, string> = Record<string, string>>(): T {
-  return useTsParams({ strict: false }) as T;
+  return useTsParams({ strict: false } as never) as T;
 }
 
 export function useLocation() {
