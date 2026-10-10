@@ -16,7 +16,7 @@ import { api } from "@/lib/backend/api";
 import type {
   TopologyCategory,
   TopologyResult,
-} from "@/convex/macroTopology";
+} from "@/lib/backend/api";
 import {
   buildStages,
   CHAIN_SUMMARY,
