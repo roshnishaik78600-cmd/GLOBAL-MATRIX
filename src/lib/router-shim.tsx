@@ -38,8 +38,7 @@ export function NavLink({
 }) {
   const location = useTsLocation();
   const isActive =
-    location.pathname === to ||
-    (!end && to !== "/" && location.pathname.startsWith(`${to}/`));
+    location.pathname === to || (!end && to !== "/" && location.pathname.startsWith(`${to}/`));
   const resolved = typeof className === "function" ? className({ isActive }) : className;
   const resolvedChildren = typeof children === "function" ? children({ isActive }) : children;
   return (
