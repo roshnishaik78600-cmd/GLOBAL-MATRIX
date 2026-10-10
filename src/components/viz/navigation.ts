@@ -92,6 +92,8 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "exposure",
     label: "Exposure",
     items: [
+      { to: "/app/assess", label: "My exposure", icon: User },
+      { to: "/app/report/sample", label: "Sample report", icon: ScrollText },
       { to: "/app/countries", label: "Countries", icon: Globe2 },
       { to: "/app/industries", label: "Industries", icon: Boxes },
       { to: "/app/supply", label: "Supply chains", icon: Network },

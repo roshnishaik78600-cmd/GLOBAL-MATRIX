@@ -412,6 +412,12 @@ export default function Landing() {
           </span>
           <div className="flex flex-wrap items-center gap-4">
             <Link
+              to="/pricing"
+              className="exec-label text-[var(--exec-ink)] transition-colors hover:text-[var(--exec-ink)]"
+            >
+              Pricing &amp; pilots
+            </Link>
+            <Link
               to="/methodology"
               className="exec-label text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
             >
