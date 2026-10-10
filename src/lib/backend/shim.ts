@@ -5,6 +5,7 @@
  * run against plain async functions (see ./api.ts) backed by React Query.
  * Convex semantics preserved:
  *  - useQuery returns `undefined` while loading.
+ *  - Passing "skip" as the args, Convex-style, disables the query.
  *  - useMutation/useAction return an async callable.
  *  - useConvex returns an imperative { query, mutation, action } caller.
  */
@@ -26,14 +27,18 @@ export function defineFn<Args, Result>(
   return { _path: path, _run: run };
 }
 
+export type Skippable<Args> = Args | "skip";
+
 export function useQuery<Args, Result>(
   fn: FnRef<Args, Result> | undefined,
-  args: Args,
+  args?: Skippable<Args>,
 ): Result | undefined {
+  const skipped = args === "skip";
+  const resolvedArgs = (skipped ? undefined : (args ?? ({} as Args))) as Args;
   const query = useRqQuery({
-    queryKey: [fn?._path, args],
-    queryFn: () => fn!._run(args),
-    enabled: !!fn,
+    queryKey: [fn?._path, resolvedArgs],
+    queryFn: () => fn!._run(resolvedArgs),
+    enabled: !!fn && !skipped,
     staleTime: 30_000,
   });
   return query.data;
