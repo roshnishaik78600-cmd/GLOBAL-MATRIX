@@ -39,7 +39,7 @@ function PlanCard({ id }: { id: PlanId }) {
       </ul>
       {id === "free" ? (
         <Link to="/app/billing" className="mt-6 inline-flex justify-center rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-accent">
-          Start free
+          Explore Free
         </Link>
       ) : (
         <Link to="/app/checkout/$product" params={{ product: id }} className="mt-6 inline-flex justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
@@ -80,7 +80,7 @@ function Pricing() {
             <p className="text-3xl font-semibold text-foreground">{formatINR(CUSTOM_REPORT.price)}</p>
             <p className="text-sm text-muted-foreground">one-time</p>
             <Link to="/app/checkout/$product" params={{ product: "custom_report" }} className="mt-4 inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-              Order a brief
+              Order a Risk Brief
             </Link>
           </div>
         </section>

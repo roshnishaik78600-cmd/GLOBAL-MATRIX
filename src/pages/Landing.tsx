@@ -259,7 +259,7 @@ export default function Landing() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="t-hero mt-4 text-[var(--exec-ink)]"
+            className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] font-semibold tracking-[-0.03em] text-[var(--exec-ink)] sm:text-[3.25rem]"
           >
             Understand Global Risks. Protect Your Supply Chain.
           </motion.h1>
