@@ -22,6 +22,13 @@
       "when": 1791621252946,
       "tag": "0002_business_profiles_and_inquiries",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791622337432,
+      "tag": "0003_billing_orders_subscriptions_roles",
+      "breakpoints": true
     }
   ]
 }
