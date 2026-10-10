@@ -15,7 +15,10 @@ import { ECB_FX, ECB_TENORS, readSdmx, type ConnectorOutcome } from "@/lib/ecb";
 /* ------------------------------------------------------------------ */
 
 const MIN_BRIEF_INTERVAL_MS = 20_000;
-const MODEL = "anthropic/claude-sonnet-5";
+const MODEL = "google/gemini-3-flash-preview";
+const BRIEF_TIMEOUT_MS = 45_000;
+const MAX_ITEM_CHARS = 600;
+const MAX_THESIS_CHARS = 2000;
 const GATEWAY_ENDPOINT = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
 type BriefShape = { thesis: string; channels: string[]; caveats: string[] };
@@ -78,7 +81,28 @@ function buildPrompt(assessment: {
   ].join("\n");
 }
 
-function parseBrief(text: string): BriefShape | null {
+function cleanList(v: unknown, max: number): string[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .filter((c): c is string => typeof c === "string" && c.trim().length > 0)
+    .map((c) => c.trim().slice(0, MAX_ITEM_CHARS))
+    .slice(0, max);
+}
+
+export function validateBriefInput(d: unknown): { eventId: string } {
+  const id = (d as { eventId?: unknown } | null)?.eventId;
+  if (typeof id !== "string" || !/^[A-Za-z0-9_.:-]{1,100}$/.test(id)) {
+    throw new Error("Invalid event id");
+  }
+  return { eventId: id };
+}
+
+export function validateRefreshInput(d: unknown): { force: boolean } {
+  const f = (d as { force?: unknown } | null | undefined)?.force;
+  return { force: f === true };
+}
+
+export function parseBrief(text: string): BriefShape | null {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
   if (start === -1 || end <= start) return null;
@@ -86,13 +110,9 @@ function parseBrief(text: string): BriefShape | null {
     const parsed = JSON.parse(text.slice(start, end + 1)) as Partial<BriefShape>;
     if (typeof parsed.thesis !== "string" || !parsed.thesis.trim()) return null;
     return {
-      thesis: parsed.thesis.trim(),
-      channels: Array.isArray(parsed.channels)
-        ? parsed.channels.filter((c): c is string => typeof c === "string")
-        : [],
-      caveats: Array.isArray(parsed.caveats)
-        ? parsed.caveats.filter((c): c is string => typeof c === "string")
-        : [],
+      thesis: parsed.thesis.trim().slice(0, MAX_THESIS_CHARS),
+      channels: cleanList(parsed.channels, 4),
+      caveats: cleanList(parsed.caveats, 5),
     };
   } catch {
     return null;
@@ -101,7 +121,7 @@ function parseBrief(text: string): BriefShape | null {
 
 export const generateBrief = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .validator((d: { eventId: string }) => d)
+  .validator(validateBriefInput)
   .handler(async ({ data, context }): Promise<BriefActionResult> => {
     const userId = context.userId as string;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -147,6 +167,7 @@ export const generateBrief = createServerFn({ method: "POST" })
     try {
       response = await fetch(GATEWAY_ENDPOINT, {
         method: "POST",
+        signal: AbortSignal.timeout(BRIEF_TIMEOUT_MS),
         headers: {
           "content-type": "application/json",
           authorization: `Bearer ${apiKey}`,
@@ -174,13 +195,22 @@ export const generateBrief = createServerFn({ method: "POST" })
 
     if (!response.ok) {
       const detail = await response.text();
-      console.error("[brief] gateway error", response.status, detail);
+      console.error("[brief] gateway error", response.status, detail.slice(0, 500));
+      if (response.status === 429) {
+        return { ok: false, reason: "rate_limited", message: "The AI service is busy. Try again in a minute." };
+      }
+      if (response.status === 402) {
+        return { ok: false, reason: "upstream_error", message: "AI credits are exhausted for this workspace. Add credits, then retry." };
+      }
       return { ok: false, reason: "upstream_error", message: `The brief service returned ${response.status}. Try again in a moment.` };
     }
 
-    const payload = (await response.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
+    let payload: { choices?: { message?: { content?: string } }[] };
+    try {
+      payload = (await response.json()) as typeof payload;
+    } catch {
+      return { ok: false, reason: "unparseable", message: "The brief service returned an unreadable response." };
+    }
     const text = payload.choices?.[0]?.message?.content?.trim() ?? "";
     if (!text) {
       return { ok: false, reason: "empty_response", message: "The model returned an empty response." };
@@ -197,7 +227,7 @@ export const generateBrief = createServerFn({ method: "POST" })
 
     const createdAt = Date.now();
     await supabaseAdmin.from("briefs").delete().eq("user_id", userId).eq("event_id", data.eventId);
-    await supabaseAdmin.from("briefs").insert({
+    const { error: saveError } = await supabaseAdmin.from("briefs").insert({
       user_id: userId,
       event_id: data.eventId,
       thesis: parsed.thesis,
@@ -207,6 +237,7 @@ export const generateBrief = createServerFn({ method: "POST" })
       corpus_version: CORPUS_VERSION,
       created_at: new Date(createdAt).toISOString(),
     });
+    if (saveError) console.error("[brief] save failed", saveError.message);
 
     return { ok: true, brief: parsed, createdAt };
   });
@@ -787,7 +818,7 @@ async function latestComtradeYear(): Promise<string> {
 /* ---- the four refresh server functions ---- */
 
 export const refreshMacro = createServerFn({ method: "POST" })
-  .validator((d?: { force?: boolean }) => d ?? {})
+  .validator((d?: { force?: boolean }) => validateRefreshInput(d))
   .handler(async ({ data }): Promise<RefreshResult> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const claim = await claimRefresh(supabaseAdmin, "worldbank", !!data.force);
@@ -799,7 +830,7 @@ export const refreshMacro = createServerFn({ method: "POST" })
   });
 
 export const refreshTrade = createServerFn({ method: "POST" })
-  .validator((d?: { force?: boolean }) => d ?? {})
+  .validator((d?: { force?: boolean }) => validateRefreshInput(d))
   .handler(async ({ data }): Promise<RefreshResult> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const claim = await claimRefresh(supabaseAdmin, "comtrade", !!data.force);
@@ -810,7 +841,7 @@ export const refreshTrade = createServerFn({ method: "POST" })
   });
 
 export const refreshAttention = createServerFn({ method: "POST" })
-  .validator((d?: { force?: boolean }) => d ?? {})
+  .validator((d?: { force?: boolean }) => validateRefreshInput(d))
   .handler(async ({ data }): Promise<RefreshResult> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const claim = await claimRefresh(supabaseAdmin, "gdelt", !!data.force);
@@ -823,7 +854,7 @@ export const refreshAttention = createServerFn({ method: "POST" })
   });
 
 export const refreshEcb = createServerFn({ method: "POST" })
-  .validator((d?: { force?: boolean }) => d ?? {})
+  .validator((d?: { force?: boolean }) => validateRefreshInput(d))
   .handler(async ({ data }): Promise<RefreshResult> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const claim = await claimRefresh(supabaseAdmin, "ecb", !!data.force);
