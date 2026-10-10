@@ -265,8 +265,8 @@ export default function Landing() {
             transition={{ duration: 0.4, delay: 0.12 }}
             className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[var(--exec-ink-dim)] sm:text-[18px]"
           >
-            Discover geopolitical disruptions, understand potential supply-chain impacts, and
-            investigate risks using evidence-backed global intelligence.
+            Discover geopolitical events, trace potential supply-chain impacts, and investigate
+            risks through connected global intelligence.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
