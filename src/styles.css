@@ -1,31 +1,17 @@
-@import "tailwindcss" source(none);
-@source "../src";
+/* DO NOT CHANGE */
+@import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
-
+/* DO NOT CHANGE */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  /* Written out rather than as `var(--radius) + 4px`: the optimizer cannot fold
+     a var() inside an addition, and it warns on every build that it left
+     `.rounded-xl` unevaluated. 1.375rem is `--radius` (1.125rem) plus 4px. */
+  --radius-xl: 1.375rem;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -38,14 +24,13 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-muted-text: var(--muted-text);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -59,86 +44,521 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Intelligence surface tokens */
+  --color-rule: var(--rule);
+  --color-elevated: var(--elevated);
+  --color-stable: var(--stable);
+  --color-warning: var(--warning);
+  --color-critical: var(--critical);
+  --color-signal: var(--signal);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-info: var(--info);
+  --color-grid: var(--grid);
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
+    monospace;
 }
 
+/* ------------------------------------------------------------------ tokens --
+   GlobalMatrix, obsidian edition.
+
+   One base, two surface lifts, one hairline, two accents. The accents are
+   rationed deliberately: cyan marks "this is live or interactive", violet marks
+   "this is the second system" (propagation, uncertainty). Everything that means
+   *rising* or *elevated* is a status colour, never an accent, so a reader never
+   has to learn a second language for "hot".
+
+   Surface contrast is done with literal hex rather than alpha so a card sitting
+   on a card is always exactly one step lighter than the card beneath it, at any
+   nesting depth, with no compositing surprises. */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  /* 18px sits inside the 16–20px band the card system is specified to use, and
+     every control derives from it, so a button and a card share one radius
+     language rather than two. */
+  --radius: 1.125rem;
+
+  --background: #080b10;
+  --foreground: #f5f7fa;
+  --card: #0e131a;
+  --card-foreground: #f5f7fa;
+  --popover: #141a22;
+  --popover-foreground: #f5f7fa;
+  --primary: #f5f7fa;
+  --primary-foreground: #080b10;
+  --secondary: #141a22;
+  --secondary-foreground: #f5f7fa;
+  --muted: #141a22;
+  /* Secondary text. The overwhelming majority of supporting copy sits here. */
+  --muted-foreground: #a7b0bc;
+  /* Muted text. Reserved for the lowest-priority register — labels inside a
+     chart, a legend caption, anything a reader should be able to skip without
+     missing an argument. Three text rungs, not two, because a design system
+     that claims a muted colour and never defines it is a design system with a
+     hole in it. */
+  --muted-text: #6f7a87;
+  --accent: #1a222d;
+  --accent-foreground: #f5f7fa;
+  --destructive: #f06a7a;
+  --border: #27313d;
+  --input: #27313d;
+  --ring: #4fd1c5;
+
+  /* The secondary surface, as a first-class name. Two lifts only: a card sits
+     on `--card`, a nested well or a control bed sits on this. */
+  --surface-2: #141a22;
+
+  --rule: #27313d;
+  --grid: #1e2732;
+
+  /* Status ramp. Green means "measured and improving", red means "measured and
+     worse", amber means "measured but stale or unresolved". None of them are
+     decorative and none of them are ever used for a non-status meaning. */
+  --stable: #36c98f;
+  --warning: #f2b84b;
+  --elevated: #f2b84b;
+  --critical: #f06a7a;
+  --signal: #f06a7a;
+
+  /* Accents. Rationed: cyan for live/interactive, violet for the propagation
+     and uncertainty layer. */
+  --cyan: #4fd1c5;
+  --violet: #8b7cff;
+  /* Information. The fourth signal colour, for neutral/informational states that
+     are neither positive, warning nor critical. */
+  --info: #6ea8fe;
+
+  --chart-1: #f06a7a;
+  --chart-2: #4fd1c5;
+  --chart-3: #36c98f;
+  --chart-4: #f2b84b;
+  --chart-5: #8b7cff;
+  --chart-6: #6ea8fe;
+
+  --sidebar: #080b10;
+  --sidebar-foreground: #f5f7fa;
+  --sidebar-primary: #f5f7fa;
+  --sidebar-primary-foreground: #080b10;
+  --sidebar-accent: #141a22;
+  --sidebar-accent-foreground: #f5f7fa;
+  --sidebar-border: #27313d;
+  --sidebar-ring: #4fd1c5;
+
+  /* Executive risk-surface tokens. Values mirror the tokens above; they are
+     kept as separate names because a large share of the console is written
+     against `--exec-*`, and retuning one register must not silently retune the
+     other. The mapping is enforced by the fact that both ramps resolve to the
+     same six colours. */
+  --exec-base: #080b10;
+  --exec-panel: #0e131a;
+  --exec-surface: #141a22;
+  --exec-surface-strong: #1a222d;
+  --exec-hairline: #27313d;
+  --exec-hairline-strong: #35414f;
+  --exec-ink: #f5f7fa;
+  --exec-ink-dim: #a7b0bc;
+  --exec-ink-muted: #6f7a87;
+  --exec-cyan: #4fd1c5;
+  --exec-violet: #8b7cff;
+  --exec-amber: #f2b84b;
+  --exec-crimson: #f06a7a;
+  --exec-emerald: #36c98f;
+  --exec-info: #6ea8fe;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
 }
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+/* The workstation is dark by default. These exist so a component that needs an
+   explicit surface can opt in without depending on a theme provider. */
+.surface-raised {
+  background: var(--card);
+}
+
+.surface-sunken {
+  background: var(--background);
 }
 
 @layer base {
   * {
-    border-color: var(--color-border);
+    @apply border-border outline-ring/50;
+  }
+  html {
+    /* `clip` rather than `hidden`: stops accidental horizontal scroll from wide
+       maps/graphs without turning the root into a scroll container, which would
+       break `position: sticky` headers. */
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: clip;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "tnum" 0;
+  }
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--ring) 35%, transparent);
+    color: var(--foreground);
+  }
+  /* Visible focus everywhere, in the accent, at a size that survives being seen
+     on a dark card as well as on the bare background. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+  /* Global text-wrapping reset.
+     Every text-bearing element in the product is listed here explicitly rather
+     than with `*`, because `*` would also catch `<pre>` and would beat the
+     whitespace utilities that components rely on. `:where()` keeps specificity
+     at zero, so `truncate`, `whitespace-nowrap` and `whitespace-pre-wrap` always
+     win where a component actually wants them.
+     The three properties together are what stop a label from degrading into a
+     one-character-per-line column when its flex or grid parent is squeezed:
+     text may wrap, but only between words, and never by breaking inside one. */
+  :where(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      span,
+      div,
+      li,
+      ul,
+      ol,
+      dl,
+      dt,
+      dd,
+      td,
+      th,
+      a,
+      button,
+      label,
+      legend,
+      figcaption,
+      blockquote,
+      strong,
+      em,
+      small,
+      summary
+    ) {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------- Typography --
+     Two label classes, both at the 12–13px metadata floor. Nothing in the
+     product is allowed below that: the previous build carried 9px and 9.5px
+     micro-labels in roughly forty places, and on a laptop at arm's length they
+     were not labels, they were smudges. */
+  .label {
+    @apply text-[12px] leading-tight font-medium text-[var(--exec-ink-dim)];
+  }
+  .label-lg {
+    @apply text-[12px] leading-tight font-semibold text-[var(--exec-ink)];
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  /* The type scale, in one place. Six registers, used everywhere: a hero never
+     competes with a page title, and a card title never shrinks into body copy. */
+  .t-hero {
+    font-size: clamp(2.5rem, 6.2vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+  }
+  .t-page {
+    font-size: clamp(2rem, 3.6vw, 2.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 650;
+  }
+  .t-section {
+    font-size: clamp(1.375rem, 2vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  .t-card {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    font-weight: 600;
+  }
+  .t-body {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .t-meta {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .rule-t {
+    @apply border-t border-rule;
+  }
+  .rule-b {
+    @apply border-b border-rule;
+  }
+
+  /* -------------------------------------------------------------- The card --
+     ONE card. `.card`, `.glass`, `.exec-surface` and `.panel` are the same
+     object, declared once in a shared selector list rather than as four
+     near-identical rules; `.glass-strong` is the same object lifted one step to
+     the secondary surface. A component written against the old executive names
+     and one written against the new ones are therefore indistinguishable on
+     screen, which is the only way two naming conventions stop drifting apart.
+
+     They are written as plain declarations rather than `@apply`-ing one class
+     from another: Tailwind v4 resolves `@apply` against real utilities only, so
+     a custom class composed from a sibling custom class fails the build.
+
+     Radius 18px (from `--radius`), a single hairline, one step of surface
+     contrast, no drop shadow. Depth on a dark surface comes from the border and
+     the lift; a shadow at this contrast is indistinguishable from a smudge. */
+  .card,
+  .glass,
+  .exec-surface,
+  .panel {
+    border-radius: var(--radius);
+    border: 1px solid var(--exec-hairline);
+    background: var(--card);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .glass-strong {
+    border-radius: var(--radius);
+    border: 1px solid var(--exec-hairline);
+    background: var(--surface-2);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .panel-head {
+    @apply flex items-center justify-between gap-3 px-4 py-3;
+  }
+
+  /* The one hover. A card that is a link lifts its border and its surface, and
+     nothing else — no translate, no shadow, no colour change on the text. */
+  .card-hover,
+  .glass-hover {
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+  .card-hover:hover,
+  .glass-hover:hover {
+    background: var(--surface-2);
+    border-color: var(--exec-hairline-strong);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-[var(--exec-hairline)] px-2 py-0.5 text-[12px] leading-tight font-medium;
+  }
+
+  /* One content width for the entire product. Every page frame, every landing
+     surface and every methodology section resolves to this, so the left edge of
+     a chart lines up with the left edge of the table beneath it at every
+     breakpoint. Defined once, because a max-width repeated per page is a
+     max-width that will drift. 1440px, plus the 32px page gutter, means the
+     content never touches the viewport edge on a wide monitor. */
+  .gm-width {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+
+  /* Vertical rhythm. Section spacing is drawn from a 4/8/12/16/24/32/48 scale
+     so the gap above a section is always visibly larger than the gap inside it. */
+  .gm-band {
+    padding-block: 1.5rem;
+  }
+  .gm-band-lg {
+    padding-block: 2.5rem;
+  }
+
+  /* Page gutter. One value, so the left edge of every page in the product is
+     the same number of pixels from the viewport edge at every breakpoint. */
+  .gm-gutter {
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .gm-gutter {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .gm-gutter {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* --------------------------------------------------------------- Map box --
+     Maps are the one element that must never cover its neighbours, so their
+     height is declared once here rather than passed as an arbitrary pixel
+     number from each of the nine call sites. 400px on a phone, 440px on a
+     tablet, 600px on a desktop — inside the specified bands at every width. */
+  .map-frame {
+    height: 400px;
+  }
+  @media (min-width: 640px) {
+    .map-frame {
+      height: 440px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .map-frame {
+      height: 600px;
+    }
+  }
+
+  .exec-num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+  .exec-label {
+    @apply text-[12px] leading-tight font-medium text-[var(--exec-ink-dim)];
+  }
+  /* The lowest-priority text register: chart labels, legend captions, hints a
+     reader may skip. Never used for anything they need to act on. */
+  .exec-label-muted {
+    @apply text-[12px] leading-tight font-medium text-[var(--exec-ink-muted)];
+  }
+  /* Violet marks the propagation and uncertainty layer, and nothing else. */
+  .accent-violet {
+    color: var(--exec-violet);
+  }
+  .border-violet {
+    border-color: color-mix(in srgb, var(--exec-violet) 45%, transparent);
+  }
+
+  /* Alert rings for cards carrying live pressure. One slow pulse, no colour
+     cycling — the colour means a band, so it must not move. */
+  .alert-ring {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--ring-color) 55%, transparent),
+      0 0 22px -6px color-mix(in srgb, var(--ring-color) 60%, transparent);
+    animation: alert-breathe 3.6s ease-in-out infinite;
+  }
+  @keyframes alert-breathe {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--ring-color) 55%, transparent),
+        0 0 18px -8px color-mix(in srgb, var(--ring-color) 45%, transparent);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--ring-color) 75%, transparent),
+        0 0 28px -4px color-mix(in srgb, var(--ring-color) 70%, transparent);
+    }
+  }
+  .live-dot {
+    animation: live-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+}
+
+@layer utilities {
+  .animate-rise {
+    animation: rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .animate-fade {
+    animation: fade 0.25s ease-out both;
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .animate-draw {
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: var(--len);
+    animation: draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  /* A slow dash travelling along a coupling arc. It says "these two places are
+     connected in the model", nothing more — the arc's width and colour carry
+     the magnitude, and neither of those animates. */
+  .flow-arc {
+    stroke-dasharray: 5 7;
+    animation: flow 2.4s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--exec-surface) 0%,
+      var(--grid) 50%,
+      var(--exec-surface) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+  @keyframes shimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-rise,
+    .animate-fade,
+    .animate-draw,
+    .flow-arc,
+    .alert-ring,
+    .live-dot,
+    .shimmer {
+      animation: none;
+    }
   }
 }

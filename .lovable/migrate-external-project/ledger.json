@@ -1,0 +1,14 @@
+{
+  "source": "github: roshnishaik78600-cmd/GlobalMatrix (public, built with Freebuff/vly)",
+  "capabilities": [
+    { "capability": "frontend pages (22 routes, react-router)", "source": "src/pages, src/components", "outcome": "port to TanStack Router file routes", "status": "in_progress", "next_action": "rewrite route table as src/routes/*" },
+    { "capability": "analytical corpus (events, graph, exposures)", "source": "src/lib/intel (versioned code, no DB)", "outcome": "copy as-is", "status": "pending", "next_action": "copy into src/lib/intel" },
+    { "capability": "auth (Convex Auth email OTP)", "source": "src/convex/auth", "outcome": "replace with Lovable Cloud auth (email/password)", "status": "pending", "next_action": "enable Cloud, build Auth page on supabase auth" },
+    { "capability": "watchlist table", "source": "src/convex/schema.ts", "outcome": "migrate to Lovable Cloud table + RLS", "status": "pending", "next_action": "migration + server functions" },
+    { "capability": "annotations table", "source": "src/convex/schema.ts", "outcome": "migrate to Lovable Cloud table + RLS", "status": "pending", "next_action": "migration + server functions" },
+    { "capability": "exposureDeps table", "source": "src/convex/schema.ts", "outcome": "migrate to Lovable Cloud table + RLS", "status": "pending", "next_action": "migration + server functions" },
+    { "capability": "AI briefs (Anthropic, throttled)", "source": "src/convex/brief.ts, briefs.ts", "outcome": "move to Lovable AI Gateway server function with throttle table", "status": "pending", "next_action": "server function" },
+    { "capability": "existing user records", "source": "none attached", "outcome": "pending export from Convex dashboard", "status": "pending", "next_action": "request CSV/JSON export of users + watchlist/annotations/exposureDeps after preview" },
+    { "capability": "vly/freebuff tooling (@vly-ai/integrations, VlyToolbar)", "source": "main.tsx", "outcome": "drop — platform-specific", "status": "done", "next_action": "none" }
+  ]
+}

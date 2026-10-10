@@ -1,0 +1,291 @@
+import { useState } from "react";
+import { Link, useNavigate } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Bookmark, BookmarkCheck } from "lucide-react";
+import { api } from "@/lib/backend/api";
+import { useToggleWatch } from "@/hooks/use-auth-action";
+import { PageFrame, PageLoading } from "@/components/viz/exec/design";
+import { FilterToggle, Panel } from "@/components/intel/AppShell";
+import { ChannelBars, Label, Meter } from "@/components/intel/primitives";
+import { pct } from "@/lib/format";
+import { CHANNEL_LABEL, type Channel } from "@/lib/intel/types";
+import { useFocus } from "@/lib/focus";
+
+export default function Industries() {
+  const data = useQuery(api.intel.industryDirectory);
+  const toggleWatch = useToggleWatch();
+  const { toggle } = useFocus();
+  const navigate = useNavigate();
+  const [watchedOnly, setWatchedOnly] = useState(false);
+
+  if (!data) {
+    return (
+      <PageLoading
+        eyebrow="Industries"
+        title="Industry exposure"
+        lede="Sector concentration, substitution lead time and the events that reach each one."
+      />
+    );
+  }
+
+  const { industries: allIndustries, watchlistSize } = data;
+  const industries = watchedOnly
+    ? allIndustries.filter((i) => i.watched)
+    : allIndustries;
+  const mostConcentrated = [...allIndustries].sort(
+    (a, b) => b.concentration - a.concentration,
+  )[0];
+  const leastSubstitutable = [...allIndustries].sort(
+    (a, b) => b.substitutionMonths - a.substitutionMonths,
+  )[0];
+
+  return (
+    <PageFrame
+      eyebrow="Industries"
+      title="Industries"
+      lede="Sector concentration, substitution lead time and the events that reach each one."
+    >
+
+      <div className="border-b border-rule bg-card">
+        <dl className="grid grid-cols-2 divide-x divide-rule px-4 py-3 lg:grid-cols-4 lg:px-6">
+          <Stat
+            caption="Sectors modelled"
+            value={String(allIndustries.length)}
+            note="Each with production, demand and route structure"
+          />
+          <Stat
+            caption="Most exposed sector"
+            value={allIndustries[0]?.id ?? "—"}
+            note={allIndustries[0] ? `${allIndustries[0].label} · ${pct(allIndustries[0].load)}` : ""}
+          />
+          <Stat
+            caption="Most concentrated"
+            value={mostConcentrated ? pct(mostConcentrated.concentration) : "—"}
+            note={
+              mostConcentrated
+                ? `Largest producer share in ${mostConcentrated.label}`
+                : ""
+            }
+          />
+          <Stat
+            caption="Longest substitution lead"
+            value={leastSubstitutable ? `${leastSubstitutable.substitutionMonths}m` : "—"}
+            note={
+              leastSubstitutable
+                ? `${leastSubstitutable.label} — the sector's real constraint`
+                : ""
+            }
+          />
+        </dl>
+      </div>
+
+      <div className="border-b border-rule">
+        <div className="flex items-center justify-between gap-4 px-4 py-3 lg:px-6">
+          <span className="label text-muted-foreground">
+            Showing {industries.length} of {allIndustries.length} sectors
+          </span>
+          <FilterToggle
+            active={watchedOnly}
+            onClick={() => setWatchedOnly((v) => !v)}
+          >
+            Watchlist ({watchlistSize})
+          </FilterToggle>
+        </div>
+      </div>
+
+      <Panel
+          caption={`Sectors · ${industries.length}`}
+          aside="Ranked by live exposure to the current corpus"
+        >
+          {industries.length === 0 ? (
+            // Not an absence of data: every sector is still in the corpus, the
+            // filter is simply excluding all of them. Say that, and offer the way
+            // back, rather than showing an unexplained blank list.
+            <div className="flex flex-col items-start gap-2 px-4 py-8">
+              <p className="label text-muted-foreground">
+                Nothing on this watchlist yet
+              </p>
+              <p className="max-w-prose text-[13px] leading-relaxed text-muted-foreground">
+                None of the {allIndustries.length} modelled sectors is saved to
+                your watchlist, so this filter has nothing to show. All of them
+                are still listed without it.
+              </p>
+              <button
+                type="button"
+                onClick={() => setWatchedOnly(false)}
+                className="exec-label mt-1 border border-rule px-2 py-1 transition-colors hover:border-foreground/30"
+              >
+                Show all {allIndustries.length} sectors
+              </button>
+            </div>
+          ) : (
+          <ul className="divide-y divide-rule">
+            {industries.map((row, i) => (
+              <motion.li
+                key={row.id}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.32, delay: Math.min(i * 0.04, 0.3) }}
+                className="group relative"
+              >
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => toggle({ kind: "industry", id: row.id })}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      toggle({ kind: "industry", id: row.id });
+                    }
+                  }}
+                  onDoubleClick={() => navigate(`/app/industry/${row.id}`)}
+                  className="grid grid-cols-12 items-start gap-x-4 gap-y-3 px-4 py-5 transition-colors hover:bg-secondary focus-visible:bg-secondary focus-visible:outline-none"
+                >
+                  <div className="col-span-6 lg:col-span-1">
+                    <span className="num text-[12px] text-muted-foreground">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  <div className="col-span-6 lg:col-span-4">
+                    <span className="num label text-signal">{row.code}</span>
+                    <h3 className="mt-1.5 text-[15px] font-semibold tracking-[-0.01em]">
+                      {row.label}
+                    </h3>
+                    <p className="mt-1.5 max-w-prose text-[13px] leading-relaxed text-muted-foreground">
+                      {row.summary}
+                    </p>
+                  </div>
+
+                  <div className="col-span-6 lg:col-span-2">
+                    <Label>Live load</Label>
+                    <p className="exec-num mt-1 text-[1.75rem] leading-none font-bold text-[var(--exec-ink)]">
+                      {pct(row.load)}
+                    </p>
+                    <ChannelBars
+                      pressure={Object.fromEntries(
+                        row.byChannel.map((c) => [c.channel, c.load]),
+                      ) as Record<Channel, number>}
+                      className="mt-2.5"
+                    />
+                    <p className="mt-1 text-[12px] text-muted-foreground">
+                      dominant {CHANNEL_LABEL[row.topChannel]}
+                    </p>
+                  </div>
+
+                  <div className="col-span-6 lg:col-span-3">
+                    <div className="space-y-3">
+                      <div>
+                        <div className="flex items-baseline justify-between">
+                          <span className="label text-[12px] text-muted-foreground">
+                            Concentration
+                          </span>
+                          <span className="num text-[12px]">
+                            {pct(row.concentration)}
+                          </span>
+                        </div>
+                        <Meter
+                          value={row.concentration}
+                          tone={row.concentration > 0.3 ? "signal" : "ink"}
+                          className="mt-1.5"
+                        />
+                        <p className="mt-1 text-[12px] text-muted-foreground">
+                          Largest single-producer share
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex items-baseline justify-between">
+                          <span className="label text-[12px] text-muted-foreground">
+                            Structural fragility
+                          </span>
+                          <span className="num text-[12px]">
+                            {pct(row.fragility)}
+                          </span>
+                        </div>
+                        <Meter value={row.fragility} tone="ink" className="mt-1.5" />
+                        <p className="mt-1 text-[12px] text-muted-foreground">
+                          {row.substitutionMonths}-month substitution lead
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 lg:col-span-2">
+                    <Label>Leading event</Label>
+                    {row.topEvent ? (
+                      <>
+                        <p className="mt-1 line-clamp-2 text-[12px] leading-snug">
+                          {row.topEvent.title}
+                        </p>
+                        <p className="num mt-1 text-[12px] text-muted-foreground">
+                          {CHANNEL_LABEL[row.topEvent.channel]} ·{" "}
+                          {row.topEvent.contribution.toFixed(3)} ·{" "}
+                          {row.eventCount} events
+                        </p>
+                      </>
+                    ) : (
+                      <p className="mt-1 text-[12px] text-muted-foreground">
+                        None
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="col-span-1 hidden justify-end pt-1 lg:flex">
+                    <Link
+                      to={`/app/industry/${row.id}`}
+                      title="Open the full sector page"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      <ArrowUpRight className="size-4" />
+                    </Link>
+                  </div>
+                </div>
+
+                  <button
+                    type="button"
+                    aria-label={
+                      row.watched ? "Remove from watchlist" : "Add to watchlist"
+                    }
+                    onClick={() =>
+                      toggleWatch(`SECTOR:${row.id}`)
+                    }
+                    className="absolute top-4 right-3 p-1.5 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {row.watched ? (
+                      <BookmarkCheck className="size-4 text-signal" />
+                    ) : (
+                      <Bookmark className="size-4" />
+                    )}
+                  </button>
+                </motion.li>
+            ))}
+          </ul>
+          )}
+        </Panel>
+  </PageFrame>
+  );
+}
+
+function Stat({
+  caption,
+  value,
+  note,
+}: {
+  caption: string;
+  value: string;
+  note: string;
+}) {
+  return (
+    <div className="border-b border-rule py-5 last:border-b-0 lg:border-b-0 lg:px-6 lg:first:pl-0">
+      <dt className="label text-muted-foreground">{caption}</dt>
+      <dd className="exec-num mt-2 text-[1.5rem] leading-none font-bold text-[var(--exec-ink)]">
+        {value}
+      </dd>
+      <dd className="mt-1.5 text-[12px] leading-snug text-muted-foreground">
+        {note}
+      </dd>
+    </div>
+  );
+}

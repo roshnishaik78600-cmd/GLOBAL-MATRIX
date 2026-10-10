@@ -10,33 +10,352 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MethodologyRouteImport } from './routes/methodology'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppAnaloguesRouteImport } from './routes/app/analogues'
+import { Route as AppAnalystRouteImport } from './routes/app/analyst'
+import { Route as AppChainRouteImport } from './routes/app/chain'
+import { Route as AppCompaniesRouteImport } from './routes/app/companies'
+import { Route as AppCountriesRouteImport } from './routes/app/countries'
+import { Route as AppDataRouteImport } from './routes/app/data'
+import { Route as AppEventsRouteImport } from './routes/app/events'
+import { Route as AppGraphRouteImport } from './routes/app/graph'
+import { Route as AppIndustriesRouteImport } from './routes/app/industries'
+import { Route as AppMarketsRouteImport } from './routes/app/markets'
+import { Route as AppPolicyRouteImport } from './routes/app/policy'
+import { Route as AppRiskRouteImport } from './routes/app/risk'
+import { Route as AppScenariosRouteImport } from './routes/app/scenarios'
+import { Route as AppSupplyRouteImport } from './routes/app/supply'
+import { Route as AppTradeRouteImport } from './routes/app/trade'
+import { Route as AppWatchlistRouteImport } from './routes/app/watchlist'
+import { Route as AppWorldRouteImport } from './routes/app/world'
+import { Route as AppCountryNodeIdRouteImport } from './routes/app/country/$nodeId'
+import { Route as AppEventEventIdRouteImport } from './routes/app/event/$eventId'
+import { Route as AppIndustryIndustryIdRouteImport } from './routes/app/industry/$industryId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MethodologyRoute = MethodologyRouteImport.update({
+  id: '/methodology',
+  path: '/methodology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnaloguesRoute = AppAnaloguesRouteImport.update({
+  id: '/analogues',
+  path: '/analogues',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalystRoute = AppAnalystRouteImport.update({
+  id: '/analyst',
+  path: '/analyst',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppChainRoute = AppChainRouteImport.update({
+  id: '/chain',
+  path: '/chain',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCompaniesRoute = AppCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCountriesRoute = AppCountriesRouteImport.update({
+  id: '/countries',
+  path: '/countries',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDataRoute = AppDataRouteImport.update({
+  id: '/data',
+  path: '/data',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEventsRoute = AppEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGraphRoute = AppGraphRouteImport.update({
+  id: '/graph',
+  path: '/graph',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIndustriesRoute = AppIndustriesRouteImport.update({
+  id: '/industries',
+  path: '/industries',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMarketsRoute = AppMarketsRouteImport.update({
+  id: '/markets',
+  path: '/markets',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPolicyRoute = AppPolicyRouteImport.update({
+  id: '/policy',
+  path: '/policy',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRiskRoute = AppRiskRouteImport.update({
+  id: '/risk',
+  path: '/risk',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppScenariosRoute = AppScenariosRouteImport.update({
+  id: '/scenarios',
+  path: '/scenarios',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSupplyRoute = AppSupplyRouteImport.update({
+  id: '/supply',
+  path: '/supply',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTradeRoute = AppTradeRouteImport.update({
+  id: '/trade',
+  path: '/trade',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppWatchlistRoute = AppWatchlistRouteImport.update({
+  id: '/watchlist',
+  path: '/watchlist',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppWorldRoute = AppWorldRouteImport.update({
+  id: '/world',
+  path: '/world',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCountryNodeIdRoute = AppCountryNodeIdRouteImport.update({
+  id: '/country/$nodeId',
+  path: '/country/$nodeId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEventEventIdRoute = AppEventEventIdRouteImport.update({
+  id: '/event/$eventId',
+  path: '/event/$eventId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIndustryIndustryIdRoute = AppIndustryIndustryIdRouteImport.update({
+  id: '/industry/$industryId',
+  path: '/industry/$industryId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/login': typeof LoginRoute
+  '/methodology': typeof MethodologyRoute
+  '/signup': typeof SignupRoute
+  '/app/analogues': typeof AppAnaloguesRoute
+  '/app/analyst': typeof AppAnalystRoute
+  '/app/chain': typeof AppChainRoute
+  '/app/companies': typeof AppCompaniesRoute
+  '/app/countries': typeof AppCountriesRoute
+  '/app/data': typeof AppDataRoute
+  '/app/events': typeof AppEventsRoute
+  '/app/graph': typeof AppGraphRoute
+  '/app/industries': typeof AppIndustriesRoute
+  '/app/markets': typeof AppMarketsRoute
+  '/app/policy': typeof AppPolicyRoute
+  '/app/risk': typeof AppRiskRoute
+  '/app/scenarios': typeof AppScenariosRoute
+  '/app/supply': typeof AppSupplyRoute
+  '/app/trade': typeof AppTradeRoute
+  '/app/watchlist': typeof AppWatchlistRoute
+  '/app/world': typeof AppWorldRoute
+  '/app/': typeof AppIndexRoute
+  '/app/country/$nodeId': typeof AppCountryNodeIdRoute
+  '/app/event/$eventId': typeof AppEventEventIdRoute
+  '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/login': typeof LoginRoute
+  '/methodology': typeof MethodologyRoute
+  '/signup': typeof SignupRoute
+  '/app/analogues': typeof AppAnaloguesRoute
+  '/app/analyst': typeof AppAnalystRoute
+  '/app/chain': typeof AppChainRoute
+  '/app/companies': typeof AppCompaniesRoute
+  '/app/countries': typeof AppCountriesRoute
+  '/app/data': typeof AppDataRoute
+  '/app/events': typeof AppEventsRoute
+  '/app/graph': typeof AppGraphRoute
+  '/app/industries': typeof AppIndustriesRoute
+  '/app/markets': typeof AppMarketsRoute
+  '/app/policy': typeof AppPolicyRoute
+  '/app/risk': typeof AppRiskRoute
+  '/app/scenarios': typeof AppScenariosRoute
+  '/app/supply': typeof AppSupplyRoute
+  '/app/trade': typeof AppTradeRoute
+  '/app/watchlist': typeof AppWatchlistRoute
+  '/app/world': typeof AppWorldRoute
+  '/app': typeof AppIndexRoute
+  '/app/country/$nodeId': typeof AppCountryNodeIdRoute
+  '/app/event/$eventId': typeof AppEventEventIdRoute
+  '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/login': typeof LoginRoute
+  '/methodology': typeof MethodologyRoute
+  '/signup': typeof SignupRoute
+  '/app/analogues': typeof AppAnaloguesRoute
+  '/app/analyst': typeof AppAnalystRoute
+  '/app/chain': typeof AppChainRoute
+  '/app/companies': typeof AppCompaniesRoute
+  '/app/countries': typeof AppCountriesRoute
+  '/app/data': typeof AppDataRoute
+  '/app/events': typeof AppEventsRoute
+  '/app/graph': typeof AppGraphRoute
+  '/app/industries': typeof AppIndustriesRoute
+  '/app/markets': typeof AppMarketsRoute
+  '/app/policy': typeof AppPolicyRoute
+  '/app/risk': typeof AppRiskRoute
+  '/app/scenarios': typeof AppScenariosRoute
+  '/app/supply': typeof AppSupplyRoute
+  '/app/trade': typeof AppTradeRoute
+  '/app/watchlist': typeof AppWatchlistRoute
+  '/app/world': typeof AppWorldRoute
+  '/app/': typeof AppIndexRoute
+  '/app/country/$nodeId': typeof AppCountryNodeIdRoute
+  '/app/event/$eventId': typeof AppEventEventIdRoute
+  '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/login'
+    | '/methodology'
+    | '/signup'
+    | '/app/analogues'
+    | '/app/analyst'
+    | '/app/chain'
+    | '/app/companies'
+    | '/app/countries'
+    | '/app/data'
+    | '/app/events'
+    | '/app/graph'
+    | '/app/industries'
+    | '/app/markets'
+    | '/app/policy'
+    | '/app/risk'
+    | '/app/scenarios'
+    | '/app/supply'
+    | '/app/trade'
+    | '/app/watchlist'
+    | '/app/world'
+    | '/app/'
+    | '/app/country/$nodeId'
+    | '/app/event/$eventId'
+    | '/app/industry/$industryId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/login'
+    | '/methodology'
+    | '/signup'
+    | '/app/analogues'
+    | '/app/analyst'
+    | '/app/chain'
+    | '/app/companies'
+    | '/app/countries'
+    | '/app/data'
+    | '/app/events'
+    | '/app/graph'
+    | '/app/industries'
+    | '/app/markets'
+    | '/app/policy'
+    | '/app/risk'
+    | '/app/scenarios'
+    | '/app/supply'
+    | '/app/trade'
+    | '/app/watchlist'
+    | '/app/world'
+    | '/app'
+    | '/app/country/$nodeId'
+    | '/app/event/$eventId'
+    | '/app/industry/$industryId'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/login'
+    | '/methodology'
+    | '/signup'
+    | '/app/analogues'
+    | '/app/analyst'
+    | '/app/chain'
+    | '/app/companies'
+    | '/app/countries'
+    | '/app/data'
+    | '/app/events'
+    | '/app/graph'
+    | '/app/industries'
+    | '/app/markets'
+    | '/app/policy'
+    | '/app/risk'
+    | '/app/scenarios'
+    | '/app/supply'
+    | '/app/trade'
+    | '/app/watchlist'
+    | '/app/world'
+    | '/app/'
+    | '/app/country/$nodeId'
+    | '/app/event/$eventId'
+    | '/app/industry/$industryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  LoginRoute: typeof LoginRoute
+  MethodologyRoute: typeof MethodologyRoute
+  SignupRoute: typeof SignupRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +367,248 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/methodology': {
+      id: '/methodology'
+      path: '/methodology'
+      fullPath: '/methodology'
+      preLoaderRoute: typeof MethodologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analogues': {
+      id: '/app/analogues'
+      path: '/analogues'
+      fullPath: '/app/analogues'
+      preLoaderRoute: typeof AppAnaloguesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analyst': {
+      id: '/app/analyst'
+      path: '/analyst'
+      fullPath: '/app/analyst'
+      preLoaderRoute: typeof AppAnalystRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/chain': {
+      id: '/app/chain'
+      path: '/chain'
+      fullPath: '/app/chain'
+      preLoaderRoute: typeof AppChainRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/companies': {
+      id: '/app/companies'
+      path: '/companies'
+      fullPath: '/app/companies'
+      preLoaderRoute: typeof AppCompaniesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/countries': {
+      id: '/app/countries'
+      path: '/countries'
+      fullPath: '/app/countries'
+      preLoaderRoute: typeof AppCountriesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/data': {
+      id: '/app/data'
+      path: '/data'
+      fullPath: '/app/data'
+      preLoaderRoute: typeof AppDataRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/events': {
+      id: '/app/events'
+      path: '/events'
+      fullPath: '/app/events'
+      preLoaderRoute: typeof AppEventsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/graph': {
+      id: '/app/graph'
+      path: '/graph'
+      fullPath: '/app/graph'
+      preLoaderRoute: typeof AppGraphRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/industries': {
+      id: '/app/industries'
+      path: '/industries'
+      fullPath: '/app/industries'
+      preLoaderRoute: typeof AppIndustriesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/markets': {
+      id: '/app/markets'
+      path: '/markets'
+      fullPath: '/app/markets'
+      preLoaderRoute: typeof AppMarketsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/policy': {
+      id: '/app/policy'
+      path: '/policy'
+      fullPath: '/app/policy'
+      preLoaderRoute: typeof AppPolicyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/risk': {
+      id: '/app/risk'
+      path: '/risk'
+      fullPath: '/app/risk'
+      preLoaderRoute: typeof AppRiskRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/scenarios': {
+      id: '/app/scenarios'
+      path: '/scenarios'
+      fullPath: '/app/scenarios'
+      preLoaderRoute: typeof AppScenariosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/supply': {
+      id: '/app/supply'
+      path: '/supply'
+      fullPath: '/app/supply'
+      preLoaderRoute: typeof AppSupplyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/trade': {
+      id: '/app/trade'
+      path: '/trade'
+      fullPath: '/app/trade'
+      preLoaderRoute: typeof AppTradeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/watchlist': {
+      id: '/app/watchlist'
+      path: '/watchlist'
+      fullPath: '/app/watchlist'
+      preLoaderRoute: typeof AppWatchlistRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/world': {
+      id: '/app/world'
+      path: '/world'
+      fullPath: '/app/world'
+      preLoaderRoute: typeof AppWorldRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/country/$nodeId': {
+      id: '/app/country/$nodeId'
+      path: '/country/$nodeId'
+      fullPath: '/app/country/$nodeId'
+      preLoaderRoute: typeof AppCountryNodeIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/event/$eventId': {
+      id: '/app/event/$eventId'
+      path: '/event/$eventId'
+      fullPath: '/app/event/$eventId'
+      preLoaderRoute: typeof AppEventEventIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/industry/$industryId': {
+      id: '/app/industry/$industryId'
+      path: '/industry/$industryId'
+      fullPath: '/app/industry/$industryId'
+      preLoaderRoute: typeof AppIndustryIndustryIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAnaloguesRoute: typeof AppAnaloguesRoute
+  AppAnalystRoute: typeof AppAnalystRoute
+  AppChainRoute: typeof AppChainRoute
+  AppCompaniesRoute: typeof AppCompaniesRoute
+  AppCountriesRoute: typeof AppCountriesRoute
+  AppDataRoute: typeof AppDataRoute
+  AppEventsRoute: typeof AppEventsRoute
+  AppGraphRoute: typeof AppGraphRoute
+  AppIndustriesRoute: typeof AppIndustriesRoute
+  AppMarketsRoute: typeof AppMarketsRoute
+  AppPolicyRoute: typeof AppPolicyRoute
+  AppRiskRoute: typeof AppRiskRoute
+  AppScenariosRoute: typeof AppScenariosRoute
+  AppSupplyRoute: typeof AppSupplyRoute
+  AppTradeRoute: typeof AppTradeRoute
+  AppWatchlistRoute: typeof AppWatchlistRoute
+  AppWorldRoute: typeof AppWorldRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppCountryNodeIdRoute: typeof AppCountryNodeIdRoute
+  AppEventEventIdRoute: typeof AppEventEventIdRoute
+  AppIndustryIndustryIdRoute: typeof AppIndustryIndustryIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAnaloguesRoute: AppAnaloguesRoute,
+  AppAnalystRoute: AppAnalystRoute,
+  AppChainRoute: AppChainRoute,
+  AppCompaniesRoute: AppCompaniesRoute,
+  AppCountriesRoute: AppCountriesRoute,
+  AppDataRoute: AppDataRoute,
+  AppEventsRoute: AppEventsRoute,
+  AppGraphRoute: AppGraphRoute,
+  AppIndustriesRoute: AppIndustriesRoute,
+  AppMarketsRoute: AppMarketsRoute,
+  AppPolicyRoute: AppPolicyRoute,
+  AppRiskRoute: AppRiskRoute,
+  AppScenariosRoute: AppScenariosRoute,
+  AppSupplyRoute: AppSupplyRoute,
+  AppTradeRoute: AppTradeRoute,
+  AppWatchlistRoute: AppWatchlistRoute,
+  AppWorldRoute: AppWorldRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppCountryNodeIdRoute: AppCountryNodeIdRoute,
+  AppEventEventIdRoute: AppEventEventIdRoute,
+  AppIndustryIndustryIdRoute: AppIndustryIndustryIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
+  LoginRoute: LoginRoute,
+  MethodologyRoute: MethodologyRoute,
+  SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

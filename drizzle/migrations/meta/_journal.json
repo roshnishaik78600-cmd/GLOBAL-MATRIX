@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791608792633,
+      "tag": "0000_globalmatrix_core_tables",
+      "breakpoints": true
+    }
+  ]
+}
