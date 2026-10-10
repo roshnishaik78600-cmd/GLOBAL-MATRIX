@@ -566,8 +566,9 @@
 @layer base {
   h1, h2, h3, .font-display {
     font-family: "Sora", var(--font-sans);
-    letter-spacing: -0.02em;
   }
+  h1 { letter-spacing: -0.03em; }
+  h2 { letter-spacing: -0.015em; }
 }
 @utility gm-hero-glow {
   background:
