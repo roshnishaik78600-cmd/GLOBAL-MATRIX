@@ -233,6 +233,101 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          admin_note: string | null
+          amount_inr: number
+          billing_period: string
+          created_at: string
+          currency: string
+          id: string
+          payment_mode: string
+          product: string
+          reference: string
+          status: string
+          updated_at: string
+          upi_reference: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          amount_inr: number
+          billing_period: string
+          created_at?: string
+          currency?: string
+          id?: string
+          payment_mode: string
+          product: string
+          reference: string
+          status?: string
+          updated_at?: string
+          upi_reference?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          amount_inr?: number
+          billing_period?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          payment_mode?: string
+          product?: string
+          reference?: string
+          status?: string
+          updated_at?: string
+          upi_reference?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payment_events: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          from_status: string | null
+          id: string
+          idempotency_key: string | null
+          order_id: string | null
+          reason: string | null
+          to_status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          idempotency_key?: string | null
+          order_id?: string | null
+          reason?: string | null
+          to_status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          from_status?: string | null
+          id?: string
+          idempotency_key?: string | null
+          order_id?: string | null
+          reason?: string | null
+          to_status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       source_locks: {
         Row: {
           attempts: number
@@ -305,6 +400,65 @@ export type Database = {
         }
         Relationships: []
       }
+      subscriptions: {
+        Row: {
+          expires_at: string | null
+          id: string
+          plan: string
+          source_order_id: string | null
+          starts_at: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          expires_at?: string | null
+          id?: string
+          plan: string
+          source_order_id?: string | null
+          starts_at?: string
+          status: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          expires_at?: string | null
+          id?: string
+          plan?: string
+          source_order_id?: string | null
+          starts_at?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_source_order_id_fkey"
+            columns: ["source_order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       watchlist: {
         Row: {
           created_at: string
@@ -334,10 +488,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -464,6 +624,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
