@@ -80,38 +80,38 @@
      language rather than two. */
   --radius: 1.125rem;
 
-  --background: #080b10;
+  --background: #060b17;
   --foreground: #f5f7fa;
-  --card: #0e131a;
+  --card: #0b1324;
   --card-foreground: #f5f7fa;
-  --popover: #141a22;
+  --popover: #111b31;
   --popover-foreground: #f5f7fa;
-  --primary: #f5f7fa;
-  --primary-foreground: #080b10;
-  --secondary: #141a22;
+  --primary: #5eb8ff;
+  --primary-foreground: #04101f;
+  --secondary: #111b31;
   --secondary-foreground: #f5f7fa;
-  --muted: #141a22;
+  --muted: #111b31;
   /* Secondary text. The overwhelming majority of supporting copy sits here. */
-  --muted-foreground: #a7b0bc;
+  --muted-foreground: #a3b1c6;
   /* Muted text. Reserved for the lowest-priority register — labels inside a
      chart, a legend caption, anything a reader should be able to skip without
      missing an argument. Three text rungs, not two, because a design system
      that claims a muted colour and never defines it is a design system with a
      hole in it. */
-  --muted-text: #6f7a87;
-  --accent: #1a222d;
+  --muted-text: #6b7a91;
+  --accent: #16223b;
   --accent-foreground: #f5f7fa;
   --destructive: #f06a7a;
-  --border: #27313d;
-  --input: #27313d;
-  --ring: #4fd1c5;
+  --border: #1f2c45;
+  --input: #1f2c45;
+  --ring: #5eb8ff;
 
   /* The secondary surface, as a first-class name. Two lifts only: a card sits
      on `--card`, a nested well or a control bed sits on this. */
-  --surface-2: #141a22;
+  --surface-2: #111b31;
 
-  --rule: #27313d;
-  --grid: #1e2732;
+  --rule: #1f2c45;
+  --grid: #172238;
 
   /* Status ramp. Green means "measured and improving", red means "measured and
      worse", amber means "measured but stale or unresolved". None of them are
@@ -124,8 +124,8 @@
 
   /* Accents. Rationed: cyan for live/interactive, violet for the propagation
      and uncertainty layer. */
-  --cyan: #4fd1c5;
-  --violet: #8b7cff;
+  --cyan: #38d6e8;
+  --violet: #a58bff;
   /* Information. The fourth signal colour, for neutral/informational states that
      are neither positive, warning nor critical. */
   --info: #6ea8fe;
@@ -137,13 +137,13 @@
   --chart-5: #8b7cff;
   --chart-6: #6ea8fe;
 
-  --sidebar: #080b10;
+  --sidebar: #050a14;
   --sidebar-foreground: #f5f7fa;
   --sidebar-primary: #f5f7fa;
-  --sidebar-primary-foreground: #080b10;
-  --sidebar-accent: #141a22;
+  --sidebar-primary-foreground: #060b17;
+  --sidebar-accent: #111b31;
   --sidebar-accent-foreground: #f5f7fa;
-  --sidebar-border: #27313d;
+  --sidebar-border: #1f2c45;
   --sidebar-ring: #4fd1c5;
 
   /* Executive risk-surface tokens. Values mirror the tokens above; they are
@@ -151,11 +151,11 @@
      against `--exec-*`, and retuning one register must not silently retune the
      other. The mapping is enforced by the fact that both ramps resolve to the
      same six colours. */
-  --exec-base: #080b10;
-  --exec-panel: #0e131a;
-  --exec-surface: #141a22;
-  --exec-surface-strong: #1a222d;
-  --exec-hairline: #27313d;
+  --exec-base: #060b17;
+  --exec-panel: #0b1324;
+  --exec-surface: #111b31;
+  --exec-surface-strong: #16223b;
+  --exec-hairline: #1f2c45;
   --exec-hairline-strong: #35414f;
   --exec-ink: #f5f7fa;
   --exec-ink-dim: #a7b0bc;

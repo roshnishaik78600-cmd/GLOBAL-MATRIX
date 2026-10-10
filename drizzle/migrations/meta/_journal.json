@@ -8,6 +8,13 @@
       "when": 1791608792633,
       "tag": "0000_globalmatrix_core_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791611555368,
+      "tag": "0001_migration",
+      "breakpoints": true
     }
   ]
 }

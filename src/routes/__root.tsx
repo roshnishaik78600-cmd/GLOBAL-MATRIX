@@ -14,6 +14,12 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { FocusProvider } from "@/lib/focus";
+import { useRealtimeSync } from "@/hooks/use-realtime-sync";
+
+function RealtimeSync() {
+  useRealtimeSync();
+  return null;
+}
 
 function NotFoundComponent() {
   return (
@@ -149,6 +155,7 @@ function RootComponent() {
       <FocusProvider>
         <Outlet />
       </FocusProvider>
+      <RealtimeSync />
       <Toaster />
     </QueryClientProvider>
   );
