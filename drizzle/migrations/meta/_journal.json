@@ -15,6 +15,13 @@
       "when": 1791611555368,
       "tag": "0001_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791621252946,
+      "tag": "0002_business_profiles_and_inquiries",
+      "breakpoints": true
     }
   ]
 }

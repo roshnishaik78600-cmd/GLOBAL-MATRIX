@@ -92,6 +92,45 @@ export type Database = {
         }
         Relationships: []
       }
+      business_profiles: {
+        Row: {
+          company_name: string | null
+          concerns: string | null
+          created_at: string
+          home_node: string
+          id: string
+          industry_id: string
+          products: string | null
+          sourcing_nodes: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_name?: string | null
+          concerns?: string | null
+          created_at?: string
+          home_node: string
+          id?: string
+          industry_id: string
+          products?: string | null
+          sourcing_nodes?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_name?: string | null
+          concerns?: string | null
+          created_at?: string
+          home_node?: string
+          id?: string
+          industry_id?: string
+          products?: string | null
+          sourcing_nodes?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       exposure_deps: {
         Row: {
           created_at: string
@@ -113,6 +152,42 @@ export type Database = {
           kind?: string
           ref_id?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      inquiries: {
+        Row: {
+          company: string | null
+          created_at: string
+          created_day: string
+          email: string
+          id: string
+          kind: string
+          message: string
+          name: string
+          status: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          created_day?: string
+          email: string
+          id?: string
+          kind: string
+          message: string
+          name: string
+          status?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          created_day?: string
+          email?: string
+          id?: string
+          kind?: string
+          message?: string
+          name?: string
+          status?: string
         }
         Relationships: []
       }
