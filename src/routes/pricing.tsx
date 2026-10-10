@@ -62,6 +62,13 @@ function Pricing() {
           <h2 className="text-xl font-semibold text-foreground">Request a report or pilot</h2>
           <div className="mt-4 max-w-2xl"><RequestForm defaultKind="report" /></div>
         </section>
+        <section id="payment" className="mt-14 scroll-mt-8">
+          <h2 className="text-xl font-semibold text-foreground">Manual UPI payment</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Payment happens by UPI once we confirm your scope by email. Below is a preview of how that payment step will look — it is not live yet.
+          </p>
+          <div className="mt-4 max-w-2xl"><PaymentSection /></div>
+        </section>
       </div>
     </main>
   );
