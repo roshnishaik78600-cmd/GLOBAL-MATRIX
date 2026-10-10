@@ -132,7 +132,7 @@ export default function RiskBoard() {
       }
     >
       {/* ------------------------------------------------------------- HERO -- */}
-      <div className="lg:col-span-12">
+      <div className="min-w-0 lg:col-span-12">
         <div className="card flex flex-col gap-6 p-6 lg:flex-row lg:items-center lg:gap-10 lg:p-8">
           <div className="min-w-0">
             <p className="exec-label text-[var(--exec-cyan)]">Composite board</p>
@@ -155,7 +155,7 @@ export default function RiskBoard() {
       </div>
 
       {/* -------------------------------------------------------------- MAP -- */}
-      <div className="lg:col-span-12">
+      <div className="min-w-0 lg:col-span-12">
         <div className="card flex min-w-0 flex-col">
           <SectionTitle
             meta={`${mapNodes.length} tracked places · click to open a profile`}
@@ -205,7 +205,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ---------------------------------------------------- RISK DRIVERS -- */}
-      <div className="lg:col-span-5">
+      <div className="min-w-0 lg:col-span-5">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle meta="mean pressure across the corpus" right={<DataType type="model" />}>
             Risk drivers
@@ -235,7 +235,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ----------------------------------------------- AFFECTED REGIONS -- */}
-      <div className="lg:col-span-7">
+      <div className="min-w-0 lg:col-span-7">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle meta="summed across all events">Most loaded network nodes</SectionTitle>
           {summary.hottest.length === 0 ? (
@@ -408,7 +408,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ------------------------------------------------ TRENDING SIGNALS -- */}
-      <div className="lg:col-span-7">
+      <div className="min-w-0 lg:col-span-7">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle meta="beyond the 90-day interval">Tail scenarios</SectionTitle>
           {rows.length === 0 ? (
@@ -439,7 +439,7 @@ export default function RiskBoard() {
       </div>
 
       {/* ------------------------------------------------------- EVIDENCE -- */}
-      <div className="lg:col-span-5">
+      <div className="min-w-0 lg:col-span-5">
         <div className="card flex h-full min-w-0 flex-col">
           <SectionTitle meta="how to read a figure">Evidence</SectionTitle>
           <ul className="flex flex-col divide-y divide-[var(--exec-hairline)]">
