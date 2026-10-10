@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import { useQuery } from "convex/react";
+import { Link } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { Pause, Play, RefreshCw } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { cn } from "@/lib/utils";
 import { sourceById } from "@/lib/sources";
 import {

@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router";
-import { useQuery } from "convex/react";
+import { Link } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { ArrowUpRight } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { Drawer } from "@/components/viz/Drawer";
 import { useFocus } from "@/lib/focus";
 import { getNode } from "@/lib/intel/nodes";

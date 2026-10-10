@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useConvex, useQuery } from "convex/react";
+import { useConvex, useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import { ExternalLink, RefreshCw } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { PageFrame } from "@/components/viz/exec/design";
 import { SectionTitle } from "@/components/viz/exec/system";
 import { Skeleton } from "@/components/viz/core";

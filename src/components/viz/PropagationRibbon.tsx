@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { AlertTriangle, ArrowRight, CircleDot, Layers, Users } from "lucide-react";
 import { NoData } from "@/components/viz/core";
 import { riskColorForScore } from "@/lib/intel/visual";

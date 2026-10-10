@@ -1,10 +1,10 @@
-import { Link, useParams } from "react-router";
-import { useQuery } from "convex/react";
+import { Link, useParams } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, Bookmark, BookmarkCheck } from "lucide-react";
 import { DataType, PageFrame, PageLoading } from "@/components/viz/exec/design";
 import { SectionTitle } from "@/components/viz/exec/system";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { useToggleWatch } from "@/hooks/use-auth-action";
 import { NoData } from "@/components/viz/core";
 import { ChannelBars } from "@/components/intel/primitives";

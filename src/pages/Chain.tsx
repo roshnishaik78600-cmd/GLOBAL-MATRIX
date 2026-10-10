@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useNavigate } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
+import { api } from "@/lib/backend/api";
 import { PageFrame } from "@/components/viz/exec/design";
 import { Skeleton } from "@/components/viz/core";
 import { QuestionStrip } from "@/components/viz/Unavailable";

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useQuery } from "@/lib/backend/shim";
+import { api } from "@/lib/backend/api";
 import { useTradeData } from "@/hooks/use-verified-data";
 import { freshnessOf } from "@/lib/freshness";
 import { compact } from "@/lib/numbers";

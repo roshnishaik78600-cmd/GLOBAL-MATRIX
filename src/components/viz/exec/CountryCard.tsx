@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "@/lib/router-shim";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Bookmark, BookmarkCheck } from "lucide-react";
 import { NodeRiskRadar, RadarLegend } from "@/components/viz/exec/NodeRiskRadar";

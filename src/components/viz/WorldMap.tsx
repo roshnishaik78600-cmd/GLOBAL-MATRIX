@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { Minus, Plus, RotateCcw } from "lucide-react";
 import { getNode } from "@/lib/intel/nodes";
 import { MAP_H, MAP_W, countryShapes, shapeForNode } from "@/lib/geo";

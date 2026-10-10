@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { NoVerifiedData } from "@/components/viz/Unavailable";
 import { MiniSpark, usd } from "@/components/viz/VerifiedPanels";
 import { SourceLine, SourceNote } from "@/components/viz/Provenance";

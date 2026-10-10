@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { Link, useNavigate, useSearchParams } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
+import { api } from "@/lib/backend/api";
 import { PageFrame } from "@/components/viz/exec/design";
 import { GraphExplorer } from "@/components/viz/Flow";
 import { Bar, NoData, Panel, Skeleton } from "@/components/viz/core";

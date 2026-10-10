@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ChevronDown } from "lucide-react";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";

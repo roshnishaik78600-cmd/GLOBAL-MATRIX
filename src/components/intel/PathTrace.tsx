@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { ExposureContribution } from "@/lib/intel/exposure";

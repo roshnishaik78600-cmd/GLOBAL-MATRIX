@@ -1,5 +1,5 @@
 import { useState, type ReactNode, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "@/lib/router-shim";
 import { Bookmark, Search, User, X, LogOut } from "lucide-react";
 import {
   DropdownMenu,

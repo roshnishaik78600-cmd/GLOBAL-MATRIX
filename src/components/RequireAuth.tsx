@@ -10,7 +10,7 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Lock } from "lucide-react";
 import type { ReactNode } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router";
+import { Navigate, useLocation, useNavigate } from "@/lib/router-shim";
 
 /**
  * Wraps a route that requires a signed-in user.

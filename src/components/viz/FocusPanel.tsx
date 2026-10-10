@@ -1,8 +1,8 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import type { ReactNode } from "react";
-import { useQuery } from "convex/react";
+import { useQuery } from "@/lib/backend/shim";
 import { ArrowUpRight } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { Drawer } from "@/components/viz/Drawer";
 import { StatusBadge } from "@/components/viz/Provenance";
 import { NodeEvidence } from "@/components/viz/NodeEvidence";

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { Database } from "lucide-react";
 import { cn } from "@/lib/utils";
 

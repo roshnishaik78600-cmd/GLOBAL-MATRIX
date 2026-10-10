@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { useQuery } from "convex/react";
+import { Link, useNavigate } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { ChevronDown, Compass, Radar as RadarIcon } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { useFocus } from "@/lib/focus";
 import { CountryCard, RegionSummary, type ExecCountry } from "@/components/viz/exec/CountryCard";
 import {

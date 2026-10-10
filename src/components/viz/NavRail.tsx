@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { NavLink } from "react-router";
+import { NavLink } from "@/lib/router-shim";
 import { X } from "lucide-react";
 import { NAV_GROUPS, type NavItem } from "@/components/viz/navigation";
 import { cn } from "@/lib/utils";

@@ -1,4 +1,4 @@
-import { useLocation } from "react-router";
+import { useLocation } from "@/lib/router-shim";
 import { PageFrame } from "@/components/viz/exec/design";
 import { Panel } from "@/components/viz/core";
 import { QuestionStrip } from "@/components/viz/Unavailable";

@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { ArrowUpRight, TrendingDown, TrendingUp } from "lucide-react";
 import { Panel, Skeleton } from "@/components/viz/core";
 import { compact } from "@/lib/numbers";

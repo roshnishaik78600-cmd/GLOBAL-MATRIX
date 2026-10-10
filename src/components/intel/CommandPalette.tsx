@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router";
-import { useQuery } from "convex/react";
+import { useNavigate } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import {
   CommandDialog,
   CommandEmpty,
@@ -10,7 +10,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { SOURCES } from "@/lib/sources";
 import { STAGE_LABEL } from "@/lib/intel/types";
 import { pct } from "@/lib/format";

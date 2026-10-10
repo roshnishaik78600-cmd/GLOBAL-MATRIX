@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useQuery } from "@/lib/backend/shim";
+import { api } from "@/lib/backend/api";
 import { useFocus } from "@/lib/focus";
 import { getNode } from "@/lib/intel/nodes";
 import { pct } from "@/lib/format";

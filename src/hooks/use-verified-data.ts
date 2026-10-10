@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useConvex, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useConvex, useQuery } from "@/lib/backend/shim";
+import { api } from "@/lib/backend/api";
 import type { FxPoint, YieldPoint } from "@/lib/ecb";
 import { STALE_AFTER_MS, formatAsOf, type Provenance } from "@/lib/sources";
 

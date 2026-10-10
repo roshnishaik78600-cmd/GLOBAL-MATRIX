@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { useQuery } from "convex/react";
+import { Link, useNavigate } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/convex/macroTopology";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import {

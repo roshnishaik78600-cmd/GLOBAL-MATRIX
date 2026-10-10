@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { SOURCE_CLASS_LABEL } from "@/lib/intel/types";

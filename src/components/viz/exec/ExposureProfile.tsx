@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router";
-import { useMutation, useQuery } from "convex/react";
+import { Link } from "@/lib/router-shim";
+import { useMutation, useQuery } from "@/lib/backend/shim";
 import { ArrowUpRight, LogIn, Plus, Trash2 } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { useAuthAction } from "@/hooks/use-auth-action";
 import { ExecCard, SectionTitle } from "@/components/viz/exec/system";

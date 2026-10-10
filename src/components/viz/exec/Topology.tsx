@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 import { bandOf } from "@/lib/intel/engine";
 import { CHANNEL_COLOR } from "@/lib/intel/visual";

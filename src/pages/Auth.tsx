@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router";
-import { useMutation } from "convex/react";
+import { Link, useNavigate, useSearchParams } from "@/lib/router-shim";
+import { useMutation } from "@/lib/backend/shim";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
@@ -10,7 +10,7 @@ import {
   Mail,
   UserX,
 } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

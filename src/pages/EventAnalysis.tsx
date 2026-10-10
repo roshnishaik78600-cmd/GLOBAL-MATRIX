@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
-import { useMutation, useQuery, useConvex } from "convex/react";
+import { Link, useNavigate, useParams } from "@/lib/router-shim";
+import { useMutation, useQuery, useConvex } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -17,7 +17,7 @@ import {
   PageLoading,
 } from "@/components/viz/exec/design";
 import { SectionTitle } from "@/components/viz/exec/system";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { useToggleWatch, useAuthAction } from "@/hooks/use-auth-action";
 import { NoData } from "@/components/viz/core";
 import { WorldMap } from "@/components/viz/WorldMap";

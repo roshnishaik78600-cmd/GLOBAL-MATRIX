@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { useLocation, useNavigate } from "react-router";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { useLocation, useNavigate } from "@/lib/router-shim";
+import { useMutation } from "@/lib/backend/shim";
+import { api } from "@/lib/backend/api";
 import { useAuth } from "@/hooks/use-auth";
 
 /**

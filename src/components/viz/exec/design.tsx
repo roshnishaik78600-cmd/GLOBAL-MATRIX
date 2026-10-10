@@ -5,7 +5,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { AlertTriangle, Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {

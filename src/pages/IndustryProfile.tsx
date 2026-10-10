@@ -1,7 +1,7 @@
-import { Link, useParams } from "react-router";
-import { useQuery } from "convex/react";
+import { Link, useParams } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { ArrowLeft, ArrowUpRight, Bookmark, BookmarkCheck } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { useToggleWatch } from "@/hooks/use-auth-action";
 import { DataType, PageFrame, PageLoading } from "@/components/viz/exec/design";
 import { SectionTitle } from "@/components/viz/exec/system";

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { arcPath, project, riskColorForScore } from "@/lib/intel/visual";
 import { getNode } from "@/lib/intel/nodes";
 import { cn } from "@/lib/utils";

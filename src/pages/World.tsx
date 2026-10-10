@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router";
-import { useQuery } from "convex/react";
+import { Link, useNavigate, useSearchParams } from "@/lib/router-shim";
+import { useQuery } from "@/lib/backend/shim";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import {
   Action,
   EmptyState,

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router";
-import { useConvex, useQuery } from "convex/react";
+import { Link } from "@/lib/router-shim";
+import { useConvex, useQuery } from "@/lib/backend/shim";
 import { Sparkles } from "lucide-react";
-import { api } from "@/convex/_generated/api";
+import { api } from "@/lib/backend/api";
 import { PageFrame } from "@/components/viz/exec/design";
 import { useAuthAction } from "@/hooks/use-auth-action";
 import { Bar, NoData, Panel, Skeleton } from "@/components/viz/core";

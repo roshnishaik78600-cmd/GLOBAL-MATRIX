@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "@/lib/router-shim";
 import { ArrowUpRight } from "lucide-react";
 import type { ChokepointRow } from "@/convex/chokepoints";
 import { getNode } from "@/lib/intel/nodes";
