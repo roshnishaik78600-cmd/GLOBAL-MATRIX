@@ -1238,6 +1238,31 @@ async function currentUser() {
 /* sources.* / brief.* — delegated to privileged server functions       */
 /* ------------------------------------------------------------------ */
 
+export interface ChokepointRow {
+  nodeId: string;
+  label: string;
+  short: string;
+  region: string;
+  kind: string;
+  load: number;
+  criticality: number;
+  eventCount: number;
+  byChannel: { channel: Channel; label: string; load: number }[];
+  /** Sectors that declare a dependency on this node, strongest first. */
+  industries: {
+    id: string;
+    label: string;
+    share: number;
+    note: string;
+    role: "route" | "input";
+    sectorLoad: number;
+  }[];
+  /** Top events reaching this node, with the term they contribute. */
+  events: { eventId: string; title: string; weight: number; channel: Channel }[];
+  /** Economies most exposed to the same events as this node. */
+  exposed: { nodeId: string; label: string; load: number; coupling: number }[];
+}
+
 export interface RefreshResult {
   skipped?: string;
   ran?: boolean;
