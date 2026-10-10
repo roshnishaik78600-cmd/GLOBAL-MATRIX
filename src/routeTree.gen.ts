@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MethodologyRouteImport } from './routes/methodology'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppAnaloguesRouteImport } from './routes/app/analogues'
@@ -60,6 +61,11 @@ const LoginRoute = LoginRouteImport.update({
 const MethodologyRoute = MethodologyRouteImport.update({
   id: '/methodology',
   path: '/methodology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/methodology': typeof MethodologyRoute
+  '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/methodology': typeof MethodologyRoute
+  '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
@@ -237,6 +245,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/methodology': typeof MethodologyRoute
+  '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
@@ -268,6 +277,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/login'
     | '/methodology'
+    | '/pricing'
     | '/signup'
     | '/app/analogues'
     | '/app/analyst'
@@ -296,6 +306,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/login'
     | '/methodology'
+    | '/pricing'
     | '/signup'
     | '/app/analogues'
     | '/app/analyst'
@@ -325,6 +336,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/login'
     | '/methodology'
+    | '/pricing'
     | '/signup'
     | '/app/analogues'
     | '/app/analyst'
@@ -355,6 +367,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   LoginRoute: typeof LoginRoute
   MethodologyRoute: typeof MethodologyRoute
+  PricingRoute: typeof PricingRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -393,6 +406,13 @@ declare module '@tanstack/react-router' {
       path: '/methodology'
       fullPath: '/methodology'
       preLoaderRoute: typeof MethodologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -608,6 +628,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   LoginRoute: LoginRoute,
   MethodologyRoute: MethodologyRoute,
+  PricingRoute: PricingRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
