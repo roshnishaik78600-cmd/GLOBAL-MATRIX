@@ -19,6 +19,33 @@ export const Route = createFileRoute("/pricing")({
 
 const ORDER: PlanId[] = ["free", "analyst", "business"];
 
+const ABOUT: Record<PlanId, { who: string; problem: string; click: string }> = {
+  free: {
+    who: "Anyone evaluating GlobalMatrix",
+    problem: "See how global events connect to countries, industries and supply chains.",
+    click: "Opens your billing page; sign in and activate the free plan. No payment.",
+  },
+  analyst: {
+    who: "Individual analysts and buyers who use AI briefs often",
+    problem: "Investigate more events in a day with model-written briefs.",
+    click: "Creates an order in your account. In demo mode it stays unpaid and unlocks nothing.",
+  },
+  business: {
+    who: "Procurement and risk teams with heavy daily use",
+    problem: "Run many briefs a day across your tracked events.",
+    click: "Creates an order in your account. In demo mode it stays unpaid and unlocks nothing.",
+  },
+};
+
+const COMPARE: { row: string; free: string; analyst: string; business: string; brief: string }[] = [
+  { row: "Price", free: "₹0", analyst: "₹999/month", business: "₹4,999/month", brief: "₹2,500 once" },
+  { row: "Billing", free: "None", analyst: "Monthly, manual renewal", business: "Monthly, manual renewal", brief: "One-time" },
+  { row: "Maps, events, impact & risk views", free: "✓", analyst: "✓", business: "✓", brief: "—" },
+  { row: "Watchlist, notes, exposure profile", free: "✓", analyst: "✓", business: "✓", brief: "—" },
+  { row: "AI analyst briefs per day", free: "5", analyst: "50", business: "200", brief: "—" },
+  { row: "Analyst-written PDF for your scope", free: "—", analyst: "—", business: "—", brief: "✓" },
+];
+
 function PlanCard({ id }: { id: PlanId }) {
   const p = PLANS[id];
   const featured = id === "analyst";
@@ -29,6 +56,8 @@ function PlanCard({ id }: { id: PlanId }) {
         {formatINR(p.price)}
         <span className="text-sm font-normal text-muted-foreground">{p.period ? " / month" : ""}</span>
       </p>
+      <p className="mt-3 text-sm text-muted-foreground"><span className="text-foreground">For:</span> {ABOUT[id].who}</p>
+      <p className="mt-1 text-sm text-muted-foreground"><span className="text-foreground">Helps you:</span> {ABOUT[id].problem}</p>
       <p className="mt-4 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">Includes</p>
       <ul className="mt-2 space-y-1.5 text-sm text-foreground">
         {p.features.map((f) => <li key={f} className="flex gap-2"><span className="text-primary">✓</span>{f}</li>)}
@@ -37,9 +66,10 @@ function PlanCard({ id }: { id: PlanId }) {
       <ul className="mt-2 flex-1 space-y-1.5 text-sm text-muted-foreground">
         {p.limits.map((f) => <li key={f} className="flex gap-2"><span>—</span>{f}</li>)}
       </ul>
+      <p className="mt-4 text-xs text-muted-foreground"><span className="text-foreground">When you click:</span> {ABOUT[id].click}</p>
       {id === "free" ? (
         <Link to="/app/billing" className="mt-6 inline-flex justify-center rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-accent">
-          Start free
+          Explore Free
         </Link>
       ) : (
         <Link to="/app/checkout/$product" params={{ product: id }} className="mt-6 inline-flex justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
@@ -67,6 +97,25 @@ function Pricing() {
           {ORDER.map((id) => <PlanCard key={id} id={id} />)}
         </div>
 
+        <section className="mt-10" aria-labelledby="compare">
+          <h2 id="compare" className="text-xl font-semibold text-foreground">Compare</h2>
+          <div className="mt-4 overflow-x-auto rounded-xl border border-border">
+            <table className="w-full min-w-[640px] text-left text-sm">
+              <thead className="bg-card text-xs text-muted-foreground">
+                <tr><th className="px-4 py-3" scope="col"><span className="sr-only">Feature</span></th><th scope="col">Free Explorer</th><th scope="col">Analyst</th><th scope="col">Business</th><th scope="col">Risk Brief</th></tr>
+              </thead>
+              <tbody>
+                {COMPARE.map((r) => (
+                  <tr key={r.row} className="border-t border-border text-foreground">
+                    <th scope="row" className="px-4 py-2.5 font-normal text-muted-foreground">{r.row}</th>
+                    <td>{r.free}</td><td>{r.analyst}</td><td>{r.business}</td><td>{r.brief}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section className="mt-14 grid gap-6 rounded-xl border border-border bg-card p-6 md:grid-cols-[1fr_auto] md:items-start">
           <div>
             <span className="rounded bg-accent px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent-foreground">One-time service · not a subscription</span>
@@ -74,13 +123,13 @@ function Pricing() {
             <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
               {CUSTOM_REPORT.deliverables.map((d) => <li key={d} className="flex gap-2"><span className="text-primary">—</span>{d}</li>)}
             </ul>
-            <p className="mt-3 text-xs text-muted-foreground">Work begins only after payment is verified and the scope is confirmed with you.</p>
+            <p className="mt-3 text-xs text-muted-foreground">For: teams that need one focused analysis without a subscription. When you click: an order is created in your account; work begins only after payment is verified and the scope is confirmed with you.</p>
           </div>
           <div className="md:text-right">
             <p className="text-3xl font-semibold text-foreground">{formatINR(CUSTOM_REPORT.price)}</p>
             <p className="text-sm text-muted-foreground">one-time</p>
             <Link to="/app/checkout/$product" params={{ product: "custom_report" }} className="mt-4 inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-              Order a brief
+              Order a Risk Brief
             </Link>
           </div>
         </section>

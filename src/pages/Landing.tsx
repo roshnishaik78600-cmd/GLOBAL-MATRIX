@@ -6,6 +6,7 @@ import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } f
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
+import { HowItWorks } from "@/components/landing/HowItWorks";
 import {
   BAND_LABEL,
   CHANNEL_LABEL,
@@ -258,27 +259,25 @@ export default function Landing() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="t-hero mt-4 text-[var(--exec-ink)]"
+            className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] font-semibold tracking-[-0.03em] text-[var(--exec-ink)] sm:text-[3.25rem]"
           >
-            GLOBALMATRIX
+            Understand Global Risks. Protect Your Supply Chain.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="mt-5 max-w-2xl text-[1.25rem] leading-snug font-medium tracking-[-0.015em] text-[var(--exec-ink)] sm:text-[1.5rem]"
+            className="mt-5 max-w-2xl text-[1.05rem] leading-snug font-medium text-[var(--exec-ink)] sm:text-[1.2rem]"
           >
-            See what changed. Trace the impact.
+            For importers, manufacturers and procurement teams.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.15 }}
-            className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]"
+            className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]"
           >
-            Global geopolitical and supply-chain exposure intelligence that
-            connects events to the countries, flows, infrastructure, industries
-            and companies they affect.
+            GlobalMatrix connects geopolitical events, trade disruptions, tariffs, and sanctions to the countries, industries, and supply chains they may affect—helping businesses investigate risks and make better-informed decisions.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -299,6 +298,12 @@ export default function Landing() {
             >
               View Impact Map
             </a>
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
+            >
+              See plans & pricing
+            </Link>
           </motion.div>
 
           {/* The four numbers, and the freshness of the layer behind them.
@@ -311,6 +316,8 @@ export default function Landing() {
 
       <main className="min-w-0">
         <div className="gm-width flex flex-col gap-6 px-4 py-10 lg:gap-8 lg:px-8 lg:py-12">
+          <HowItWorks />
+
           {/* GLOBAL PULSE — the six numbers that summarise the world. */}
           <GlobalPulse data={topology} />
 
