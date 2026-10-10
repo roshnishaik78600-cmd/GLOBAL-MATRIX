@@ -38,7 +38,7 @@ export function PaymentSection() {
         ))}
       </div>
 
-      <div className="mt-6 grid items-start gap-6 sm:grid-cols-[auto,1fr]">
+      <div className="mt-6 grid items-start gap-6 sm:grid-cols-[auto_1fr]">
         {/* The QR sits on a plain white well, the way a scannable code would.
             It is decorative: it encodes no payment destination. */}
         <div className="relative w-fit rounded-lg border border-border bg-white p-3">
