@@ -275,7 +275,7 @@ export default function Landing() {
             transition={{ duration: 0.4, delay: 0.12 }}
             className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[var(--exec-ink-dim)] sm:text-[18px]"
           >
-            Connect geopolitical events to trade disruptions, industry exposure, and supply-chain risks—all in one intelligence platform.
+            Discover geopolitical disruptions, understand potential supply-chain impacts, and investigate risks using evidence-backed global intelligence.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -290,17 +290,18 @@ export default function Landing() {
               Explore Global Risks
               <ArrowRight className="size-4" />
             </Link>
-            <Link
-              to="/app/data"
+            <a
+              href="#how-it-works"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
             >
-              View Live Intelligence
-            </Link>
+              See How It Works
+            </a>
             <Link
               to="/pricing"
+              hash="compare"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] bg-[var(--exec-panel)]/60 px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] backdrop-blur transition-colors hover:border-[var(--exec-cyan)]"
             >
-              Explore Pricing
+              Compare Plans
             </Link>
           </motion.div>
 

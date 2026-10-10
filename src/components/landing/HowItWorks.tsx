@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { Radar, Network, ShieldCheck, ArrowRight } from "lucide-react";
+import { PropagationExample } from "./PropagationExample";
 
 const STEPS = [
   { icon: Radar, title: "Discover", text: "See important global events and disruptions." },
   { icon: Network, title: "Understand", text: "Explore affected industries, trade routes, and potential impact pathways." },
-  { icon: ShieldCheck, title: "Act Smarter", text: "Identify risks to investigate and what indicators to monitor next." },
+  { icon: ShieldCheck, title: "Prepare", text: "Know which suppliers to check and which indicators to watch next." },
 ];
 
 const EXAMPLES = [
@@ -30,7 +31,7 @@ const EXAMPLES = [
 
 export function HowItWorks() {
   return (
-    <section aria-labelledby="how-heading" className="card p-5 sm:p-7">
+    <section id="how-it-works" aria-labelledby="how-heading" className="card scroll-mt-20 p-5 sm:p-7">
       <h2 id="how-heading" className="t-card text-[var(--exec-ink)]">How GlobalMatrix works</h2>
       <ol className="mt-5 grid gap-4 sm:grid-cols-3">
         {STEPS.map((s, i) => (
