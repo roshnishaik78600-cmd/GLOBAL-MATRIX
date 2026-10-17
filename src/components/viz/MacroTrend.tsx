@@ -158,6 +158,8 @@ function SeriesChart({
           stroke="var(--foreground)"
           strokeWidth={1.4}
           vectorEffect="non-scaling-stroke"
+          pathLength={1}
+          className="gm-draw"
         />
         {values.map((v, i) => (
           <circle key={years[i]} cx={x(i)} cy={y(v)} r={1.8} fill="var(--foreground)">

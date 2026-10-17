@@ -724,11 +724,28 @@
   border-color: var(--exec-hairline-strong, var(--border));
 }
 
+/* Chart line draw-in. Requires pathLength={1} on the element so dasharray
+   units are fractions of the whole line. */
+@keyframes gm-drawin {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.gm-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: gm-drawin 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gm-drift,
   .gm-ticker,
   .gm-shimmer,
-  .gm-rise {
+  .gm-rise,
+  .gm-draw {
     animation: none;
+  }
+  .gm-draw {
+    stroke-dashoffset: 0;
   }
 }
