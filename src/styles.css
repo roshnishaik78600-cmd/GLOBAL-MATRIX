@@ -80,92 +80,92 @@
      language rather than two. */
   --radius: 0.5rem;
 
-  --background: oklch(0.15155 0.00852 285.339);
-  --foreground: oklch(0.95877 0.0127 86.83);
-  --card: oklch(0.18454 0.01013 285.365);
-  --card-foreground: oklch(0.95877 0.0127 86.83);
-  --popover: oklch(0.20838 0.01576 284.951);
-  --popover-foreground: oklch(0.95877 0.0127 86.83);
-  --primary: oklch(0.81216 0.15398 162.669);
-  --primary-foreground: oklch(0.15155 0.00852 285.339);
-  --secondary: oklch(0.20838 0.01576 284.951);
-  --secondary-foreground: oklch(0.95877 0.0127 86.83);
-  --muted: oklch(0.20838 0.01576 284.951);
+  --background: #101012;
+  --foreground: #f2ede4;
+  --card: #1c1b1d;
+  --card-foreground: #f2ede4;
+  --popover: #242226;
+  --popover-foreground: #f2ede4;
+  --primary: #c47b55;
+  --primary-foreground: #101012;
+  --secondary: #242226;
+  --secondary-foreground: #f2ede4;
+  --muted: #242226;
   /* Secondary text. The overwhelming majority of supporting copy sits here. */
-  --muted-foreground: oklch(0.71029 0.01104 81.791);
+  --muted-foreground: #a7a19a;
   /* Muted text. Reserved for the lowest-priority register — labels inside a
      chart, a legend caption, anything a reader should be able to skip without
      missing an argument. Three text rungs, not two, because a design system
      that claims a muted colour and never defines it is a design system with a
      hole in it. */
-  --muted-text: oklch(0.63752 0.00951 84.583);
-  --accent: oklch(0.20838 0.01576 284.951);
-  --accent-foreground: oklch(0.95877 0.0127 86.83);
-  --destructive: oklch(0.70908 0.18637 14.148);
-  --border: oklch(0.29283 0.01625 285.353);
-  --input: oklch(0.29283 0.01625 285.353);
-  --ring: oklch(0.81216 0.15398 162.669);
+  --muted-text: #918b84;
+  --accent: #242226;
+  --accent-foreground: #f2ede4;
+  --destructive: #c8687a;
+  --border: #38332f;
+  --input: #38332f;
+  --ring: #c47b55;
 
   /* The secondary surface, as a first-class name. Two lifts only: a card sits
      on `--card`, a nested well or a control bed sits on this. */
-  --surface-2: oklch(0.20838 0.01576 284.951);
+  --surface-2: #242226;
 
-  --rule: oklch(0.29283 0.01625 285.353);
-  --grid: oklch(0.24705 0.01508 285.243);
+  --rule: #38332f;
+  --grid: #2a2729;
 
   /* Status ramp. Green means "measured and improving", red means "measured and
      worse", amber means "measured but stale or unresolved". None of them are
      decorative and none of them are ever used for a non-status meaning. */
-  --stable: oklch(0.81216 0.15398 162.669);
-  --warning: oklch(0.83341 0.12627 78.419);
-  --elevated: oklch(0.83341 0.12627 78.419);
-  --critical: oklch(0.70908 0.18637 14.148);
-  --signal: oklch(0.70908 0.18637 14.148);
+  --stable: #c47b55;
+  --warning: #dda85e;
+  --elevated: #dda85e;
+  --critical: #c8687a;
+  --signal: #c8687a;
 
   /* Accents. Rationed: emerald for live/interactive, violet for the propagation
      and uncertainty layer. */
-  --cyan: oklch(0.81216 0.15398 162.669);
-  --violet: oklch(0.74839 0.14392 294.027);
+  --cyan: #c47b55;
+  --violet: #e5c99a;
   /* Information. The fourth signal colour, for neutral/informational states that
      are neither positive, warning nor critical. */
-  --info: oklch(0.74839 0.14392 294.027);
+  --info: #e5c99a;
 
-  --chart-1: oklch(0.70908 0.18637 14.148);
-  --chart-2: oklch(0.81216 0.15398 162.669);
-  --chart-3: oklch(0.81216 0.15398 162.669);
-  --chart-4: oklch(0.83341 0.12627 78.419);
-  --chart-5: oklch(0.74839 0.14392 294.027);
-  --chart-6: oklch(0.74839 0.14392 294.027);
+  --chart-1: #c8687a;
+  --chart-2: #c47b55;
+  --chart-3: #c47b55;
+  --chart-4: #dda85e;
+  --chart-5: #e5c99a;
+  --chart-6: #e5c99a;
 
-  --sidebar: oklch(0.15155 0.00852 285.339);
-  --sidebar-foreground: oklch(0.95877 0.0127 86.83);
-  --sidebar-primary: oklch(0.95877 0.0127 86.83);
-  --sidebar-primary-foreground: oklch(0.15155 0.00852 285.339);
-  --sidebar-accent: oklch(0.20838 0.01576 284.951);
-  --sidebar-accent-foreground: oklch(0.95877 0.0127 86.83);
-  --sidebar-border: oklch(0.29283 0.01625 285.353);
-  --sidebar-ring: oklch(0.81216 0.15398 162.669);
+  --sidebar: #101012;
+  --sidebar-foreground: #f2ede4;
+  --sidebar-primary: #f2ede4;
+  --sidebar-primary-foreground: #101012;
+  --sidebar-accent: #242226;
+  --sidebar-accent-foreground: #f2ede4;
+  --sidebar-border: #38332f;
+  --sidebar-ring: #c47b55;
 
   /* Executive risk-surface tokens. Values mirror the tokens above; they are
      kept as separate names because a large share of the console is written
      against `--exec-*`, and retuning one register must not silently retune the
      other. The mapping is enforced by the fact that both ramps resolve to the
      same six colours. */
-  --exec-base: oklch(0.15155 0.00852 285.339);
-  --exec-panel: oklch(0.18454 0.01013 285.365);
-  --exec-surface: oklch(0.20838 0.01576 284.951);
-  --exec-surface-strong: oklch(0.25591 0.01683 285.15);
-  --exec-hairline: oklch(0.29283 0.01625 285.353);
-  --exec-hairline-strong: oklch(0.3871 0.01851 285.503);
-  --exec-ink: oklch(0.95877 0.0127 86.83);
-  --exec-ink-dim: oklch(0.71029 0.01104 81.791);
-  --exec-ink-muted: oklch(0.63752 0.00951 84.583);
-  --exec-cyan: oklch(0.81216 0.15398 162.669);
-  --exec-violet: oklch(0.74839 0.14392 294.027);
-  --exec-amber: oklch(0.83341 0.12627 78.419);
-  --exec-crimson: oklch(0.70908 0.18637 14.148);
-  --exec-emerald: oklch(0.81216 0.15398 162.669);
-  --exec-info: oklch(0.74839 0.14392 294.027);
+  --exec-base: #101012;
+  --exec-panel: #1c1b1d;
+  --exec-surface: #242226;
+  --exec-surface-strong: #2e2b2c;
+  --exec-hairline: #38332f;
+  --exec-hairline-strong: #4d4640;
+  --exec-ink: #f2ede4;
+  --exec-ink-dim: #a7a19a;
+  --exec-ink-muted: #918b84;
+  --exec-cyan: #c47b55;
+  --exec-violet: #e5c99a;
+  --exec-amber: #dda85e;
+  --exec-crimson: #c8687a;
+  --exec-emerald: #c47b55;
+  --exec-info: #e5c99a;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
