@@ -126,7 +126,7 @@ export function PageFrame({
  */
 function BodyGrid({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 [&>*]:min-w-0 lg:grid-cols-12 lg:gap-5">
+    <div className="gm-body grid grid-cols-[minmax(0,1fr)] gap-4 [&>*]:min-w-0 lg:grid-cols-12 lg:gap-5">
       {Children.map(children, (child) => {
         if (!isValidElement(child) || typeof child.type !== "string") {
           return child;
@@ -181,7 +181,7 @@ export function Region({
         // border. It is a ring, not a glow: on a surface this dark a diffuse
         // shadow reads as blur, and blur reads as an accident.
         <section
-          className="card flex h-full min-w-0 flex-col"
+          className="card gm-rise flex h-full min-w-0 flex-col"
           style={{
             borderColor: "color-mix(in srgb, var(--exec-cyan) 45%, var(--exec-hairline))",
           }}
@@ -189,7 +189,7 @@ export function Region({
           {children}
         </section>
       ) : (
-        <section className="card flex h-full min-w-0 flex-col">{children}</section>
+        <section className="card gm-rise flex h-full min-w-0 flex-col">{children}</section>
       )}
     </div>
   );
