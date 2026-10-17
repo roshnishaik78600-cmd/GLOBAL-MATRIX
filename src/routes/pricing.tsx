@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
 import { formatINR } from "@/lib/commerce";
 import { PLANS, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
+import { fadeUp, hoverLift, revealProps, stagger } from "@/lib/motion";
 
 export const Route = createFileRoute("/pricing")({
   staticData: { sitemap: true },
