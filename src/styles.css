@@ -689,10 +689,46 @@
   animation: gm-shimmer 1.6s linear infinite;
 }
 
+/* Console entrance: panels rise and fade in, staggered down the grid. */
+@keyframes gm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.gm-rise {
+  animation: gm-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.gm-body > *:nth-child(2) .gm-rise {
+  animation-delay: 0.06s;
+}
+.gm-body > *:nth-child(3) .gm-rise {
+  animation-delay: 0.12s;
+}
+.gm-body > *:nth-child(4) .gm-rise {
+  animation-delay: 0.18s;
+}
+.gm-body > *:nth-child(n + 5) .gm-rise {
+  animation-delay: 0.24s;
+}
+
+/* Cards brighten their hairline on hover — quiet, not a glow. */
+.card {
+  transition: border-color 0.25s ease;
+}
+.card:hover {
+  border-color: var(--exec-hairline-strong, var(--border));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gm-drift,
   .gm-ticker,
-  .gm-shimmer {
+  .gm-shimmer,
+  .gm-rise {
     animation: none;
   }
 }
