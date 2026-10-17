@@ -620,3 +620,79 @@
     0 0 0 1px color-mix(in oklch, var(--primary) 25%, transparent),
     0 18px 50px -18px color-mix(in oklch, var(--primary) 45%, transparent);
 }
+
+/* ---- Premium surface & text treatments -------------------------------- */
+
+/* Copper → champagne gradient text for editorial emphasis. */
+.gm-text-gradient {
+  background: linear-gradient(100deg, var(--primary) 10%, var(--violet) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hairline card with a soft top light — the default "premium panel". */
+.gm-panel {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, color-mix(in oklch, var(--card) 100%, var(--foreground) 2%), var(--card));
+  border-radius: 1rem;
+  box-shadow: inset 0 1px 0 color-mix(in oklch, var(--foreground) 6%, transparent);
+}
+
+/* Slow ambient drift for hero glows. Transform-only, cheap on mobile. */
+@keyframes gm-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.06);
+  }
+}
+.gm-drift {
+  animation: gm-drift 14s ease-in-out infinite;
+}
+
+/* Marquee ticker for the event strip. Pauses on hover. */
+@keyframes gm-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.gm-ticker {
+  animation: gm-ticker 60s linear infinite;
+}
+.gm-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Loading shimmer for skeletons. */
+@keyframes gm-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+.gm-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--surface-2) 40%,
+    color-mix(in oklch, var(--surface-2) 70%, var(--foreground) 8%) 50%,
+    var(--surface-2) 60%
+  );
+  background-size: 200% 100%;
+  animation: gm-shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-drift,
+  .gm-ticker,
+  .gm-shimmer {
+    animation: none;
+  }
+}
