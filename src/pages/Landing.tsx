@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
+import { fadeUp, mediaIn, stagger } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
 import { api } from "@/lib/backend/api";
