@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
+import { fadeUp, mediaIn, stagger } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
 import { api } from "@/lib/backend/api";
@@ -215,25 +216,40 @@ export default function Landing() {
     <ExecPage className="min-h-full">
       <LandingNav />
 
-      <header className="relative border-b border-border">
-        <div className="gm-width px-4 pt-9 lg:px-8 lg:pt-12">
-          <p className="mb-4 flex items-center gap-3 text-sm font-medium text-primary">
+      <header className="relative overflow-hidden border-b border-border">
+        {/* Atmospheric copper glow behind the hero — decoration only. */}
+        <div
+          aria-hidden
+          className="gm-hero-glow pointer-events-none absolute inset-0 opacity-60"
+        />
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          animate="show"
+          className="gm-width relative px-4 pt-9 lg:px-8 lg:pt-12"
+        >
+          <motion.p
+            variants={fadeUp}
+            className="mb-4 flex items-center gap-3 text-sm font-medium text-primary"
+          >
             <Globe2 className="size-4" /> GlobalMatrix{" "}
             <span className="text-muted-foreground">/ Connected intelligence</span>
-          </p>
+          </motion.p>
           <motion.h1
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
+            variants={fadeUp}
             className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]"
           >
             Understand global disruption{" "}
             <span className="text-primary">before it reaches your supply chain.</span>
           </motion.h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+          <motion.p
+            variants={fadeUp}
+            className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground"
+          >
             Event → affected country or industry → supply-chain exposure → evidence → what to
             check next.
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          </motion.p>
+          <motion.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-3">
             <Button asChild size="lg">
               <Link to="/app">
                 Explore Global Risks <ArrowRight />
@@ -247,15 +263,24 @@ export default function Landing() {
                 View Pricing <ArrowRight />
               </Link>
             </Button>
-          </div>
-          <div className="mt-7 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 text-xs text-muted-foreground">
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            className="mt-7 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 text-xs text-muted-foreground"
+          >
             <span className="flex items-center gap-2">
               <Network className="size-4 text-primary" /> Global exposure network
             </span>
             <span>Demonstration events · modelled connections, not shipping routes</span>
-          </div>
-        </div>
-        <div className="gm-width relative" id="world-map">
+          </motion.div>
+        </motion.div>
+        <motion.div
+          variants={mediaIn}
+          initial="hidden"
+          animate="show"
+          className="gm-width relative"
+          id="world-map"
+        >
           {data ? (
             <WorldMap
               nodes={data.mapNodes}
@@ -269,10 +294,16 @@ export default function Landing() {
           ) : (
             <Skeleton className="gm-map-stage w-full" />
           )}
-        </div>
-        <div className="gm-width px-4 pb-5 lg:px-8">
+        </motion.div>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="show"
+          transition={{ delay: 0.35 }}
+          className="gm-width relative px-4 pb-5 lg:px-8"
+        >
           <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
-        </div>
+        </motion.div>
       </header>
 
       <main className="min-w-0">

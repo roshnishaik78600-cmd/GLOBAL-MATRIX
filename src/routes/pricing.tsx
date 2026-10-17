@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
 import { formatINR } from "@/lib/commerce";
 import { PLANS, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
+import { fadeUp, hoverLift, revealProps, stagger } from "@/lib/motion";
 
 export const Route = createFileRoute("/pricing")({
   staticData: { sitemap: true },
@@ -73,29 +76,33 @@ function PlanCard({ id }: { id: PlanId }) {
   const p = PLANS[id];
   const featured = id === "analyst";
   return (
-    <div
-      className={`flex flex-col rounded-xl border bg-card p-6 ${featured ? "border-primary" : "border-border"}`}
+    <motion.div
+      variants={fadeUp}
+      whileHover={hoverLift}
+      className={`relative flex flex-col rounded-2xl border bg-card p-6 transition-shadow ${
+        featured ? "gm-plan-featured border-transparent" : "border-border hover:border-primary/40"
+      }`}
     >
+      {featured && (
+        <span className="absolute -top-3 left-6 inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold tracking-wide text-primary-foreground uppercase">
+          <Sparkles className="size-3" aria-hidden /> Most popular
+        </span>
+      )}
       <h2 className="text-lg font-semibold text-foreground">{p.name}</h2>
-      <p className="mt-3 text-3xl font-semibold text-foreground">
+      <p className="mt-3 text-4xl font-semibold tracking-tight text-foreground">
         {formatINR(p.price)}
         <span className="text-sm font-normal text-muted-foreground">
           {p.period ? " / month" : ""}
         </span>
       </p>
-      <p className="mt-3 text-sm text-muted-foreground">
-        <span className="text-foreground">For:</span> {ABOUT[id].who}
-      </p>
-      <p className="mt-1 text-sm text-muted-foreground">
-        <span className="text-foreground">Helps you:</span> {ABOUT[id].problem}
-      </p>
+      <p className="mt-2 text-sm text-muted-foreground">{ABOUT[id].who}</p>
       <p className="mt-4 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
         Includes
       </p>
       <ul className="mt-2 space-y-1.5 text-sm text-foreground">
         {p.features.map((f) => (
           <li key={f} className="flex gap-2">
-            <span className="text-primary">✓</span>
+            <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
             {f}
           </li>
         ))}
@@ -106,18 +113,16 @@ function PlanCard({ id }: { id: PlanId }) {
       <ul className="mt-2 flex-1 space-y-1.5 text-sm text-muted-foreground">
         {p.limits.map((f) => (
           <li key={f} className="flex gap-2">
-            <span>—</span>
+            <span aria-hidden>—</span>
             {f}
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-xs text-muted-foreground">
-        <span className="text-foreground">When you click:</span> {ABOUT[id].click}
-      </p>
+      <p className="mt-4 text-xs text-muted-foreground">{ABOUT[id].click}</p>
       {id === "free" ? (
         <Link
           to="/app/billing"
-          className="mt-6 inline-flex justify-center rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-accent"
+          className="mt-6 inline-flex justify-center rounded-full border border-border px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary/60 hover:bg-accent"
         >
           Explore Free
         </Link>
@@ -125,12 +130,12 @@ function PlanCard({ id }: { id: PlanId }) {
         <Link
           to="/app/checkout/$product"
           params={{ product: id }}
-          className="mt-6 inline-flex justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          className="mt-6 inline-flex justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
         >
           Choose {p.name}
         </Link>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -158,11 +163,15 @@ function Pricing() {
           paid plans stay inactive until payment verification goes live.
         </div>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <motion.div
+          variants={stagger}
+          {...revealProps}
+          className="mt-10 grid gap-5 md:grid-cols-3"
+        >
           {ORDER.map((id) => (
             <PlanCard key={id} id={id} />
           ))}
-        </div>
+        </motion.div>
 
         <section className="mt-10" aria-labelledby="compare">
           <h2 id="compare" className="text-xl font-semibold text-foreground">

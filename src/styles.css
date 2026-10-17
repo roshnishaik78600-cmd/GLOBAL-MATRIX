@@ -602,3 +602,21 @@
   border-radius: 0;
   background: transparent;
 }
+
+/* Atmospheric copper glow for hero sections — pure decoration, no motion. */
+.gm-hero-glow {
+  background:
+    radial-gradient(60% 55% at 18% 0%, color-mix(in oklch, var(--primary) 16%, transparent), transparent 70%),
+    radial-gradient(45% 40% at 85% 12%, color-mix(in oklch, var(--accent, var(--primary)) 10%, transparent), transparent 70%);
+}
+
+/* Featured pricing card: copper edge light + soft lift shadow. */
+.gm-plan-featured {
+  border-color: color-mix(in oklch, var(--primary) 65%, transparent);
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(160deg, color-mix(in oklch, var(--primary) 70%, transparent), transparent 45%, color-mix(in oklch, var(--primary) 35%, transparent)) border-box;
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--primary) 25%, transparent),
+    0 18px 50px -18px color-mix(in oklch, var(--primary) 45%, transparent);
+}
