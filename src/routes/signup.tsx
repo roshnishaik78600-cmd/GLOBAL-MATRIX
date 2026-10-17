@@ -2,8 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import AuthPage from "@/pages/Auth";
 
 export const Route = createFileRoute("/signup")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Create account — GlobalMatrix" },
       {
         name: "description",

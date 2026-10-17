@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import Landing from "@/pages/Landing";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app" },
       { title: "GlobalMatrix — Understand Global Disruption Before It Reaches Your Supply Chain" },
       {
         name: "description",

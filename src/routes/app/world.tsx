@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import World from "@/pages/World";
 
 export const Route = createFileRoute("/app/world")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/world" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app/app/world" },
       { title: "World Map — GlobalMatrix" },
       {
         name: "description",

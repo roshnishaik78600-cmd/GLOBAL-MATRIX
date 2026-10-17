@@ -4,8 +4,11 @@ import { PLANS, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
 
 export const Route = createFileRoute("/pricing")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/pricing" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app/pricing" },
       { title: "Pricing — GlobalMatrix Supply-Chain Intelligence" },
       {
         name: "description",

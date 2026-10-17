@@ -1,3 +1,4 @@
+import { ShareButton } from "@/components/intel/ShareButton";
 import { Link, useParams } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { ArrowLeft, ArrowUpRight, Bookmark, BookmarkCheck } from "lucide-react";
@@ -74,6 +75,7 @@ export default function IndustryProfile() {
       lede={industry.summary}
       actions={
         <>
+          <ShareButton />
           <button
             type="button"
             onClick={() => toggleWatch(`SECTOR:${industry.id}`)}

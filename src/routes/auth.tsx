@@ -4,8 +4,10 @@ import AuthPage from "@/pages/Auth";
 // Compat: the original auth URL keeps working and lands on the sign-in
 // face of the same flow.
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Sign in — GlobalMatrix" },
       {
         name: "description",

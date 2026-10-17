@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import Supply from "@/pages/Supply";
 
 export const Route = createFileRoute("/app/supply")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/supply" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app/app/supply" },
       { title: "Supply Chain Exposure — GlobalMatrix" },
       {
         name: "description",

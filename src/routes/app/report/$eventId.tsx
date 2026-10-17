@@ -7,8 +7,10 @@ import { getNode } from "@/lib/intel/nodes";
 import { BAND_LABEL, CHANNEL_LABEL, SOURCE_CLASS_LABEL, STAGE_LABEL } from "@/lib/intel/types";
 
 export const Route = createFileRoute("/app/report/$eventId")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Intelligence Report — GlobalMatrix" },
       {
         name: "description",

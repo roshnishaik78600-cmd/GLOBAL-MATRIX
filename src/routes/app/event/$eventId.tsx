@@ -2,8 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import EventAnalysis from "@/pages/EventAnalysis";
 
 export const Route = createFileRoute("/app/event/$eventId")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Event Analysis — GlobalMatrix" },
       {
         name: "description",

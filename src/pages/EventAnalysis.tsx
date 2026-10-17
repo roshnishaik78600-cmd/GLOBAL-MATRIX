@@ -1,3 +1,4 @@
+import { ShareButton } from "@/components/intel/ShareButton";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "@/lib/router-shim";
 import { useMutation, useQuery, useConvex } from "@/lib/backend/shim";
@@ -140,6 +141,7 @@ export default function EventAnalysis() {
       lede={s.summary}
       actions={
         <>
+          <ShareButton />
           <button
             type="button"
             onClick={() => toggleWatch(`EVENT:${s.id}`)}
