@@ -295,7 +295,7 @@ export default function RiskBoard() {
               a reader lines numbers up against each other, and cards destroy
               that comparison. The container scrolls horizontally rather than
               overflowing, so the page itself never does. */}
-          <div className="w-full max-w-full min-w-0 overflow-x-auto">
+          <div className="relative w-full max-w-full min-w-0 overflow-x-auto">
             <table className="w-full min-w-[52rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-[var(--exec-hairline)]">
