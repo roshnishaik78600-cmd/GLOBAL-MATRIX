@@ -17,6 +17,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppAnaloguesRouteImport } from './routes/app/analogues'
 import { Route as AppAnalystRouteImport } from './routes/app/analyst'
@@ -81,6 +82,11 @@ const PricingRoute = PricingRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/methodology': typeof MethodologyRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
   '/app/assess': typeof AppAssessRoute
@@ -252,6 +259,7 @@ export interface FileRoutesByTo {
   '/methodology': typeof MethodologyRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
   '/app/assess': typeof AppAssessRoute
@@ -288,6 +296,7 @@ export interface FileRoutesById {
   '/methodology': typeof MethodologyRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/app/analogues': typeof AppAnaloguesRoute
   '/app/analyst': typeof AppAnalystRoute
   '/app/assess': typeof AppAssessRoute
@@ -325,6 +334,7 @@ export interface FileRouteTypes {
     | '/methodology'
     | '/pricing'
     | '/signup'
+    | '/sitemap.xml'
     | '/app/analogues'
     | '/app/analyst'
     | '/app/assess'
@@ -359,6 +369,7 @@ export interface FileRouteTypes {
     | '/methodology'
     | '/pricing'
     | '/signup'
+    | '/sitemap.xml'
     | '/app/analogues'
     | '/app/analyst'
     | '/app/assess'
@@ -394,6 +405,7 @@ export interface FileRouteTypes {
     | '/methodology'
     | '/pricing'
     | '/signup'
+    | '/sitemap.xml'
     | '/app/analogues'
     | '/app/analyst'
     | '/app/assess'
@@ -430,6 +442,7 @@ export interface RootRouteChildren {
   MethodologyRoute: typeof MethodologyRoute
   PricingRoute: typeof PricingRoute
   SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -488,6 +501,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -735,6 +755,7 @@ const rootRouteChildren: RootRouteChildren = {
   MethodologyRoute: MethodologyRoute,
   PricingRoute: PricingRoute,
   SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
