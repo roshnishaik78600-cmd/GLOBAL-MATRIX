@@ -4,7 +4,7 @@ import Landing from "@/pages/Landing";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "GlobalMatrix — Global Risk. Connected. Understood." },
+      { title: "GlobalMatrix — Understand Global Disruption Before It Reaches Your Supply Chain" },
       {
         name: "description",
         content:
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "GlobalMatrix — Global Risk. Connected. Understood.",
+        content: "GlobalMatrix — Understand Global Disruption Before It Reaches Your Supply Chain",
       },
       {
         property: "og:description",
