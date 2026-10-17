@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { PLANS, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { formatINR } from "@/lib/commerce";
+import { fadeUp, hoverLift, revealProps, stagger } from "@/lib/motion";
 
 const IDS: PlanId[] = ["free", "analyst", "business"];
 
@@ -20,11 +22,17 @@ export function PricingTeaser() {
         <p className="mt-2 max-w-xl text-[15px] text-[var(--exec-ink-dim)]">
           Simple plans in INR. Payments are not enabled yet — no money is collected.
         </p>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          variants={stagger}
+          {...revealProps}
+          className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+        >
           {IDS.map((id) => (
-            <div
+            <motion.div
               key={id}
-              className="rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/70 p-4"
+              variants={fadeUp}
+              whileHover={hoverLift}
+              className="rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/70 p-4 transition-colors hover:border-[var(--exec-cyan)]"
             >
               <p className="text-[13px] text-[var(--exec-ink-dim)]">{PLANS[id].name}</p>
               <p className="mt-1 text-[1.5rem] font-semibold text-[var(--exec-ink)]">
@@ -36,9 +44,13 @@ export function PricingTeaser() {
               <p className="mt-1 text-[12px] text-[var(--exec-ink-muted)]">
                 {PLANS[id].limits[0] ?? PLANS[id].features[1]}
               </p>
-            </div>
+            </motion.div>
           ))}
-          <div className="rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/70 p-4">
+          <motion.div
+            variants={fadeUp}
+            whileHover={hoverLift}
+            className="rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/70 p-4 transition-colors hover:border-[var(--exec-cyan)]"
+          >
             <p className="text-[13px] text-[var(--exec-ink-dim)]">Risk Brief</p>
             <p className="mt-1 text-[1.5rem] font-semibold text-[var(--exec-ink)]">
               {formatINR(CUSTOM_REPORT.price)}
@@ -46,8 +58,8 @@ export function PricingTeaser() {
             <p className="mt-1 text-[12px] text-[var(--exec-ink-muted)]">
               One-time, no subscription
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             to="/app"
