@@ -220,7 +220,7 @@ export default function Landing() {
         {/* Atmospheric copper glow behind the hero — decoration only. */}
         <div
           aria-hidden
-          className="gm-hero-glow pointer-events-none absolute inset-0 opacity-60"
+          className="gm-hero-glow gm-drift pointer-events-none absolute inset-0 opacity-70"
         />
         <motion.div
           variants={stagger}
@@ -240,7 +240,7 @@ export default function Landing() {
             className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]"
           >
             Understand global disruption{" "}
-            <span className="text-primary">before it reaches your supply chain.</span>
+            <span className="gm-text-gradient">before it reaches your supply chain.</span>
           </motion.h1>
           <motion.p
             variants={fadeUp}
@@ -295,6 +295,25 @@ export default function Landing() {
             <Skeleton className="gm-map-stage w-full" />
           )}
         </motion.div>
+        {/* Event ticker — a quiet strip of the latest detected events. The
+            list is rendered twice so the marquee loops seamlessly. */}
+        {timeline.length > 0 && (
+          <div className="relative overflow-hidden border-t border-border py-2.5">
+            <div className="gm-ticker flex w-max items-center gap-8 whitespace-nowrap px-4">
+              {[...timeline, ...timeline].map((e, i) => (
+                <Link
+                  key={`${e.id}-${i}`}
+                  to={`/app/event/${e.id}`}
+                  className="flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="size-1.5 rounded-full bg-primary" aria-hidden />
+                  <span className="font-medium text-foreground/80">{e.place}</span>
+                  {e.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
         <motion.div
           variants={fadeUp}
           initial="hidden"
