@@ -303,8 +303,7 @@ export default function Landing() {
               {[...timeline, ...timeline].map((e, i) => (
                 <Link
                   key={`${e.id}-${i}`}
-                  to="/app/event/$eventId"
-                  params={{ eventId: e.id }}
+                  to={`/app/event/${e.id}`}
                   className="flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <span className="size-1.5 rounded-full bg-primary" aria-hidden />
