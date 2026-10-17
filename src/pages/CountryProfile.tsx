@@ -1,3 +1,4 @@
+import { ShareButton } from "@/components/intel/ShareButton";
 import { Link, useParams } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
@@ -105,6 +106,7 @@ export default function CountryProfile() {
       }
       actions={
         <>
+          <ShareButton />
           <button
             type="button"
             onClick={() => toggleWatch(`NODE:${nodeId}`)}
