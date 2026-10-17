@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import RiskBoard from "@/pages/RiskBoard";
 
 export const Route = createFileRoute("/app/risk")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/risk" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app/app/risk" },
       { title: "Risk Board — GlobalMatrix" },
       {
         name: "description",

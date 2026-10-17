@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import Trade from "@/pages/Trade";
 
 export const Route = createFileRoute("/app/trade")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/trade" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app/app/trade" },
       { title: "Trade Flows — GlobalMatrix" },
       {
         name: "description",

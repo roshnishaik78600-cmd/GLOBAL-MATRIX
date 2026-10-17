@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import IndustryProfile from "@/pages/IndustryProfile";
 
 export const Route = createFileRoute("/app/industry/$industryId")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Industry Profile — GlobalMatrix" },

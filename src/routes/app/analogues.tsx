@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import NotAvailable from "@/pages/NotAvailable";
 
 export const Route = createFileRoute("/app/analogues")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Historical Analogues — GlobalMatrix" },

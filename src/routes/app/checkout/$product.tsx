@@ -10,6 +10,7 @@ import { ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 import { DemoQr } from "@/components/commerce/DemoQr";
 
 export const Route = createFileRoute("/app/checkout/$product")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Checkout — GlobalMatrix" },

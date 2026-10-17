@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import CountryProfile from "@/pages/CountryProfile";
 
 export const Route = createFileRoute("/app/country/$nodeId")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Country Profile — GlobalMatrix" },

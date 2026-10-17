@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { adminOverview, adminDecideOrder } from "@/lib/billing/billing.functions";
 
 export const Route = createFileRoute("/admin")({
+  staticData: { sitemap: false },
   ssr: false,
   head: () => ({
     meta: [

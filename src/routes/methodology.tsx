@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import Methodology from "@/pages/Methodology";
 
 export const Route = createFileRoute("/methodology")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/methodology" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.lovable.app/methodology" },
       { title: "Methodology — GlobalMatrix" },
       {
         name: "description",

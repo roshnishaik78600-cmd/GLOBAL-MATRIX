@@ -8,6 +8,7 @@ import { getMyBilling, activateFree, cancelOrder } from "@/lib/billing/billing.f
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/app/billing")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Billing — GlobalMatrix account" },

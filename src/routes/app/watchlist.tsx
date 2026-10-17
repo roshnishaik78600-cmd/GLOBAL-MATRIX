@@ -2,8 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import Watchlist from "@/pages/Watchlist";
 
 export const Route = createFileRoute("/app/watchlist")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Watchlist — GlobalMatrix" },
       {
         name: "description",

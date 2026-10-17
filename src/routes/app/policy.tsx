@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import NotAvailable from "@/pages/NotAvailable";
 
 export const Route = createFileRoute("/app/policy")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Policy Tracker — GlobalMatrix" },

@@ -2,8 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import Analyst from "@/pages/Analyst";
 
 export const Route = createFileRoute("/app/analyst")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
+      { name: "robots", content: "noindex" },
       { title: "Analyst — GlobalMatrix" },
       {
         name: "description",
