@@ -220,7 +220,7 @@ export default function Landing() {
         {/* Atmospheric copper glow behind the hero — decoration only. */}
         <div
           aria-hidden
-          className="gm-hero-glow pointer-events-none absolute inset-0 opacity-60"
+          className="gm-hero-glow gm-drift pointer-events-none absolute inset-0 opacity-70"
         />
         <motion.div
           variants={stagger}
@@ -240,7 +240,7 @@ export default function Landing() {
             className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]"
           >
             Understand global disruption{" "}
-            <span className="text-primary">before it reaches your supply chain.</span>
+            <span className="gm-text-gradient">before it reaches your supply chain.</span>
           </motion.h1>
           <motion.p
             variants={fadeUp}
