@@ -308,7 +308,7 @@ export default function RiskBoard() {
                   <th scope="col" className="exec-label w-56 px-4 py-3">
                     30-day composite
                   </th>
-                  <th scope="col" className="w-10 px-2 py-3">
+                  <th scope="col" className="relative w-10 px-2 py-3">
                     <span className="sr-only">Open</span>
                   </th>
                 </tr>
