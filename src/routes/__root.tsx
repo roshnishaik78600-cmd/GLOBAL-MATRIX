@@ -9,6 +9,7 @@ import {
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { MotionConfig } from "framer-motion";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -190,12 +191,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <FocusProvider>
-        <Outlet />
-      </FocusProvider>
-      <RealtimeSync />
-      <Toaster />
+      {/* reducedMotion="user" makes every animation honour the visitor's
+          system setting; the shared presets in src/lib/motion.ts rely on it. */}
+      <MotionConfig reducedMotion="user">
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <FocusProvider>
+          <Outlet />
+        </FocusProvider>
+        <RealtimeSync />
+        <Toaster />
+      </MotionConfig>
     </QueryClientProvider>
   );
 }
