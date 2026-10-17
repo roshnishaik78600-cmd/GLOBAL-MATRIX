@@ -295,6 +295,26 @@ export default function Landing() {
             <Skeleton className="gm-map-stage w-full" />
           )}
         </motion.div>
+        {/* Event ticker — a quiet strip of the latest detected events. The
+            list is rendered twice so the marquee loops seamlessly. */}
+        {timeline.length > 0 && (
+          <div className="relative overflow-hidden border-t border-border py-2.5">
+            <div className="gm-ticker flex w-max items-center gap-8 whitespace-nowrap px-4">
+              {[...timeline, ...timeline].map((e, i) => (
+                <Link
+                  key={`${e.id}-${i}`}
+                  to="/app/event/$eventId"
+                  params={{ eventId: e.id }}
+                  className="flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <span className="size-1.5 rounded-full bg-primary" aria-hidden />
+                  <span className="font-medium text-foreground/80">{e.place}</span>
+                  {e.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
         <motion.div
           variants={fadeUp}
           initial="hidden"
