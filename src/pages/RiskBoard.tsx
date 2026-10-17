@@ -156,7 +156,7 @@ export default function RiskBoard() {
 
       {/* -------------------------------------------------------------- MAP -- */}
       <div className="min-w-0 lg:col-span-12">
-        <div className="card flex min-w-0 flex-col">
+        <div className="card flex min-w-0 max-w-full flex-col overflow-hidden">
           <SectionTitle
             meta={`${mapNodes.length} tracked places · click to open a profile`}
             right={<DataType type="model" />}
@@ -283,7 +283,7 @@ export default function RiskBoard() {
 
       {/* ------------------------------------------ HISTORICAL MOVEMENT -- */}
       <div className="min-w-0 lg:col-span-12">
-        <div className="card flex min-w-0 flex-col">
+        <div className="card flex min-w-0 max-w-full flex-col overflow-hidden">
           <SectionTitle
             meta="each row is one event; the bar is its 80% interval"
             right={<DataType type="scenario" />}
@@ -295,7 +295,7 @@ export default function RiskBoard() {
               a reader lines numbers up against each other, and cards destroy
               that comparison. The container scrolls horizontally rather than
               overflowing, so the page itself never does. */}
-          <div className="min-w-0 overflow-x-auto">
+          <div className="relative w-full max-w-full min-w-0 overflow-x-auto">
             <table className="w-full min-w-[52rem] border-collapse text-left">
               <thead>
                 <tr className="border-b border-[var(--exec-hairline)]">
@@ -308,7 +308,7 @@ export default function RiskBoard() {
                   <th scope="col" className="exec-label w-56 px-4 py-3">
                     30-day composite
                   </th>
-                  <th scope="col" className="w-10 px-2 py-3">
+                  <th scope="col" className="relative w-10 px-2 py-3">
                     <span className="sr-only">Open</span>
                   </th>
                 </tr>

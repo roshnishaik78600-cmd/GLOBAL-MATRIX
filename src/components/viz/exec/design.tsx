@@ -126,7 +126,7 @@ export function PageFrame({
  */
 function BodyGrid({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-4 [&>*]:min-w-0 lg:grid-cols-12 lg:gap-5">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 [&>*]:min-w-0 lg:grid-cols-12 lg:gap-5">
       {Children.map(children, (child) => {
         if (!isValidElement(child) || typeof child.type !== "string") {
           return child;

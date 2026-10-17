@@ -226,11 +226,12 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]"
           >
-            Global risk. <span className="text-primary">Connected.</span>
-            <br className="hidden sm:block" /> Understood.
+            Understand global disruption{" "}
+            <span className="text-primary">before it reaches your supply chain.</span>
           </motion.h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            See how global events could affect trade and supply chains.
+            Event → affected country or industry → supply-chain exposure → evidence → what to
+            check next.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Button asChild size="lg">
