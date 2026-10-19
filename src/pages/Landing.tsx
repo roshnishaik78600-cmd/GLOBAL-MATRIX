@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
-import { useQuery } from "@/lib/backend/shim";
+import { useQuery, useQueryState } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
-import { CORPUS_LABEL } from "@/lib/intel/scenarios";
+import { CORPUS_LABEL, SCENARIOS, CORPUS_VERSION } from "@/lib/intel/scenarios";
+import { COUNTRIES } from "@/lib/intel/countries";
+import { INDUSTRIES } from "@/lib/intel/industries";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { FiveStageStory, ReferenceNav, StoryProgress } from "@/components/landing/ReferenceStory";
 import {
@@ -396,42 +398,30 @@ const TREND_LABEL: Record<TopologyResult["categories"][number]["trend"], string>
  * - LAST UPDATE is the most recent successful fetch across every connector.
  */
 function HeroStats({ regions, links }: { regions: number; links: number }) {
-  const health = useQuery(api.observations.sourceHealth);
-
-  const liveReadings = (health ?? []).reduce((sum, h) => {
-    if (!h.readingCount) return sum;
-    return freshnessOf(h.lastSuccessAt, h.sourceId) === "live" ? sum + h.readingCount : sum;
-  }, 0);
-
-  const lastUpdate = (health ?? []).reduce((max, h) => Math.max(max, h.lastSuccessAt), 0);
-
+  const latest = SCENARIOS.reduce((max, scenario) => scenario.detectedAt > max ? scenario.detectedAt : max, "");
   const cells = [
-    { label: "Live signals", value: String(liveReadings) },
-    { label: "Active regions", value: String(regions) },
-    { label: "Network links", value: String(links) },
-    {
-      label: "Last update",
-      value: relativeAge(lastUpdate) || "never",
-      // A source that has never answered cannot leave this cell reading "never"
-      // with no explanation, so it says why.
-      note: lastUpdate ? undefined : "no connector has returned a reading yet",
-    },
+    { label: "Demo events", value: String(SCENARIOS.length) },
+    { label: "Country profiles", value: String(COUNTRIES.length) },
+    { label: "Industries", value: String(INDUSTRIES.length) },
+    { label: "Corpus date · UTC", value: latest.slice(0, 10) },
   ];
 
   return (
+    <div>
+    <p className="mb-3 font-mono text-xs text-muted-foreground">Demo corpus · {CORPUS_VERSION} · {regions || "—"} mapped places · {links || "—"} modelled couplings</p>
     <dl className="grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4">
       {cells.map((cell) => (
         <div key={cell.label} className="flex min-w-0 flex-col gap-2 px-1 py-1">
           <dt className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">{cell.label}</dt>
           <dd
             className="exec-num truncate text-[1.35rem] leading-none font-semibold text-[var(--exec-ink)]"
-            title={cell.note}
           >
             {cell.value}
           </dd>
         </div>
       ))}
     </dl>
+    </div>
   );
 }
 
@@ -508,7 +498,8 @@ function WhatToWatch({ rows }: { rows: WatchRow[] }) {
  * connector that has never answered says so instead of showing a date.
  */
 function DataAndEvidence() {
-  const health = useQuery(api.observations.sourceHealth);
+  const query = useQueryState(api.observations.sourceHealth);
+  const health = query.data;
 
   return (
     <section>
@@ -522,7 +513,12 @@ function DataAndEvidence() {
         </Link>
       </div>
       <div className="card">
-        {health === undefined ? (
+        {query.error && health === undefined ? (
+          <div role="alert" className="p-4">
+            <p className="text-sm text-muted-foreground">Source status is temporarily unavailable. Demo analysis remains separate from source readings.</p>
+            <Button variant="outline" className="mt-3" onClick={() => void query.refetch()}>Retry</Button>
+          </div>
+        ) : health === undefined ? (
           <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
             Resolving connector state…
           </p>

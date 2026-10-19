@@ -95,7 +95,7 @@ export function IntelligenceHero() {
           <span>mean for your business.</span>
         </h1>
         <p className="gm-signal-description">
-          Geopolitical and supply-chain exposure intelligence for businesses.
+          Geopolitical and supply-chain exposure intelligence for Indian importers, exporters and risk teams.
           <br />
           Connect events to countries, industries and trade. Decide what to investigate next.
         </p>

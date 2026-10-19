@@ -70,8 +70,9 @@ describe("entitlements", () => {
     expect(effectivePlan({ plan: "business", status: "active", expires_at: "invalid" }, now)).toBe(
       "free",
     ));
-  it("brief limits: free 5, analyst 50, business 200", () =>
-    expect(BRIEF_DAILY_LIMIT).toEqual({ free: 5, analyst: 50, business: 200 }));
+  it("free allowance is five briefs per day", () => expect(BRIEF_DAILY_LIMIT.free).toBe(5));
+  it("analyst allowance is fifty briefs per day", () => expect(BRIEF_DAILY_LIMIT.analyst).toBe(50));
+  it("business daily allowance is unlimited", () => expect(BRIEF_DAILY_LIMIT.business).toBeNull());
 });
 
 describe("gateway event validation", () => {

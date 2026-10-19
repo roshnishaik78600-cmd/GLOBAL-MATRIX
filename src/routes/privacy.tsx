@@ -3,7 +3,9 @@ import { PublicInfo } from "@/components/landing/PublicInfo";
 export const Route = createFileRoute("/privacy")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/privacy" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/privacy" },
       { title: "Privacy & Data Transparency — GlobalMatrix" },
       {
         name: "description",

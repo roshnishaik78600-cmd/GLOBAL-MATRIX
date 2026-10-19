@@ -3,14 +3,16 @@ import { useServerFn } from "@tanstack/react-start";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { formatINR } from "@/lib/commerce";
-import { PLANS, BRIEF_DAILY_LIMIT, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
+import { PLANS, briefLimitLabel, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { getMyBilling, activateFree, cancelOrder } from "@/lib/billing/billing.functions";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/app/billing")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/billing" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app/billing" },
       { title: "Billing — GlobalMatrix account" },
       { name: "description", content: "Your GlobalMatrix plan, entitlements and order history." },
       { property: "og:title", content: "Billing — GlobalMatrix" },
@@ -104,7 +106,7 @@ function Billing() {
           </p>
           <p className="mt-4 text-3xl font-semibold text-foreground">{plan.name}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            AI analyst briefs: {BRIEF_DAILY_LIMIT[data.plan]} per day
+            AI analyst briefs: {briefLimitLabel(data.plan)} per day
           </p>
           {data.subscription && data.plan !== "free" && (
             <p className="mt-1 text-sm text-muted-foreground">

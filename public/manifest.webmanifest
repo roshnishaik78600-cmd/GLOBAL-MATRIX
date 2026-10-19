@@ -1,0 +1,8 @@
+{
+  "name": "GlobalMatrix",
+  "short_name": "GlobalMatrix",
+  "description": "Geopolitical and supply-chain exposure intelligence",
+  "start_url": "/app",
+  "display": "standalone",
+  "icons": [{ "src": "/favicon.ico", "sizes": "any", "type": "image/x-icon" }]
+}

@@ -4,7 +4,9 @@ import Analyst from "@/pages/Analyst";
 export const Route = createFileRoute("/app/analyst")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/analyst" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app/analyst" },
       { name: "robots", content: "noindex" },
       { title: "Analyst — GlobalMatrix" },
       {

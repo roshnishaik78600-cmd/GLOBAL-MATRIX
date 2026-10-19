@@ -43,7 +43,7 @@ export function formatINR(n: number) {
   }).format(n);
 }
 
-export const INQUIRY_KINDS = ["sample", "report", "pilot", "contact"] as const;
+export const INQUIRY_KINDS = ["sample", "report", "pilot", "contact", "waitlist"] as const;
 export type InquiryKind = (typeof INQUIRY_KINDS)[number];
 
 export const inquirySchema = z.object({

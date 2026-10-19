@@ -1273,22 +1273,24 @@ export type SourceStatus = {
   cadence: string;
 };
 
+type PublicSourceRun = { source_id: string; key: string; ok: boolean; retrieved_at: string; problem: string | null };
+async function publicSourceRuns(): Promise<PublicSourceRun[]> {
+  const { data, error } = await supabase.rpc("public_source_summary");
+  if (error) throw new Error("Source status could not be loaded. Please retry.");
+  if (!data || typeof data !== "object" || Array.isArray(data) || !Array.isArray(data.runs)) throw new Error("Source status is unavailable.");
+  return data.runs.filter((row): row is Record<string, import("@/integrations/supabase/types").Json> => !!row && typeof row === "object" && !Array.isArray(row))
+    .map((row) => ({ source_id: String(row.source_id), key: String(row.key), ok: row.ok === true, retrieved_at: String(row.retrieved_at), problem: typeof row.problem === "string" ? row.problem : null }));
+}
+
 async function sourceStatus(args: { sourceId: string }): Promise<SourceStatus | null> {
   if (!(args.sourceId in SOURCES)) return null;
 
-  const { data: readings } = await supabase
+  const { data: readings, error: readingError } = await supabase
     .from("observations")
     .select("*")
     .eq("source_id", args.sourceId);
-  const { data: attempts } = await supabase
-    .from("source_runs")
-    .select("*")
-    .eq("source_id", args.sourceId);
-  const { data: lock } = await supabase
-    .from("source_locks")
-    .select("*")
-    .eq("source_id", args.sourceId)
-    .maybeSingle();
+  if (readingError) throw new Error("Source readings could not be loaded. Please retry.");
+  const attempts = (await publicSourceRuns()).filter((row) => row.source_id === args.sourceId);
 
   const keys = new Set<string>();
   let lastVerifiedAt = 0;
@@ -1329,17 +1331,17 @@ async function sourceStatus(args: { sourceId: string }): Promise<SourceStatus | 
     lastVerifiedAt,
     lastAttemptAt,
     readingCount: keys.size,
-    nextAttemptAt: lock ? Date.parse(lock.next_allowed_at) : 0,
-    consecutiveFailures: lock?.consecutive_failures ?? 0,
+    nextAttemptAt: 0,
+    consecutiveFailures: 0,
     problem,
     cadence: POLL[args.sourceId]?.cadence ?? "on demand",
   };
 }
 
 async function sourceHealth() {
-  const { data: readings } = await supabase.from("observations").select("*");
-  const { data: attempts } = await supabase.from("source_runs").select("*");
-  const { data: locks } = await supabase.from("source_locks").select("*");
+  const { data: readings, error } = await supabase.from("observations").select("*");
+  if (error) throw new Error("Source readings could not be loaded. Please retry.");
+  const attempts = await publicSourceRuns();
 
   const bySourceReadings = new Map<string, NonNullable<typeof readings>>();
   for (const r of readings ?? []) {
@@ -1353,12 +1355,10 @@ async function sourceHealth() {
     list.push(a);
     bySourceAttempts.set(a.source_id, list);
   }
-  const lockOf = new Map((locks ?? []).map((l) => [l.source_id, l]));
 
   return Object.keys(SOURCES).map((sourceId) => {
     const rows = bySourceReadings.get(sourceId) ?? [];
     const runs = bySourceAttempts.get(sourceId) ?? [];
-    const lock = lockOf.get(sourceId);
 
     const perKey = new Map<string, (typeof rows)[number]>();
     for (const r of rows) {
@@ -1406,8 +1406,8 @@ async function sourceHealth() {
       lastSuccessAt,
       lastAttemptAt,
       publishedAt,
-      nextAttemptAt: lock ? Date.parse(lock.next_allowed_at) : 0,
-      consecutiveFailures: lock?.consecutive_failures ?? 0,
+      nextAttemptAt: 0,
+      consecutiveFailures: 0,
       readingCount: perKey.size,
       cadence: POLL[sourceId]?.cadence ?? "on demand",
       problem: neverContacted ? undefined : problem,

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useConvex, useQuery } from "@/lib/backend/shim";
+import { useConvex, useQueryState } from "@/lib/backend/shim";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ExternalLink, RefreshCw } from "lucide-react";
 import { api } from "@/lib/backend/api";
@@ -175,7 +176,8 @@ function RefreshAllButton() {
 }
 
 export default function DataSources() {
-  const health = useQuery(api.observations.sourceHealth);
+  const query = useQueryState(api.observations.sourceHealth);
+  const health = query.data;
 
   return (
     <PageFrame
@@ -187,7 +189,10 @@ export default function DataSources() {
       {/* --------------------------------------------------- MONITORING BOARD -- */}
       <div className="lg:col-span-12">
         <div className="gm-source-register grid grid-cols-1 gap-0">
-          {health === undefined
+          {query.error && health === undefined ? <div role="alert" className="border-t border-border py-6">
+            <p className="text-sm text-muted-foreground">Source status could not be loaded. Your existing readings have not been changed.</p>
+            <Button variant="outline" className="mt-4" onClick={() => void query.refetch()}>Retry <RefreshCw aria-hidden /></Button>
+          </div> : health === undefined
             ? Array.from({ length: 4 }).map((_, i) => (
                 <Skeleton key={i} className="h-72 w-full rounded-lg" />
               ))
@@ -382,6 +387,10 @@ function SourceCard({
       />
 
       <dl className="flex flex-col gap-2">
+        <div className="flex items-baseline justify-between gap-3">
+          <dt className="exec-label shrink-0">Verified datasets</dt>
+          <dd className="exec-num text-sm">{row?.readingCount ?? 0}</dd>
+        </div>
         <div className="flex items-baseline justify-between gap-3">
           <dt className="exec-label shrink-0">Observation period</dt>
           <dd className="exec-num min-w-0 truncate text-right text-[13px] text-[var(--exec-ink)]">

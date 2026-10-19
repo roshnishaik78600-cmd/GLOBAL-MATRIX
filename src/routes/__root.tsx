@@ -18,6 +18,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { FocusProvider } from "@/lib/focus";
 import { useRealtimeSync } from "@/hooks/use-realtime-sync";
 import { ReferenceFooter } from "@/components/landing/ReferenceStory";
+import { Button } from "@/components/ui/button";
 
 function RealtimeSync() {
   useRealtimeSync();
@@ -67,15 +68,16 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
+          <Button
+            onClick={async () => {
+              await router.options.context.queryClient.resetQueries();
+              await router.invalidate();
               reset();
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Try again
-          </button>
+          </Button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
@@ -132,6 +134,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
     ],
   }),
   shellComponent: RootShell,

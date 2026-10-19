@@ -23,7 +23,7 @@ const STAGES = [
     title: "Source",
     summary: "Named publishers, fetched on a schedule.",
     detail:
-      "Three connectors, all public and keyless: the World Bank for annual national accounts, UN Comtrade for reported merchandise trade, and GDELT for the volume of news coverage. Each one is polled on its own refresh window and each stores its own last successful reading, so one failing connector cannot date the rest.",
+      "Four public connectors: World Bank national accounts, UN Comtrade merchandise totals, GDELT media attention and ECB reference rates. Each stores its own last successful reading and follows its own refresh schedule.",
     advanced:
       "The World Bank connector covers 18 of the 19 tracked economies across 5 indicator series. Comtrade's public preview tier is sampled and abbreviated, so mirrored flows do not sum to world totals. GDELT measures media attention, which is not evidence that an event occurred.",
   },
@@ -71,17 +71,17 @@ export default function Methodology() {
   return (
     <ExecPage className="gm-methodology-page min-h-full">
       <nav className="sticky top-0 z-30 border-b border-[var(--exec-hairline)] bg-[var(--exec-base)]/90 backdrop-blur">
-        <div className="gm-width flex h-16 items-center gap-4 px-4 lg:px-8">
+        <div className="gm-width flex min-h-16 flex-wrap items-center gap-2 px-4 py-2 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2.5">
             <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
             <span className="truncate text-[14px] font-semibold tracking-[0.2em] text-[var(--exec-ink)] uppercase">
               Globalmatrix
             </span>
           </Link>
-          <span className="exec-label ml-auto text-[var(--exec-ink-dim)]">Methodology</span>
+          <span className="exec-label ml-auto hidden text-[var(--exec-ink-dim)] sm:block">Methodology</span>
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3.5 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
+            className="ml-auto inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)] sm:ml-0"
           >
             <ArrowLeft className="size-3.5" /> Back
           </Link>

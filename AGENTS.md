@@ -20,3 +20,6 @@
 - Render the shared public footer once in the root outside application/admin paths; factual public information pages share PublicInfo so identity, data and billing disclosures remain consistent.
 - EventPreview reads the existing event-chain queries; the signature graph leads its page, with local keyboard-selectable nodes and relationship context derived from the same graph edges, so selecting a node does not obscure the network with a global drawer.
 - Share PricingPlans and RiskBriefPanel between public pricing displays, reading billing constants and gating paid choices with an availability dialog, so presentation cannot imply a live subscription or diverge across pages.
+- Public source status uses a sanitized database summary; raw runs/locks require MFA admin access, so provider diagnostics and scheduling are not publicly exposed.
+- Reserve source refreshes atomically and public inquiries through service-only database claims; validate inquiry input on both sides and store interest without implying payment or email delivery.
+- Bound legacy initial query reads to three seconds and expose terminal failures to retry boundaries; never substitute demonstration data for failed source reads.

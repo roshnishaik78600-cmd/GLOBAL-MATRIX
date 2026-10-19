@@ -3,8 +3,10 @@ import EventAnalysis from "@/pages/EventAnalysis";
 
 export const Route = createFileRoute("/app/event/$eventId")({
   staticData: { sitemap: false },
-  head: () => ({
+  head: ({ params }) => ({
+    links: [{ rel: "canonical", href: `https://globalmatrix.dev/app/event/${encodeURIComponent(params.eventId)}` }],
     meta: [
+      { property: "og:url", content: `https://globalmatrix.dev/app/event/${encodeURIComponent(params.eventId)}` },
       { name: "robots", content: "noindex" },
       { title: "Event Analysis — GlobalMatrix" },
       {

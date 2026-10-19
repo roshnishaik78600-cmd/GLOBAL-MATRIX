@@ -10,7 +10,7 @@ import {
 import { COUNTRIES } from "@/lib/intel/countries";
 import { INDUSTRIES } from "@/lib/intel/industries";
 
-const BASE_URL = "https://globalmatrix.lovable.app";
+const BASE_URL = "https://globalmatrix.dev";
 
 export const Route = createFileRoute("/sitemap.xml")({
   staticData: { sitemap: false },

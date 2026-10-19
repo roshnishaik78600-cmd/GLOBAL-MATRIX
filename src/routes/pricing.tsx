@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { formatINR } from "@/lib/commerce";
-import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT } from "@/lib/billing/core";
+import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT, briefLimitLabel } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
 import { PricingPlans, RiskBriefPanel } from "@/components/commerce/PricingPlans";
 
@@ -46,11 +46,14 @@ const COMPARE: { row: string; free: string; analyst: string; business: string; b
   },
   { row: "Maps, events, impact & risk views", free: "✓", analyst: "✓", business: "✓", brief: "—" },
   { row: "Watchlist, notes, exposure profile", free: "✓", analyst: "✓", business: "✓", brief: "—" },
+  { row: "PDF export", free: "Print / save sample & event reports", analyst: "Same as Free", business: "Same as Free", brief: "Scoped PDF after verified payment" },
+  { row: "Saved brief history", free: "Own generated briefs", analyst: "Own generated briefs", business: "Own generated briefs", brief: "—" },
+  { row: "Email alerts, API access & team seats", free: "Not available", analyst: "Not available", business: "Not available", brief: "—" },
   {
     row: "AI analyst briefs per day",
     free: String(BRIEF_DAILY_LIMIT.free),
     analyst: String(BRIEF_DAILY_LIMIT.analyst),
-    business: String(BRIEF_DAILY_LIMIT.business),
+    business: briefLimitLabel("business"),
     brief: "—",
   },
   { row: "Analyst-written PDF for your scope", free: "—", analyst: "—", business: "—", brief: "✓" },
@@ -76,6 +79,7 @@ function Pricing() {
         </div>
         <PricingPlans />
         <RiskBriefPanel />
+        <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">Payments are disabled. GST treatment, tax invoices and refund terms must be confirmed before live billing; no tax invoice or refund is issued for a demo order. Prices shown are in INR.</p>
 
         <section className="mt-16" aria-labelledby="compare">
           <h2 id="compare" className="text-xl font-semibold text-foreground">
