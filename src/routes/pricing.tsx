@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { formatINR } from "@/lib/commerce";
-import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT } from "@/lib/billing/core";
+import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT, briefLimitLabel } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
 import { PricingPlans, RiskBriefPanel } from "@/components/commerce/PricingPlans";
 
@@ -53,7 +53,7 @@ const COMPARE: { row: string; free: string; analyst: string; business: string; b
     row: "AI analyst briefs per day",
     free: String(BRIEF_DAILY_LIMIT.free),
     analyst: String(BRIEF_DAILY_LIMIT.analyst),
-    business: String(BRIEF_DAILY_LIMIT.business),
+    business: briefLimitLabel("business"),
     brief: "—",
   },
   { row: "Analyst-written PDF for your scope", free: "—", analyst: "—", business: "—", brief: "✓" },

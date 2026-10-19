@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT, type PlanId } from "@/lib/billing/core";
+import { PLANS, CUSTOM_REPORT, briefLimitLabel, type PlanId } from "@/lib/billing/core";
 import { formatINR } from "@/lib/commerce";
 import { fadeUp, hoverLift, revealProps, stagger } from "@/lib/motion";
 import { RequestForm } from "@/components/commerce/RequestForm";
@@ -47,7 +47,7 @@ export function PricingPlans() {
                 <span>{plan.period ? "/ month" : "Free to explore"}</span>
               </div>
               <div className="gm-price-capacity">
-                <strong>{BRIEF_DAILY_LIMIT[id]}</strong>
+                <strong className={id === "business" ? "text-xl" : undefined}>{briefLimitLabel(id)}</strong>
                 <span>
                   AI analyst briefs
                   <br />

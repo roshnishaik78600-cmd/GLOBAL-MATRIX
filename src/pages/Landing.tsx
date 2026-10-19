@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
-import { useQuery } from "@/lib/backend/shim";
+import { useQuery, useQueryState } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
@@ -498,7 +498,8 @@ function WhatToWatch({ rows }: { rows: WatchRow[] }) {
  * connector that has never answered says so instead of showing a date.
  */
 function DataAndEvidence() {
-  const health = useQuery(api.observations.sourceHealth);
+  const query = useQueryState(api.observations.sourceHealth);
+  const health = query.data;
 
   return (
     <section>
@@ -512,7 +513,12 @@ function DataAndEvidence() {
         </Link>
       </div>
       <div className="card">
-        {health === undefined ? (
+        {query.error && health === undefined ? (
+          <div role="alert" className="p-4">
+            <p className="text-sm text-muted-foreground">Source status is temporarily unavailable. Demo analysis remains separate from source readings.</p>
+            <Button variant="outline" className="mt-3" onClick={() => void query.refetch()}>Retry</Button>
+          </div>
+        ) : health === undefined ? (
           <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
             Resolving connector state…
           </p>

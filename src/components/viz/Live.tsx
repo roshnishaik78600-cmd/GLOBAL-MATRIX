@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@/lib/router-shim";
-import { useQuery } from "@/lib/backend/shim";
+import { useQueryState } from "@/lib/backend/shim";
 import { Pause, Play, RefreshCw } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import { cn } from "@/lib/utils";
@@ -34,7 +34,8 @@ import {
  * pushed those into each other would cost more than it is worth.
  */
 export function SourceHealthChip({ className }: { className?: string }) {
-  const health = useQuery(api.observations.sourceHealth);
+  const query = useQueryState(api.observations.sourceHealth);
+  const health = query.data;
   const rows = health ?? [];
 
   const total = rows.length;
@@ -50,7 +51,9 @@ export function SourceHealthChip({ className }: { className?: string }) {
         : "var(--exec-emerald)";
 
   const label =
-    health === undefined
+    query.error && health === undefined
+      ? "SOURCE STATUS UNAVAILABLE"
+      : health === undefined
       ? "CHECKING SOURCES"
       : total === 0
         ? "NO SOURCES"
@@ -59,7 +62,9 @@ export function SourceHealthChip({ className }: { className?: string }) {
           : `${verified}/${total} VERIFIED`;
 
   const detail =
-    health === undefined
+    query.error && health === undefined
+      ? "Open the source register to retry."
+      : health === undefined
       ? "Reading connector state."
       : rows
           .map((r) => {

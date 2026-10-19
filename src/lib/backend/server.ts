@@ -162,7 +162,7 @@ export const generateBrief = createServerFn({ method: "POST" })
       "reserve_brief_claim",
       {
         p_user_id: userId,
-        p_daily_limit: BRIEF_DAILY_LIMIT[plan],
+        p_daily_limit: BRIEF_DAILY_LIMIT[plan] ?? 0,
         p_interval_ms: MIN_BRIEF_INTERVAL_MS,
       },
     );
