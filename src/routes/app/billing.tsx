@@ -47,7 +47,12 @@ function Billing() {
     if (user) refresh();
   }, [user, refresh]);
 
-  if (loading) return <p role="status" className="p-8 text-sm text-muted-foreground">Checking your account…</p>;
+  if (loading)
+    return (
+      <p role="status" className="p-8 text-sm text-muted-foreground">
+        Checking your account…
+      </p>
+    );
   if (!user)
     return (
       <div className="p-8 text-sm">

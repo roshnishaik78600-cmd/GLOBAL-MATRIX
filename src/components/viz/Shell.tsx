@@ -97,9 +97,7 @@ export function Shell({ children }: { children: ReactNode }) {
             aria-label="GlobalMatrix, overview"
           >
             <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
-            <span className="truncate text-[16px] font-semibold text-foreground">
-              GlobalMatrix
-            </span>
+            <span className="truncate text-[16px] font-semibold text-foreground">GlobalMatrix</span>
           </Link>
 
           {/* Centre — the primary destinations. Hidden below `lg`, where the
