@@ -7,7 +7,7 @@ export const Route = createFileRoute("/app/industry/$industryId")({
   head: ({ params }) => {
     const ind = getIndustry(params.industryId);
     const name = ind?.label ?? "Industry";
-    const url = `https://globalmatrix.lovable.app/app/industry/${params.industryId}`;
+    const url = `https://globalmatrix.dev/app/industry/${params.industryId}`;
     const title = `${name} supply-chain risk — GlobalMatrix`;
     const description =
       ind?.summary ??

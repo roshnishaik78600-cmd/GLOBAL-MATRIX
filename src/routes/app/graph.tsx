@@ -4,9 +4,9 @@ import GraphExplorerPage from "@/pages/GraphExplorerPage";
 export const Route = createFileRoute("/app/graph")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/graph" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/graph" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/graph" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/graph" },
       { title: "Graph Explorer — GlobalMatrix" },
       {
         name: "description",

@@ -4,9 +4,9 @@ import DataSources from "@/pages/DataSources";
 export const Route = createFileRoute("/app/data")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/data" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/data" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/data" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/data" },
       { title: "Data Sources — GlobalMatrix" },
       {
         name: "description",

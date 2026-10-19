@@ -4,9 +4,9 @@ import Landing from "@/pages/Landing";
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app" },
+      { property: "og:url", content: "https://globalmatrix.dev" },
       { title: "GlobalMatrix — Business Exposure Intelligence" },
       {
         name: "description",

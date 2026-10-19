@@ -7,9 +7,9 @@ import { PricingPlans, RiskBriefPanel } from "@/components/commerce/PricingPlans
 export const Route = createFileRoute("/pricing")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/pricing" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/pricing" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/pricing" },
+      { property: "og:url", content: "https://globalmatrix.dev/pricing" },
       { title: "Pricing — GlobalMatrix Supply-Chain Intelligence" },
       {
         name: "description",

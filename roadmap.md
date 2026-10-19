@@ -1,4 +1,6 @@
 # Roadmap
+- [ ] Full polishing audit: audit requested routes; correct demo counters, empty/loading states, domain metadata and operational security; verify and report remaining gaps
+- [ ] Expanded capabilities: waitlist, unlimited Business allowance, onboarding, account deletion, email delivery and public-form throttling — pending audited scope and safe implementation
 - [x] Rebuild homepage pricing and subscription page with shared prominent cards and separate Risk Brief; desktop/mobile dialogs, free exploration and demo checkout links verified; 31 tests passed
 - [x] Premium experience brief: sharpen business positioning and interactive event preview; put the Impact Graph first and expose relationship context
 - [x] Refine pricing, mobile comparison, billing FAQs and shared public footer with truthful company/contact/data/terms pages

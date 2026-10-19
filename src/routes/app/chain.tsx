@@ -4,9 +4,9 @@ import ChainPage from "@/pages/Chain";
 export const Route = createFileRoute("/app/chain")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/chain" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/chain" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/chain" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/chain" },
       { title: "Propagation Chain — GlobalMatrix" },
       {
         name: "description",
