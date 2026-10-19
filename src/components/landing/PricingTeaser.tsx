@@ -47,21 +47,18 @@ export function PricingTeaser() {
             </motion.div>
           ))}
         </motion.div>
-        </motion.div>
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6"><p className="text-sm text-muted-foreground">One focused risk brief <span className="text-foreground">{formatINR(CUSTOM_REPORT.price)}</span> · one-time</p><Button asChild variant="outline"><Link to="/app/checkout/$product" params={{product: "custom_report"}}>Request a Risk Brief <ArrowRight /></Link></Button></div>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link
+          <Button asChild size="lg"><Link
             to="/app"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--exec-cyan)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-base)] hover:opacity-90"
           >
             Explore Global Risks <ArrowRight className="size-4" aria-hidden />
-          </Link>
-          <Link
+          </Link></Button>
+          <Button asChild size="lg" variant="outline"><Link
             to="/pricing"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--exec-hairline-strong)] px-5 py-3 text-[14px] font-semibold text-[var(--exec-ink)] hover:border-[var(--exec-cyan)]"
           >
             Compare plans
-          </Link>
+          </Link></Button>
         </div>
       </div>
     </section>
