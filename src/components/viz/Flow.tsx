@@ -149,7 +149,7 @@ export function FlowMap({
       viewBox={`0 0 ${W} ${H}`}
       className="w-full"
       style={{ height }}
-      role="group"
+      role="img"
       aria-label={`Flow map with ${paths.length} producer to consumer links`}
     >
       <g stroke="var(--grid)" strokeWidth={1}>
