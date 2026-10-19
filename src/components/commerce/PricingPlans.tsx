@@ -13,6 +13,7 @@ import {
 import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT, type PlanId } from "@/lib/billing/core";
 import { formatINR } from "@/lib/commerce";
 import { fadeUp, hoverLift, revealProps, stagger } from "@/lib/motion";
+import { RequestForm } from "@/components/commerce/RequestForm";
 
 const ORDER: PlanId[] = ["free", "analyst", "business"];
 const ICONS = { free: Compass, analyst: Network, business: Layers };
@@ -77,7 +78,7 @@ export function PricingPlans() {
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className="w-full">
-                        Choose {plan.name} <ArrowRight aria-hidden />
+                        Join waitlist <ArrowRight aria-hidden />
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
@@ -89,6 +90,7 @@ export function PricingPlans() {
                           demo checkout.
                         </DialogDescription>
                       </DialogHeader>
+                      <RequestForm defaultKind="waitlist" fixedKind defaultMessage={`Please notify me when ${plan.name} subscriptions are available.`} />
                       <Button asChild>
                         <Link to="/app">
                           Start Exploring <ArrowRight aria-hidden />

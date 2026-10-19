@@ -329,52 +329,14 @@ async function claimRefresh(
   const policy = POLL[sourceId];
   if (!policy) return { proceed: false, reason: "cooling_down", retryInMs: 0 };
 
-  const now = Date.now();
-  const { data: lock } = await supabaseAdmin
-    .from("source_locks")
-    .select("*")
-    .eq("source_id", sourceId)
-    .maybeSingle();
-
-  if (lock) {
-    const startedAt = Date.parse(lock.started_at);
-    const inFlight = lock.finished_at === null && now - startedAt < policy.maxRunMs;
-    if (inFlight) {
-      return {
-        proceed: false,
-        reason: "in_flight",
-        retryInMs: Math.max(0, startedAt + policy.maxRunMs - now),
-      };
-    }
-
-    const forced = force === true && lock.consecutive_failures === 0;
-    const nextAllowedAt = Date.parse(lock.next_allowed_at);
-    const cooling = Math.max(0, nextAllowedAt - now);
-    const floorWait = forced ? Math.max(0, policy.forceFloorMs - (now - startedAt)) : 0;
-    const wait = forced ? floorWait : cooling;
-    if (wait > 0) return { proceed: false, reason: "cooling_down", retryInMs: wait };
-
-    await supabaseAdmin
-      .from("source_locks")
-      .update({
-        started_at: new Date(now).toISOString(),
-        finished_at: null,
-        attempts: lock.attempts + 1,
-      })
-      .eq("id", lock.id);
-    return { proceed: true };
-  }
-
-  await supabaseAdmin.from("source_locks").insert({
-    source_id: sourceId,
-    started_at: new Date(now).toISOString(),
-    finished_at: null,
-    consecutive_failures: 0,
-    next_allowed_at: new Date(now + policy.minIntervalMs).toISOString(),
-    attempts: 1,
-    failures: 0,
+  const { data, error } = await supabaseAdmin.rpc("claim_source_refresh", {
+    p_source_id: sourceId, p_force: force, p_min_ms: policy.minIntervalMs,
+    p_floor_ms: policy.forceFloorMs, p_max_run_ms: policy.maxRunMs,
   });
-  return { proceed: true };
+  if (error) throw new Error("Source refresh could not be reserved.");
+  if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("Invalid source reservation.");
+  if (data.proceed === true) return { proceed: true };
+  return { proceed: false, reason: data.reason === "in_flight" ? "in_flight" : "cooling_down", retryInMs: Math.max(0, Number(data.retryInMs) || 0) };
 }
 
 const DATA_STATUSES: readonly string[] = ["observed", "stale", "unavailable"];
