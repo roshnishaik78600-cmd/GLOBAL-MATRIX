@@ -14,6 +14,7 @@ import {
   useQuery as useRqQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import { withQueryDeadline } from "@/lib/query-deadline";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- untyped default for legacy call sites
 export type FnRef<Args = any, Result = any> = {
@@ -34,15 +35,26 @@ export function useQuery<Args, Result>(
   fn: FnRef<Args, Result> | undefined,
   args?: Skippable<Args>,
 ): Result | undefined {
+  const query = useQueryState(fn, args);
+  if (query.error && query.data === undefined) throw query.error;
+  return query.data;
+}
+
+export function useQueryState<Args, Result>(fn: FnRef<Args, Result> | undefined, args?: Skippable<Args>) {
   const skipped = args === "skip";
   const resolvedArgs = (skipped ? undefined : (args ?? ({} as Args))) as Args;
   const query = useRqQuery({
     queryKey: [fn?._path, resolvedArgs],
-    queryFn: () => fn!._run(resolvedArgs),
+    queryFn: () => {
+      if (!fn) throw new Error("This data source is unavailable.");
+      return withQueryDeadline(() => fn._run(resolvedArgs));
+    },
     enabled: !!fn && !skipped,
     staleTime: 30_000,
+    retry: false,
+    networkMode: "always",
   });
-  return query.data;
+  return query;
 }
 
 export function useMutation<Args, Result>(
@@ -63,8 +75,10 @@ export function useConvex() {
     query: <A, R>(fn: FnRef<A, R>, args: A): Promise<R> =>
       queryClient.fetchQuery({
         queryKey: [fn._path, args],
-        queryFn: () => fn._run(args),
+        queryFn: () => withQueryDeadline(() => fn._run(args)),
         staleTime: 30_000,
+        retry: false,
+        networkMode: "always",
       }),
     mutation: <A, R>(fn: FnRef<A, R>, args: A): Promise<R> => fn._run(args),
     action: <A, R>(fn: FnRef<A, R>, args: A): Promise<R> => fn._run(args),
