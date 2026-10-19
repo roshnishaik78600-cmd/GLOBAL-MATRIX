@@ -1196,76 +1196,276 @@
   border-radius: 0;
   box-shadow: none;
 }
-.gm-chapter-label { display: flex; align-items: center; gap: 10px; }
-.gm-chapter-mark { width: 24px; height: 1px; background: var(--primary); }
-.gm-page-actions { max-width: 100%; }
-.gm-page-actions select { max-width: 100%; }
-.gm-layout-report .gm-research-header .gm-width { padding-block: 48px; }
-.gm-layout-report .gm-research-header h1 { max-width: 900px; }
-.gm-layout-report .gm-research-header .t-body { max-width: 700px; }
-.gm-report-composition { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 48px; align-items: start; }
-.gm-report-index { position: sticky; top: 28px; display: grid; gap: 0; }
-.gm-report-index a { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 12px; line-height: 1.5; }
-.gm-report-index a:hover { color: var(--primary); }
-.gm-report-sections { min-width: 0; }
-.gm-report-band { min-width: 0; padding-bottom: 32px; scroll-margin-top: 20px; }
-.gm-report-band > * { width: 100%; }
-.gm-report-band .card { border-top: 0; padding-inline: 0; }
-.gm-report-band .panel-head { padding-inline: 0; }
-.gm-layout-directory .gm-research-header { padding-block: 20px; }
-.gm-country-region { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; border-top: 1px solid var(--border); padding-top: 24px; }
-.gm-region-identity { align-content: start; flex-direction: column; align-items: start; }
-.gm-region-identity .glass { border: 0; background: transparent; box-shadow: none; padding: 0; gap: 12px; }
-.gm-country-roster article { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 18px; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; background: transparent; padding: 20px 0; box-shadow: none; animation: none; }
-.gm-country-roster article > :last-child { grid-column: 1 / -1; }
-.gm-country-roster article > :nth-child(3) { border-top: 0; padding-top: 0; }
-.gm-country-roster article:hover { background: var(--secondary); }
-.gm-sector-entry { border-top: 1px solid var(--border); min-height: 310px; }
-.gm-sector-entry h3 { font-size: 24px; }
-.gm-sector-entry .col-span-2 { align-self: start; }
-.gm-body-laboratory { align-items: start; }
-.gm-body-laboratory > :first-child { grid-column: span 4; position: sticky; top: 20px; }
-.gm-body-laboratory > :nth-child(2) { grid-column: span 8; }
-.gm-body-notebook > :first-child { border-top: 1px solid var(--border); }
-.gm-body-register > * { border-top: 1px solid var(--border); padding-top: 24px; }
-.gm-source-entry > :first-child { grid-column: 1 / -1; }
-.gm-source-entry h2 { font-size: 24px; }
-.gm-source-register article { background: transparent; border-radius: 0; box-shadow: none; }
-.gm-overview-map .map-frame { height: 580px; }
-.gm-overview-signals { border-left: 1px solid var(--border); padding-left: 22px; }
-.gm-overview-signals li button { padding-block: 20px; }
-.gm-overview-signals li button p { font-size: 14px; line-height: 1.5; }
-.gm-propagation-workbench { padding: 28px 0 48px; }
-.gm-propagation-workbench .gm-reference-heading { font-size: 30px; }
-.gm-propagation-workbench .gm-five-stages { max-width: none; }
-.gm-propagation-nodes > * { min-height: 64px; white-space: normal; justify-content: space-between; text-align: left; }
-.gm-auth-masthead { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 20px; }
-.gm-auth-page .t-section { font-size: 32px; line-height: 1.2; }
-.gm-auth-page .gm-auth-form { padding-inline: 0; }
-.gm-account-page { min-width: 0; }
-.gm-billing-composition > section { min-width: 0; }
-.gm-account-page table { min-width: 680px; }
-.gm-checkout-composition { align-items: start; }
-.gm-printed-report > section { position: relative; padding-block: 40px; }
-.gm-methodology-page h1 { font-size: 44px; }
+.gm-chapter-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gm-chapter-mark {
+  width: 24px;
+  height: 1px;
+  background: var(--primary);
+}
+.gm-page-actions {
+  max-width: 100%;
+}
+.gm-page-actions select {
+  max-width: 100%;
+}
+.gm-layout-report .gm-research-header .gm-width {
+  padding-block: 48px;
+}
+.gm-layout-report .gm-research-header h1 {
+  max-width: 900px;
+}
+.gm-layout-report .gm-research-header .t-body {
+  max-width: 700px;
+}
+.gm-report-composition {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+.gm-report-index {
+  position: sticky;
+  top: 28px;
+  display: grid;
+  gap: 0;
+}
+.gm-report-index a {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.gm-report-index a:hover {
+  color: var(--primary);
+}
+.gm-report-sections {
+  min-width: 0;
+}
+.gm-report-band {
+  min-width: 0;
+  padding-bottom: 32px;
+  scroll-margin-top: 20px;
+}
+.gm-report-band > * {
+  width: 100%;
+}
+.gm-report-band .card {
+  border-top: 0;
+  padding-inline: 0;
+}
+.gm-report-band .panel-head {
+  padding-inline: 0;
+}
+.gm-layout-directory .gm-research-header {
+  padding-block: 20px;
+}
+.gm-country-region {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.gm-region-identity {
+  align-content: start;
+  flex-direction: column;
+  align-items: start;
+}
+.gm-region-identity .glass {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  gap: 12px;
+}
+.gm-country-roster article {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  padding: 20px 0;
+  box-shadow: none;
+  animation: none;
+}
+.gm-country-roster article > :last-child {
+  grid-column: 1 / -1;
+}
+.gm-country-roster article > :nth-child(3) {
+  border-top: 0;
+  padding-top: 0;
+}
+.gm-country-roster article:hover {
+  background: var(--secondary);
+}
+.gm-sector-entry {
+  border-top: 1px solid var(--border);
+  min-height: 310px;
+}
+.gm-sector-entry h3 {
+  font-size: 24px;
+}
+.gm-sector-entry .col-span-2 {
+  align-self: start;
+}
+.gm-body-laboratory {
+  align-items: start;
+}
+.gm-body-laboratory > :first-child {
+  grid-column: span 4;
+  position: sticky;
+  top: 20px;
+}
+.gm-body-laboratory > :nth-child(2) {
+  grid-column: span 8;
+}
+.gm-body-notebook > :first-child {
+  border-top: 1px solid var(--border);
+}
+.gm-body-register > * {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.gm-source-entry > :first-child {
+  grid-column: 1 / -1;
+}
+.gm-source-entry h2 {
+  font-size: 24px;
+}
+.gm-source-register article {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+.gm-overview-map .map-frame {
+  height: 580px;
+}
+.gm-overview-signals {
+  border-left: 1px solid var(--border);
+  padding-left: 22px;
+}
+.gm-overview-signals li button {
+  padding-block: 20px;
+}
+.gm-overview-signals li button p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.gm-propagation-workbench {
+  padding: 28px 0 48px;
+}
+.gm-propagation-workbench .gm-reference-heading {
+  font-size: 30px;
+}
+.gm-propagation-workbench .gm-five-stages {
+  max-width: none;
+}
+.gm-propagation-nodes > * {
+  min-height: 64px;
+  white-space: normal;
+  justify-content: space-between;
+  text-align: left;
+}
+.gm-auth-masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+}
+.gm-auth-page .t-section {
+  font-size: 32px;
+  line-height: 1.2;
+}
+.gm-auth-page .gm-auth-form {
+  padding-inline: 0;
+}
+.gm-account-page {
+  min-width: 0;
+}
+.gm-billing-composition > section {
+  min-width: 0;
+}
+.gm-account-page table {
+  min-width: 680px;
+}
+.gm-checkout-composition {
+  align-items: start;
+}
+.gm-printed-report > section {
+  position: relative;
+  padding-block: 40px;
+}
+.gm-methodology-page h1 {
+  font-size: 44px;
+}
 @media (max-width: 1023px) {
-  .gm-report-composition { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-  .gm-report-index { position: static; display: flex; overflow-x: auto; gap: 24px; border-bottom: 1px solid var(--border); }
-  .gm-report-index a { min-width: 130px; border: 0; }
-  .gm-country-region { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .gm-region-identity { flex-direction: row; flex-wrap: wrap; }
-  .gm-body-laboratory > :first-child, .gm-body-laboratory > :nth-child(2) { grid-column: 1 / -1; position: static; }
-  .gm-overview-signals { border-left: 0; padding-left: 0; }
+  .gm-report-composition {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .gm-report-index {
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .gm-report-index a {
+    min-width: 130px;
+    border: 0;
+  }
+  .gm-country-region {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .gm-region-identity {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .gm-body-laboratory > :first-child,
+  .gm-body-laboratory > :nth-child(2) {
+    grid-column: 1 / -1;
+    position: static;
+  }
+  .gm-overview-signals {
+    border-left: 0;
+    padding-left: 0;
+  }
 }
 @media (max-width: 767px) {
-  .gm-research-page .t-page { font-size: 30px; }
-  .gm-layout-report .gm-research-header .gm-width { padding-block: 28px; }
-  .gm-country-roster article { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .gm-country-roster article > header { grid-column: 1 / -1; }
-  .gm-country-roster article > :nth-child(3) svg { max-width: 70px; }
-  .gm-overview-map .map-frame { height: 390px; }
-  .gm-propagation-workbench .gm-reference-heading { font-size: 26px; }
-  .gm-auth-masthead > :last-child { font-size: 12px; }
+  .gm-research-page .t-page {
+    font-size: 30px;
+  }
+  .gm-layout-report .gm-research-header .gm-width {
+    padding-block: 28px;
+  }
+  .gm-country-roster article {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .gm-country-roster article > header {
+    grid-column: 1 / -1;
+  }
+  .gm-country-roster article > :nth-child(3) svg {
+    max-width: 70px;
+  }
+  .gm-overview-map .map-frame {
+    height: 390px;
+  }
+  .gm-propagation-workbench .gm-reference-heading {
+    font-size: 26px;
+  }
+  .gm-auth-masthead > :last-child {
+    font-size: 12px;
+  }
 }
 .gm-auth-identity {
   background: var(--secondary);

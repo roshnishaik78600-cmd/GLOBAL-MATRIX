@@ -48,7 +48,7 @@ export default function CountryProfile() {
   if (data === null) {
     return (
       <PageFrame
-      layout="report"
+        layout="report"
         eyebrow="Country"
         title="Place not found"
         lede={`GlobalMatrix does not track a place called "${nodeId}".`}

@@ -183,8 +183,12 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
           Hidden below lg so the form owns small screens; nothing decorative
           stands between a phone and the form. */}
       <header className="gm-auth-masthead border-b border-border px-6 py-5">
-        <Link to="/" className="text-lg font-semibold">GlobalMatrix<span className="text-primary">.</span></Link>
-        <Link to="/app" className="text-sm text-muted-foreground">Explore intelligence <ArrowRight className="inline size-4" /></Link>
+        <Link to="/" className="text-lg font-semibold">
+          GlobalMatrix<span className="text-primary">.</span>
+        </Link>
+        <Link to="/app" className="text-sm text-muted-foreground">
+          Explore intelligence <ArrowRight className="inline size-4" />
+        </Link>
       </header>
       {/* ------------------------------------------------ Right: the form. */}
       <main className="flex w-full min-w-0 flex-1 items-center justify-center px-4 py-12 sm:px-8">

@@ -65,7 +65,7 @@ export default function EventAnalysis() {
   if (data === null) {
     return (
       <PageFrame
-      layout="report"
+        layout="report"
         eyebrow="Event"
         title="Event not found"
         lede={`No event in the current corpus carries the id "${eventId}". It may have been renamed, or the link may be stale.`}

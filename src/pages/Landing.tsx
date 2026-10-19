@@ -390,7 +390,13 @@ export default function Landing() {
                 { to: "/app/assess", label: "Review your dependencies", number: "01" },
                 { to: "/app/watchlist", label: "Keep the signal in view", number: "02" },
                 { to: "/app/analyst", label: "Read an evidence-led brief", number: "03" },
-              ].map((item) => <Link key={item.to} to={item.to} className="border-t border-border py-6 text-left"><span className="font-mono text-xs text-primary">{item.number}</span><h3 className="mt-5 text-xl font-semibold">{item.label}</h3><ArrowRight className="mt-8 size-5" /></Link>)}
+              ].map((item) => (
+                <Link key={item.to} to={item.to} className="border-t border-border py-6 text-left">
+                  <span className="font-mono text-xs text-primary">{item.number}</span>
+                  <h3 className="mt-5 text-xl font-semibold">{item.label}</h3>
+                  <ArrowRight className="mt-8 size-5" />
+                </Link>
+              ))}
             </div>
           </section>
           <EcosystemStory />

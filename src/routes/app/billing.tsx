@@ -98,111 +98,113 @@ function Billing() {
       )}
 
       <div className="gm-billing-composition mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-      <section className="border-t border-border py-6">
-        <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          Current plan
-        </p>
-        <p className="mt-4 text-3xl font-semibold text-foreground">{plan.name}</p>
-        <p className="mt-1 text-sm text-muted-foreground">
-          AI analyst briefs: {BRIEF_DAILY_LIMIT[data.plan]} per day
-        </p>
-        {data.subscription && data.plan !== "free" && (
-          <p className="mt-1 text-sm text-muted-foreground">
-            Active {fmt(data.subscription.starts_at)} – {fmt(data.subscription.expires_at)}. Renewal
-            is manual: place a new order before expiry.
+        <section className="border-t border-border py-6">
+          <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            Current plan
           </p>
-        )}
-        {data.subscription?.status && data.subscription.status !== "active" && (
+          <p className="mt-4 text-3xl font-semibold text-foreground">{plan.name}</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Subscription status: {data.subscription.status}
+            AI analyst briefs: {BRIEF_DAILY_LIMIT[data.plan]} per day
           </p>
-        )}
-        <div className="mt-4 flex flex-wrap gap-3 text-sm">
-          {!data.subscription && (
-            <Button
-              variant="outline"
-              onClick={() =>
-                free()
-                  .then(refresh)
-                  .catch(() => setError("Could not activate Free Explorer. Try again."))
-              }
-              className="rounded-md border border-border px-3 py-1.5 text-foreground hover:bg-accent"
-            >
-              Activate Free Explorer
-            </Button>
+          {data.subscription && data.plan !== "free" && (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Active {fmt(data.subscription.starts_at)} – {fmt(data.subscription.expires_at)}.
+              Renewal is manual: place a new order before expiry.
+            </p>
           )}
-          {data.plan !== "business" && (
-            <Link
-              to="/pricing"
-              className="rounded-md bg-primary px-3 py-1.5 font-medium text-primary-foreground"
-            >
-              Compare plans
-            </Link>
+          {data.subscription?.status && data.subscription.status !== "active" && (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Subscription status: {data.subscription.status}
+            </p>
           )}
-        </div>
-      </section>
-
-      <section className="border-b border-border pb-6">
-        <h2 className="font-semibold text-foreground">Orders</h2>
-        {data.orders.length === 0 ? (
-          <p className="mt-2 text-sm text-muted-foreground">No orders yet.</p>
-        ) : (
-          <div className="mt-3 overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="text-xs text-muted-foreground">
-                <tr>
-                  <th className="py-2">Reference</th>
-                  <th>Item</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {data.orders.map((o) => (
-                  <tr key={o.id} className="border-t border-border">
-                    <td className="py-2 font-mono">{o.reference}</td>
-                    <td>{productName(o.product)}</td>
-                    <td>
-                      {formatINR(o.amount_inr)}
-                      {o.billing_period === "month" ? "/mo" : ""}
-                    </td>
-                    <td>
-                      {o.status.replace(/_/g, " ")}
-                      {o.payment_mode === "demo" ? " (demo)" : ""}
-                    </td>
-                    <td>{fmt(o.created_at)}</td>
-                    <td>
-                      {o.status === "pending_payment" && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-xs text-muted-foreground underline"
-                          onClick={async () => {
-                            if (!confirm("Cancel this order?")) return;
-                            try {
-                              await cancel({ data: { id: o.id } });
-                              refresh();
-                            } catch {
-                              setError("Could not cancel the order. Reload billing and try again.");
-                            }
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            {!data.subscription && (
+              <Button
+                variant="outline"
+                onClick={() =>
+                  free()
+                    .then(refresh)
+                    .catch(() => setError("Could not activate Free Explorer. Try again."))
+                }
+                className="rounded-md border border-border px-3 py-1.5 text-foreground hover:bg-accent"
+              >
+                Activate Free Explorer
+              </Button>
+            )}
+            {data.plan !== "business" && (
+              <Link
+                to="/pricing"
+                className="rounded-md bg-primary px-3 py-1.5 font-medium text-primary-foreground"
+              >
+                Compare plans
+              </Link>
+            )}
           </div>
-        )}
-        <p className="mt-3 text-xs text-muted-foreground">
-          Invoices and receipts are not issued yet; they will appear here once payments go live.
-        </p>
-      </section>
+        </section>
+
+        <section className="border-b border-border pb-6">
+          <h2 className="font-semibold text-foreground">Orders</h2>
+          {data.orders.length === 0 ? (
+            <p className="mt-2 text-sm text-muted-foreground">No orders yet.</p>
+          ) : (
+            <div className="mt-3 overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="text-xs text-muted-foreground">
+                  <tr>
+                    <th className="py-2">Reference</th>
+                    <th>Item</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.orders.map((o) => (
+                    <tr key={o.id} className="border-t border-border">
+                      <td className="py-2 font-mono">{o.reference}</td>
+                      <td>{productName(o.product)}</td>
+                      <td>
+                        {formatINR(o.amount_inr)}
+                        {o.billing_period === "month" ? "/mo" : ""}
+                      </td>
+                      <td>
+                        {o.status.replace(/_/g, " ")}
+                        {o.payment_mode === "demo" ? " (demo)" : ""}
+                      </td>
+                      <td>{fmt(o.created_at)}</td>
+                      <td>
+                        {o.status === "pending_payment" && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-xs text-muted-foreground underline"
+                            onClick={async () => {
+                              if (!confirm("Cancel this order?")) return;
+                              try {
+                                await cancel({ data: { id: o.id } });
+                                refresh();
+                              } catch {
+                                setError(
+                                  "Could not cancel the order. Reload billing and try again.",
+                                );
+                              }
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          <p className="mt-3 text-xs text-muted-foreground">
+            Invoices and receipts are not issued yet; they will appear here once payments go live.
+          </p>
+        </section>
       </div>
     </div>
   );

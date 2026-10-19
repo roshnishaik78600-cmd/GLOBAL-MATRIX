@@ -158,7 +158,9 @@ export default function Analyst() {
         ) : null}
 
         {/* Answer */}
-        <section className={cn("min-w-0", assessment ? "lg:col-span-8 lg:row-start-1" : "lg:col-span-12")}>
+        <section
+          className={cn("min-w-0", assessment ? "lg:col-span-8 lg:row-start-1" : "lg:col-span-12")}
+        >
           <Panel
             title="Answer"
             meta={brief ? `generated ${timestamp(brief.createdAt)}` : "no brief yet"}

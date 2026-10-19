@@ -136,9 +136,7 @@ export default function Industries() {
 
                   <div className="col-span-10">
                     <span className="num label text-signal">{row.code}</span>
-                    <h3 className="mt-1.5 text-[15px] font-semibold ">
-                      {row.label}
-                    </h3>
+                    <h3 className="mt-1.5 text-[15px] font-semibold ">{row.label}</h3>
                     <p className="mt-1.5 max-w-prose text-[13px] leading-relaxed text-muted-foreground">
                       {row.summary}
                     </p>

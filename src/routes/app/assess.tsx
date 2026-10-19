@@ -125,9 +125,7 @@ function Assess() {
 
   return (
     <div className="gm-account-page mx-auto max-w-6xl px-6 py-10">
-      <h1 className="text-4xl font-semibold text-foreground">
-        Business exposure assessment
-      </h1>
+      <h1 className="text-4xl font-semibold text-foreground">Business exposure assessment</h1>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
         Tell us what you depend on. We only show links the model actually tracks — nothing is
         inferred about your company that you haven't declared.

@@ -78,7 +78,12 @@ export default function ChainPage() {
 
       <div className="grid grid-cols-1 gap-4">
         <FiveStageStory embedded />
-        <details className="border-t border-border py-5"><summary className="cursor-pointer text-lg font-semibold">Full nine-stage analysis</summary><ChainExplorer /></details>
+        <details className="border-t border-border py-5">
+          <summary className="cursor-pointer text-lg font-semibold">
+            Full nine-stage analysis
+          </summary>
+          <ChainExplorer />
+        </details>
 
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-12">
           <section className="xl:col-span-9">

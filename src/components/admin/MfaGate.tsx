@@ -37,7 +37,10 @@ export function MfaGate({ children }: { children: ReactNode }) {
         if (ee) throw ee;
         setStage({ kind: "enroll", factorId: e.id, qr: e.totp.qr_code, secret: e.totp.secret });
       } catch (e) {
-        setStage({ kind: "error", message: e instanceof Error ? e.message : "Could not start MFA" });
+        setStage({
+          kind: "error",
+          message: e instanceof Error ? e.message : "Could not start MFA",
+        });
       }
     })();
   }, []);

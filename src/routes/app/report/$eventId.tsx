@@ -103,9 +103,7 @@ function Report() {
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             GlobalMatrix intelligence report · {s.reference}
           </p>
-          <h1 className="mt-2 text-3xl font-semibold text-foreground sm:text-3xl">
-            {s.title}
-          </h1>
+          <h1 className="mt-2 text-3xl font-semibold text-foreground sm:text-3xl">{s.title}</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {STAGE_LABEL[s.stage]} · first signal {s.firstSignalAt.slice(0, 10)} · detected{" "}
             {s.detectedAt.slice(0, 10)} · {s.regions.join(", ")}
