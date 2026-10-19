@@ -4,9 +4,9 @@ import Countries from "@/pages/Countries";
 export const Route = createFileRoute("/app/countries")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/countries" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/countries" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/countries" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/countries" },
       { title: "Countries — GlobalMatrix" },
       {
         name: "description",

@@ -4,9 +4,9 @@ import Methodology from "@/pages/Methodology";
 export const Route = createFileRoute("/methodology")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/methodology" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/methodology" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/methodology" },
+      { property: "og:url", content: "https://globalmatrix.dev/methodology" },
       { title: "Methodology — GlobalMatrix" },
       {
         name: "description",

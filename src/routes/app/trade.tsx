@@ -4,9 +4,9 @@ import Trade from "@/pages/Trade";
 export const Route = createFileRoute("/app/trade")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/trade" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/trade" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/trade" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/trade" },
       { title: "Trade Flows — GlobalMatrix" },
       {
         name: "description",

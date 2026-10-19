@@ -4,9 +4,9 @@ import Industries from "@/pages/Industries";
 export const Route = createFileRoute("/app/industries")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/industries" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/industries" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/industries" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/industries" },
       { title: "Industries — GlobalMatrix" },
       {
         name: "description",

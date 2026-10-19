@@ -4,9 +4,9 @@ import Overview from "@/pages/Overview";
 export const Route = createFileRoute("/app/")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app" },
+      { property: "og:url", content: "https://globalmatrix.dev/app" },
       { title: "Overview — GlobalMatrix Console" },
       {
         name: "description",

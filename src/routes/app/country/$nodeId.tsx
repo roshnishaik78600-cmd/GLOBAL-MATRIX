@@ -6,7 +6,7 @@ export const Route = createFileRoute("/app/country/$nodeId")({
   staticData: { sitemap: true },
   head: ({ params }) => {
     const name = getNode(params.nodeId).label;
-    const url = `https://globalmatrix.lovable.app/app/country/${params.nodeId}`;
+    const url = `https://globalmatrix.dev/app/country/${params.nodeId}`;
     const title = `${name} supply-chain exposure — GlobalMatrix`;
     const description = `${name}: trade dependencies, chokepoints, industries and modelled risk exposure, with sources and limitations.`;
     return {

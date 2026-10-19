@@ -4,9 +4,9 @@ import RiskBoard from "@/pages/RiskBoard";
 export const Route = createFileRoute("/app/risk")({
   staticData: { sitemap: true },
   head: () => ({
-    links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app/app/risk" }],
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/risk" }],
     meta: [
-      { property: "og:url", content: "https://globalmatrix.lovable.app/app/risk" },
+      { property: "og:url", content: "https://globalmatrix.dev/app/risk" },
       { title: "Risk Board — GlobalMatrix" },
       {
         name: "description",
