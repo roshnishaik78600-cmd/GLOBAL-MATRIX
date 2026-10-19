@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Rebuild homepage pricing and subscription page with shared prominent cards and separate Risk Brief; verify desktop/mobile and unavailable-payment actions
+- [x] Rebuild homepage pricing and subscription page with shared prominent cards and separate Risk Brief; desktop/mobile dialogs, free exploration and demo checkout links verified; 31 tests passed
 - [x] Premium experience brief: sharpen business positioning and interactive event preview; put the Impact Graph first and expose relationship context
 - [x] Refine pricing, mobile comparison, billing FAQs and shared public footer with truthful company/contact/data/terms pages
 - [x] Verify public navigation, graph selections, responsive pages and signed-in demo billing; preserve existing safeguards
