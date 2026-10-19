@@ -19,3 +19,4 @@
 - Compose PageFrame with explicit workspace, report, directory, laboratory, register or notebook layouts; reports use a section index and full-width ordered bands rather than a uniform KPI grid.
 - Render the shared public footer once in the root outside application/admin paths; factual public information pages share PublicInfo so identity, data and billing disclosures remain consistent.
 - EventPreview reads the existing event-chain queries; the signature graph leads its page, with local keyboard-selectable nodes and relationship context derived from the same graph edges, so selecting a node does not obscure the network with a global drawer.
+- Share PricingPlans and RiskBriefPanel between public pricing displays, reading billing constants and gating paid choices with an availability dialog, so presentation cannot imply a live subscription or diverge across pages.
