@@ -1273,13 +1273,30 @@ export type SourceStatus = {
   cadence: string;
 };
 
-type PublicSourceRun = { source_id: string; key: string; ok: boolean; retrieved_at: string; problem: string | null };
+type PublicSourceRun = {
+  source_id: string;
+  key: string;
+  ok: boolean;
+  retrieved_at: string;
+  problem: string | null;
+};
 async function publicSourceRuns(): Promise<PublicSourceRun[]> {
   const { data, error } = await supabase.rpc("public_source_summary");
   if (error) throw new Error("Source status could not be loaded. Please retry.");
-  if (!data || typeof data !== "object" || Array.isArray(data) || !Array.isArray(data.runs)) throw new Error("Source status is unavailable.");
-  return data.runs.filter((row): row is Record<string, import("@/integrations/supabase/types").Json> => !!row && typeof row === "object" && !Array.isArray(row))
-    .map((row) => ({ source_id: String(row.source_id), key: String(row.key), ok: row.ok === true, retrieved_at: String(row.retrieved_at), problem: typeof row.problem === "string" ? row.problem : null }));
+  if (!data || typeof data !== "object" || Array.isArray(data) || !Array.isArray(data.runs))
+    throw new Error("Source status is unavailable.");
+  return data.runs
+    .filter(
+      (row): row is Record<string, import("@/integrations/supabase/types").Json> =>
+        !!row && typeof row === "object" && !Array.isArray(row),
+    )
+    .map((row) => ({
+      source_id: String(row.source_id),
+      key: String(row.key),
+      ok: row.ok === true,
+      retrieved_at: String(row.retrieved_at),
+      problem: typeof row.problem === "string" ? row.problem : null,
+    }));
 }
 
 async function sourceStatus(args: { sourceId: string }): Promise<SourceStatus | null> {

@@ -88,8 +88,12 @@ export default function NotAvailable() {
                 be traced back to a signal, a pathway or a stated coefficient.
               </p>
               <div className="flex flex-wrap gap-3 pt-3">
-                <Button asChild><Link to="/contact">Request early access</Link></Button>
-                <Button asChild variant="outline"><Link to="/methodology">See methodology</Link></Button>
+                <Button asChild>
+                  <Link to="/contact">Request early access</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/methodology">See methodology</Link>
+                </Button>
               </div>
             </div>
           </Panel>

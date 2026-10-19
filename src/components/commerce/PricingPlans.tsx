@@ -47,7 +47,9 @@ export function PricingPlans() {
                 <span>{plan.period ? "/ month" : "Free to explore"}</span>
               </div>
               <div className="gm-price-capacity">
-                <strong className={id === "business" ? "text-xl" : undefined}>{briefLimitLabel(id)}</strong>
+                <strong className={id === "business" ? "text-xl" : undefined}>
+                  {briefLimitLabel(id)}
+                </strong>
                 <span>
                   AI analyst briefs
                   <br />
@@ -90,7 +92,11 @@ export function PricingPlans() {
                           demo checkout.
                         </DialogDescription>
                       </DialogHeader>
-                      <RequestForm defaultKind="waitlist" fixedKind defaultMessage={`Please notify me when ${plan.name} subscriptions are available.`} />
+                      <RequestForm
+                        defaultKind="waitlist"
+                        fixedKind
+                        defaultMessage={`Please notify me when ${plan.name} subscriptions are available.`}
+                      />
                       <Button asChild>
                         <Link to="/app">
                           Start Exploring <ArrowRight aria-hidden />

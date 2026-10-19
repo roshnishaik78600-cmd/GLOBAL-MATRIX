@@ -54,29 +54,30 @@ export function SourceHealthChip({ className }: { className?: string }) {
     query.error && health === undefined
       ? "SOURCE STATUS UNAVAILABLE"
       : health === undefined
-      ? "CHECKING SOURCES"
-      : total === 0
-        ? "NO SOURCES"
-        : held > 0
-          ? `${verified}/${total} VERIFIED · ${held} HELD`
-          : `${verified}/${total} VERIFIED`;
+        ? "CHECKING SOURCES"
+        : total === 0
+          ? "NO SOURCES"
+          : held > 0
+            ? `${verified}/${total} VERIFIED · ${held} HELD`
+            : `${verified}/${total} VERIFIED`;
 
   const detail =
     query.error && health === undefined
       ? "Open the source register to retry."
       : health === undefined
-      ? "Reading connector state."
-      : rows
-          .map((r) => {
-            const name = sourceById(r.sourceId)?.label ?? r.sourceId;
-            const state =
-              r.lastSuccessAt === 0
-                ? "no verified reading yet"
-                : `last verified ${relativeAge(r.lastSuccessAt)}`;
-            const healthWord = r.lastAttemptAt > r.lastSuccessAt ? " · latest attempt failed" : "";
-            return `${name}: ${state}${healthWord}`;
-          })
-          .join("\n");
+        ? "Reading connector state."
+        : rows
+            .map((r) => {
+              const name = sourceById(r.sourceId)?.label ?? r.sourceId;
+              const state =
+                r.lastSuccessAt === 0
+                  ? "no verified reading yet"
+                  : `last verified ${relativeAge(r.lastSuccessAt)}`;
+              const healthWord =
+                r.lastAttemptAt > r.lastSuccessAt ? " · latest attempt failed" : "";
+              return `${name}: ${state}${healthWord}`;
+            })
+            .join("\n");
 
   return (
     <Link

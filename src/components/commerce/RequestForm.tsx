@@ -15,11 +15,25 @@ const KIND_LABEL: Record<InquiryKind, string> = {
   waitlist: "Join the waitlist",
 };
 
-export function RequestForm({ defaultKind = "sample", fixedKind = false, defaultMessage = "" }: { defaultKind?: InquiryKind; fixedKind?: boolean; defaultMessage?: string }) {
+export function RequestForm({
+  defaultKind = "sample",
+  fixedKind = false,
+  defaultMessage = "",
+}: {
+  defaultKind?: InquiryKind;
+  fixedKind?: boolean;
+  defaultMessage?: string;
+}) {
   const sendInquiry = useServerFn(submitInquiry);
   const formId = useId();
   const [kind, setKind] = useState<InquiryKind>(defaultKind);
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: defaultMessage, website: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: defaultMessage,
+    website: "",
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [problem, setProblem] = useState("");
@@ -53,7 +67,9 @@ export function RequestForm({ defaultKind = "sample", fixedKind = false, default
   if (state === "done") {
     return (
       <div className="rounded-lg border border-border bg-card p-6">
-        <p role="status" className="text-sm font-semibold text-foreground">{kind === "waitlist" ? "You're on the waitlist." : "Request received."}</p>
+        <p role="status" className="text-sm font-semibold text-foreground">
+          {kind === "waitlist" ? "You're on the waitlist." : "Request received."}
+        </p>
         <p className="mt-1 text-sm text-muted-foreground">
           Your inquiry has been saved for review. A response time has not been confirmed. No payment
           has been taken.
@@ -81,20 +97,22 @@ export function RequestForm({ defaultKind = "sample", fixedKind = false, default
       className="space-y-4 rounded-lg border border-border bg-card p-6"
       noValidate
     >
-      {!fixedKind && <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Request type">
-        {(Object.keys(KIND_LABEL) as InquiryKind[]).map((k) => (
-          <Button
-            key={k}
-            type="button"
-            role="radio"
-            aria-checked={kind === k}
-            onClick={() => setKind(k)}
-            className={`rounded-md border px-3 py-1.5 text-xs transition-colors ${kind === k ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:text-foreground"}`}
-          >
-            {KIND_LABEL[k]}
-          </Button>
-        ))}
-      </div>}
+      {!fixedKind && (
+        <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Request type">
+          {(Object.keys(KIND_LABEL) as InquiryKind[]).map((k) => (
+            <Button
+              key={k}
+              type="button"
+              role="radio"
+              aria-checked={kind === k}
+              onClick={() => setKind(k)}
+              className={`rounded-md border px-3 py-1.5 text-xs transition-colors ${kind === k ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:text-foreground"}`}
+            >
+              {KIND_LABEL[k]}
+            </Button>
+          ))}
+        </div>
+      )}
       <div className="grid gap-4 sm:grid-cols-2">
         {field("name", "Name")}
         {field("email", "Work email", "email")}
@@ -119,7 +137,11 @@ export function RequestForm({ defaultKind = "sample", fixedKind = false, default
         value={form.website}
         onChange={(e) => setForm({ ...form, website: e.target.value })}
       />
-      {state === "error" && <p role="alert" className="text-sm text-destructive">{problem}</p>}
+      {state === "error" && (
+        <p role="alert" className="text-sm text-destructive">
+          {problem}
+        </p>
+      )}
       <Button type="submit" disabled={state === "sending"} className="w-full sm:w-auto">
         {state === "sending" ? "Sending…" : KIND_LABEL[kind]}
       </Button>

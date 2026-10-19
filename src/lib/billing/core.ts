@@ -8,8 +8,13 @@ export type PlanId = "free" | "analyst" | "business";
 export type ProductId = "analyst" | "business" | "custom_report";
 
 /** Daily AI-analyst brief allowance per plan — enforced on the server. */
-export const BRIEF_DAILY_LIMIT: Record<PlanId, number | null> = { free: 5, analyst: 50, business: null };
-export const briefLimitLabel = (plan: PlanId): string => BRIEF_DAILY_LIMIT[plan] === null ? "Unlimited" : String(BRIEF_DAILY_LIMIT[plan]);
+export const BRIEF_DAILY_LIMIT: Record<PlanId, number | null> = {
+  free: 5,
+  analyst: 50,
+  business: null,
+};
+export const briefLimitLabel = (plan: PlanId): string =>
+  BRIEF_DAILY_LIMIT[plan] === null ? "Unlimited" : String(BRIEF_DAILY_LIMIT[plan]);
 
 export const PLANS: Record<
   PlanId,
