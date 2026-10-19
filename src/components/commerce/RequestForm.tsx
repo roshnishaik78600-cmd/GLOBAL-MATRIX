@@ -52,7 +52,8 @@ export function RequestForm({ defaultKind = "sample" }: { defaultKind?: InquiryK
       <div className="rounded-lg border border-border bg-card p-6">
         <p className="text-sm font-semibold text-foreground">Request received.</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Your inquiry has been saved for review. A response time has not been confirmed. No payment has been taken.
+          Your inquiry has been saved for review. A response time has not been confirmed. No payment
+          has been taken.
         </p>
       </div>
     );

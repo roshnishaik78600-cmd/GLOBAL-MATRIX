@@ -374,25 +374,27 @@ export default function Overview() {
           the twelve columns and six tiles across that width would be unreadable. */}
       <Region width={12}>
         {topology ? (
-        <RiskTopology
-          data={topology}
-          columns={3}
-          selected={topologyFilter}
-          onSelect={(id) => {
-            setTopologyFilter(id);
-            if (id && id !== "risk") {
-              setDomain((CHANNEL_BY_TOPOLOGY[id] as Channel | undefined) ?? "risk");
-            }
-          }}
-        />
-        ) : <p role="status" className="py-6 text-sm text-muted-foreground">Loading supporting macro readings… The exposure map remains available.</p>}
+          <RiskTopology
+            data={topology}
+            columns={3}
+            selected={topologyFilter}
+            onSelect={(id) => {
+              setTopologyFilter(id);
+              if (id && id !== "risk") {
+                setDomain((CHANNEL_BY_TOPOLOGY[id] as Channel | undefined) ?? "risk");
+              }
+            }}
+          />
+        ) : (
+          <p role="status" className="py-6 text-sm text-muted-foreground">
+            Loading supporting macro readings… The exposure map remains available.
+          </p>
+        )}
       </Region>
 
       {/* LEVEL 3 — the three composite gauges, full width so each dial keeps
           its own readable width instead of being squeezed into a sidebar. */}
-      <Region width={12}>
-        {topology && <GaugeCluster data={topology} />}
-      </Region>
+      <Region width={12}>{topology && <GaugeCluster data={topology} />}</Region>
 
       {/* LEVEL 5 — external verified data, with its own freshness per source. */}
       <Region width={12}>
@@ -483,7 +485,9 @@ function OverviewSkeleton() {
   return (
     <div className="min-w-0 px-4 py-4 lg:px-6">
       <h1 className="text-3xl font-medium">Global intelligence</h1>
-      <p role="status" className="mt-3 text-sm text-muted-foreground">Loading the exposure network and event evidence…</p>
+      <p role="status" className="mt-3 text-sm text-muted-foreground">
+        Loading the exposure network and event evidence…
+      </p>
       <Skeleton className="mt-2 h-3 w-full max-w-2xl" />
       <div className="mt-6 grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-12">
         <div className="grid grid-cols-2 gap-2 lg:col-span-12 lg:grid-cols-6">

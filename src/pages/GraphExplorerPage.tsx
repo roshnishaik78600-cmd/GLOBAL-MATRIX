@@ -131,7 +131,7 @@ export default function GraphExplorerPage() {
                     navigate(`/app/event/${id}`);
                     return;
                   }
-                  setSelected((current) => current === id ? null : id);
+                  setSelected((current) => (current === id ? null : id));
                 }}
               />
             ) : (
@@ -186,7 +186,8 @@ export default function GraphExplorerPage() {
                       return (
                         <li key={`${edge.from}:${edge.to}:${index}`} className="py-3 text-xs">
                           <p className="font-medium">
-                            {edge.from === selected ? selectedLabel(selected) : other?.label} → {edge.to === selected ? selectedLabel(selected) : other?.label}
+                            {edge.from === selected ? selectedLabel(selected) : other?.label} →{" "}
+                            {edge.to === selected ? selectedLabel(selected) : other?.label}
                           </p>
                           <p className="mt-1 text-muted-foreground">
                             {edge.label} · weight {edge.weight.toFixed(2)}
