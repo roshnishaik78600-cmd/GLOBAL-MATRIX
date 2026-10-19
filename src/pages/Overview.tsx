@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Globe2 } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { useFocus, type TimeWindow } from "@/lib/focus";
@@ -34,6 +34,8 @@ import {
 } from "@/components/viz/exec/Topology";
 import { freshnessOf } from "@/lib/freshness";
 import { period as periodLabel } from "@/lib/numbers";
+import { Button } from "@/components/ui/button";
+import { ChainExplorer } from "@/components/viz/ChainExplorer";
 
 /**
  * The executive command centre.
@@ -99,8 +101,8 @@ export default function Overview() {
   return (
     <PageFrame
       eyebrow="Overview"
-      title="Executive command centre"
-      lede="Where global risk is concentrated right now, the macro topology behind it, and what changed."
+      title="The world. In context."
+      lede="Global signals, connected exposure, and the evidence behind every relationship."
       actions={
         <>
           <Action to="/app/risk">Risk explorer</Action>
@@ -138,62 +140,15 @@ export default function Overview() {
         </div>
       }
     >
-      {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
-          two columns each, so every headline number sits on the same baseline as
-          the panels below it rather than in a card of its own. */}
-      <Region width={12}>
-        <MetricGrid columns={6}>
-          <Metric
-            label="Mean composite"
-            value={num(stats?.meanScore ?? 0, 1)}
-            unit="/100"
-            basis="model"
-            tone={loadColour((stats?.meanScore ?? 0) / 100)}
-            period="30D"
-            hint="Corpus mean composite risk on the 30-day horizon"
-          />
-          <Metric
-            label="Most exposed"
-            value={hottest?.short ?? "—"}
-            basis="model"
-            tone={loadColour(hottest?.load ?? 0)}
-            hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
-          />
-          <Metric
-            label="Corpus events"
-            value={count(stats?.events ?? data.stats.events)}
-            basis="scenario"
-            hint="Synthetic events currently in the corpus"
-          />
-          <Metric
-            label="Tracked places"
-            value={count(mappable.length)}
-            basis="scenario"
-            hint="Places the map can plot"
-          />
-          <Metric
-            label="Active signals"
-            value={count((stats?.bands?.high ?? 0) + (stats?.bands?.severe ?? 0))}
-            basis="model"
-            period={timeWindow.toUpperCase()}
-            hint="Events at elevated-or-worse composite score inside the active window"
-          />
-          <Metric
-            label="In window"
-            value={count(inWindow)}
-            unit={`/ ${count(ticker.length)}`}
-            basis="scenario"
-            period={timeWindow.toUpperCase()}
-            hint="Events falling inside the selected window"
-          />
-        </MetricGrid>
-      </Region>
-
+      <div className="gm-overview-intro flex flex-wrap items-center justify-between gap-5 border-b border-border pb-6">
+        <div className="flex items-center gap-4"><Globe2 className="size-8 text-primary" /><div><p className="text-lg font-medium">Global exposure atlas</p><p className="mt-1 text-xs text-muted-foreground">{mappable.length} mapped places · {data.flows.length} modelled connections</p></div></div>
+        <Button asChild variant="outline"><Link to="/app/world">Open world explorer <ArrowUpRight /></Link></Button>
+      </div>
       {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
           support it rather than compete with it. */}
-      <Region width={8} dominant>
+      <Region width={12} dominant className="gm-overview-map">
         <PanelHead
-          title="Global risk surface"
+          title="Explore the exposure network"
           meta="land shading and arcs are model output"
           actions={<DataType type="model" />}
         />
@@ -211,31 +166,15 @@ export default function Overview() {
         </div>
       </Region>
 
-      {/* LEVEL 2 — the radar. One tile per row, because this region is four of
-          the twelve columns and six tiles across that width would be unreadable. */}
-      <Region width={4}>
-        <RiskTopology
-          data={topology}
-          columns={1}
-          selected={topologyFilter}
-          onSelect={(id) => {
-            setTopologyFilter(id);
-            if (id && id !== "risk") {
-              setDomain((CHANNEL_BY_TOPOLOGY[id] as Channel | undefined) ?? "risk");
-            }
-          }}
-        />
-      </Region>
-
       {/* LEVEL 2 — what changed, as a readable feed. */}
       <Region width={7}>
         <PanelHead
-          title="Streamed events"
-          meta={`${inWindow} of ${data.topEvents.length} inside ${timeWindow.toUpperCase()}`}
+          title="Scenario intelligence"
+          meta="Demonstration corpus · not live news"
           actions={<DataType type="model" />}
         />
         <ul className="min-w-0 divide-y divide-[var(--exec-hairline)]">
-          {data.topEvents.map((event) => {
+          {data.topEvents.filter((event) => ticker.some((item) => item.id === event.id && item.inWindow)).map((event) => {
             const active = isFocused("event", event.id);
             return (
               <li key={event.id} className="flex min-w-0 items-stretch">
@@ -310,6 +249,74 @@ export default function Overview() {
             onSelect={(id) => toggle({ kind: "event", id })}
           />
         )}
+      </Region>
+
+      <div className="border-t border-border pt-8"><div className="mb-6 flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p><h2 className="mt-3 text-2xl font-medium">Follow what comes next.</h2></div><Button asChild variant="ghost"><Link to="/app/graph">Knowledge graph <ArrowRight /></Link></Button></div><ChainExplorer className="gm-story-chain" /></div>
+      {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
+          two columns each, so every headline number sits on the same baseline as
+          the panels below it rather than in a card of its own. */}
+      <Region width={12}>
+        <MetricGrid columns={6}>
+          <Metric
+            label="Mean composite"
+            value={num(stats?.meanScore ?? 0, 1)}
+            unit="/100"
+            basis="model"
+            tone={loadColour((stats?.meanScore ?? 0) / 100)}
+            period="30D"
+            hint="Corpus mean composite risk on the 30-day horizon"
+          />
+          <Metric
+            label="Most exposed"
+            value={hottest?.short ?? "—"}
+            basis="model"
+            tone={loadColour(hottest?.load ?? 0)}
+            hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
+          />
+          <Metric
+            label="Corpus events"
+            value={count(stats?.events ?? data.stats.events)}
+            basis="scenario"
+            hint="Synthetic events currently in the corpus"
+          />
+          <Metric
+            label="Tracked places"
+            value={count(mappable.length)}
+            basis="scenario"
+            hint="Places the map can plot"
+          />
+          <Metric
+            label="Active signals"
+            value={count((stats?.bands?.high ?? 0) + (stats?.bands?.severe ?? 0))}
+            basis="model"
+            period={timeWindow.toUpperCase()}
+            hint="Events at elevated-or-worse composite score inside the active window"
+          />
+          <Metric
+            label="In window"
+            value={count(inWindow)}
+            unit={`/ ${count(ticker.length)}`}
+            basis="scenario"
+            period={timeWindow.toUpperCase()}
+            hint="Events falling inside the selected window"
+          />
+        </MetricGrid>
+      </Region>
+
+      {/* LEVEL 2 — the radar. One tile per row, because this region is four of
+          the twelve columns and six tiles across that width would be unreadable. */}
+      <Region width={12}>
+        <RiskTopology
+          data={topology}
+          columns={3}
+          selected={topologyFilter}
+          onSelect={(id) => {
+            setTopologyFilter(id);
+            if (id && id !== "risk") {
+              setDomain((CHANNEL_BY_TOPOLOGY[id] as Channel | undefined) ?? "risk");
+            }
+          }}
+        />
       </Region>
 
       {/* LEVEL 3 — the three composite gauges, full width so each dial keeps

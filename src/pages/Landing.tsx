@@ -2,13 +2,14 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { motion } from "framer-motion";
-import { fadeUp, mediaIn, stagger } from "@/lib/motion";
+import { fadeUp, stagger } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Factory, Globe2, Landmark, Network, Package, TrendingUp } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import { ChainExplorer } from "@/components/viz/ChainExplorer";
 import { PricingTeaser } from "@/components/landing/PricingTeaser";
 import {
   BAND_LABEL,
@@ -30,7 +31,6 @@ import { loadColour } from "@/components/viz/exec/Topology";
 import {
   BarPreview,
   ExploreGrid,
-  FollowTheShock,
   GlobalPulse,
   SplitPreview,
   UnavailablePreview,
@@ -216,117 +216,32 @@ export default function Landing() {
     <ExecPage className="min-h-full">
       <LandingNav />
 
-      <header className="relative overflow-hidden border-b border-border">
-        {/* Atmospheric copper glow behind the hero — decoration only. */}
-        <div
-          aria-hidden
-          className="gm-hero-glow gm-drift pointer-events-none absolute inset-0 opacity-70"
-        />
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-          className="gm-width relative px-4 pt-9 lg:px-8 lg:pt-12"
-        >
-          <motion.p
-            variants={fadeUp}
-            className="mb-4 flex items-center gap-3 text-sm font-medium text-primary"
-          >
-            <Globe2 className="size-4" /> GlobalMatrix{" "}
-            <span className="text-muted-foreground">/ Connected intelligence</span>
-          </motion.p>
-          <motion.h1
-            variants={fadeUp}
-            className="max-w-5xl text-[2.5rem] leading-[1.12] font-semibold text-foreground sm:text-[3.5rem] lg:text-[4rem]"
-          >
-            Understand global disruption{" "}
-            <span className="gm-text-gradient">before it reaches your supply chain.</span>
-          </motion.h1>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground"
-          >
-            Event → affected country or industry → supply-chain exposure → evidence → what to
-            check next.
-          </motion.p>
-          <motion.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg">
-              <Link to="/app">
-                Explore Global Risks <ArrowRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href="#how-it-works">See How It Works</a>
-            </Button>
-            <Button asChild size="lg" variant="ghost">
-              <Link to="/pricing">
-                View Pricing <ArrowRight />
-              </Link>
-            </Button>
-          </motion.div>
-          <motion.div
-            variants={fadeUp}
-            className="mt-7 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 text-xs text-muted-foreground"
-          >
-            <span className="flex items-center gap-2">
-              <Network className="size-4 text-primary" /> Global exposure network
-            </span>
-            <span>Demonstration events · modelled connections, not shipping routes</span>
+      <header className="gm-cinematic-hero relative isolate overflow-hidden border-b border-border">
+        <div className="gm-hero-cartography absolute inset-x-0 bottom-0" id="world-map">
+          {data ? <WorldMap nodes={data.mapNodes} flows={data.flows} events={mapEvents} className="gm-cinematic-map" selected={sharedNodeId} onSelect={selectNode} onInspect={(id) => navigate(`/app/country/${id}`)} /> : <Skeleton className="gm-cinematic-map w-full" />}
+        </div>
+        <motion.div variants={stagger} initial="hidden" animate="show" className="gm-width pointer-events-none relative z-10 px-5 pt-12 sm:px-10 lg:pt-16">
+          <motion.p variants={fadeUp} className="mb-6 flex items-center gap-3 text-xs font-medium text-primary"><span className="h-px w-8 bg-primary" /> GLOBALMATRIX / GLOBAL INTELLIGENCE</motion.p>
+          <motion.h1 variants={fadeUp} className="gm-cinematic-title max-w-4xl font-medium text-foreground">See the world.<br /><span className="text-primary">Understand the impact.</span></motion.h1>
+          <motion.p variants={fadeUp} className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">Trace global signals into potential supply-chain exposure. Evidence first. Connections in context.</motion.p>
+          <motion.div variants={fadeUp} className="pointer-events-auto mt-7 flex flex-wrap gap-3">
+            <Button asChild size="lg"><Link to="/app">Explore Global Intelligence <ArrowRight /></Link></Button>
+            <Button asChild size="lg" variant="outline"><a href="#impact-story">Follow the impact <Network /></a></Button>
           </motion.div>
         </motion.div>
-        <motion.div
-          variants={mediaIn}
-          initial="hidden"
-          animate="show"
-          className="gm-width relative"
-          id="world-map"
-        >
-          {data ? (
-            <WorldMap
-              nodes={data.mapNodes}
-              flows={data.flows}
-              events={mapEvents}
-              className="gm-map-stage"
-              selected={sharedNodeId}
-              onSelect={selectNode}
-              onInspect={(id) => navigate(`/app/country/${id}`)}
-            />
-          ) : (
-            <Skeleton className="gm-map-stage w-full" />
-          )}
-        </motion.div>
-        {/* Event ticker — a quiet strip of the latest detected events. The
-            list is rendered twice so the marquee loops seamlessly. */}
-        {timeline.length > 0 && (
-          <div className="relative overflow-hidden border-t border-border py-2.5">
-            <div className="gm-ticker flex w-max items-center gap-8 whitespace-nowrap px-4">
-              {[...timeline, ...timeline].map((e, i) => (
-                <Link
-                  key={`${e.id}-${i}`}
-                  to={`/app/event/${e.id}`}
-                  className="flex items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <span className="size-1.5 rounded-full bg-primary" aria-hidden />
-                  <span className="font-medium text-foreground/80">{e.place}</span>
-                  {e.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          transition={{ delay: 0.35 }}
-          className="gm-width relative px-4 pb-5 lg:px-8"
-        >
-          <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
-        </motion.div>
+        <div className="gm-hero-caption gm-width pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-wrap items-center justify-between gap-3 px-5 py-5 text-xs sm:px-10">
+          <span className="text-foreground">01 / The world is connected.</span>
+          <span className="text-muted-foreground">Demonstration events · modelled exposure network</span>
+        </div>
       </header>
+      <div className="gm-width px-5 py-5 sm:px-10"><HeroStats regions={mappable.length} links={data?.flows.length ?? 0} /></div>
 
       <main className="min-w-0">
         <div className="gm-width gm-editorial flex flex-col gap-8 px-4 py-8 lg:gap-10 lg:px-8">
+          <section id="impact-story" className="gm-impact-story scroll-mt-20 border-t border-border py-10">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="mb-4 text-xs text-primary">02 / THE CONNECTIONS THAT MATTER</p><h2 className="text-3xl font-medium sm:text-4xl">A signal is only<br />the beginning.</h2></div><p className="max-w-sm text-sm leading-relaxed text-muted-foreground">Select an event. Follow each supported relationship. See where the evidence stops.</p></div>
+            <ChainExplorer className="gm-story-chain" />
+          </section>
           <HowItWorks />
 
           {/* GLOBAL PULSE — the six numbers that summarise the world. */}
@@ -336,7 +251,7 @@ export default function Landing() {
           {feed ? <WhatsChanging events={timeline} /> : <PulseSkeleton />}
 
           {/* FOLLOW THE SHOCK — the mechanism, drawn rather than asserted. */}
-          <FollowTheShock events={feed?.rows ?? []} />
+
 
           <details className="border-t border-border pt-5">
             <summary className="cursor-pointer text-lg font-semibold text-foreground">
