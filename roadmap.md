@@ -1,4 +1,5 @@
 # Roadmap
+- [ ] Latest reconstruction brief: make /app a reference-led exploration experience, not a conventional dashboard; preserve all analytical controls
 - [ ] New non-negotiable brief: replace sidebar-first shell; reconstruct overview, graph and each page family with distinct reference-derived layouts
 - [ ] Reorder homepage into seven narrative stages and verify reconstructed routes with preserved workflows
 - [x] Recreate live Orizon reference: extracted light/lime tokens, centered homepage, five-stage impact story, ecosystem and conversion sections
