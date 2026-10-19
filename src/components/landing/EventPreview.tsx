@@ -65,7 +65,10 @@ export function EventPreview() {
             <div>
               <Network className="size-4 text-primary" />
               <small>Industry impact</small>
-              <strong>{industry?.rows[0]?.label || (chain ? "Unmeasured" : <Skeleton className="h-4 w-24" />)}</strong>
+              <strong>
+                {industry?.rows[0]?.label ||
+                  (chain ? "Unmeasured" : <Skeleton className="h-4 w-24" />)}
+              </strong>
             </div>
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3">
