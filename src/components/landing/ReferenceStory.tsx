@@ -133,7 +133,7 @@ export function StoryProgress() {
         </a>
       ))}
       <div className="gm-progress-readout font-mono text-xs text-muted-foreground">
-        {String(progress).padStart(3, "0")}%
+        {progress}% read
       </div>
     </nav>
   );
