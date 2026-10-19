@@ -18,7 +18,9 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/app/assess")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/assess" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app/assess" },
       { name: "robots", content: "noindex" },
       { title: "Business Exposure Assessment — GlobalMatrix" },
       {

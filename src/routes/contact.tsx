@@ -3,7 +3,9 @@ import { PublicInfo } from "@/components/landing/PublicInfo";
 export const Route = createFileRoute("/contact")({
   staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/contact" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/contact" },
       { title: "Contact — GlobalMatrix" },
       {
         name: "description",

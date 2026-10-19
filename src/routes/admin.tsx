@@ -11,7 +11,9 @@ export const Route = createFileRoute("/admin")({
   staticData: { sitemap: false },
   ssr: false,
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/admin" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/admin" },
       { title: "Admin — GlobalMatrix" },
       { name: "description", content: "GlobalMatrix billing administration." },
       { property: "og:title", content: "Admin — GlobalMatrix" },

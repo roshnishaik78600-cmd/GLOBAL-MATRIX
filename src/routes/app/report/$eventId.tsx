@@ -8,8 +8,10 @@ import { BAND_LABEL, CHANNEL_LABEL, SOURCE_CLASS_LABEL, STAGE_LABEL } from "@/li
 
 export const Route = createFileRoute("/app/report/$eventId")({
   staticData: { sitemap: false },
-  head: () => ({
+  head: ({ params }) => ({
+    links: [{ rel: "canonical", href: `https://globalmatrix.dev/app/report/${encodeURIComponent(params.eventId)}` }],
     meta: [
+      { property: "og:url", content: `https://globalmatrix.dev/app/report/${encodeURIComponent(params.eventId)}` },
       { name: "robots", content: "noindex" },
       { title: "Intelligence Report — GlobalMatrix" },
       {

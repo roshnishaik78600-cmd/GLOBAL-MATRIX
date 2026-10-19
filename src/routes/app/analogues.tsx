@@ -4,7 +4,9 @@ import NotAvailable from "@/pages/NotAvailable";
 export const Route = createFileRoute("/app/analogues")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/analogues" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app/analogues" },
       { title: "Historical Analogues — GlobalMatrix" },
       {
         name: "description",

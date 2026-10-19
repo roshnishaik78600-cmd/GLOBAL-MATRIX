@@ -4,7 +4,9 @@ import Watchlist from "@/pages/Watchlist";
 export const Route = createFileRoute("/app/watchlist")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/watchlist" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app/watchlist" },
       { name: "robots", content: "noindex" },
       { title: "Watchlist — GlobalMatrix" },
       {

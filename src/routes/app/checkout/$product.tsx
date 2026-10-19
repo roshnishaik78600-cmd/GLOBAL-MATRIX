@@ -11,8 +11,10 @@ import { DemoQr } from "@/components/commerce/DemoQr";
 
 export const Route = createFileRoute("/app/checkout/$product")({
   staticData: { sitemap: false },
-  head: () => ({
+  head: ({ params }) => ({
+    links: [{ rel: "canonical", href: `https://globalmatrix.dev/app/checkout/${encodeURIComponent(params.product)}` }],
     meta: [
+      { property: "og:url", content: `https://globalmatrix.dev/app/checkout/${encodeURIComponent(params.product)}` },
       { title: "Checkout — GlobalMatrix" },
       {
         name: "description",

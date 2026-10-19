@@ -4,7 +4,9 @@ import { Shell } from "@/components/viz/Shell";
 export const Route = createFileRoute("/app")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app" },
       { title: "GlobalMatrix — Intelligence Workspace" },
       {
         name: "description",

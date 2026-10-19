@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/app/billing")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/app/billing" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/app/billing" },
       { title: "Billing — GlobalMatrix account" },
       { name: "description", content: "Your GlobalMatrix plan, entitlements and order history." },
       { property: "og:title", content: "Billing — GlobalMatrix" },

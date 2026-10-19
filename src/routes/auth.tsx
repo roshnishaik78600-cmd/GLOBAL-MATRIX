@@ -6,7 +6,9 @@ import AuthPage from "@/pages/Auth";
 export const Route = createFileRoute("/auth")({
   staticData: { sitemap: false },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://globalmatrix.dev/auth" }],
     meta: [
+      { property: "og:url", content: "https://globalmatrix.dev/auth" },
       { name: "robots", content: "noindex" },
       { title: "Sign in — GlobalMatrix" },
       {
