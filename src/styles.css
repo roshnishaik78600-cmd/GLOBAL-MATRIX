@@ -148,12 +148,27 @@
   --intelligence-shadow: 0 16px 48px color-mix(in oklch, var(--background) 85%, transparent);
   --overlay: color-mix(in oklch, var(--background) 85%, transparent);
   --drawer-shadow: -12px 0 40px color-mix(in oklch, var(--background) 80%, transparent);
-  --pricing-glass: linear-gradient(155deg, color-mix(in oklch, var(--surface-2) 85%, transparent), var(--card));
+  --pricing-glass: linear-gradient(
+    155deg,
+    color-mix(in oklch, var(--surface-2) 85%, transparent),
+    var(--card)
+  );
   --pricing-analyst: linear-gradient(155deg, var(--burgundy), var(--card) 72%);
-  --pricing-business: linear-gradient(155deg, color-mix(in oklch, var(--aubergine) 36%, var(--card)), var(--card) 76%);
-  --pricing-brief: linear-gradient(115deg, color-mix(in oklch, var(--burgundy) 65%, var(--background)), color-mix(in oklch, var(--aubergine) 35%, var(--background)));
-  --pricing-shadow: 0 20px 45px color-mix(in oklch, var(--background) 80%, transparent), inset 0 1px 0 color-mix(in oklch, var(--foreground) 9%, transparent);
-  --pricing-featured-shadow: var(--pricing-shadow), 0 0 30px color-mix(in oklch, var(--maroon) 24%, transparent);
+  --pricing-business: linear-gradient(
+    155deg,
+    color-mix(in oklch, var(--aubergine) 36%, var(--card)),
+    var(--card) 76%
+  );
+  --pricing-brief: linear-gradient(
+    115deg,
+    color-mix(in oklch, var(--burgundy) 65%, var(--background)),
+    color-mix(in oklch, var(--aubergine) 35%, var(--background))
+  );
+  --pricing-shadow:
+    0 20px 45px color-mix(in oklch, var(--background) 80%, transparent),
+    inset 0 1px 0 color-mix(in oklch, var(--foreground) 9%, transparent);
+  --pricing-featured-shadow:
+    var(--pricing-shadow), 0 0 30px color-mix(in oklch, var(--maroon) 24%, transparent);
 }
 
 /* The workstation is dark by default. These exist so a component that needs an
@@ -2316,14 +2331,18 @@
   text-align: left;
   transition: border-color 200ms;
 }
-.gm-price-card:hover { border-color: var(--input); }
+.gm-price-card:hover {
+  border-color: var(--input);
+}
 .gm-price-card-analyst {
   top: -12px;
   background: var(--pricing-analyst);
   border-color: var(--maroon);
   box-shadow: var(--pricing-featured-shadow);
 }
-.gm-price-card-business { background: var(--pricing-business); }
+.gm-price-card-business {
+  background: var(--pricing-business);
+}
 .gm-price-card-top {
   display: flex;
   justify-content: space-between;
@@ -2331,7 +2350,9 @@
   margin-bottom: 28px;
   color: var(--primary);
 }
-.gm-price-amount { margin: 18px 0 28px; }
+.gm-price-amount {
+  margin: 18px 0 28px;
+}
 .gm-price-amount strong {
   display: block;
   font-size: 52px;
@@ -2352,17 +2373,60 @@
   border-block: 1px solid var(--border);
   padding-block: 18px;
 }
-.gm-price-capacity strong { font-size: 30px; font-weight: 500; }
-.gm-price-capacity span { font-size: 12px; line-height: 1.5; color: var(--muted-foreground); }
-.gm-price-coverage { font-size: 12px; margin-top: 20px; min-height: 36px; color: var(--muted-foreground); }
-.gm-price-features { display: grid; gap: 14px; margin: 12px 0 30px; font-size: 13px; line-height: 1.6; }
-.gm-price-features li { display: flex; gap: 9px; }
-.gm-price-features svg { margin-top: 3px; }
-.gm-price-card-action { margin-top: auto; }
-.gm-price-card-action p { min-height: 32px; margin-top: 12px; font-size: 11px; text-align: center; color: var(--muted-foreground); }
-.gm-price-card-action [data-slot="button"] { min-height: 46px; }
-.gm-price-card-business [data-slot="button"][data-variant="default"] { background: var(--aubergine); border-color: var(--aubergine); }
-.gm-price-footnote { max-width: 750px; margin: 24px auto 0; font-size: 12px; line-height: 1.7; text-align: center; color: var(--muted-foreground); }
+.gm-price-capacity strong {
+  font-size: 30px;
+  font-weight: 500;
+}
+.gm-price-capacity span {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+.gm-price-coverage {
+  font-size: 12px;
+  margin-top: 20px;
+  min-height: 36px;
+  color: var(--muted-foreground);
+}
+.gm-price-features {
+  display: grid;
+  gap: 14px;
+  margin: 12px 0 30px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.gm-price-features li {
+  display: flex;
+  gap: 9px;
+}
+.gm-price-features svg {
+  margin-top: 3px;
+}
+.gm-price-card-action {
+  margin-top: auto;
+}
+.gm-price-card-action p {
+  min-height: 32px;
+  margin-top: 12px;
+  font-size: 11px;
+  text-align: center;
+  color: var(--muted-foreground);
+}
+.gm-price-card-action [data-slot="button"] {
+  min-height: 46px;
+}
+.gm-price-card-business [data-slot="button"][data-variant="default"] {
+  background: var(--aubergine);
+  border-color: var(--aubergine);
+}
+.gm-price-footnote {
+  max-width: 750px;
+  margin: 24px auto 0;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--muted-foreground);
+}
 .gm-reference-home .gm-editorial .gm-risk-offer,
 .gm-risk-offer {
   display: grid;
@@ -2375,36 +2439,100 @@
   border-block: 1px solid var(--maroon);
   text-align: left;
 }
-.gm-risk-offer h3 { margin: 14px 0; font-size: 26px; font-weight: 500; }
-.gm-risk-offer-price { font-size: 17px; line-height: 1.6; }
-.gm-risk-offer-price strong { font-size: 25px; font-weight: 600; }
-.gm-risk-offer-price > span { color: var(--muted-foreground); font-size: 13px; }
-.gm-risk-offer-description { margin-top: 10px; max-width: 580px; font-size: 13px; color: var(--muted-foreground); line-height: 1.7; }
-.gm-risk-offer-action > p { margin-top: 12px; font-size: 11px; color: var(--muted-foreground); text-align: center; }
+.gm-risk-offer h3 {
+  margin: 14px 0;
+  font-size: 26px;
+  font-weight: 500;
+}
+.gm-risk-offer-price {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.gm-risk-offer-price strong {
+  font-size: 25px;
+  font-weight: 600;
+}
+.gm-risk-offer-price > span {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+.gm-risk-offer-description {
+  margin-top: 10px;
+  max-width: 580px;
+  font-size: 13px;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+.gm-risk-offer-action > p {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+  text-align: center;
+}
 @media (max-width: 900px) {
-  .gm-price-grid { gap: 14px; }
-  .gm-price-card { padding-inline: 20px; }
-  .gm-price-amount strong { font-size: 42px; }
-  .gm-risk-offer { grid-template-columns: minmax(0, 1fr); }
-  .gm-risk-offer-action { justify-self: start; }
+  .gm-price-grid {
+    gap: 14px;
+  }
+  .gm-price-card {
+    padding-inline: 20px;
+  }
+  .gm-price-amount strong {
+    font-size: 42px;
+  }
+  .gm-risk-offer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .gm-risk-offer-action {
+    justify-self: start;
+  }
 }
 @media (max-width: 767px) {
-  .gm-reference-home .gm-editorial .gm-pricing-showcase { padding-block: 44px; }
-  .gm-pricing-heading { padding-top: 24px; }
+  .gm-reference-home .gm-editorial .gm-pricing-showcase {
+    padding-block: 44px;
+  }
+  .gm-pricing-heading {
+    padding-top: 24px;
+  }
   .gm-reference-pricing .gm-pricing-heading h1,
-  .gm-reference-home .gm-pricing-heading #pricing-teaser { font-size: 32px; }
-  .gm-price-grid { grid-template-columns: minmax(0, 1fr); gap: 22px; padding-top: 0; }
-  .gm-price-card { padding: 28px; }
-  .gm-price-card-analyst { top: 0; }
-  .gm-price-amount strong { font-size: 52px; }
-  .gm-price-coverage { min-height: 0; }
-  .gm-payment-notice { align-items: baseline; text-align: center; line-height: 1.7; margin-bottom: 26px; }
+  .gm-reference-home .gm-pricing-heading #pricing-teaser {
+    font-size: 32px;
+  }
+  .gm-price-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding-top: 0;
+  }
+  .gm-price-card {
+    padding: 28px;
+  }
+  .gm-price-card-analyst {
+    top: 0;
+  }
+  .gm-price-amount strong {
+    font-size: 52px;
+  }
+  .gm-price-coverage {
+    min-height: 0;
+  }
+  .gm-payment-notice {
+    align-items: baseline;
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 26px;
+  }
   .gm-reference-home .gm-editorial .gm-risk-offer,
-  .gm-risk-offer { padding: 26px 20px; gap: 24px; }
-  .gm-risk-offer h3 { font-size: 24px; }
+  .gm-risk-offer {
+    padding: 26px 20px;
+    gap: 24px;
+  }
+  .gm-risk-offer h3 {
+    font-size: 24px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gm-price-card { transition: none; }
+  .gm-price-card {
+    transition: none;
+  }
 }
 .gm-plan-allowance {
   display: flex;

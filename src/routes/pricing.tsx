@@ -69,7 +69,10 @@ function Pricing() {
         <div className="gm-pricing-intro gm-pricing-heading">
           <p className="gm-reference-eyebrow">GlobalMatrix / Plans</p>
           <h1>Start free. Upgrade when you need more.</h1>
-          <p>Explore global risks for free. Choose a paid plan when you need more capacity or business support.</p>
+          <p>
+            Explore global risks for free. Choose a paid plan when you need more capacity or
+            business support.
+          </p>
         </div>
         <PricingPlans />
         <RiskBriefPanel />
