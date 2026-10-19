@@ -259,7 +259,7 @@ export function GraphExplorer({
               key={i}
               d={`M ${a.x} ${a.y} C ${(a.x + b.x) / 2} ${a.y}, ${(a.x + b.x) / 2} ${b.y}, ${b.x} ${b.y}`}
               stroke="var(--foreground)"
-              strokeOpacity={dim ? 0.05 : 0.28}
+              strokeOpacity={dim ? 0.12 : 0.45}
               strokeWidth={0.5 + (e.weight / maxEdge) * 2.5}
             />
           );
@@ -288,7 +288,7 @@ export function GraphExplorer({
                 }
               }}
               onClick={() => onSelect?.(n.id)}
-              opacity={dim ? 0.2 : 1}
+              opacity={dim ? 0.55 : 1}
             >
               <title>
                 {n.label} · {n.kind}
