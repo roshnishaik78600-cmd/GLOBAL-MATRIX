@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import orbit from "@/assets/intelligence-orbit.jpg";
 import { lovable } from "@/integrations/lovable/index";
 
 interface AuthProps {
@@ -37,14 +36,6 @@ const SIGNUP_FAILURE = "We couldn't create your account. Check the details and t
 const NETWORK_FAILURE = "We couldn't complete that request. Please try again.";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-/** The propagation chain shown on the visual panel — the product in four words. */
-const CHAIN: { label: string; note: string }[] = [
-  { label: "Event", note: "what happened" },
-  { label: "Geography", note: "where it lands" },
-  { label: "Impact", note: "how it travels" },
-  { label: "Exposure", note: "who is affected" },
-];
 
 /**
  * The authentication surface.

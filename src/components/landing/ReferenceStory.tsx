@@ -93,24 +93,20 @@ export function StoryProgress() {
   const [active, setActive] = useState("start");
   const [progress, setProgress] = useState(0);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
-      },
-      { rootMargin: "-15% 0px -55% 0px" },
-    );
-    for (const section of STORY_SECTIONS) {
-      const element = document.getElementById(section.id);
-      if (element) observer.observe(element);
-    }
     const update = () => {
       const extent = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(extent > 0 ? Math.min(100, Math.round((window.scrollY / extent) * 100)) : 0);
+      const threshold = Math.min(200, window.innerHeight * 0.25);
+      let current = "start";
+      for (const section of STORY_SECTIONS) {
+        const element = document.getElementById(section.id);
+        if (element && element.getBoundingClientRect().top <= threshold) current = section.id;
+      }
+      setActive(current);
     };
     window.addEventListener("scroll", update, { passive: true });
     update();
     return () => {
-      observer.disconnect();
       window.removeEventListener("scroll", update);
     };
   }, []);
