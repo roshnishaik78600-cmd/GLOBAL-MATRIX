@@ -5,7 +5,7 @@ import { inquirySchema } from "@/lib/commerce";
 import { REQUEST_LIMIT, retryMessage } from "@/lib/request-policy";
 
 export const submitInquiry = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) =>
+  .validator((input: unknown) =>
     inquirySchema.extend({ website: z.string().max(200).optional() }).parse(input),
   )
   .handler(async ({ data }) => {
@@ -26,7 +26,10 @@ export const submitInquiry = createServerFn({ method: "POST" })
         console.error("Inquiry reservation failed", error.code);
         return { ok: false, message: "Requests are temporarily unavailable. Please try again." };
       }
-      if (claim && typeof claim === "object" && !Array.isArray(claim) && claim.ok === false) {
+      if (!claim || typeof claim !== "object" || Array.isArray(claim)) {
+        return { ok: false, message: "Requests are temporarily unavailable. Please try again." };
+      }
+      if (claim.ok !== true) {
         return {
           ok: false,
           message: retryMessage(Number(claim.waitSeconds) || REQUEST_LIMIT.windowSeconds),
