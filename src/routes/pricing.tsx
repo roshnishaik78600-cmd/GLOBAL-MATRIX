@@ -152,13 +152,13 @@ function Pricing() {
           ← GlobalMatrix
         </Link>
         <div className="gm-pricing-intro">
-        <p className="gm-reference-eyebrow mt-8">Research at your pace</p>
-        <h1 className="mt-8 text-3xl font-semibold  text-foreground sm:text-5xl">
-          Intelligence. At your scale.
-        </h1>
-        <p className="mt-3 max-w-2xl text-muted-foreground">
-          Start with the world. Go further with more daily AI briefs.
-        </p>
+          <p className="gm-reference-eyebrow mt-8">Research at your pace</p>
+          <h1 className="mt-8 text-3xl font-semibold  text-foreground sm:text-5xl">
+            Intelligence. At your scale.
+          </h1>
+          <p className="mt-3 max-w-2xl text-muted-foreground">
+            Start with the world. Go further with more daily AI briefs.
+          </p>
         </div>
         <div
           role="status"

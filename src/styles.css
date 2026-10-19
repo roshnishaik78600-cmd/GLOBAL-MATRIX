@@ -717,7 +717,9 @@
 }
 
 /* Reference uses soft surface depth, not neon edge lights. */
-.gm-hero-glow { background: transparent; }
+.gm-hero-glow {
+  background: transparent;
+}
 .gm-plan-featured {
   border-color: var(--primary);
   background: var(--secondary);
@@ -890,9 +892,15 @@
 
 /* Orizon-derived composition: centred storytelling, orbital linework,
    thin rules and compact interactions; original GlobalMatrix content. */
-.gm-reference-home { scroll-behavior: smooth; }
-.gm-reference-home .gm-width { max-width: 1280px; }
-.gm-reference-announcement { background: var(--background); }
+.gm-reference-home {
+  scroll-behavior: smooth;
+}
+.gm-reference-home .gm-width {
+  max-width: 1280px;
+}
+.gm-reference-announcement {
+  background: var(--background);
+}
 .gm-reference-home [data-slot="button"][data-variant="default"],
 .gm-reference-home [data-slot="button"][data-variant="outline"],
 .gm-reference-pricing [data-slot="button"][data-variant="default"],
@@ -901,78 +909,353 @@
   padding-inline: 26px;
   min-height: 42px;
 }
-.gm-reference-home [data-slot="button"][data-variant="default"] { box-shadow: var(--reference-action-shadow); }
-.gm-reference-home .gm-reference-announcement [data-slot="button"] { border-radius: 4px; min-height: 28px; padding-inline: 12px; box-shadow: none; }
-.gm-reference-hero { min-height: 760px; position: relative; overflow: hidden; text-align: center; }
-.gm-reference-hero-art { position: relative; height: 420px; max-width: 1120px; margin-inline: auto; }
-.gm-reference-hero-art img { position: relative; z-index: 1; width: 720px; height: 420px; object-fit: contain; margin-inline: auto; mix-blend-mode: multiply; }
-.gm-orbital-section::before, .gm-reference-hero-art::before {
-  content: ""; position: absolute; width: 820px; height: 820px; max-width: none;
-  top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
-  background: repeating-radial-gradient(circle, transparent 0 66px, var(--reference-orbit) 67px 68px, transparent 69px 104px);
+.gm-reference-home [data-slot="button"][data-variant="default"] {
+  box-shadow: var(--reference-action-shadow);
+}
+.gm-reference-home .gm-reference-announcement [data-slot="button"] {
+  border-radius: 4px;
+  min-height: 28px;
+  padding-inline: 12px;
+  box-shadow: none;
+}
+.gm-reference-hero {
+  min-height: 760px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.gm-reference-hero-art {
+  position: relative;
+  height: 420px;
+  max-width: 1120px;
+  margin-inline: auto;
+}
+.gm-reference-hero-art img {
+  position: relative;
+  z-index: 1;
+  width: 720px;
+  height: 420px;
+  object-fit: contain;
+  margin-inline: auto;
+  mix-blend-mode: multiply;
+}
+.gm-orbital-section::before,
+.gm-reference-hero-art::before {
+  content: "";
+  position: absolute;
+  width: 820px;
+  height: 820px;
+  max-width: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: repeating-radial-gradient(
+    circle,
+    transparent 0 66px,
+    var(--reference-orbit) 67px 68px,
+    transparent 69px 104px
+  );
   mask-image: radial-gradient(circle, var(--foreground) 25%, transparent 71%);
 }
-.gm-reference-hero-copy { position: relative; z-index: 2; padding: 0 20px 52px; }
-.gm-reference-eyebrow { display: flex; align-items:center; justify-content:center; gap: 12px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--muted-foreground); }
-.gm-reference-eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--primary); }
-.gm-reference-title { margin-top: 22px; font-size: 48px; line-height: 1.1; font-weight: 650; letter-spacing: 0; }
-.gm-reference-title .text-primary { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 7px; }
-.gm-reference-heading { font-size: 40px; font-weight: 650; line-height: 1.16; letter-spacing: 0; margin-top: 20px; }
-.gm-reference-section { position:relative; padding: 100px 24px; text-align: center; }
-.gm-orbital-section { overflow:hidden; }
-.gm-orbital-section::before { top: 42%; }
-.gm-ecosystem-orbit { width: 650px; height: 370px; object-fit:contain; margin: 16px auto 0; position: relative; mix-blend-mode:multiply; }
-.gm-ecosystem-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; max-width:660px; margin: 0 auto; position:relative; }
-.gm-ecosystem-link { display:flex; align-items:center; gap:10px; border:1px solid var(--border); border-radius:8px; padding:12px 15px; background:var(--background); text-align:left; font-size:14px; box-shadow:var(--reference-shadow); transition:border-color 180ms, transform 180ms; }
-.gm-ecosystem-link:hover { border-color:var(--primary); transform:translateY(-2px); }
-.gm-five-stage { min-height:100px; border-top:1px solid var(--border); border-radius:0; align-items:flex-start; justify-content:flex-start; flex-direction:column; white-space:normal; text-align:left; padding:18px; }
-.gm-five-stage[aria-pressed="true"] { border-color:var(--primary); background:var(--secondary); }
-.gm-five-stage svg { position:absolute; align-self:flex-end; }
-.gm-five-stage { position:relative; }
-.gm-stage-detail { min-height:250px; }
-.gm-reference-atlas { background:var(--secondary); padding-bottom:24px; }
-.gm-reference-atlas .gm-width { position:relative; }
-.gm-reference-atlas .map-frame { height:500px; }
-.gm-reference-evidence { border-bottom:1px solid var(--border); }
-.gm-reference-conversion { margin-top:40px; border-top:1px solid var(--border); background:var(--secondary); padding:56px 24px; text-align:center; }
-.gm-story-progress { position:fixed; z-index:25; left:20px; top:42%; display:flex; flex-direction:column; gap:16px; }
-.gm-progress-link { display:flex; align-items:center; gap:10px; height:10px; }
-.gm-progress-line { width:18px; height:1px; background:var(--input); transition:width 180ms; }
-.gm-progress-name { opacity:0; pointer-events:none; font:11px var(--font-mono); color:var(--muted-foreground); background:var(--background); padding:4px; transition:opacity 180ms; }
-.gm-progress-link:hover .gm-progress-name, .gm-progress-link:focus-visible .gm-progress-name { opacity:1; }
-.gm-progress-link.is-active .gm-progress-line { background:var(--primary); width:26px; }
-.gm-progress-readout { margin-top:14px; font-size:10px; }
-.gm-reference-home .gm-editorial { max-width:1180px; }
-.gm-reference-home .gm-editorial section { padding-block:30px; }
-.gm-reference-home #pricing-teaser { font-size:36px; line-height:1.15; max-width:650px; margin:auto; }
-.gm-reference-home #pricing-teaser ~ p { margin-inline:auto; }
-.gm-reference-pricing h1 { font-size:44px; line-height:1.12; }
-.gm-reference-pricing .gm-pricing-intro { text-align:center; }
-.gm-reference-pricing .gm-pricing-intro p { margin-inline:auto; }
-.gm-reference-pricing #compare { font-size:30px; text-align:center; margin-block:50px 30px; }
-.gm-reference-pricing table td:nth-child(3), .gm-reference-pricing table th:nth-child(3) { background:var(--secondary); }
-.gm-research-header { background:var(--background); border-bottom:1px solid var(--border); }
-.gm-research-region { padding-top:8px; }
-.gm-research-dominant { border-color:var(--border); box-shadow:var(--reference-shadow); }
-.gm-research-page .t-page { font-weight:650; }
-.gm-research-page .card { box-shadow:var(--reference-shadow); }
-.gm-auth-identity { background:var(--secondary); }
-.gm-auth-identity .gm-auth-orbit { width:100%; height:260px; object-fit:contain; mix-blend-mode:multiply; }
-.gm-auth-form { border:0; box-shadow:none; background:transparent; }
-@media (max-width: 1100px) { .gm-story-progress { display:none; } }
-@media (max-width:767px) {
-  .gm-reference-hero { min-height:690px; }
-  .gm-reference-hero-art { height:320px; }
-  .gm-reference-hero-art img { height:320px; width:100%; }
-  .gm-reference-hero-art::before { width:590px; height:590px; }
-  .gm-reference-title { font-size:34px; }
-  .gm-reference-heading { font-size:30px; }
-  .gm-reference-section { padding:64px 20px; }
-  .gm-ecosystem-orbit { height:240px; width:100%; }
-  .gm-ecosystem-links { grid-template-columns:1fr; }
-  .gm-five-stage { min-height:56px; flex-direction:row; align-items:center; padding:14px; gap:16px; }
-  .gm-five-stage svg { position:static; align-self:center; }
-  .gm-reference-atlas .map-frame { height:360px; }
-  .gm-reference-pricing h1 { font-size:32px; }
+.gm-reference-hero-copy {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px 52px;
 }
-@media (prefers-reduced-motion:reduce) { .gm-reference-home { scroll-behavior:auto; } .gm-ecosystem-link { transition:none; } }
+.gm-reference-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.gm-reference-eyebrow::before {
+  content: "";
+  width: 30px;
+  height: 1px;
+  background: var(--primary);
+}
+.gm-reference-title {
+  margin-top: 22px;
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+.gm-reference-title .text-primary {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+.gm-reference-heading {
+  font-size: 40px;
+  font-weight: 650;
+  line-height: 1.16;
+  letter-spacing: 0;
+  margin-top: 20px;
+}
+.gm-reference-section {
+  position: relative;
+  padding: 100px 24px;
+  text-align: center;
+}
+.gm-orbital-section {
+  overflow: hidden;
+}
+.gm-orbital-section::before {
+  top: 42%;
+}
+.gm-ecosystem-orbit {
+  width: 650px;
+  height: 370px;
+  object-fit: contain;
+  margin: 16px auto 0;
+  position: relative;
+  mix-blend-mode: multiply;
+}
+.gm-ecosystem-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 660px;
+  margin: 0 auto;
+  position: relative;
+}
+.gm-ecosystem-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 15px;
+  background: var(--background);
+  text-align: left;
+  font-size: 14px;
+  box-shadow: var(--reference-shadow);
+  transition:
+    border-color 180ms,
+    transform 180ms;
+}
+.gm-ecosystem-link:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.gm-five-stage {
+  min-height: 100px;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  white-space: normal;
+  text-align: left;
+  padding: 18px;
+}
+.gm-five-stage[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--secondary);
+}
+.gm-five-stage svg {
+  position: absolute;
+  align-self: flex-end;
+}
+.gm-five-stage {
+  position: relative;
+}
+.gm-stage-detail {
+  min-height: 250px;
+}
+.gm-reference-atlas {
+  background: var(--secondary);
+  padding-bottom: 24px;
+}
+.gm-reference-atlas .gm-width {
+  position: relative;
+}
+.gm-reference-atlas .map-frame {
+  height: 500px;
+}
+.gm-reference-evidence {
+  border-bottom: 1px solid var(--border);
+}
+.gm-reference-conversion {
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  background: var(--secondary);
+  padding: 56px 24px;
+  text-align: center;
+}
+.gm-story-progress {
+  position: fixed;
+  z-index: 25;
+  left: 20px;
+  top: 42%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.gm-progress-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 10px;
+}
+.gm-progress-line {
+  width: 18px;
+  height: 1px;
+  background: var(--input);
+  transition: width 180ms;
+}
+.gm-progress-name {
+  opacity: 0;
+  pointer-events: none;
+  font: 11px var(--font-mono);
+  color: var(--muted-foreground);
+  background: var(--background);
+  padding: 4px;
+  transition: opacity 180ms;
+}
+.gm-progress-link:hover .gm-progress-name,
+.gm-progress-link:focus-visible .gm-progress-name {
+  opacity: 1;
+}
+.gm-progress-link.is-active .gm-progress-line {
+  background: var(--primary);
+  width: 26px;
+}
+.gm-progress-readout {
+  margin-top: 14px;
+  font-size: 10px;
+}
+.gm-reference-home .gm-editorial {
+  max-width: 1180px;
+}
+.gm-reference-home .gm-editorial section {
+  padding-block: 30px;
+}
+.gm-reference-home #pricing-teaser {
+  font-size: 36px;
+  line-height: 1.15;
+  max-width: 650px;
+  margin: auto;
+}
+.gm-reference-home #pricing-teaser ~ p {
+  margin-inline: auto;
+}
+.gm-reference-pricing h1 {
+  font-size: 44px;
+  line-height: 1.12;
+}
+.gm-reference-pricing .gm-pricing-intro {
+  text-align: center;
+}
+.gm-reference-pricing .gm-pricing-intro p {
+  margin-inline: auto;
+}
+.gm-reference-pricing #compare {
+  font-size: 30px;
+  text-align: center;
+  margin-block: 50px 30px;
+}
+.gm-reference-pricing table td:nth-child(3),
+.gm-reference-pricing table th:nth-child(3) {
+  background: var(--secondary);
+}
+.gm-research-header {
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+.gm-research-region {
+  padding-top: 8px;
+}
+.gm-research-dominant {
+  border-color: var(--border);
+  box-shadow: var(--reference-shadow);
+}
+.gm-research-page .t-page {
+  font-weight: 650;
+}
+.gm-research-page .card {
+  box-shadow: var(--reference-shadow);
+}
+.gm-auth-identity {
+  background: var(--secondary);
+}
+.gm-auth-identity .gm-auth-orbit {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.gm-auth-form {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+@media (max-width: 1100px) {
+  .gm-story-progress {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .gm-reference-hero {
+    min-height: 690px;
+  }
+  .gm-reference-hero-art {
+    height: 320px;
+  }
+  .gm-reference-hero-art img {
+    height: 320px;
+    width: 100%;
+  }
+  .gm-reference-hero-art::before {
+    width: 590px;
+    height: 590px;
+  }
+  .gm-reference-title {
+    font-size: 34px;
+  }
+  .gm-reference-heading {
+    font-size: 30px;
+  }
+  .gm-reference-section {
+    padding: 64px 20px;
+  }
+  .gm-ecosystem-orbit {
+    height: 240px;
+    width: 100%;
+  }
+  .gm-ecosystem-links {
+    grid-template-columns: 1fr;
+  }
+  .gm-five-stage {
+    min-height: 56px;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px;
+    gap: 16px;
+  }
+  .gm-five-stage svg {
+    position: static;
+    align-self: center;
+  }
+  .gm-reference-atlas .map-frame {
+    height: 360px;
+  }
+  .gm-reference-pricing h1 {
+    font-size: 32px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gm-reference-home {
+    scroll-behavior: auto;
+  }
+  .gm-ecosystem-link {
+    transition: none;
+  }
+}

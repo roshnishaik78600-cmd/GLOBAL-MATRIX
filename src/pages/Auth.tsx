@@ -193,7 +193,14 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
         </div>
 
         <div className="px-10 pb-4 xl:px-14">
-          <img src={orbit} alt="" loading="lazy" width={1536} height={1024} className="gm-auth-orbit mb-8" />
+          <img
+            src={orbit}
+            alt=""
+            loading="lazy"
+            width={1536}
+            height={1024}
+            className="gm-auth-orbit mb-8"
+          />
           <p className="t-hero text-[40px] text-[var(--exec-ink)]">
             See what changed.
             <br />
