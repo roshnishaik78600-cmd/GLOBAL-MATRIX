@@ -22,11 +22,7 @@ export function PricingTeaser() {
         <p className="mt-2 max-w-xl text-[15px] text-[var(--exec-ink-dim)]">
           Simple plans in INR. Payments are not enabled yet — no money is collected.
         </p>
-        <motion.div
-          variants={stagger}
-          {...revealProps}
-          className="mt-8 grid gap-4 md:grid-cols-3"
-        >
+        <motion.div variants={stagger} {...revealProps} className="mt-8 grid gap-4 md:grid-cols-3">
           {IDS.map((id) => (
             <motion.div
               key={id}
@@ -47,18 +43,26 @@ export function PricingTeaser() {
             </motion.div>
           ))}
         </motion.div>
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6"><p className="text-sm text-muted-foreground">One focused risk brief <span className="text-foreground">{formatINR(CUSTOM_REPORT.price)}</span> · one-time</p><Button asChild variant="outline"><Link to="/app/checkout/$product" params={{product: "custom_report"}}>Request a Risk Brief <ArrowRight /></Link></Button></div>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6">
+          <p className="text-sm text-muted-foreground">
+            One focused risk brief{" "}
+            <span className="text-foreground">{formatINR(CUSTOM_REPORT.price)}</span> · one-time
+          </p>
+          <Button asChild variant="outline">
+            <Link to="/app/checkout/$product" params={{ product: "custom_report" }}>
+              Request a Risk Brief <ArrowRight />
+            </Link>
+          </Button>
+        </div>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button asChild size="lg"><Link
-            to="/app"
-          >
-            Explore Global Risks <ArrowRight className="size-4" aria-hidden />
-          </Link></Button>
-          <Button asChild size="lg" variant="outline"><Link
-            to="/pricing"
-          >
-            Compare plans
-          </Link></Button>
+          <Button asChild size="lg">
+            <Link to="/app">
+              Explore Global Risks <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link to="/pricing">Compare plans</Link>
+          </Button>
         </div>
       </div>
     </section>
