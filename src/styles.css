@@ -64,40 +64,45 @@
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
-/* Reference-derived white, ink and lime palette. Legacy executive names
+/* User-directed obsidian, burgundy and aubergine palette. Legacy executive names
    resolve to this same system so existing intelligence surfaces stay coherent. */
 :root {
   --radius: 0.5rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.182 0.014 154);
-  --card: oklch(1 0 0);
+  --burgundy: oklch(0.3 0.089 350);
+  --maroon: oklch(0.38 0.119 352);
+  --aubergine: oklch(0.43 0.091 327);
+  --navigation-glass: color-mix(in oklch, var(--background) 88%, transparent);
+  --hero-shade: linear-gradient(180deg, transparent 10%, color-mix(in oklch, var(--background) 32%, transparent) 42%, var(--background) 100%);
+  --background: oklch(0.115 0.003 290);
+  --foreground: oklch(0.96 0.007 330);
+  --card: oklch(0.157 0.015 325);
   --card-foreground: var(--foreground);
   --popover: var(--background);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.71 0.221 135.3);
-  --primary-foreground: oklch(0.182 0.014 154);
-  --secondary: oklch(0.978 0.016 135);
+  --primary: oklch(0.65 0.092 345);
+  --primary-foreground: var(--foreground);
+  --secondary: oklch(0.157 0.015 325);
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.97 0.002 145);
-  --muted-foreground: oklch(0.45 0.013 145);
-  --muted-text: oklch(0.51 0.008 145);
-  --accent: oklch(0.969 0.025 135);
+  --muted: oklch(0.2 0.014 325);
+  --muted-foreground: oklch(0.72 0.016 325);
+  --muted-text: oklch(0.66 0.015 325);
+  --accent: oklch(0.3 0.089 350);
   --accent-foreground: var(--foreground);
-  --destructive: oklch(0.5 0.18 27);
+  --destructive: oklch(0.71 0.12 20);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.913 0.006 145);
-  --input: oklch(0.85 0.009 145);
+  --border: oklch(0.28 0.014 325);
+  --input: oklch(0.37 0.022 325);
   --ring: var(--primary);
-  --surface-2: oklch(0.975 0.006 145);
+  --surface-2: oklch(0.185 0.017 325);
   --rule: var(--border);
-  --grid: oklch(0.947 0.008 145);
-  --stable: oklch(0.48 0.143 137);
-  --warning: oklch(0.49 0.12 65);
-  --elevated: var(--warning);
+  --grid: oklch(0.24 0.01 325);
+  --stable: oklch(0.77 0.012 325);
+  --warning: oklch(0.77 0.065 70);
+  --elevated: oklch(0.65 0.078 330);
   --critical: var(--destructive);
-  --signal: var(--destructive);
+  --signal: oklch(0.75 0.13 20);
   --cyan: var(--primary);
-  --violet: oklch(0.49 0.095 131);
+  --violet: oklch(0.55 0.095 327);
   --info: var(--muted-foreground);
   --chart-1: var(--critical);
   --chart-2: var(--primary);
@@ -105,7 +110,7 @@
   --chart-4: var(--warning);
   --chart-5: var(--violet);
   --chart-6: var(--muted-foreground);
-  --sidebar: oklch(0.987 0.004 145);
+  --sidebar: var(--background);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
@@ -132,8 +137,8 @@
   --reference-orbit: color-mix(in oklch, var(--primary) 28%, transparent);
   --reference-shadow: 0 2px 3px color-mix(in oklch, var(--foreground) 6%, transparent);
   --reference-action-shadow: 0 5px 18px color-mix(in oklch, var(--primary) 22%, transparent);
-  --overlay: color-mix(in oklch, var(--foreground) 25%, transparent);
-  --drawer-shadow: -12px 0 40px color-mix(in oklch, var(--foreground) 12%, transparent);
+  --overlay: color-mix(in oklch, var(--background) 85%, transparent);
+  --drawer-shadow: -12px 0 40px color-mix(in oklch, var(--background) 80%, transparent);
 }
 
 /* The workstation is dark by default. These exist so a component that needs an

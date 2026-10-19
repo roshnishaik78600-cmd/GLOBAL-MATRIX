@@ -35,7 +35,7 @@ import {
 import { freshnessOf } from "@/lib/freshness";
 import { period as periodLabel } from "@/lib/numbers";
 import { Button } from "@/components/ui/button";
-import orbit from "@/assets/intelligence-orbit.jpg";
+import orbit from "@/assets/intelligence-dark.jpg";
 import { FiveStageStory } from "@/components/landing/ReferenceStory";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
 
@@ -103,12 +103,7 @@ export default function Overview() {
   return (
     <PageFrame
       layout="atlas"
-      visual={
-        <div className="gm-atlas-identity">
-          <img src={orbit} alt="" width={1536} height={1024} />
-          <span className="gm-atlas-stage font-mono">01 / GLOBAL INTELLIGENCE</span>
-        </div>
-      }
+
       eyebrow="Overview"
       title="See the world. Understand the impact."
       lede="Global signals, connected exposure, and the evidence behind every relationship."
@@ -149,6 +144,10 @@ export default function Overview() {
         </div>
       }
     >
+      <section className="gm-mission-strip lg:col-span-12" aria-label="Intelligence workspace">
+        <img src={orbit} alt="Global geographic exposure pathways" width={1536} height={1024} />
+        <div><p className="font-mono text-xs text-primary">STAGE 01 / GLOBAL SIGNAL</p><h2 className="mt-4 text-3xl font-medium">From signal<br />to perspective.</h2><p className="mt-4 text-sm text-muted-foreground">Demonstration events. Modelled connections.<br />Explore the evidence behind the exposure.</p><Button asChild variant="outline" className="mt-6"><Link to="/app/graph">Open impact graph <ArrowUpRight /></Link></Button></div>
+      </section>
       {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
           support it rather than compete with it. */}
       <nav
@@ -281,7 +280,7 @@ export default function Overview() {
         )}
       </Region>
 
-      <div id="overview-impact" className="scroll-mt-6 border-t border-border pt-8">
+      <div id="overview-impact" className="lg:col-span-12 scroll-mt-6 border-t border-border pt-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p>

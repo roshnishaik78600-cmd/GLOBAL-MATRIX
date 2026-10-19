@@ -10,13 +10,12 @@ import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import {
-  EcosystemStory,
   FiveStageStory,
   ReferenceFooter,
   ReferenceNav,
   StoryProgress,
 } from "@/components/landing/ReferenceStory";
-import orbit from "@/assets/intelligence-orbit.jpg";
+import { IntelligenceHero, IntelligenceCore, ProductShowcases } from "@/components/landing/IntelligenceExperience";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
 import { PricingTeaser } from "@/components/landing/PricingTeaser";
 import {
@@ -225,51 +224,8 @@ export default function Landing() {
       <ReferenceNav />
       <StoryProgress />
 
-      <header id="start" className="gm-reference-hero scroll-mt-20">
-        <div className="gm-reference-hero-art">
-          <img
-            src={orbit}
-            alt="A translucent globe with a connected orbital pathway"
-            width={1536}
-            height={1024}
-            fetchPriority="high"
-          />
-        </div>
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-          className="gm-reference-hero-copy"
-        >
-          <motion.p variants={fadeUp} className="gm-reference-eyebrow">
-            GlobalMatrix / geopolitical intelligence
-          </motion.p>
-          <motion.h1 variants={fadeUp} className="gm-reference-title">
-            See the world.
-            <br />
-            <span className="text-primary">Understand the impact.</span>
-          </motion.h1>
-          <motion.p
-            variants={fadeUp}
-            className="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground"
-          >
-            Trace global signals into potential supply-chain exposure.
-            <br className="hidden sm:block" /> Evidence first. Connections in context.
-          </motion.p>
-          <motion.div variants={fadeUp} className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg">
-              <Link to="/app">
-                Explore Global Intelligence <ArrowRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href="#trace-event">
-                Follow the impact <Network />
-              </a>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </header>
+      <IntelligenceHero />
+      <ProductShowcases />
       <FiveStageStory />
       <section
         id="world-map"
@@ -399,7 +355,7 @@ export default function Landing() {
               ))}
             </div>
           </section>
-          <EcosystemStory />
+          <IntelligenceCore />
           <PricingTeaser />
 
           <AccessBand />
