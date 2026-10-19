@@ -1,6 +1,7 @@
 # Roadmap
-- [ ] Orizon-inspired transformation: immersive homepage, persistent navigation, map-first overview, connected impact story, pricing and shared page layouts
-- [ ] Verify redesigned navigation, map selection, pricing and desktop/mobile rendering
+- [x] Orizon-inspired foundation: immersive homepage, persistent navigation, map-first overview, connected impact story, pricing and shared page layouts
+- [x] Verify redesigned navigation, map selection, pricing and desktop/mobile rendering
+- [ ] Remaining full-product brief: individual event/profile/trade/scenario/auth/billing layouts and authenticated end-to-end checks; not completed in this pass
 - [x] Non-blue design system and compact map-first homepage
 - [x] Consistent app/map/graph styling and dummy QR checkout
 - [x] Automated tests and public navigation at desktop/tablet/phone sizes
