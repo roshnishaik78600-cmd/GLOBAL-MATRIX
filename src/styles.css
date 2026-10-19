@@ -1570,8 +1570,13 @@
   .gm-country-roster article > :nth-child(3) svg {
     max-width: 70px;
   }
-  .gm-country-roster article > :nth-child(2) { justify-content: space-between; }
-  .gm-country-roster article > :nth-child(3) { display: grid; grid-template-columns: 80px minmax(0,1fr); }
+  .gm-country-roster article > :nth-child(2) {
+    justify-content: space-between;
+  }
+  .gm-country-roster article > :nth-child(3) {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
   .gm-overview-map .map-frame {
     height: 390px;
   }
