@@ -328,6 +328,24 @@ export type Database = {
           },
         ]
       }
+      request_windows: {
+        Row: {
+          hits: number
+          key_hash: string
+          started_at: string
+        }
+        Insert: {
+          hits?: number
+          key_hash: string
+          started_at?: string
+        }
+        Update: {
+          hits?: number
+          key_hash?: string
+          started_at?: string
+        }
+        Relationships: []
+      }
       source_locks: {
         Row: {
           attempts: number
@@ -488,6 +506,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_request_window: {
+        Args: { p_key: string; p_limit: number; p_window_seconds: number }
+        Returns: Json
+      }
+      claim_source_refresh: {
+        Args: {
+          p_floor_ms: number
+          p_force: boolean
+          p_max_run_ms: number
+          p_min_ms: number
+          p_source_id: string
+        }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -496,6 +528,7 @@ export type Database = {
         Returns: boolean
       }
       is_mfa_admin: { Args: never; Returns: boolean }
+      public_source_summary: { Args: never; Returns: Json }
       reserve_brief_claim: {
         Args: {
           p_daily_limit: number
