@@ -10,7 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Keep all UI colors in semantic global tokens; legacy cyan token names map to the current action accent so existing visualizations stay consistent.
-- Reserve AI brief quotas through the service-only atomic database function before generation; per-user locking prevents concurrent requests bypassing allowances.
+- Reserve AI brief quotas through the service-only atomic database function before generation; map an unlimited allowance to its zero sentinel while keeping per-user interval locking, so concurrent requests cannot bypass allowances or abuse protection.
 - Keep the homepage map interactive and reuse the shared WorldMap rather than introducing a second geography renderer.
 - Use the shared navigation inventory for the compact, expandable desktop spine and mobile directory; retain one shell scroll viewport to prevent navigation obscuring content.
 
@@ -23,3 +23,4 @@
 - Public source status uses a sanitized database summary; raw runs/locks require MFA admin access, so provider diagnostics and scheduling are not publicly exposed.
 - Reserve source refreshes atomically and public inquiries through service-only database claims; validate inquiry input on both sides and store interest without implying payment or email delivery.
 - Bound legacy initial query reads to three seconds and expose terminal failures to retry boundaries; never substitute demonstration data for failed source reads.
+- Use query-state reads for shared source-health indicators and source-register panels, so a connector failure does not replace unrelated application content with a global error screen.

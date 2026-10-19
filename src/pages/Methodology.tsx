@@ -78,7 +78,9 @@ export default function Methodology() {
               Globalmatrix
             </span>
           </Link>
-          <span className="exec-label ml-auto hidden text-[var(--exec-ink-dim)] sm:block">Methodology</span>
+          <span className="exec-label ml-auto hidden text-[var(--exec-ink-dim)] sm:block">
+            Methodology
+          </span>
           <Link
             to="/"
             className="ml-auto inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--exec-hairline-strong)] px-3 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)] sm:ml-0"

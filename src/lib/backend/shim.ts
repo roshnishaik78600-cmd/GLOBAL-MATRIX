@@ -40,7 +40,10 @@ export function useQuery<Args, Result>(
   return query.data;
 }
 
-export function useQueryState<Args, Result>(fn: FnRef<Args, Result> | undefined, args?: Skippable<Args>) {
+export function useQueryState<Args, Result>(
+  fn: FnRef<Args, Result> | undefined,
+  args?: Skippable<Args>,
+) {
   const skipped = args === "skip";
   const resolvedArgs = (skipped ? undefined : (args ?? ({} as Args))) as Args;
   const query = useRqQuery({

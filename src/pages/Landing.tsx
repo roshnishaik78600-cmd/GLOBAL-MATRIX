@@ -398,7 +398,10 @@ const TREND_LABEL: Record<TopologyResult["categories"][number]["trend"], string>
  * - LAST UPDATE is the most recent successful fetch across every connector.
  */
 function HeroStats({ regions, links }: { regions: number; links: number }) {
-  const latest = SCENARIOS.reduce((max, scenario) => scenario.detectedAt > max ? scenario.detectedAt : max, "");
+  const latest = SCENARIOS.reduce(
+    (max, scenario) => (scenario.detectedAt > max ? scenario.detectedAt : max),
+    "",
+  );
   const cells = [
     { label: "Demo events", value: String(SCENARIOS.length) },
     { label: "Country profiles", value: String(COUNTRIES.length) },
@@ -408,19 +411,20 @@ function HeroStats({ regions, links }: { regions: number; links: number }) {
 
   return (
     <div>
-    <p className="mb-3 font-mono text-xs text-muted-foreground">Demo corpus · {CORPUS_VERSION} · {regions || "—"} mapped places · {links || "—"} modelled couplings</p>
-    <dl className="grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4">
-      {cells.map((cell) => (
-        <div key={cell.label} className="flex min-w-0 flex-col gap-2 px-1 py-1">
-          <dt className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">{cell.label}</dt>
-          <dd
-            className="exec-num truncate text-[1.35rem] leading-none font-semibold text-[var(--exec-ink)]"
-          >
-            {cell.value}
-          </dd>
-        </div>
-      ))}
-    </dl>
+      <p className="mb-3 font-mono text-xs text-muted-foreground">
+        Demo corpus · {CORPUS_VERSION} · {regions || "—"} mapped places · {links || "—"} modelled
+        couplings
+      </p>
+      <dl className="grid grid-cols-2 gap-4 border-t border-border pt-4 sm:grid-cols-4">
+        {cells.map((cell) => (
+          <div key={cell.label} className="flex min-w-0 flex-col gap-2 px-1 py-1">
+            <dt className="exec-label min-w-0 truncate text-[var(--exec-ink-dim)]">{cell.label}</dt>
+            <dd className="exec-num truncate text-[1.35rem] leading-none font-semibold text-[var(--exec-ink)]">
+              {cell.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }
@@ -515,13 +519,16 @@ function DataAndEvidence() {
       <div className="card">
         {query.error && health === undefined ? (
           <div role="alert" className="p-4">
-            <p className="text-sm text-muted-foreground">Source status is temporarily unavailable. Demo analysis remains separate from source readings.</p>
-            <Button variant="outline" className="mt-3" onClick={() => void query.refetch()}>Retry</Button>
+            <p className="text-sm text-muted-foreground">
+              Source status is temporarily unavailable. Demo analysis remains separate from source
+              readings.
+            </p>
+            <Button variant="outline" className="mt-3" onClick={() => void query.refetch()}>
+              Retry
+            </Button>
           </div>
         ) : health === undefined ? (
-          <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
-            Resolving connector state…
-          </p>
+          <Skeleton className="h-24 w-full" />
         ) : health.length === 0 ? (
           <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
             No connector has returned a reading yet. This page shows no estimates while that is

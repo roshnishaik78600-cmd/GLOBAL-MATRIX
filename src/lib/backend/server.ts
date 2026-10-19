@@ -330,13 +330,21 @@ async function claimRefresh(
   if (!policy) return { proceed: false, reason: "cooling_down", retryInMs: 0 };
 
   const { data, error } = await supabaseAdmin.rpc("claim_source_refresh", {
-    p_source_id: sourceId, p_force: force, p_min_ms: policy.minIntervalMs,
-    p_floor_ms: policy.forceFloorMs, p_max_run_ms: policy.maxRunMs,
+    p_source_id: sourceId,
+    p_force: force,
+    p_min_ms: policy.minIntervalMs,
+    p_floor_ms: policy.forceFloorMs,
+    p_max_run_ms: policy.maxRunMs,
   });
   if (error) throw new Error("Source refresh could not be reserved.");
-  if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("Invalid source reservation.");
+  if (!data || typeof data !== "object" || Array.isArray(data))
+    throw new Error("Invalid source reservation.");
   if (data.proceed === true) return { proceed: true };
-  return { proceed: false, reason: data.reason === "in_flight" ? "in_flight" : "cooling_down", retryInMs: Math.max(0, Number(data.retryInMs) || 0) };
+  return {
+    proceed: false,
+    reason: data.reason === "in_flight" ? "in_flight" : "cooling_down",
+    retryInMs: Math.max(0, Number(data.retryInMs) || 0),
+  };
 }
 
 const DATA_STATUSES: readonly string[] = ["observed", "stale", "unavailable"];

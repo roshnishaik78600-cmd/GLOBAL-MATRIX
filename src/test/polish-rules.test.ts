@@ -5,10 +5,24 @@ import { QUERY_DEADLINE_MS, withQueryDeadline } from "@/lib/query-deadline";
 
 describe("public requests", () => {
   it("accepts saved waitlist interest", () => {
-    expect(inquirySchema.parse({ kind: "waitlist", name: "Test", email: "qa@example.test", message: "Interested in Analyst availability" }).kind).toBe("waitlist");
+    expect(
+      inquirySchema.parse({
+        kind: "waitlist",
+        name: "Test",
+        email: "qa@example.test",
+        message: "Interested in Analyst availability",
+      }).kind,
+    ).toBe("waitlist");
   });
   it("rejects invalid email before submission", () => {
-    expect(inquirySchema.safeParse({ kind: "waitlist", name: "Test", email: "invalid", message: "Please notify me" }).success).toBe(false);
+    expect(
+      inquirySchema.safeParse({
+        kind: "waitlist",
+        name: "Test",
+        email: "invalid",
+        message: "Please notify me",
+      }).success,
+    ).toBe(false);
   });
   it("caps public inquiries at five an hour", () => {
     expect(REQUEST_LIMIT).toEqual({ inquiriesPerHour: 5, windowSeconds: 3600 });
@@ -25,12 +39,18 @@ describe("read deadlines", () => {
       const check = expect(result).rejects.toThrow("within 3 seconds");
       await vi.advanceTimersByTimeAsync(3000);
       await check;
-    } finally { vi.useRealTimers(); }
+    } finally {
+      vi.useRealTimers();
+    }
   });
   it("returns actual completed data", async () => {
     expect(await withQueryDeadline(async () => ({ events: 12 }))).toEqual({ events: 12 });
   });
   it("preserves original failures", async () => {
-    await expect(withQueryDeadline(async () => { throw new Error("source offline"); })).rejects.toThrow("source offline");
+    await expect(
+      withQueryDeadline(async () => {
+        throw new Error("source offline");
+      }),
+    ).rejects.toThrow("source offline");
   });
 });
