@@ -91,7 +91,9 @@ export default function GraphExplorerPage() {
         </>
       }
     >
-      <FiveStageStory embedded />
+      <div className="lg:col-span-12">
+        <FiveStageStory embedded />
+      </div>
       <div className="gm-graph-workspace grid grid-cols-1 gap-6 xl:grid-cols-12">
         <section className="min-w-0 xl:col-span-9">
           <Panel
