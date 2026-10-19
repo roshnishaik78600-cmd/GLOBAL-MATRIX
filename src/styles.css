@@ -1481,10 +1481,19 @@
   padding: 20px;
 }
 @media (min-width: 768px) and (max-height: 800px) {
-  .gm-atlas-identity { height: 190px; }
-  .gm-atlas-identity img { height: 190px; width: 350px; }
-  .gm-layout-atlas .t-page { font-size: 32px; }
-  .gm-layout-atlas .gm-research-header .gm-width { padding-bottom: 20px; }
+  .gm-atlas-identity {
+    height: 190px;
+  }
+  .gm-atlas-identity img {
+    height: 190px;
+    width: 350px;
+  }
+  .gm-layout-atlas .t-page {
+    font-size: 32px;
+  }
+  .gm-layout-atlas .gm-research-header .gm-width {
+    padding-bottom: 20px;
+  }
 }
 @media (max-width: 767px) {
   .gm-atlas-identity {
