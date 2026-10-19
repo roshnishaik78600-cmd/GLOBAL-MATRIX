@@ -90,7 +90,12 @@ export function Shell({ children }: { children: ReactNode }) {
       </a>
       {/* Top navigation. `shrink-0` so it never takes part in the scroll, and the
           page body below is the one and only scroll container. */}
-      <header className={cn("gm-workspace-nav sticky top-0 z-30 shrink-0 border-b border-border backdrop-blur-xl", scrolled && "is-scrolled")}>
+      <header
+        className={cn(
+          "gm-workspace-nav sticky top-0 z-30 shrink-0 border-b border-border backdrop-blur-xl",
+          scrolled && "is-scrolled",
+        )}
+      >
         <div className="gm-width grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 xl:flex lg:gap-6 lg:px-8">
           {/* Left — the wordmark. */}
           <Link

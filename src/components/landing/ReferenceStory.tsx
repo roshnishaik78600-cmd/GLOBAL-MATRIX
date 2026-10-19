@@ -23,11 +23,19 @@ export const STORY_SECTIONS = [
 export function ReferenceNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  useEffect(() => { const update = () => setScrolled(window.scrollY > 24); window.addEventListener("scroll", update, { passive: true }); update(); return () => window.removeEventListener("scroll", update); }, []);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   return (
     <>
       <nav
-        className={cn("gm-reference-nav sticky top-0 z-40 border-b border-border backdrop-blur-xl", scrolled && "is-scrolled")}
+        className={cn(
+          "gm-reference-nav sticky top-0 z-40 border-b border-border backdrop-blur-xl",
+          scrolled && "is-scrolled",
+        )}
         aria-label="GlobalMatrix"
       >
         <div className="gm-width flex h-16 items-center justify-between gap-4 px-5 sm:px-8">
@@ -43,7 +51,11 @@ export function ReferenceNav() {
             <Link to="/pricing">Pricing</Link>
           </div>
           <div className="flex items-center gap-2">
-            <Button asChild className="hidden lg:inline-flex"><Link to="/signup">Start exploring <ArrowUpRight /></Link></Button>
+            <Button asChild className="hidden lg:inline-flex">
+              <Link to="/signup">
+                Start exploring <ArrowUpRight />
+              </Link>
+            </Button>
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
               <Link to="/login">
                 Sign in <ArrowUpRight />

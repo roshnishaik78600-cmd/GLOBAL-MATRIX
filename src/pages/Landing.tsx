@@ -15,7 +15,11 @@ import {
   ReferenceNav,
   StoryProgress,
 } from "@/components/landing/ReferenceStory";
-import { IntelligenceHero, IntelligenceCore, ProductShowcases } from "@/components/landing/IntelligenceExperience";
+import {
+  IntelligenceHero,
+  IntelligenceCore,
+  ProductShowcases,
+} from "@/components/landing/IntelligenceExperience";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
 import { PricingTeaser } from "@/components/landing/PricingTeaser";
 import {
