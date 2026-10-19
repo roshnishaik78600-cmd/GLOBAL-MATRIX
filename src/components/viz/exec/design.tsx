@@ -69,13 +69,13 @@ export function PageFrame({
     // `min-h-full`, not `min-h-screen`: the shell owns the viewport height, so a
     // 100vh minimum here would give every page a permanent phantom scrollbar's
     // worth of empty space below its footer.
-    <ExecPage className="flex min-h-full flex-col">
-      <header className="border-b border-[var(--exec-hairline)]">
+    <ExecPage className="gm-research-page flex min-h-full flex-col">
+      <header className="gm-research-header border-b border-[var(--exec-hairline)]">
         <div className="gm-width px-4 pt-8 pb-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
             <div className="min-w-0 max-w-3xl">
               <p className="exec-label text-[var(--exec-cyan)]">{eyebrow}</p>
-              <h1 className="t-page mt-2 text-[var(--exec-ink)]">{title}</h1>
+              <h1 className="t-page mt-3 text-[var(--exec-ink)]">{title}</h1>
               <p className="t-body mt-2 max-w-2xl text-[var(--exec-ink-dim)]">{lede}</p>
             </div>
             {actions ? (
@@ -181,15 +181,12 @@ export function Region({
         // border. It is a ring, not a glow: on a surface this dark a diffuse
         // shadow reads as blur, and blur reads as an accident.
         <section
-          className="card gm-rise flex h-full min-w-0 flex-col"
-          style={{
-            borderColor: "color-mix(in srgb, var(--exec-cyan) 45%, var(--exec-hairline))",
-          }}
+          className="gm-research-region gm-research-dominant gm-rise flex h-full min-w-0 flex-col"
         >
           {children}
         </section>
       ) : (
-        <section className="card gm-rise flex h-full min-w-0 flex-col">{children}</section>
+        <section className="gm-research-region gm-rise flex h-full min-w-0 flex-col">{children}</section>
       )}
     </div>
   );
