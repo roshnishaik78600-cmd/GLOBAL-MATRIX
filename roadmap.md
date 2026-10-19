@@ -1,4 +1,7 @@
 # Roadmap
+- [ ] Recreate live Orizon reference: extracted light/lime tokens, centered homepage, five-stage impact story, ecosystem and conversion sections
+- [ ] Carry reference visual system through app, auth, pricing, checkout, loading and unavailable states
+- [ ] Compare reference and updated preview; test public and signed-in flows at desktop/tablet/mobile sizes
 - [x] Orizon-inspired foundation: immersive homepage, persistent navigation, map-first overview, connected impact story, pricing and shared page layouts
 - [x] Verify redesigned navigation, map selection, pricing and desktop/mobile rendering
 - [ ] Remaining full-product brief: individual event/profile/trade/scenario/auth/billing layouts and authenticated end-to-end checks; not completed in this pass
