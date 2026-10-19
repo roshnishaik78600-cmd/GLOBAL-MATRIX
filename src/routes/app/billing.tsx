@@ -47,7 +47,7 @@ function Billing() {
     if (user) refresh();
   }, [user, refresh]);
 
-  if (loading) return null;
+  if (loading) return <p role="status" className="p-8 text-sm text-muted-foreground">Checking your account…</p>;
   if (!user)
     return (
       <div className="p-8 text-sm">
@@ -92,7 +92,7 @@ function Billing() {
         </div>
       )}
 
-      <section className="rounded-xl border border-border bg-card p-6">
+      <section className="border-y border-border py-6">
         <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
           Current plan
         </p>
@@ -136,7 +136,7 @@ function Billing() {
         </div>
       </section>
 
-      <section className="rounded-xl border border-border bg-card p-6">
+      <section className="border-b border-border pb-6">
         <h2 className="font-semibold text-foreground">Orders</h2>
         {data.orders.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">No orders yet.</p>

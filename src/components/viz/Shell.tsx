@@ -97,8 +97,8 @@ export function Shell({ children }: { children: ReactNode }) {
             aria-label="GlobalMatrix, overview"
           >
             <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
-            <span className="truncate text-[14px] font-semibold tracking-[0.2em] text-[var(--exec-ink)] uppercase">
-              Globalmatrix
+            <span className="truncate text-[16px] font-semibold text-foreground">
+              GlobalMatrix
             </span>
           </Link>
 
@@ -107,7 +107,7 @@ export function Shell({ children }: { children: ReactNode }) {
               last two wait for `xl`: seven icon-plus-label links overflow a
               1024px bar and would collide with the account cluster. */}
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-1 2xl:flex"
             aria-label="Primary"
           >
             {PRIMARY_NAV.map((item, i) => (
