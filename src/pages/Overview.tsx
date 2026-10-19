@@ -141,8 +141,20 @@ export default function Overview() {
       }
     >
       <div className="gm-overview-intro flex flex-wrap items-center justify-between gap-5 border-b border-border pb-6">
-        <div className="flex items-center gap-4"><Globe2 className="size-8 text-primary" /><div><p className="text-lg font-medium">Global exposure atlas</p><p className="mt-1 text-xs text-muted-foreground">{mappable.length} mapped places · {data.flows.length} modelled connections</p></div></div>
-        <Button asChild variant="outline"><Link to="/app/world">Open world explorer <ArrowUpRight /></Link></Button>
+        <div className="flex items-center gap-4">
+          <Globe2 className="size-8 text-primary" />
+          <div>
+            <p className="text-lg font-medium">Global exposure atlas</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {mappable.length} mapped places · {data.flows.length} modelled connections
+            </p>
+          </div>
+        </div>
+        <Button asChild variant="outline">
+          <Link to="/app/world">
+            Open world explorer <ArrowUpRight />
+          </Link>
+        </Button>
       </div>
       {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
           support it rather than compete with it. */}
@@ -174,55 +186,57 @@ export default function Overview() {
           actions={<DataType type="model" />}
         />
         <ul className="min-w-0 divide-y divide-[var(--exec-hairline)]">
-          {data.topEvents.filter((event) => ticker.some((item) => item.id === event.id && item.inWindow)).map((event) => {
-            const active = isFocused("event", event.id);
-            return (
-              <li key={event.id} className="flex min-w-0 items-stretch">
-                <button
-                  type="button"
-                  onClick={() => toggle({ kind: "event", id: event.id })}
-                  aria-pressed={active}
-                  className="min-w-0 flex-1 px-3 py-2.5 text-left transition-colors hover:bg-[var(--exec-surface)]"
-                >
-                  <div className="flex min-w-0 items-baseline justify-between gap-2">
-                    <span
-                      className="exec-label min-w-0 truncate"
-                      style={{ color: riskColorForScore(event.score) }}
-                    >
-                      {CHANNEL_LABEL[event.dominantChannel]}
-                    </span>
-                    <span className="exec-num shrink-0 text-[12px] font-semibold text-[var(--exec-ink)]">
-                      {num(event.score, 1)}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-[12px] leading-snug font-medium text-[var(--exec-ink)]">
-                    {event.title}
-                  </p>
-                  <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-1">
-                    {event.topNodes.map((n) => (
+          {data.topEvents
+            .filter((event) => ticker.some((item) => item.id === event.id && item.inWindow))
+            .map((event) => {
+              const active = isFocused("event", event.id);
+              return (
+                <li key={event.id} className="flex min-w-0 items-stretch">
+                  <button
+                    type="button"
+                    onClick={() => toggle({ kind: "event", id: event.id })}
+                    aria-pressed={active}
+                    className="min-w-0 flex-1 px-3 py-2.5 text-left transition-colors hover:bg-[var(--exec-surface)]"
+                  >
+                    <div className="flex min-w-0 items-baseline justify-between gap-2">
                       <span
-                        key={n.nodeId}
-                        className="exec-num max-w-[14ch] truncate rounded-sm border border-[var(--exec-hairline)] px-1 text-[12px] text-[var(--exec-ink-dim)]"
-                        title={`${n.label} · weight ${num(n.weight, 2)}`}
+                        className="exec-label min-w-0 truncate"
+                        style={{ color: riskColorForScore(event.score) }}
                       >
-                        {n.short}
+                        {CHANNEL_LABEL[event.dominantChannel]}
                       </span>
-                    ))}
-                    <span className="exec-num ml-auto shrink-0 text-[12px] text-[var(--exec-ink-dim)]">
-                      {`80% ${num(event.low, 0)}–${num(event.high, 0)}`}
-                    </span>
-                  </div>
-                </button>
-                <Link
-                  to={`/app/event/${event.id}`}
-                  aria-label={`Open ${event.title}`}
-                  className="flex w-8 shrink-0 items-center justify-center border-l border-[var(--exec-hairline)] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
-                >
-                  <ArrowUpRight className="size-3.5" />
-                </Link>
-              </li>
-            );
-          })}
+                      <span className="exec-num shrink-0 text-[12px] font-semibold text-[var(--exec-ink)]">
+                        {num(event.score, 1)}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-[12px] leading-snug font-medium text-[var(--exec-ink)]">
+                      {event.title}
+                    </p>
+                    <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-1">
+                      {event.topNodes.map((n) => (
+                        <span
+                          key={n.nodeId}
+                          className="exec-num max-w-[14ch] truncate rounded-sm border border-[var(--exec-hairline)] px-1 text-[12px] text-[var(--exec-ink-dim)]"
+                          title={`${n.label} · weight ${num(n.weight, 2)}`}
+                        >
+                          {n.short}
+                        </span>
+                      ))}
+                      <span className="exec-num ml-auto shrink-0 text-[12px] text-[var(--exec-ink-dim)]">
+                        {`80% ${num(event.low, 0)}–${num(event.high, 0)}`}
+                      </span>
+                    </div>
+                  </button>
+                  <Link
+                    to={`/app/event/${event.id}`}
+                    aria-label={`Open ${event.title}`}
+                    className="flex w-8 shrink-0 items-center justify-center border-l border-[var(--exec-hairline)] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
+                  >
+                    <ArrowUpRight className="size-3.5" />
+                  </Link>
+                </li>
+              );
+            })}
         </ul>
       </Region>
 
@@ -251,7 +265,20 @@ export default function Overview() {
         )}
       </Region>
 
-      <div className="border-t border-border pt-8"><div className="mb-6 flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p><h2 className="mt-3 text-2xl font-medium">Follow what comes next.</h2></div><Button asChild variant="ghost"><Link to="/app/graph">Knowledge graph <ArrowRight /></Link></Button></div><ChainExplorer className="gm-story-chain" /></div>
+      <div className="border-t border-border pt-8">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p>
+            <h2 className="mt-3 text-2xl font-medium">Follow what comes next.</h2>
+          </div>
+          <Button asChild variant="ghost">
+            <Link to="/app/graph">
+              Knowledge graph <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <ChainExplorer className="gm-story-chain" />
+      </div>
       {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
           two columns each, so every headline number sits on the same baseline as
           the panels below it rather than in a card of its own. */}

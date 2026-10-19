@@ -218,28 +218,90 @@ export default function Landing() {
 
       <header className="gm-cinematic-hero relative isolate overflow-hidden border-b border-border">
         <div className="gm-hero-cartography absolute inset-x-0 bottom-0" id="world-map">
-          {data ? <WorldMap nodes={data.mapNodes} flows={data.flows} events={mapEvents} className="gm-cinematic-map" selected={sharedNodeId} onSelect={selectNode} onInspect={(id) => navigate(`/app/country/${id}`)} /> : <Skeleton className="gm-cinematic-map w-full" />}
+          {data ? (
+            <WorldMap
+              nodes={data.mapNodes}
+              flows={data.flows}
+              events={mapEvents}
+              className="gm-cinematic-map"
+              selected={sharedNodeId}
+              onSelect={selectNode}
+              onInspect={(id) => navigate(`/app/country/${id}`)}
+            />
+          ) : (
+            <Skeleton className="gm-cinematic-map w-full" />
+          )}
         </div>
-        <motion.div variants={stagger} initial="hidden" animate="show" className="gm-width pointer-events-none relative z-10 px-5 pt-12 sm:px-10 lg:pt-16">
-          <motion.p variants={fadeUp} className="mb-6 flex items-center gap-3 text-xs font-medium text-primary"><span className="h-px w-8 bg-primary" /> GLOBALMATRIX / GLOBAL INTELLIGENCE</motion.p>
-          <motion.h1 variants={fadeUp} className="gm-cinematic-title max-w-4xl font-medium text-foreground">See the world.<br /><span className="text-primary">Understand the impact.</span></motion.h1>
-          <motion.p variants={fadeUp} className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground">Trace global signals into potential supply-chain exposure. Evidence first. Connections in context.</motion.p>
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          animate="show"
+          className="gm-width pointer-events-none relative z-10 px-5 pt-12 sm:px-10 lg:pt-16"
+        >
+          <motion.p
+            variants={fadeUp}
+            className="mb-6 flex items-center gap-3 text-xs font-medium text-primary"
+          >
+            <span className="h-px w-8 bg-primary" /> GLOBALMATRIX / GLOBAL INTELLIGENCE
+          </motion.p>
+          <motion.h1
+            variants={fadeUp}
+            className="gm-cinematic-title max-w-4xl font-medium text-foreground"
+          >
+            See the world.
+            <br />
+            <span className="text-primary">Understand the impact.</span>
+          </motion.h1>
+          <motion.p
+            variants={fadeUp}
+            className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground"
+          >
+            Trace global signals into potential supply-chain exposure. Evidence first. Connections
+            in context.
+          </motion.p>
           <motion.div variants={fadeUp} className="pointer-events-auto mt-7 flex flex-wrap gap-3">
-            <Button asChild size="lg"><Link to="/app">Explore Global Intelligence <ArrowRight /></Link></Button>
-            <Button asChild size="lg" variant="outline"><a href="#impact-story">Follow the impact <Network /></a></Button>
+            <Button asChild size="lg">
+              <Link to="/app">
+                Explore Global Intelligence <ArrowRight />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="#impact-story">
+                Follow the impact <Network />
+              </a>
+            </Button>
           </motion.div>
         </motion.div>
         <div className="gm-hero-caption gm-width pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-wrap items-center justify-between gap-3 px-5 py-5 text-xs sm:px-10">
           <span className="text-foreground">01 / The world is connected.</span>
-          <span className="text-muted-foreground">Demonstration events · modelled exposure network</span>
+          <span className="text-muted-foreground">
+            Demonstration events · modelled exposure network
+          </span>
         </div>
       </header>
-      <div className="gm-width px-5 py-5 sm:px-10"><HeroStats regions={mappable.length} links={data?.flows.length ?? 0} /></div>
+      <div className="gm-width px-5 py-5 sm:px-10">
+        <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
+      </div>
 
       <main className="min-w-0">
         <div className="gm-width gm-editorial flex flex-col gap-8 px-4 py-8 lg:gap-10 lg:px-8">
-          <section id="impact-story" className="gm-impact-story scroll-mt-20 border-t border-border py-10">
-            <div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="mb-4 text-xs text-primary">02 / THE CONNECTIONS THAT MATTER</p><h2 className="text-3xl font-medium sm:text-4xl">A signal is only<br />the beginning.</h2></div><p className="max-w-sm text-sm leading-relaxed text-muted-foreground">Select an event. Follow each supported relationship. See where the evidence stops.</p></div>
+          <section
+            id="impact-story"
+            className="gm-impact-story scroll-mt-20 border-t border-border py-10"
+          >
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+              <div>
+                <p className="mb-4 text-xs text-primary">02 / THE CONNECTIONS THAT MATTER</p>
+                <h2 className="text-3xl font-medium sm:text-4xl">
+                  A signal is only
+                  <br />
+                  the beginning.
+                </h2>
+              </div>
+              <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+                Select an event. Follow each supported relationship. See where the evidence stops.
+              </p>
+            </div>
             <ChainExplorer className="gm-story-chain" />
           </section>
           <HowItWorks />
@@ -251,7 +313,6 @@ export default function Landing() {
           {feed ? <WhatsChanging events={timeline} /> : <PulseSkeleton />}
 
           {/* FOLLOW THE SHOCK — the mechanism, drawn rather than asserted. */}
-
 
           <details className="border-t border-border pt-5">
             <summary className="cursor-pointer text-lg font-semibold text-foreground">

@@ -89,7 +89,13 @@ function PlanCard({ id }: { id: PlanId }) {
           <Sparkles className="size-3" aria-hidden /> For deeper research
         </span>
       )}
-      <div className="mb-7 flex items-center justify-between"><span className="flex size-11 items-center justify-center rounded-md border border-border text-primary">{id === "free" ? <Compass /> : id === "analyst" ? <Network /> : <Layers />}</span><span className="text-xs text-muted-foreground">0{ORDER.indexOf(id) + 1}</span></div><h2 className="text-lg font-semibold text-foreground">{p.name}</h2>
+      <div className="mb-7 flex items-center justify-between">
+        <span className="flex size-11 items-center justify-center rounded-md border border-border text-primary">
+          {id === "free" ? <Compass /> : id === "analyst" ? <Network /> : <Layers />}
+        </span>
+        <span className="text-xs text-muted-foreground">0{ORDER.indexOf(id) + 1}</span>
+      </div>
+      <h2 className="text-lg font-semibold text-foreground">{p.name}</h2>
       <p className="mt-3 text-4xl font-semibold  text-foreground">
         {formatINR(p.price)}
         <span className="text-sm font-normal text-muted-foreground">
@@ -97,9 +103,7 @@ function PlanCard({ id }: { id: PlanId }) {
         </span>
       </p>
       <p className="mt-2 text-sm text-muted-foreground">{ABOUT[id].who}</p>
-      <p className="mt-4 font-mono text-xs uppercase r text-muted-foreground">
-        Includes
-      </p>
+      <p className="mt-4 font-mono text-xs uppercase r text-muted-foreground">Includes</p>
       <ul className="mt-2 space-y-1.5 text-sm text-foreground">
         {p.features.map((f) => (
           <li key={f} className="flex gap-2">
@@ -121,20 +125,17 @@ function PlanCard({ id }: { id: PlanId }) {
       </ul>
       <p className="mt-4 text-xs text-muted-foreground">{ABOUT[id].click}</p>
       {id === "free" ? (
-        <Button asChild variant="outline" className="mt-6 w-full"><Link
-          to="/app/billing"
-          className="mt-6"
-        >
-          Explore Free <ArrowUpRight />
-        </Link></Button>
+        <Button asChild variant="outline" className="mt-6 w-full">
+          <Link to="/app/billing" className="mt-6">
+            Explore Free <ArrowUpRight />
+          </Link>
+        </Button>
       ) : (
-        <Button asChild className="mt-6 w-full"><Link
-          to="/app/checkout/$product"
-          params={{ product: id }}
-          className="mt-6"
-        >
-          Choose {p.name} <ArrowUpRight />
-        </Link></Button>
+        <Button asChild className="mt-6 w-full">
+          <Link to="/app/checkout/$product" params={{ product: id }} className="mt-6">
+            Choose {p.name} <ArrowUpRight />
+          </Link>
+        </Button>
       )}
     </motion.div>
   );
@@ -164,11 +165,7 @@ function Pricing() {
           paid plans stay inactive until payment verification goes live.
         </div>
 
-        <motion.div
-          variants={stagger}
-          {...revealProps}
-          className="mt-10 grid gap-5 md:grid-cols-3"
-        >
+        <motion.div variants={stagger} {...revealProps} className="mt-10 grid gap-5 md:grid-cols-3">
           {ORDER.map((id) => (
             <PlanCard key={id} id={id} />
           ))}

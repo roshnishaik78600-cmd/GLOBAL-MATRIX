@@ -180,13 +180,13 @@ export function Region({
         // The dominant object is the one thing on the page that gets the accent
         // border. It is a ring, not a glow: on a surface this dark a diffuse
         // shadow reads as blur, and blur reads as an accident.
-        <section
-          className="gm-research-region gm-research-dominant gm-rise flex h-full min-w-0 flex-col"
-        >
+        <section className="gm-research-region gm-research-dominant gm-rise flex h-full min-w-0 flex-col">
           {children}
         </section>
       ) : (
-        <section className="gm-research-region gm-rise flex h-full min-w-0 flex-col">{children}</section>
+        <section className="gm-research-region gm-rise flex h-full min-w-0 flex-col">
+          {children}
+        </section>
       )}
     </div>
   );
