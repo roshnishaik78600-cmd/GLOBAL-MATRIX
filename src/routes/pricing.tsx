@@ -143,7 +143,7 @@ function PlanCard({ id }: { id: PlanId }) {
 
 function Pricing() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="gm-reference-pricing min-h-screen bg-background">
       <div className="mx-auto max-w-6xl px-5 py-16">
         <Link
           to="/"
@@ -151,12 +151,15 @@ function Pricing() {
         >
           ← GlobalMatrix
         </Link>
+        <div className="gm-pricing-intro">
+        <p className="gm-reference-eyebrow mt-8">Research at your pace</p>
         <h1 className="mt-8 text-3xl font-semibold  text-foreground sm:text-5xl">
           Intelligence. At your scale.
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           Start with the world. Go further with more daily AI briefs.
         </p>
+        </div>
         <div
           role="status"
           className="mt-6 rounded-md border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-foreground"
@@ -171,7 +174,7 @@ function Pricing() {
           ))}
         </motion.div>
 
-        <section className="mt-10" aria-labelledby="compare">
+        <section className="mt-16" aria-labelledby="compare">
           <h2 id="compare" className="text-xl font-semibold text-foreground">
             Compare
           </h2>

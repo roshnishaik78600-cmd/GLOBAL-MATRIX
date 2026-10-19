@@ -13,3 +13,5 @@
 - Reserve AI brief quotas through the service-only atomic database function before generation; per-user locking prevents concurrent requests bypassing allowances.
 - Keep the homepage map interactive and reuse the shared WorldMap rather than introducing a second geography renderer.
 - Use the shared navigation inventory for the persistent desktop rail and mobile directory; keep one shell scroll viewport so navigation never obscures page content.
+
+- Reference storytelling lives in the shared ReferenceStory presentation module; the original nine-stage analysis and WorldMap remain available to preserve analytical workflows.

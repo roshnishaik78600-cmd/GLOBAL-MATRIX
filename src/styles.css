@@ -28,6 +28,8 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-overlay: var(--overlay);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -62,111 +64,76 @@
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
-/* ------------------------------------------------------------------ tokens --
-   GlobalMatrix, obsidian edition.
-
-   One base, two surface lifts, one hairline, two accents. The accents are
-   rationed deliberately: emerald marks "this is live or interactive", violet marks
-   "this is the second system" (propagation, uncertainty). Everything that means
-   *rising* or *elevated* is a status colour, never an accent, so a reader never
-   has to learn a second language for "hot".
-
-   Surface contrast is done with literal hex rather than alpha so a card sitting
-   on a card is always exactly one step lighter than the card beneath it, at any
-   nesting depth, with no compositing surprises. */
+/* Reference-derived white, ink and lime palette. Legacy executive names
+   resolve to this same system so existing intelligence surfaces stay coherent. */
 :root {
-  /* 18px sits inside the 16–20px band the card system is specified to use, and
-     every control derives from it, so a button and a card share one radius
-     language rather than two. */
   --radius: 0.5rem;
-
-  --background: #101012;
-  --foreground: #f2ede4;
-  --card: #1c1b1d;
-  --card-foreground: #f2ede4;
-  --popover: #242226;
-  --popover-foreground: #f2ede4;
-  --primary: #c47b55;
-  --primary-foreground: #101012;
-  --secondary: #242226;
-  --secondary-foreground: #f2ede4;
-  --muted: #242226;
-  /* Secondary text. The overwhelming majority of supporting copy sits here. */
-  --muted-foreground: #a7a19a;
-  /* Muted text. Reserved for the lowest-priority register — labels inside a
-     chart, a legend caption, anything a reader should be able to skip without
-     missing an argument. Three text rungs, not two, because a design system
-     that claims a muted colour and never defines it is a design system with a
-     hole in it. */
-  --muted-text: #918b84;
-  --accent: #242226;
-  --accent-foreground: #f2ede4;
-  --destructive: #c8687a;
-  --border: #38332f;
-  --input: #38332f;
-  --ring: #c47b55;
-
-  /* The secondary surface, as a first-class name. Two lifts only: a card sits
-     on `--card`, a nested well or a control bed sits on this. */
-  --surface-2: #242226;
-
-  --rule: #38332f;
-  --grid: #2a2729;
-
-  /* Status ramp. Green means "measured and improving", red means "measured and
-     worse", amber means "measured but stale or unresolved". None of them are
-     decorative and none of them are ever used for a non-status meaning. */
-  --stable: #c47b55;
-  --warning: #dda85e;
-  --elevated: #dda85e;
-  --critical: #c8687a;
-  --signal: #c8687a;
-
-  /* Accents. Rationed: emerald for live/interactive, violet for the propagation
-     and uncertainty layer. */
-  --cyan: #c47b55;
-  --violet: #e5c99a;
-  /* Information. The fourth signal colour, for neutral/informational states that
-     are neither positive, warning nor critical. */
-  --info: #e5c99a;
-
-  --chart-1: #c8687a;
-  --chart-2: #c47b55;
-  --chart-3: #c47b55;
-  --chart-4: #dda85e;
-  --chart-5: #e5c99a;
-  --chart-6: #e5c99a;
-
-  --sidebar: #101012;
-  --sidebar-foreground: #f2ede4;
-  --sidebar-primary: #f2ede4;
-  --sidebar-primary-foreground: #101012;
-  --sidebar-accent: #242226;
-  --sidebar-accent-foreground: #f2ede4;
-  --sidebar-border: #38332f;
-  --sidebar-ring: #c47b55;
-
-  /* Executive risk-surface tokens. Values mirror the tokens above; they are
-     kept as separate names because a large share of the console is written
-     against `--exec-*`, and retuning one register must not silently retune the
-     other. The mapping is enforced by the fact that both ramps resolve to the
-     same six colours. */
-  --exec-base: #101012;
-  --exec-panel: #1c1b1d;
-  --exec-surface: #242226;
-  --exec-surface-strong: #2e2b2c;
-  --exec-hairline: #38332f;
-  --exec-hairline-strong: #4d4640;
-  --exec-ink: #f2ede4;
-  --exec-ink-dim: #a7a19a;
-  --exec-ink-muted: #918b84;
-  --exec-cyan: #c47b55;
-  --exec-violet: #e5c99a;
-  --exec-amber: #dda85e;
-  --exec-crimson: #c8687a;
-  --exec-emerald: #c47b55;
-  --exec-info: #e5c99a;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.182 0.014 154);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.71 0.221 135.3);
+  --primary-foreground: oklch(0.182 0.014 154);
+  --secondary: oklch(0.978 0.016 135);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.97 0.002 145);
+  --muted-foreground: oklch(0.45 0.013 145);
+  --muted-text: oklch(0.51 0.008 145);
+  --accent: oklch(0.969 0.025 135);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.5 0.18 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.913 0.006 145);
+  --input: oklch(0.85 0.009 145);
+  --ring: var(--primary);
+  --surface-2: oklch(0.975 0.006 145);
+  --rule: var(--border);
+  --grid: oklch(0.947 0.008 145);
+  --stable: oklch(0.48 0.143 137);
+  --warning: oklch(0.49 0.12 65);
+  --elevated: var(--warning);
+  --critical: var(--destructive);
+  --signal: var(--destructive);
+  --cyan: var(--primary);
+  --violet: oklch(0.49 0.095 131);
+  --info: var(--muted-foreground);
+  --chart-1: var(--critical);
+  --chart-2: var(--primary);
+  --chart-3: var(--stable);
+  --chart-4: var(--warning);
+  --chart-5: var(--violet);
+  --chart-6: var(--muted-foreground);
+  --sidebar: oklch(0.987 0.004 145);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --exec-base: var(--background);
+  --exec-panel: var(--card);
+  --exec-surface: var(--surface-2);
+  --exec-surface-strong: var(--accent);
+  --exec-hairline: var(--border);
+  --exec-hairline-strong: var(--input);
+  --exec-ink: var(--foreground);
+  --exec-ink-dim: var(--muted-foreground);
+  --exec-ink-muted: var(--muted-text);
+  --exec-cyan: var(--primary);
+  --exec-violet: var(--violet);
+  --exec-amber: var(--warning);
+  --exec-crimson: var(--critical);
+  --exec-emerald: var(--stable);
+  --exec-info: var(--info);
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --reference-orbit: color-mix(in oklch, var(--primary) 28%, transparent);
+  --reference-shadow: 0 2px 3px color-mix(in oklch, var(--foreground) 6%, transparent);
+  --reference-action-shadow: 0 5px 18px color-mix(in oklch, var(--primary) 22%, transparent);
+  --overlay: color-mix(in oklch, var(--foreground) 25%, transparent);
+  --drawer-shadow: -12px 0 40px color-mix(in oklch, var(--foreground) 12%, transparent);
 }
 
 /* The workstation is dark by default. These exist so a component that needs an
@@ -194,6 +161,7 @@
     overflow-x: clip;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    letter-spacing: 0;
     font-feature-settings:
       "cv02",
       "cv03",
@@ -571,7 +539,7 @@
   h2,
   h3,
   .font-display {
-    font-family: "Sora", var(--font-sans);
+    font-family: var(--font-sans);
   }
   h1 {
     letter-spacing: 0;
@@ -748,36 +716,12 @@
   background: transparent;
 }
 
-/* Atmospheric copper glow for hero sections — pure decoration, no motion. */
-.gm-hero-glow {
-  background:
-    radial-gradient(
-      60% 55% at 18% 0%,
-      color-mix(in oklch, var(--primary) 16%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      45% 40% at 85% 12%,
-      color-mix(in oklch, var(--accent, var(--primary)) 10%, transparent),
-      transparent 70%
-    );
-}
-
-/* Featured pricing card: copper edge light + soft lift shadow. */
+/* Reference uses soft surface depth, not neon edge lights. */
+.gm-hero-glow { background: transparent; }
 .gm-plan-featured {
-  border-color: color-mix(in oklch, var(--primary) 65%, transparent);
-  background:
-    linear-gradient(var(--card), var(--card)) padding-box,
-    linear-gradient(
-        160deg,
-        color-mix(in oklch, var(--primary) 70%, transparent),
-        transparent 45%,
-        color-mix(in oklch, var(--primary) 35%, transparent)
-      )
-      border-box;
-  box-shadow:
-    0 0 0 1px color-mix(in oklch, var(--primary) 25%, transparent),
-    0 18px 50px -18px color-mix(in oklch, var(--primary) 45%, transparent);
+  border-color: var(--primary);
+  background: var(--secondary);
+  box-shadow: var(--reference-shadow);
 }
 
 /* ---- Premium surface & text treatments -------------------------------- */
@@ -798,7 +742,7 @@
     color-mix(in oklch, var(--card) 100%, var(--foreground) 2%),
     var(--card)
   );
-  border-radius: 1rem;
+  border-radius: var(--radius);
   box-shadow: inset 0 1px 0 color-mix(in oklch, var(--foreground) 6%, transparent);
 }
 
@@ -943,3 +887,92 @@
   border-color: var(--story-edge);
   background: var(--background);
 }
+
+/* Orizon-derived composition: centred storytelling, orbital linework,
+   thin rules and compact interactions; original GlobalMatrix content. */
+.gm-reference-home { scroll-behavior: smooth; }
+.gm-reference-home .gm-width { max-width: 1280px; }
+.gm-reference-announcement { background: var(--background); }
+.gm-reference-home [data-slot="button"][data-variant="default"],
+.gm-reference-home [data-slot="button"][data-variant="outline"],
+.gm-reference-pricing [data-slot="button"][data-variant="default"],
+.gm-reference-pricing [data-slot="button"][data-variant="outline"] {
+  border-radius: 999px;
+  padding-inline: 26px;
+  min-height: 42px;
+}
+.gm-reference-home [data-slot="button"][data-variant="default"] { box-shadow: var(--reference-action-shadow); }
+.gm-reference-home .gm-reference-announcement [data-slot="button"] { border-radius: 4px; min-height: 28px; padding-inline: 12px; box-shadow: none; }
+.gm-reference-hero { min-height: 760px; position: relative; overflow: hidden; text-align: center; }
+.gm-reference-hero-art { position: relative; height: 420px; max-width: 1120px; margin-inline: auto; }
+.gm-reference-hero-art img { position: relative; z-index: 1; width: 720px; height: 420px; object-fit: contain; margin-inline: auto; mix-blend-mode: multiply; }
+.gm-orbital-section::before, .gm-reference-hero-art::before {
+  content: ""; position: absolute; width: 820px; height: 820px; max-width: none;
+  top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+  background: repeating-radial-gradient(circle, transparent 0 66px, var(--reference-orbit) 67px 68px, transparent 69px 104px);
+  mask-image: radial-gradient(circle, var(--foreground) 25%, transparent 71%);
+}
+.gm-reference-hero-copy { position: relative; z-index: 2; padding: 0 20px 52px; }
+.gm-reference-eyebrow { display: flex; align-items:center; justify-content:center; gap: 12px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; color: var(--muted-foreground); }
+.gm-reference-eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--primary); }
+.gm-reference-title { margin-top: 22px; font-size: 48px; line-height: 1.1; font-weight: 650; letter-spacing: 0; }
+.gm-reference-title .text-primary { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 7px; }
+.gm-reference-heading { font-size: 40px; font-weight: 650; line-height: 1.16; letter-spacing: 0; margin-top: 20px; }
+.gm-reference-section { position:relative; padding: 100px 24px; text-align: center; }
+.gm-orbital-section { overflow:hidden; }
+.gm-orbital-section::before { top: 42%; }
+.gm-ecosystem-orbit { width: 650px; height: 370px; object-fit:contain; margin: 16px auto 0; position: relative; mix-blend-mode:multiply; }
+.gm-ecosystem-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; max-width:660px; margin: 0 auto; position:relative; }
+.gm-ecosystem-link { display:flex; align-items:center; gap:10px; border:1px solid var(--border); border-radius:8px; padding:12px 15px; background:var(--background); text-align:left; font-size:14px; box-shadow:var(--reference-shadow); transition:border-color 180ms, transform 180ms; }
+.gm-ecosystem-link:hover { border-color:var(--primary); transform:translateY(-2px); }
+.gm-five-stage { min-height:100px; border-top:1px solid var(--border); border-radius:0; align-items:flex-start; justify-content:flex-start; flex-direction:column; white-space:normal; text-align:left; padding:18px; }
+.gm-five-stage[aria-pressed="true"] { border-color:var(--primary); background:var(--secondary); }
+.gm-five-stage svg { position:absolute; align-self:flex-end; }
+.gm-five-stage { position:relative; }
+.gm-stage-detail { min-height:250px; }
+.gm-reference-atlas { background:var(--secondary); padding-bottom:24px; }
+.gm-reference-atlas .gm-width { position:relative; }
+.gm-reference-atlas .map-frame { height:500px; }
+.gm-reference-evidence { border-bottom:1px solid var(--border); }
+.gm-reference-conversion { margin-top:40px; border-top:1px solid var(--border); background:var(--secondary); padding:56px 24px; text-align:center; }
+.gm-story-progress { position:fixed; z-index:25; left:20px; top:42%; display:flex; flex-direction:column; gap:16px; }
+.gm-progress-link { display:flex; align-items:center; gap:10px; height:10px; }
+.gm-progress-line { width:18px; height:1px; background:var(--input); transition:width 180ms; }
+.gm-progress-name { opacity:0; pointer-events:none; font:11px var(--font-mono); color:var(--muted-foreground); background:var(--background); padding:4px; transition:opacity 180ms; }
+.gm-progress-link:hover .gm-progress-name, .gm-progress-link:focus-visible .gm-progress-name { opacity:1; }
+.gm-progress-link.is-active .gm-progress-line { background:var(--primary); width:26px; }
+.gm-progress-readout { margin-top:14px; font-size:10px; }
+.gm-reference-home .gm-editorial { max-width:1180px; }
+.gm-reference-home .gm-editorial section { padding-block:30px; }
+.gm-reference-home #pricing-teaser { font-size:36px; line-height:1.15; max-width:650px; margin:auto; }
+.gm-reference-home #pricing-teaser ~ p { margin-inline:auto; }
+.gm-reference-pricing h1 { font-size:44px; line-height:1.12; }
+.gm-reference-pricing .gm-pricing-intro { text-align:center; }
+.gm-reference-pricing .gm-pricing-intro p { margin-inline:auto; }
+.gm-reference-pricing #compare { font-size:30px; text-align:center; margin-block:50px 30px; }
+.gm-reference-pricing table td:nth-child(3), .gm-reference-pricing table th:nth-child(3) { background:var(--secondary); }
+.gm-research-header { background:var(--background); border-bottom:1px solid var(--border); }
+.gm-research-region { padding-top:8px; }
+.gm-research-dominant { border-color:var(--border); box-shadow:var(--reference-shadow); }
+.gm-research-page .t-page { font-weight:650; }
+.gm-research-page .card { box-shadow:var(--reference-shadow); }
+.gm-auth-identity { background:var(--secondary); }
+.gm-auth-identity .gm-auth-orbit { width:100%; height:260px; object-fit:contain; mix-blend-mode:multiply; }
+.gm-auth-form { border:0; box-shadow:none; background:transparent; }
+@media (max-width: 1100px) { .gm-story-progress { display:none; } }
+@media (max-width:767px) {
+  .gm-reference-hero { min-height:690px; }
+  .gm-reference-hero-art { height:320px; }
+  .gm-reference-hero-art img { height:320px; width:100%; }
+  .gm-reference-hero-art::before { width:590px; height:590px; }
+  .gm-reference-title { font-size:34px; }
+  .gm-reference-heading { font-size:30px; }
+  .gm-reference-section { padding:64px 20px; }
+  .gm-ecosystem-orbit { height:240px; width:100%; }
+  .gm-ecosystem-links { grid-template-columns:1fr; }
+  .gm-five-stage { min-height:56px; flex-direction:row; align-items:center; padding:14px; gap:16px; }
+  .gm-five-stage svg { position:static; align-self:center; }
+  .gm-reference-atlas .map-frame { height:360px; }
+  .gm-reference-pricing h1 { font-size:32px; }
+}
+@media (prefers-reduced-motion:reduce) { .gm-reference-home { scroll-behavior:auto; } .gm-ecosystem-link { transition:none; } }

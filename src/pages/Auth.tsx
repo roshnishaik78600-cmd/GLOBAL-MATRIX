@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import orbit from "@/assets/intelligence-orbit.jpg";
 import { lovable } from "@/integrations/lovable/index";
 
 interface AuthProps {
@@ -181,7 +182,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
       {/* ------------------------------------------------ Left: identity panel.
           Hidden below lg so the form owns small screens; nothing decorative
           stands between a phone and the form. */}
-      <aside className="relative hidden overflow-hidden border-r border-[var(--exec-hairline)] bg-[var(--exec-panel)] lg:flex lg:w-[46%] lg:flex-col lg:justify-between xl:w-1/2">
+      <aside className="gm-auth-identity relative hidden overflow-hidden border-r border-[var(--exec-hairline)] bg-[var(--exec-panel)] lg:flex lg:w-[46%] lg:flex-col lg:justify-between xl:w-1/2">
         <div className="p-10 xl:p-14">
           <Link to="/" className="inline-flex items-center gap-2.5" aria-label="GlobalMatrix home">
             <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
@@ -192,7 +193,8 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
         </div>
 
         <div className="px-10 pb-4 xl:px-14">
-          <p className="t-hero text-[clamp(2rem,4vw,3.25rem)] text-[var(--exec-ink)]">
+          <img src={orbit} alt="" loading="lazy" width={1536} height={1024} className="gm-auth-orbit mb-8" />
+          <p className="t-hero text-[40px] text-[var(--exec-ink)]">
             See what changed.
             <br />
             <span className="text-[var(--exec-cyan)]">Trace the impact.</span>
@@ -270,7 +272,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
 
           <motion.section
             {...entrance}
-            className="card min-w-0 p-6 sm:p-8"
+            className="gm-auth-form min-w-0 p-6 sm:p-8"
             aria-labelledby="auth-title"
           >
             {step === "form" ? (
@@ -418,7 +420,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                     type="submit"
                     disabled={isLoading}
                     aria-busy={isLoading || undefined}
-                    className="h-11 w-full rounded-full bg-[var(--exec-cyan)] text-[14px] font-semibold text-[var(--exec-base)] hover:opacity-90"
+                    className="h-11 w-full rounded-full bg-[var(--exec-cyan)] text-[14px] font-semibold text-primary-foreground hover:opacity-90"
                   >
                     {isLoading ? (
                       <Loader2 className="size-4 animate-spin" aria-hidden />
@@ -500,7 +502,7 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
                     setError(null);
                     setNotice(null);
                   }}
-                  className="mt-6 h-11 w-full rounded-full bg-[var(--exec-cyan)] text-[14px] font-semibold text-[var(--exec-base)] hover:opacity-90"
+                  className="mt-6 h-11 w-full rounded-full bg-[var(--exec-cyan)] text-[14px] font-semibold text-primary-foreground hover:opacity-90"
                 >
                   Back to sign in
                 </Button>
