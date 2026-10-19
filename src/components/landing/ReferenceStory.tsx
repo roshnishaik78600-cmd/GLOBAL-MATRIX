@@ -265,7 +265,15 @@ export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
           >
             <p className="font-mono text-xs text-primary">STAGE 0{active + 1}</p>
             <h3 className="mt-3 text-2xl font-semibold">{step.question}</h3>
-            {detail ? (
+            {active === 1 ? (
+              <div className="mt-4 grid gap-6 sm:grid-cols-3">
+                <div><p className="text-xs text-muted-foreground">Basis</p><p className="mt-2 text-sm">Demonstration corpus</p></div>
+                <div><p className="text-xs text-muted-foreground">Model confidence</p><p className="mt-2 text-sm">{Math.round(chain.event.confidence * 100)}%</p></div>
+                <div><p className="text-xs text-muted-foreground">80% score interval</p><p className="mt-2 text-sm">{chain.event.low.toFixed(0)}–{chain.event.high.toFixed(0)}</p></div>
+                <p className="text-sm leading-relaxed text-muted-foreground sm:col-span-3">This event is a demonstration, not verified live news. Inspect its signal history and stated assumptions before interpreting the exposure.</p>
+                <Button asChild variant="outline"><Link to={`/app/event/${chain.event.id}`}>Inspect event evidence <ArrowUpRight /></Link></Button>
+              </div>
+            ) : detail ? (
               <>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {detail.rows[0]?.detail ?? detail.unmeasured?.reason ?? detail.about}
