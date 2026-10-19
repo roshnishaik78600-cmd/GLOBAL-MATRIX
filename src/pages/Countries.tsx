@@ -124,6 +124,7 @@ export default function Countries() {
   // rather than a second command bar.
   return (
     <PageFrame
+      layout="directory"
       eyebrow="Countries"
       title="Sovereign risk intelligence"
       lede="Every tracked economy and the infrastructure it depends on, ranked by derived exposure."
@@ -259,8 +260,8 @@ export default function Countries() {
         {groups.map((group) => {
           const isCollapsed = collapsed[group.region] ?? false;
           return (
-            <section key={group.region} className="min-w-0">
-              <div className="mb-2 flex flex-wrap items-center gap-2">
+            <section key={group.region} className="gm-country-region min-w-0">
+              <div className="gm-region-identity mb-2 flex flex-wrap items-center gap-2">
                 <RegionSummary
                   region={group.region}
                   rows={group.rows}
@@ -287,7 +288,7 @@ export default function Countries() {
               </div>
 
               {!isCollapsed ? (
-                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+                <div className="gm-country-roster grid grid-cols-1 gap-0">
                   {group.rows.map((row, i) => (
                     <CountryCard key={row.nodeId} row={row} index={i} />
                   ))}

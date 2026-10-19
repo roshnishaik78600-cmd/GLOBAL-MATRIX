@@ -8,6 +8,7 @@ import { Bar, NoData, Panel, Skeleton } from "@/components/viz/core";
 import { getNode } from "@/lib/intel/nodes";
 import { riskColorForScore } from "@/lib/intel/visual";
 import { Button } from "@/components/ui/button";
+import { FiveStageStory } from "@/components/landing/ReferenceStory";
 import { useFocus } from "@/lib/focus";
 
 /**
@@ -67,6 +68,7 @@ export default function GraphExplorerPage() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Knowledge graph"
       title="Every connection has a context."
       lede="Select a signal. Explore its modelled pathways and inspect the supported exposure relationships."
@@ -89,6 +91,9 @@ export default function GraphExplorerPage() {
         </>
       }
     >
+      <div className="lg:col-span-12">
+        <FiveStageStory embedded />
+      </div>
       <div className="gm-graph-workspace grid grid-cols-1 gap-6 xl:grid-cols-12">
         <section className="min-w-0 xl:col-span-9">
           <Panel

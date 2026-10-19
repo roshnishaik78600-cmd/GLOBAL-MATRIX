@@ -37,7 +37,10 @@ export function MfaGate({ children }: { children: ReactNode }) {
         if (ee) throw ee;
         setStage({ kind: "enroll", factorId: e.id, qr: e.totp.qr_code, secret: e.totp.secret });
       } catch (e) {
-        setStage({ kind: "error", message: e instanceof Error ? e.message : "Could not start MFA" });
+        setStage({
+          kind: "error",
+          message: e instanceof Error ? e.message : "Could not start MFA",
+        });
       }
     })();
   }, []);
@@ -54,7 +57,7 @@ export function MfaGate({ children }: { children: ReactNode }) {
   if (stage.kind === "ok") return <>{children}</>;
   return (
     <main className="grid min-h-screen place-items-center bg-background p-6">
-      <div className="w-full max-w-sm rounded-lg border border-border bg-card p-6">
+      <div className="w-full max-w-sm border-y border-border py-8">
         <ShieldCheck className="size-6 text-primary" />
         <h1 className="mt-3 text-xl font-semibold text-foreground">Two-step verification</h1>
         {stage.kind === "loading" && (

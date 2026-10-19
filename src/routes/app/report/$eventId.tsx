@@ -97,15 +97,13 @@ function Report() {
   const weakSignals = s.signals.filter((g) => g.corroborations < 2);
 
   return (
-    <article className="mx-auto max-w-4xl px-6 py-10 print:max-w-none print:px-0 print:py-0">
+    <article className="gm-printed-report mx-auto max-w-4xl px-6 py-10 print:max-w-none print:px-0 print:py-0">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             GlobalMatrix intelligence report · {s.reference}
           </p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-            {s.title}
-          </h1>
+          <h1 className="mt-2 text-3xl font-semibold text-foreground sm:text-3xl">{s.title}</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {STAGE_LABEL[s.stage]} · first signal {s.firstSignalAt.slice(0, 10)} · detected{" "}
             {s.detectedAt.slice(0, 10)} · {s.regions.join(", ")}

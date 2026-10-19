@@ -102,7 +102,7 @@ export function ExplorePanel({ open, onClose }: { open: boolean; onClose: () => 
         type="button"
         aria-label="Close explore panel"
         onClick={onClose}
-        className="absolute inset-0 bg-black/65"
+        className="absolute inset-0 bg-overlay"
       />
       <div
         ref={ref}

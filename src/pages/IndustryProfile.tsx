@@ -42,6 +42,7 @@ export default function IndustryProfile() {
   if (data === null) {
     return (
       <PageFrame
+        layout="report"
         eyebrow="Industry"
         title="Sector not found"
         lede={`GlobalMatrix does not track a sector called "${industryId}". The link may be stale, or the sector may have been removed from the model.`}
@@ -70,6 +71,7 @@ export default function IndustryProfile() {
 
   return (
     <PageFrame
+      layout="report"
       eyebrow={`${industry.code} · sector profile`}
       title={industry.label}
       lede={industry.summary}

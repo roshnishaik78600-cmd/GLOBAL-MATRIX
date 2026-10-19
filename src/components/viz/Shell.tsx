@@ -97,9 +97,7 @@ export function Shell({ children }: { children: ReactNode }) {
             aria-label="GlobalMatrix, overview"
           >
             <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
-            <span className="truncate text-[14px] font-semibold tracking-[0.2em] text-[var(--exec-ink)] uppercase">
-              Globalmatrix
-            </span>
+            <span className="truncate text-[16px] font-semibold text-foreground">GlobalMatrix</span>
           </Link>
 
           {/* Centre — the primary destinations. Hidden below `lg`, where the
@@ -107,7 +105,7 @@ export function Shell({ children }: { children: ReactNode }) {
               last two wait for `xl`: seven icon-plus-label links overflow a
               1024px bar and would collide with the account cluster. */}
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-center gap-1 lg:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex"
             aria-label="Primary"
           >
             {PRIMARY_NAV.map((item, i) => (
@@ -151,7 +149,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 </button>
                 <Link
                   to="/signup"
-                  className="shrink-0 rounded-full bg-[var(--exec-cyan)] px-3.5 py-2 text-[13px] font-semibold text-[var(--exec-base)] transition-opacity hover:opacity-90"
+                  className="shrink-0 rounded-full bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground transition-opacity hover:opacity-90"
                 >
                   Create account
                 </Link>

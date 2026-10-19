@@ -7,6 +7,7 @@ import { QuestionStrip } from "@/components/viz/Unavailable";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
 import { MapLegend, MapSelection, WorldMap, isPlottable } from "@/components/viz/WorldMap";
 import { SignalMatrix } from "@/components/viz/SignalMatrix";
+import { FiveStageStory } from "@/components/landing/ReferenceStory";
 import { useFocus } from "@/lib/focus";
 
 /**
@@ -42,6 +43,7 @@ export default function ChainPage() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Impact"
       title="Impact graph"
       lede="How one event travels from detection through countries, trade, energy and supply chains into market exposure."
@@ -75,7 +77,13 @@ export default function ChainPage() {
       />
 
       <div className="grid grid-cols-1 gap-4">
-        <ChainExplorer />
+        <FiveStageStory embedded />
+        <details className="border-t border-border py-5">
+          <summary className="cursor-pointer text-lg font-semibold">
+            Full nine-stage analysis
+          </summary>
+          <ChainExplorer />
+        </details>
 
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-12">
           <section className="xl:col-span-9">

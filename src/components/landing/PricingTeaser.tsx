@@ -11,7 +11,10 @@ const IDS: PlanId[] = ["free", "analyst", "business"];
 /** Short pricing summary + final call to action. Prices come from the central billing config. */
 export function PricingTeaser() {
   return (
-    <section aria-labelledby="pricing-teaser" className="relative border-t border-border py-10">
+    <section
+      aria-labelledby="pricing-teaser"
+      className="relative scroll-mt-20 border-t border-border py-10 text-center"
+    >
       <div className="relative">
         <h2
           id="pricing-teaser"
@@ -22,7 +25,11 @@ export function PricingTeaser() {
         <p className="mt-2 max-w-xl text-[15px] text-[var(--exec-ink-dim)]">
           Simple plans in INR. Payments are not enabled yet — no money is collected.
         </p>
-        <motion.div variants={stagger} {...revealProps} className="mt-8 grid gap-4 md:grid-cols-3">
+        <motion.div
+          variants={stagger}
+          {...revealProps}
+          className="mt-10 grid gap-4 text-left md:grid-cols-3"
+        >
           {IDS.map((id) => (
             <motion.div
               key={id}
@@ -54,7 +61,7 @@ export function PricingTeaser() {
             </Link>
           </Button>
         </div>
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg">
             <Link to="/app">
               Explore Global Risks <ArrowRight className="size-4" aria-hidden />

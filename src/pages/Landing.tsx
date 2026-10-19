@@ -9,6 +9,14 @@ import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import {
+  EcosystemStory,
+  FiveStageStory,
+  ReferenceFooter,
+  ReferenceNav,
+  StoryProgress,
+} from "@/components/landing/ReferenceStory";
+import orbit from "@/assets/intelligence-orbit.jpg";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
 import { PricingTeaser } from "@/components/landing/PricingTeaser";
 import {
@@ -213,97 +221,99 @@ export default function Landing() {
   const mapEvents = (data?.mapEvents ?? []).filter((e) => e.nodeId !== "");
 
   return (
-    <ExecPage className="min-h-full">
-      <LandingNav />
+    <ExecPage className="gm-reference-home min-h-full">
+      <ReferenceNav />
+      <StoryProgress />
 
-      <header className="gm-cinematic-hero relative isolate overflow-hidden border-b border-border">
-        <div className="gm-hero-cartography absolute inset-x-0 bottom-0" id="world-map">
-          {data ? (
-            <WorldMap
-              nodes={data.mapNodes}
-              flows={data.flows}
-              events={mapEvents}
-              className="gm-cinematic-map"
-              selected={sharedNodeId}
-              onSelect={selectNode}
-              onInspect={(id) => navigate(`/app/country/${id}`)}
-            />
-          ) : (
-            <Skeleton className="gm-cinematic-map w-full" />
-          )}
+      <header id="start" className="gm-reference-hero scroll-mt-20">
+        <div className="gm-reference-hero-art">
+          <img
+            src={orbit}
+            alt="A translucent globe with a connected orbital pathway"
+            width={1536}
+            height={1024}
+            fetchPriority="high"
+          />
         </div>
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="show"
-          className="gm-width pointer-events-none relative z-10 px-5 pt-12 sm:px-10 lg:pt-16"
+          className="gm-reference-hero-copy"
         >
-          <motion.p
-            variants={fadeUp}
-            className="mb-6 flex items-center gap-3 text-xs font-medium text-primary"
-          >
-            <span className="h-px w-8 bg-primary" /> GLOBALMATRIX / GLOBAL INTELLIGENCE
+          <motion.p variants={fadeUp} className="gm-reference-eyebrow">
+            GlobalMatrix / geopolitical intelligence
           </motion.p>
-          <motion.h1
-            variants={fadeUp}
-            className="gm-cinematic-title max-w-4xl font-medium text-foreground"
-          >
+          <motion.h1 variants={fadeUp} className="gm-reference-title">
             See the world.
             <br />
             <span className="text-primary">Understand the impact.</span>
           </motion.h1>
           <motion.p
             variants={fadeUp}
-            className="mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground"
+            className="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-muted-foreground"
           >
-            Trace global signals into potential supply-chain exposure. Evidence first. Connections
-            in context.
+            Trace global signals into potential supply-chain exposure.
+            <br className="hidden sm:block" /> Evidence first. Connections in context.
           </motion.p>
-          <motion.div variants={fadeUp} className="pointer-events-auto mt-7 flex flex-wrap gap-3">
+          <motion.div variants={fadeUp} className="mt-7 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg">
               <Link to="/app">
                 Explore Global Intelligence <ArrowRight />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="#impact-story">
+              <a href="#trace-event">
                 Follow the impact <Network />
               </a>
             </Button>
           </motion.div>
         </motion.div>
-        <div className="gm-hero-caption gm-width pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-wrap items-center justify-between gap-3 px-5 py-5 text-xs sm:px-10">
-          <span className="text-foreground">01 / The world is connected.</span>
-          <span className="text-muted-foreground">
-            Demonstration events · modelled exposure network
-          </span>
-        </div>
       </header>
-      <div className="gm-width px-5 py-5 sm:px-10">
-        <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
-      </div>
-
+      <FiveStageStory />
+      <section
+        id="world-map"
+        className="gm-reference-atlas scroll-mt-20"
+        aria-labelledby="atlas-heading"
+      >
+        <div className="gm-reference-section pb-8">
+          <p className="gm-reference-eyebrow">One world. Many dependencies.</p>
+          <h2 id="atlas-heading" className="gm-reference-heading">
+            Every connection,
+            <br />
+            <span className="text-primary">in context.</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-sm text-muted-foreground">
+            Demonstration events · modelled exposure network
+          </p>
+        </div>
+        <div className="gm-width px-4 sm:px-8">
+          {data ? (
+            <WorldMap
+              nodes={data.mapNodes}
+              flows={data.flows}
+              events={mapEvents}
+              className="map-frame"
+              selected={sharedNodeId}
+              onSelect={selectNode}
+              onInspect={(id) => navigate(`/app/country/${id}`)}
+            />
+          ) : (
+            <Skeleton className="map-frame w-full" />
+          )}
+          <HeroStats regions={mappable.length} links={data?.flows.length ?? 0} />
+        </div>
+      </section>
       <main className="min-w-0">
         <div className="gm-width gm-editorial flex flex-col gap-8 px-4 py-8 lg:gap-10 lg:px-8">
-          <section
-            id="impact-story"
-            className="gm-impact-story scroll-mt-20 border-t border-border py-10"
-          >
-            <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
-              <div>
-                <p className="mb-4 text-xs text-primary">02 / THE CONNECTIONS THAT MATTER</p>
-                <h2 className="text-3xl font-medium sm:text-4xl">
-                  A signal is only
-                  <br />
-                  the beginning.
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-                Select an event. Follow each supported relationship. See where the evidence stops.
-              </p>
+          <details className="border-b border-border pb-8">
+            <summary className="cursor-pointer text-lg font-semibold">
+              Explore all nine propagation stages
+            </summary>
+            <div className="mt-5">
+              <ChainExplorer className="gm-story-chain" />
             </div>
-            <ChainExplorer className="gm-story-chain" />
-          </section>
+          </details>
           <HowItWorks />
 
           {/* GLOBAL PULSE — the six numbers that summarise the world. */}
@@ -367,40 +377,36 @@ export default function Landing() {
             </div>
           </details>
 
+          <section id="evidence" className="gm-reference-evidence scroll-mt-20">
+            <p className="gm-reference-eyebrow">04 / Understand the exposure</p>
+            <h2 className="gm-reference-heading mb-8 text-center">Evidence, before conclusions.</h2>
+            <DataAndEvidence />
+          </section>
+          <section id="next-step" className="gm-reference-section scroll-mt-20">
+            <p className="gm-reference-eyebrow">05 / Decide what comes next</p>
+            <h2 className="gm-reference-heading">A clearer next question.</h2>
+            <div className="gm-decision-paths mt-10 grid gap-6 md:grid-cols-3">
+              {[
+                { to: "/app/assess", label: "Review your dependencies", number: "01" },
+                { to: "/app/watchlist", label: "Keep the signal in view", number: "02" },
+                { to: "/app/analyst", label: "Read an evidence-led brief", number: "03" },
+              ].map((item) => (
+                <Link key={item.to} to={item.to} className="border-t border-border py-6 text-left">
+                  <span className="font-mono text-xs text-primary">{item.number}</span>
+                  <h3 className="mt-5 text-xl font-semibold">{item.label}</h3>
+                  <ArrowRight className="mt-8 size-5" />
+                </Link>
+              ))}
+            </div>
+          </section>
+          <EcosystemStory />
           <PricingTeaser />
 
           <AccessBand />
         </div>
       </main>
 
-      <footer className="border-t border-[var(--exec-hairline)]">
-        <div className="gm-width flex flex-wrap items-center justify-between gap-3 px-4 py-6 lg:px-8">
-          <span className="exec-label text-[var(--exec-ink-dim)]">
-            GlobalMatrix · geopolitical, macro and supply-chain intelligence
-          </span>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to="/pricing"
-              className="exec-label text-[var(--exec-ink)] transition-colors hover:text-[var(--exec-ink)]"
-            >
-              Pricing &amp; pilots
-            </Link>
-            <Link
-              to="/methodology"
-              className="exec-label text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
-            >
-              Methodology
-            </Link>
-            <Link
-              to="/app/data"
-              className="exec-label text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
-            >
-              Sources
-            </Link>
-            <span className="exec-label text-[var(--exec-ink-dim)]">{CORPUS_LABEL}</span>
-          </div>
-        </div>
-      </footer>
+      <ReferenceFooter />
 
       {/* Countries carry their full ten-module board here too, so a click on the
           homepage map opens the same intelligence a reader would get inside. */}
@@ -420,51 +426,6 @@ const TREND_LABEL: Record<TopologyResult["categories"][number]["trend"], string>
   falling: "falling",
   flat: "steady",
 };
-
-/** The public header. Deliberately lighter than the console's own bar. */
-function LandingNav() {
-  return (
-    <nav className="sticky top-0 z-30 border-b border-[var(--exec-hairline)] bg-[var(--exec-base)]/90 backdrop-blur">
-      <div className="gm-width flex h-16 items-center gap-4 px-4 lg:px-8">
-        <Link to="/" className="flex shrink-0 items-center gap-2.5">
-          <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
-          <span className="truncate text-[14px] font-semibold tracking-[0.2em] text-[var(--exec-ink)] uppercase">
-            Globalmatrix
-          </span>
-        </Link>
-        <div className="ml-auto flex items-center gap-1">
-          {[
-            { to: "/app", label: "Explore" },
-            { to: "/app/world", label: "World" },
-            { to: "/app/events", label: "Events" },
-            { to: "/app/markets", label: "Markets" },
-            { to: "/pricing", label: "Pricing" },
-          ].map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="hidden rounded-lg px-3 py-2 text-[14px] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)] md:block"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            to="/login"
-            className="ml-1 rounded-full border border-[var(--exec-hairline-strong)] px-4 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
-          >
-            Sign in
-          </Link>
-          <Link
-            to="/signup"
-            className="ml-1.5 hidden rounded-full bg-[var(--exec-cyan)] px-4 py-2 text-[13px] font-semibold text-[var(--exec-base)] transition-opacity hover:opacity-90 sm:block"
-          >
-            Create account
-          </Link>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 /**
  * The four hero numbers.
@@ -667,12 +628,22 @@ function PulseSkeleton() {
 /** The access band. What is public, and what an account is actually for. */
 function AccessBand() {
   return (
-    <section className="border-t border-border py-6">
-      <h2 className="t-section text-[var(--exec-ink)]">Explore GlobalMatrix freely.</h2>
-      <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
+    <section className="gm-reference-conversion">
+      <h2 className="gm-reference-heading text-primary">See the connections that matter.</h2>
+      <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
         Explore without signing in. Create an account to save your research.
       </p>
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        <Button asChild>
+          <Link to="/app">
+            Explore free <ArrowRight />
+          </Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/pricing">View plans</Link>
+        </Button>
+      </div>
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {[
           {
             title: "No sign-in needed",

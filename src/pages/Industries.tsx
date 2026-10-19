@@ -38,6 +38,7 @@ export default function Industries() {
 
   return (
     <PageFrame
+      layout="directory"
       eyebrow="Industries"
       title="Industries"
       lede="Sector concentration, substitution lead time and the events that reach each one."
@@ -105,7 +106,7 @@ export default function Industries() {
             </button>
           </div>
         ) : (
-          <ul className="divide-y divide-rule">
+          <ul className="gm-sector-catalogue grid grid-cols-1 gap-x-10 lg:grid-cols-2">
             {industries.map((row, i) => (
               <motion.li
                 key={row.id}
@@ -125,25 +126,23 @@ export default function Industries() {
                     }
                   }}
                   onDoubleClick={() => navigate(`/app/industry/${row.id}`)}
-                  className="grid grid-cols-12 items-start gap-x-4 gap-y-3 px-4 py-5 transition-colors hover:bg-secondary focus-visible:bg-secondary focus-visible:outline-none"
+                  className="gm-sector-entry grid grid-cols-12 items-start gap-x-4 gap-y-3 px-0 py-7 transition-colors hover:bg-secondary focus-visible:bg-secondary focus-visible:outline-none"
                 >
-                  <div className="col-span-6 lg:col-span-1">
+                  <div className="col-span-2">
                     <span className="num text-[12px] text-muted-foreground">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
 
-                  <div className="col-span-6 lg:col-span-4">
+                  <div className="col-span-10">
                     <span className="num label text-signal">{row.code}</span>
-                    <h3 className="mt-1.5 text-[15px] font-semibold tracking-[-0.01em]">
-                      {row.label}
-                    </h3>
+                    <h3 className="mt-1.5 text-[15px] font-semibold ">{row.label}</h3>
                     <p className="mt-1.5 max-w-prose text-[13px] leading-relaxed text-muted-foreground">
                       {row.summary}
                     </p>
                   </div>
 
-                  <div className="col-span-6 lg:col-span-2">
+                  <div className="col-span-6">
                     <Label>Live load</Label>
                     <p className="exec-num mt-1 text-[1.75rem] leading-none font-bold text-[var(--exec-ink)]">
                       {pct(row.load)}
@@ -162,7 +161,7 @@ export default function Industries() {
                     </p>
                   </div>
 
-                  <div className="col-span-6 lg:col-span-3">
+                  <div className="col-span-6">
                     <div className="space-y-3">
                       <div>
                         <div className="flex items-baseline justify-between">
@@ -195,7 +194,7 @@ export default function Industries() {
                     </div>
                   </div>
 
-                  <div className="col-span-12 lg:col-span-2">
+                  <div className="col-span-12">
                     <Label>Leading event</Label>
                     {row.topEvent ? (
                       <>

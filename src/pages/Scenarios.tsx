@@ -59,13 +59,14 @@ export default function Scenarios() {
 
   return (
     <PageFrame
+      layout="laboratory"
       eyebrow="Scenarios"
       title="Scenario lab"
       lede="Hypothetical perturbations of the corpus, with the range they imply and the observed baseline beside them."
     >
       {/* Builder */}
       <div className="border-b border-rule bg-card">
-        <div className="grid grid-cols-1 gap-px bg-rule lg:grid-cols-4">
+        <div className="gm-scenario-builder grid grid-cols-1 gap-px bg-rule sm:grid-cols-2">
           <div className="bg-card p-4">
             <p className="label text-muted-foreground">What changes?</p>
             <select

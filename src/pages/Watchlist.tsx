@@ -113,6 +113,7 @@ export default function Watchlist() {
 
   return (
     <PageFrame
+      layout="notebook"
       eyebrow="Personal"
       title="Watchlist"
       lede="What you are tracking. Bookmark an event, country or industry anywhere in GlobalMatrix and it appears here."

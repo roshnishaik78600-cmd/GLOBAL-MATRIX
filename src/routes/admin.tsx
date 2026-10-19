@@ -108,11 +108,11 @@ function Admin() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-6xl p-6">
+      <div className="gm-account-page mx-auto max-w-6xl px-6 py-10">
         <Link to="/app/billing" className="text-xs text-muted-foreground">
           ← Billing
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-foreground">Admin</h1>
+        <h1 className="mt-4 text-4xl font-semibold text-foreground">Admin</h1>
         <div role="tablist" className="mt-4 flex flex-wrap gap-2">
           {TABS.map((t) => (
             <button
@@ -134,7 +134,7 @@ function Admin() {
 
         <div className="mt-6">
           {tab === "Overview" && (
-            <div className="grid gap-4 sm:grid-cols-4">
+            <div className="grid gap-8 border-y border-border py-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
                 ["Orders", data.orders.length],
                 ["Awaiting verification", queue.length],
@@ -145,7 +145,7 @@ function Admin() {
                     .length,
                 ],
               ].map(([k, v]) => (
-                <div key={k} className="rounded-lg border border-border bg-card p-4">
+                <div key={k} className="min-w-0 border-l border-border pl-5">
                   <p className="text-xs text-muted-foreground">{k}</p>
                   <p className="mt-1 text-2xl font-semibold text-foreground">{v}</p>
                 </div>
