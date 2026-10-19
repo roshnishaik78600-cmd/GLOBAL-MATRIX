@@ -66,7 +66,7 @@ export function Drawer({
           />
           <motion.aside
             className={cn(
-              "relative flex h-full flex-col border-l border-rule bg-card shadow-[0_0_60px_rgba(0,0,0,0.55)]",
+              "relative flex h-full flex-col border-l border-rule bg-card shadow-[var(--drawer-shadow)]",
               width,
             )}
             initial={reduced ? { opacity: 0 } : { x: 24, opacity: 0 }}
