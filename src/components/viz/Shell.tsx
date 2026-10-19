@@ -96,7 +96,7 @@ export function Shell({ children }: { children: ReactNode }) {
           scrolled && "is-scrolled",
         )}
       >
-        <div className="gm-width grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 xl:flex lg:gap-6 lg:px-8">
+        <div className="gm-width grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 2xl:flex lg:px-8">
           {/* Left — the wordmark. */}
           <Link
             to="/app"
@@ -112,7 +112,7 @@ export function Shell({ children }: { children: ReactNode }) {
               last two wait for `xl`: seven icon-plus-label links overflow a
               1024px bar and would collide with the account cluster. */}
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-1 2xl:flex"
             aria-label="Primary"
           >
             {PRIMARY_NAV.map((item, i) => (
@@ -139,7 +139,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 backend can actually defend — how many sources have a verified
                 reading stored, and how many are currently failing — and opens
                 the register where each one is explained. */}
-            <SourceHealthChip className="hidden xl:inline-flex" />
+            <SourceHealthChip className="hidden 2xl:inline-flex" />
 
             {isAuthenticated && user ? (
               <div className="hidden lg:block">

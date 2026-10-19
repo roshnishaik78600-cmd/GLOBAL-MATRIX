@@ -1,6 +1,9 @@
 # Roadmap
-- [ ] Full polishing audit: audit requested routes; correct demo counters, empty/loading states, domain metadata and operational security; verify and report remaining gaps
-- [ ] Expanded capabilities: waitlist, unlimited Business allowance, onboarding, account deletion, email delivery and public-form throttling — pending audited scope and safe implementation
+- [x] Polishing pass: truthful demo counters, source register retry, global source-status isolation, domain metadata, manifest/structured data, Methodology mobile overflow and safe demo billing verified
+- [x] Saved waitlist, unlimited Business daily allowance, atomic public-form/source request limits, private raw diagnostics and sanitized public summaries; tests and signed-in billing read-back passed
+- [ ] Rich demo corpus — unmet: 12 events / 19 country profiles / 10 industries / 8 route nodes; requested 25 / 40 / 15 / 10 plus 30 distinct trade links need explicit hypothetical content expansion
+- [ ] Remaining polishing capabilities — onboarding, account deletion, guest migration, watchlist-count entitlements, streaming/remaining brief display, report request fields, full map/graph controls and complete action/state accessibility audit are not implemented
+- [ ] Deployment and performance verification — host redirects/security headers, Lighthouse/CLS, image optimization, OAuth/email settings and monitoring integrations remain unverified or unconfigured
 - [x] Rebuild homepage pricing and subscription page with shared prominent cards and separate Risk Brief; desktop/mobile dialogs, free exploration and demo checkout links verified; 31 tests passed
 - [x] Premium experience brief: sharpen business positioning and interactive event preview; put the Impact Graph first and expose relationship context
 - [x] Refine pricing, mobile comparison, billing FAQs and shared public footer with truthful company/contact/data/terms pages
