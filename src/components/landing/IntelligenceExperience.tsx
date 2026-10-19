@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/router-shim";
 import globe from "@/assets/intelligence-dark.jpg";
+import { EventPreview } from "./EventPreview";
 
 const FEATURES = [
   {
@@ -81,28 +82,22 @@ export function IntelligenceHero() {
           height={1024}
           fetchPriority="high"
         />
-        <svg viewBox="0 0 1000 650" className="gm-signal-paths" aria-hidden="true">
-          <path d="M240 380Q490 80 750 260M320 440Q620 160 740 370M430 210Q230 400 650 480" />
-          <circle cx="240" cy="380" r="5" />
-          <circle cx="750" cy="260" r="5" />
-          <circle cx="430" cy="210" r="5" />
-        </svg>
       </motion.div>
       <div className="gm-signal-topline">
         <span>STAGE 01 / GLOBAL SIGNAL</span>
         <span>EVENT → EXPOSURE → CONTEXT</span>
       </div>
       <div className="gm-signal-copy">
-        <p className="gm-reference-eyebrow">GlobalMatrix / intelligence in context</p>
+        <p className="gm-reference-eyebrow">GlobalMatrix / business exposure intelligence</p>
         <h1>
-          See the world.
+          Know what global events
           <br />
-          <span>Understand the impact.</span>
+          <span>mean for your business.</span>
         </h1>
         <p className="gm-signal-description">
-          A connected view of geopolitical change.
+          Geopolitical and supply-chain exposure intelligence for businesses.
           <br />
-          Trace the evidence. Explore your exposure.
+          Connect events to countries, industries and trade. Decide what to investigate next.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg">
@@ -116,6 +111,7 @@ export function IntelligenceHero() {
             </a>
           </Button>
         </div>
+        <EventPreview />
       </div>
       <a
         href="#trace-event"

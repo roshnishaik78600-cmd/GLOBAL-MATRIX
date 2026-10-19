@@ -339,41 +339,47 @@ export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
 export function ReferenceFooter() {
   return (
     <footer className="border-t border-border">
-      <div className="gm-width grid gap-8 px-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="gm-width grid gap-8 px-6 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <Link to="/" className="text-lg font-semibold">
             GlobalMatrix<span className="text-primary">.</span>
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Geopolitical and supply-chain exposure intelligence.
+            Geopolitical and supply-chain exposure intelligence for businesses.
           </p>
         </div>
         {[
           {
-            title: "Intelligence",
+            title: "Product",
             items: [
               { to: "/app", label: "Overview" },
               { to: "/app/events", label: "Events" },
               { to: "/app/graph", label: "Impact graph" },
               { to: "/app/trade", label: "Trade" },
+              { to: "/pricing", label: "Pricing" },
             ],
           },
           {
-            title: "Research",
+            title: "Resources",
             items: [
-              { to: "/app/countries", label: "Countries" },
-              { to: "/app/industries", label: "Industries" },
-              { to: "/app/analyst", label: "AI briefs" },
+              { to: "/methodology", label: "Methodology" },
+              { to: "/app/data", label: "Data sources & timing" },
               { to: "/app/report/sample", label: "Example report" },
             ],
           },
           {
-            title: "Explore",
+            title: "Company",
             items: [
-              { to: "/pricing", label: "Plans" },
-              { to: "/methodology", label: "Methodology" },
-              { to: "/app/data", label: "Sources" },
-              { to: "/login", label: "Sign in" },
+              { to: "/about", label: "About GlobalMatrix" },
+              { to: "/contact", label: "Contact" },
+            ],
+          },
+          {
+            title: "Legal & billing",
+            items: [
+              { to: "/privacy", label: "Privacy & data notice" },
+              { to: "/terms", label: "Product & billing terms" },
+              { to: "/app/billing", label: "Manage orders" },
             ],
           },
         ].map((group) => (
@@ -389,8 +395,9 @@ export function ReferenceFooter() {
           </div>
         ))}
       </div>
-      <div className="gm-width border-t border-border px-6 py-5 text-xs text-muted-foreground">
-        Demonstration events · attributed economic sources · uncertainty stated
+      <div className="gm-width flex flex-wrap justify-between gap-3 border-t border-border px-6 py-5 text-xs text-muted-foreground">
+        <span>© {new Date().getUTCFullYear()} GlobalMatrix</span>
+        <span>Demonstration events · attributed economic sources · uncertainty stated</span>
       </div>
     </footer>
   );

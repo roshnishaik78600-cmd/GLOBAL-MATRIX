@@ -1,5 +1,16 @@
 # Orizon reference redesign — verification
 
+## Premium product experience — 19 October 2026
+- Business-focused homepage headline and an interactive event preview use the existing demonstration feed and chain queries. The chosen event carries into the Impact Graph. Supplier dependencies remain explicitly unmeasured; no live-news or customer-review claims were added.
+- Graph now leads its page. Keyboard-selectable nodes use larger hit areas and local selection, avoiding the global country drawer covering the network; the context panel displays actual edge labels/weights and links to evidence. The longer business workflow remains expandable.
+- Overview no longer waits for secondary macro readings before showing its exposure map. Loading state identifies the page and data being requested.
+- Pricing retains central-config prices and allowances, adds visible daily brief capacity, mobile comparison and billing/data FAQs. No new discounts, annual billing or entitlements.
+- Shared footer appears once across public pages. About, Contact, Privacy/data transparency and Product/billing terms use working destinations. Legal notices explicitly identify missing operator/formal-policy information rather than fabricate it. Existing inquiry confirmation no longer promises an unconfirmed reply deadline.
+- Browser checks: 14 representative destinations at 1280×1800, 951×609 and 390×844; no document overflow or uncaught runtime exceptions. Event switch, event-to-graph navigation, keyboard node selection, billing FAQ and mobile Pricing navigation passed.
+- Signed-in billing: created Analyst demo order, read it back as pending payment, cancelled it from Billing and reloaded to confirm persisted cancellation; Free Explorer remained at five AI briefs/day. No real purchase, paid activation or post-MFA approval tested.
+- 31/31 existing tests passed. Edited files linted without errors (ReferenceStory retains a Fast Refresh export warning). Harness build/type checks reported build OK. Existing full-project lint issues were not claimed resolved.
+- Evidence: `/tmp/browser/premium/` scripts, results and screenshots. Formal privacy/terms review, verified operator contact and live payment setup still require owner-provided information.
+
 ## Final black / burgundy transformation
 - User's latest dark brief supersedes the older white/lime theme documented below. Obsidian background, ivory type, burgundy actions and aubergine selection tokens replace green across existing chart/status aliases.
 - New `IntelligenceExperience.tsx`: full-bleed original globe scene with scroll-linked movement and animated geographic paths, alternating product compositions, selectable six-capability core with meaningful explanations and existing-route links.

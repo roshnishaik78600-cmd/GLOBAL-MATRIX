@@ -206,8 +206,8 @@ export function GraphExplorer({
   const W = 1000;
   const H = height;
 
-  const order = ["Event", "Channel", "Country", "Corridor", "Industry"];
   const placed = useMemo(() => {
+    const order = ["Event", "Channel", "Country", "Corridor", "Industry"];
     const cols = new Map<string, GraphNodeSpec[]>();
     for (const kind of order) {
       cols.set(
@@ -230,7 +230,7 @@ export function GraphExplorer({
       ci += 1;
     }
     return out;
-  }, [nodes]);
+  }, [nodes, H]);
 
   const pos = new Map(placed.map((p) => [p.id, p]));
 
@@ -245,7 +245,7 @@ export function GraphExplorer({
       viewBox={`0 0 ${W} ${H}`}
       className="w-full"
       style={{ height }}
-      role="img"
+      role="group"
       aria-label={`Relationship graph with ${placed.length} nodes and ${edges.length} edges`}
     >
       <g fill="none">
@@ -259,7 +259,7 @@ export function GraphExplorer({
               key={i}
               d={`M ${a.x} ${a.y} C ${(a.x + b.x) / 2} ${a.y}, ${(a.x + b.x) / 2} ${b.y}, ${b.x} ${b.y}`}
               stroke="var(--foreground)"
-              strokeOpacity={dim ? 0.05 : 0.28}
+              strokeOpacity={dim ? 0.12 : 0.45}
               strokeWidth={0.5 + (e.weight / maxEdge) * 2.5}
             />
           );
@@ -269,14 +269,31 @@ export function GraphExplorer({
         {placed.map((n) => {
           const r = 3 + n.weight * 7;
           const active = selected === n.id;
-          const dim = selected && !active;
+          const connected = edges.some(
+            (e) => (e.from === selected && e.to === n.id) || (e.to === selected && e.from === n.id),
+          );
+          const dim = selected && !active && !connected;
           return (
             <g
               key={n.id}
-              className={cn(onSelect && "cursor-pointer")}
+              className={cn("gm-graph-node", onSelect && "cursor-pointer")}
+              role={onSelect ? "button" : undefined}
+              tabIndex={onSelect ? 0 : undefined}
+              aria-label={`${n.label}, ${n.kind}, model impact ${(n.weight * 100).toFixed(0)} percent`}
+              aria-pressed={onSelect ? active : undefined}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onSelect?.(n.id);
+                }
+              }}
               onClick={() => onSelect?.(n.id)}
-              opacity={dim ? 0.2 : 1}
+              opacity={dim ? 0.55 : 1}
             >
+              <title>
+                {n.label} · {n.kind}
+              </title>
+              <circle cx={n.x} cy={n.y} r={22} fill="transparent" />
               <circle
                 cx={n.x}
                 cy={n.y}
