@@ -105,6 +105,7 @@ export default function Supply() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Supply chains"
       title="Supply chain chokepoint analyzer"
       lede="Single points of failure, one at a time, and the sectors that depend on each."

@@ -67,6 +67,7 @@ export default function GraphExplorerPage() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Knowledge graph"
       title="Every connection has a context."
       lede="Select a signal. Explore its modelled pathways and inspect the supported exposure relationships."

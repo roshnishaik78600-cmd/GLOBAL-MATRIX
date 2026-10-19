@@ -1,4 +1,4 @@
-import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
+import { Children, cloneElement, isValidElement, useId, type ReactElement, type ReactNode } from "react";
 import { Link } from "@/lib/router-shim";
 import { AlertTriangle, Inbox } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -54,7 +54,9 @@ export function PageFrame({
   controls,
   children,
   footer,
+  layout = "workspace",
 }: {
+  layout?: "workspace" | "report" | "directory" | "laboratory" | "register" | "notebook";
   eyebrow: string;
   title: string;
   /** One sentence. A paragraph here is a Level-6 statement in a Level-1 slot. */
@@ -69,17 +71,17 @@ export function PageFrame({
     // `min-h-full`, not `min-h-screen`: the shell owns the viewport height, so a
     // 100vh minimum here would give every page a permanent phantom scrollbar's
     // worth of empty space below its footer.
-    <ExecPage className="gm-research-page flex min-h-full flex-col">
+    <ExecPage className={cn("gm-research-page flex min-h-full flex-col", `gm-layout-${layout}`)}>
       <header className="gm-research-header border-b border-[var(--exec-hairline)]">
         <div className="gm-width px-4 pt-8 pb-6 lg:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+          <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
             <div className="min-w-0 max-w-3xl">
-              <p className="exec-label text-[var(--exec-cyan)]">{eyebrow}</p>
+              <p className="gm-chapter-label exec-label text-muted-foreground"><span className="gm-chapter-mark" aria-hidden />{eyebrow}</p>
               <h1 className="t-page mt-3 text-[var(--exec-ink)]">{title}</h1>
               <p className="t-body mt-2 max-w-2xl text-[var(--exec-ink-dim)]">{lede}</p>
             </div>
             {actions ? (
-              <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>
+              <div className="gm-page-actions flex min-w-0 flex-wrap items-center gap-2">{actions}</div>
             ) : null}
           </div>
         </div>
@@ -93,7 +95,7 @@ export function PageFrame({
 
       <main className="min-w-0 flex-1">
         <div className="gm-width px-4 py-6 lg:px-8 lg:py-8">
-          <BodyGrid>{children}</BodyGrid>
+          <BodyGrid layout={layout}>{children}</BodyGrid>
         </div>
       </main>
 
@@ -124,20 +126,45 @@ export function PageFrame({
  * an element this function cannot see, and two competing `lg:col-span-*`
  * utilities would resolve by stylesheet order rather than by intent.
  */
-function BodyGrid({ children }: { children: ReactNode }) {
+function sectionName(node: ReactNode): string | null {
+  if (!isValidElement(node)) return null;
+  const props = node.props as { title?: unknown; caption?: unknown; children?: ReactNode };
+  if (typeof props.title === "string") return props.title;
+  if (typeof props.caption === "string") return props.caption;
+  if (typeof node.type === "function" && node.type.name === "SectionTitle" && typeof props.children === "string") return props.children;
+  for (const child of Children.toArray(props.children)) {
+    const name = sectionName(child);
+    if (name) return name;
+  }
+  return null;
+}
+
+function BodyGrid({ children, layout }: { children: ReactNode; layout: string }) {
+  const id = useId().replaceAll(":", "");
+  const items = Children.toArray(children);
+  if (layout === "report") {
+    const sections = items.map((child, i) => ({ child, id: `${id}-${i}`, name: sectionName(child) }));
+    return (
+      <div className="gm-report-composition">
+        <nav className="gm-report-index" aria-label="Report sections">
+          {sections.filter((section) => section.name).map((section, i) => (
+            <a key={section.id} href={`#${section.id}`}><span className="font-mono text-primary">{String(i + 1).padStart(2, "0")}</span><span>{section.name}</span></a>
+          ))}
+        </nav>
+        <div className="gm-report-sections">
+          {sections.map((section) => <section className="gm-report-band" id={section.id} key={section.id}>{section.child}</section>)}
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className="gm-body grid grid-cols-[minmax(0,1fr)] gap-4 [&>*]:min-w-0 lg:grid-cols-12 lg:gap-5">
-      {Children.map(children, (child) => {
-        if (!isValidElement(child) || typeof child.type !== "string") {
-          return child;
-        }
+    <div className={cn("gm-body grid grid-cols-[minmax(0,1fr)] gap-6 [&>*]:min-w-0 lg:grid-cols-12 lg:gap-8", `gm-body-${layout}`)}>
+      {items.map((child) => {
+        if (!isValidElement(child) || typeof child.type !== "string") return child;
         const props = child.props as { className?: unknown };
         const cls = typeof props.className === "string" ? props.className : "";
-        // Already spanned, or deliberately full-bleed inside a sub-grid.
         if (/(^|\s)(lg:)?col-span-/.test(cls)) return child;
-        return cloneElement(child as ReactElement<{ className?: string }>, {
-          className: cn("lg:col-span-12", cls),
-        });
+        return cloneElement(child as ReactElement<{ className?: string }>, { className: cn("lg:col-span-12", cls) });
       })}
     </div>
   );

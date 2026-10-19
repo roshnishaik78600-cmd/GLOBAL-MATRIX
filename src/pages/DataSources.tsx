@@ -179,13 +179,14 @@ export default function DataSources() {
 
   return (
     <PageFrame
+      layout="register"
       eyebrow="Sources"
       title="Data sources"
       lede="Every connector, the period its data describes, when we pulled it, and what it cannot prove."
     >
       {/* --------------------------------------------------- MONITORING BOARD -- */}
       <div className="lg:col-span-12">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="gm-source-register grid grid-cols-1 gap-0">
           {health === undefined
             ? Array.from({ length: 4 }).map((_, i) => (
                 <Skeleton key={i} className="h-72 w-full rounded-lg" />
@@ -338,7 +339,7 @@ function SourceCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.2) }}
-      className="card card-hover flex min-w-0 flex-col gap-3 p-4"
+      className="gm-source-entry grid min-w-0 gap-5 border-t border-border py-7 md:grid-cols-2"
     >
       <div className="flex min-w-0 items-start justify-between gap-2">
         <h2 className="min-w-0 flex-1 text-[15px] font-semibold tracking-[0.04em] text-[var(--exec-ink)]">

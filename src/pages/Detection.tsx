@@ -106,6 +106,7 @@ export default function Detection() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Events"
       title="Global event observatory"
       lede="Every event in the corpus with the pressure, evidence and interval behind its score."
@@ -156,7 +157,7 @@ export default function Detection() {
       </div>
 
       {/* LEFT: the stream. Compact rows, not cards. */}
-      <Region width={5}>
+      <Region width={4}>
         <ExecCard className="h-full">
           <SectionTitle meta="30-day composite, ranked" right={<BasisTag basis="scenario" />}>
             Event stream
@@ -180,7 +181,7 @@ export default function Detection() {
               }
             />
           ) : (
-            <ul className="max-h-[38rem] divide-y divide-[var(--exec-hairline)] overflow-y-auto">
+            <ul className="max-h-[44rem] divide-y divide-[var(--exec-hairline)] overflow-y-auto">
               {rows.map((r) => {
                 const isActive = selectedEvent === r.id;
                 return (

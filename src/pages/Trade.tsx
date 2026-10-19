@@ -84,6 +84,7 @@ export default function Trade() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Trade"
       title="Trade flow engine"
       lede="Reported merchandise values for every economy GlobalMatrix follows, flowed into world trade and ranked by balance."

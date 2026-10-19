@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
-import { ArrowUpRight, ArrowRight, Globe2 } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { useFocus, type TimeWindow } from "@/lib/focus";
@@ -140,25 +140,9 @@ export default function Overview() {
         </div>
       }
     >
-      <div className="gm-overview-intro flex flex-wrap items-center justify-between gap-5 border-b border-border pb-6">
-        <div className="flex items-center gap-4">
-          <Globe2 className="size-8 text-primary" />
-          <div>
-            <p className="text-lg font-medium">Global exposure atlas</p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {mappable.length} mapped places · {data.flows.length} modelled connections
-            </p>
-          </div>
-        </div>
-        <Button asChild variant="outline">
-          <Link to="/app/world">
-            Open world explorer <ArrowUpRight />
-          </Link>
-        </Button>
-      </div>
       {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
           support it rather than compete with it. */}
-      <Region width={12} dominant className="gm-overview-map">
+      <Region width={8} dominant className="gm-overview-map">
         <PanelHead
           title="Explore the exposure network"
           meta="land shading and arcs are model output"
@@ -179,7 +163,7 @@ export default function Overview() {
       </Region>
 
       {/* LEVEL 2 — what changed, as a readable feed. */}
-      <Region width={7}>
+      <Region width={4} className="gm-overview-signals">
         <PanelHead
           title="Scenario intelligence"
           meta="Demonstration corpus · not live news"
@@ -241,7 +225,7 @@ export default function Overview() {
       </Region>
 
       {/* LEVEL 2 — the timeline of what happened. */}
-      <Region width={5}>
+      <Region width={12}>
         {ticker.length === 0 ? (
           <>
             <PanelHead

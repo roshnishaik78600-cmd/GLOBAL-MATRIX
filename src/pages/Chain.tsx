@@ -42,6 +42,7 @@ export default function ChainPage() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Impact"
       title="Impact graph"
       lede="How one event travels from detection through countries, trade, energy and supply chains into market exposure."

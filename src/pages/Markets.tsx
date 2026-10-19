@@ -55,6 +55,7 @@ export default function Markets() {
 
   return (
     <PageFrame
+      layout="register"
       eyebrow="Markets"
       title="Markets"
       lede="Official euro reference rates, the euro area yield curve, and measured news attention — with the market price feed stated as absent rather than approximated."

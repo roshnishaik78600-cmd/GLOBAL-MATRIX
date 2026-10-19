@@ -105,7 +105,7 @@ export function Shell({ children }: { children: ReactNode }) {
               last two wait for `xl`: seven icon-plus-label links overflow a
               1024px bar and would collide with the account cluster. */}
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-center gap-1 2xl:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex"
             aria-label="Primary"
           >
             {PRIMARY_NAV.map((item, i) => (

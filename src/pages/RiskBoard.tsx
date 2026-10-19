@@ -119,6 +119,7 @@ export default function RiskBoard() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="Risk explorer"
       title="Global risk"
       lede="Where risk is concentrated right now, what is driving it, and how far it can be trusted."

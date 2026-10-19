@@ -96,6 +96,7 @@ export default function Analyst() {
 
   return (
     <PageFrame
+      layout="notebook"
       eyebrow="AI analyst"
       title="AI analyst"
       lede="A question answered with evidence, drivers and sources — never a claim without the ledger it came from."
@@ -147,17 +148,17 @@ export default function Analyst() {
         {/* The answer, shown rather than told: what the numbers look like. */}
         {assessment ? (
           <>
-            <section className="lg:col-span-5">
+            <section className="lg:col-span-4 lg:col-start-9 lg:row-start-1">
               <EventFootprintMap assessment={assessment} className="h-full" />
             </section>
-            <section className="lg:col-span-3">
+            <section className="lg:col-span-4 lg:col-start-9 lg:row-start-2">
               <RiskTrajectory assessment={assessment} className="h-full" />
             </section>
           </>
         ) : null}
 
         {/* Answer */}
-        <section className={cn("min-w-0", assessment ? "lg:col-span-4" : "lg:col-span-6")}>
+        <section className={cn("min-w-0", assessment ? "lg:col-span-8 lg:row-start-1" : "lg:col-span-12")}>
           <Panel
             title="Answer"
             meta={brief ? `generated ${timestamp(brief.createdAt)}` : "no brief yet"}
@@ -219,7 +220,7 @@ export default function Analyst() {
         </section>
 
         {/* Drivers + model output */}
-        <section className="min-w-0 space-y-3 lg:col-span-3">
+        <section className="min-w-0 space-y-3 lg:col-span-4 lg:col-start-9 lg:row-start-2">
           <Panel title="Model output" meta="deterministic">
             {assessment ? (
               <div className="space-y-2.5 p-3">
@@ -276,7 +277,7 @@ export default function Analyst() {
         </section>
 
         {/* Evidence */}
-        <section className="min-w-0 lg:col-span-3">
+        <section className="min-w-0 lg:col-span-4 lg:col-start-9 lg:row-start-2">
           <Panel
             title="Evidence"
             meta={`${assessment?.scenario.signals.length ?? 0} observations`}

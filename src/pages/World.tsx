@@ -367,6 +367,7 @@ export default function World() {
 
   return (
     <PageFrame
+      layout="workspace"
       eyebrow="World map"
       title="Event → World"
       lede="Trace how a global event propagates across countries, trade, energy, infrastructure and supply chains."
