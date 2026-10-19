@@ -17,3 +17,5 @@
 - Reference storytelling lives in ReferenceStory; IntelligenceExperience owns the scroll-linked visual hero and selectable capability core because marketing interactions must stay separate from analytical data logic. The original nine-stage analysis and WorldMap remain available to preserve analytical workflows.
 
 - Compose PageFrame with explicit workspace, report, directory, laboratory, register or notebook layouts; reports use a section index and full-width ordered bands rather than a uniform KPI grid.
+- Render the shared public footer once in the root outside application/admin paths; factual public information pages share PublicInfo so identity, data and billing disclosures remain consistent.
+- EventPreview reads the existing event-chain queries; the signature graph leads its page, with keyboard-selectable nodes and relationship context derived from the same graph edges.

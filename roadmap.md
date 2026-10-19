@@ -1,4 +1,7 @@
 # Roadmap
+- [ ] Premium experience brief: sharpen business positioning and interactive event preview; put the Impact Graph first and expose relationship context
+- [ ] Refine pricing, mobile comparison, billing FAQs and shared public footer with truthful company/contact/data/terms pages
+- [ ] Verify public navigation, graph selections, responsive pages and signed-in demo billing; preserve existing safeguards
 - [x] Final dark transformation: replace lime tokens, rebuild homepage hero/ecosystem and map-first application stage hierarchy; preserve data and payment logic
 - [x] Verify 31 dark destinations at three sizes, map/graph/stage navigation, mobile menu, signed-in demo billing and 31 existing tests
 - [x] Latest reconstruction brief: make /app a reference-led exploration experience, preserving analytical controls; verified at 951×609 and desktop/phone sizes

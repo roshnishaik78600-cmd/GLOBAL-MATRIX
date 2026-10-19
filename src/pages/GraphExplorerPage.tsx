@@ -9,7 +9,6 @@ import { getNode } from "@/lib/intel/nodes";
 import { riskColorForScore } from "@/lib/intel/visual";
 import { Button } from "@/components/ui/button";
 import { FiveStageStory } from "@/components/landing/ReferenceStory";
-import { useFocus } from "@/lib/focus";
 
 /**
  * Graph explorer.
@@ -20,9 +19,8 @@ import { useFocus } from "@/lib/focus";
 export default function GraphExplorerPage() {
   const feed = useQuery(api.intel.detectionFeed, {});
   const [params, setParams] = useSearchParams();
-  const { focus, toggle } = useFocus();
   const navigate = useNavigate();
-  const selected = focus?.kind === "node" ? focus.id : null;
+  const [selected, setSelected] = useState<string | null>(null);
 
   const eventId = params.get("event") ?? feed?.rows[0]?.id;
   const graph = useQuery(api.intel.eventGraph, eventId ? { eventId } : "skip");
@@ -70,7 +68,7 @@ export default function GraphExplorerPage() {
     <PageFrame
       layout="workspace"
       eyebrow="Knowledge graph"
-      title="Every connection has a context."
+      title="Impact Graph"
       lede="Select a signal. Explore its modelled pathways and inspect the supported exposure relationships."
       actions={
         <>
@@ -91,10 +89,7 @@ export default function GraphExplorerPage() {
         </>
       }
     >
-      <div className="lg:col-span-12">
-        <FiveStageStory embedded />
-      </div>
-      <div className="gm-graph-workspace grid grid-cols-1 gap-6 xl:grid-cols-12">
+      <div className="gm-graph-workspace grid grid-cols-1 gap-6 lg:col-span-12 xl:grid-cols-12">
         <section className="min-w-0 xl:col-span-9">
           <Panel
             title="Exposure network"
@@ -117,7 +112,9 @@ export default function GraphExplorerPage() {
               </Button>
             }
           >
-            {graph ? (
+            {graph === null ? (
+              <NoData reason="No exposure network exists for this event. Choose another event." />
+            ) : graph ? (
               <GraphExplorer
                 nodes={view.nodes}
                 edges={view.edges}
@@ -134,7 +131,7 @@ export default function GraphExplorerPage() {
                     navigate(`/app/event/${id}`);
                     return;
                   }
-                  toggle({ kind: "node", id });
+                  setSelected((current) => current === id ? null : id);
                 }}
               />
             ) : (
@@ -160,8 +157,8 @@ export default function GraphExplorerPage() {
         </section>
 
         <section className="min-w-0 space-y-3 xl:col-span-3">
-          <Panel title="Selection" meta="click a node">
-            {selected ? (
+          <Panel title="Relationship context" meta="Modelled · not observed causation">
+            {selected && graph?.nodes.some((node) => node.id === selected) ? (
               <div className="space-y-3 p-3">
                 <div>
                   <p className="text-[14px] font-semibold">{selectedLabel(selected)}</p>
@@ -172,12 +169,35 @@ export default function GraphExplorerPage() {
                   tone={riskColorForScore(nodeWeight(selected, graph?.nodes ?? []) * 100)}
                   height={5}
                 />
-                <Link
-                  to={`/app/country/${selected}`}
-                  className="label block border border-rule px-3 py-2 text-center transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
-                >
-                  Open profile
-                </Link>
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  Impact is a model weight, not the probability of disruption or a financial-loss
+                  estimate.
+                </p>
+                <Button asChild variant="outline" className="w-full">
+                  <Link to={`/app/country/${selected}`}>Inspect country evidence</Link>
+                </Button>
+                <ul className="divide-y divide-border">
+                  {graph.edges
+                    .filter((edge) => edge.from === selected || edge.to === selected)
+                    .map((edge, index) => {
+                      const other = graph.nodes.find(
+                        (node) => node.id === (edge.from === selected ? edge.to : edge.from),
+                      );
+                      return (
+                        <li key={`${edge.from}:${edge.to}:${index}`} className="py-3 text-xs">
+                          <p className="font-medium">
+                            {edge.from === selected ? selectedLabel(selected) : other?.label} → {edge.to === selected ? selectedLabel(selected) : other?.label}
+                          </p>
+                          <p className="mt-1 text-muted-foreground">
+                            {edge.label} · weight {edge.weight.toFixed(2)}
+                          </p>
+                        </li>
+                      );
+                    })}
+                </ul>
+                <Button asChild variant="link" className="px-0">
+                  <Link to={`/app/event/${eventId}`}>Inspect event assumptions & confidence</Link>
+                </Button>
               </div>
             ) : (
               <NoData reason="Select a node on the graph to inspect it." />
@@ -207,6 +227,12 @@ export default function GraphExplorerPage() {
           </Panel>
         </section>
       </div>
+      <details className="border-t border-border py-6 lg:col-span-12">
+        <summary className="cursor-pointer text-lg font-medium">
+          Follow the business impact workflow
+        </summary>
+        <FiveStageStory embedded />
+      </details>
     </PageFrame>
   );
 }

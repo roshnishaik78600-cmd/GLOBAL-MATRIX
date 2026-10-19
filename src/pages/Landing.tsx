@@ -9,12 +9,7 @@ import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { CORPUS_LABEL } from "@/lib/intel/scenarios";
 import { HowItWorks } from "@/components/landing/HowItWorks";
-import {
-  FiveStageStory,
-  ReferenceFooter,
-  ReferenceNav,
-  StoryProgress,
-} from "@/components/landing/ReferenceStory";
+import { FiveStageStory, ReferenceNav, StoryProgress } from "@/components/landing/ReferenceStory";
 import {
   IntelligenceHero,
   IntelligenceCore,
@@ -229,8 +224,8 @@ export default function Landing() {
       <StoryProgress />
 
       <IntelligenceHero />
-      <ProductShowcases />
       <FiveStageStory />
+      <ProductShowcases />
       <section
         id="world-map"
         className="gm-reference-atlas scroll-mt-20"
@@ -365,8 +360,6 @@ export default function Landing() {
           <AccessBand />
         </div>
       </main>
-
-      <ReferenceFooter />
 
       {/* Countries carry their full ten-module board here too, so a click on the
           homepage map opens the same intelligence a reader would get inside. */}

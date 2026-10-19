@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
@@ -16,6 +17,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { FocusProvider } from "@/lib/focus";
 import { useRealtimeSync } from "@/hooks/use-realtime-sync";
+import { ReferenceFooter } from "@/components/landing/ReferenceStory";
 
 function RealtimeSync() {
   useRealtimeSync();
@@ -168,6 +170,8 @@ function reloadOnceForStaleChunk() {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const publicPage = !pathname.startsWith("/app") && !pathname.startsWith("/admin");
 
   useEffect(() => {
     const onPreload = (e: Event) => {
@@ -197,6 +201,7 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <FocusProvider>
           <Outlet />
+          {publicPage && <ReferenceFooter />}
         </FocusProvider>
         <RealtimeSync />
         <Toaster />

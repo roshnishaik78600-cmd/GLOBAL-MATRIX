@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Check, Sparkles, ArrowUpRight, Compass, Network, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatINR } from "@/lib/commerce";
-import { PLANS, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
+import { PLANS, CUSTOM_REPORT, BRIEF_DAILY_LIMIT, type PlanId } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
 import { fadeUp, hoverLift, revealProps, stagger } from "@/lib/motion";
 
@@ -38,7 +38,7 @@ const ABOUT: Record<PlanId, { who: string; problem: string; click: string }> = {
   free: {
     who: "Anyone evaluating GlobalMatrix",
     problem: "See how global events connect to countries, industries and supply chains.",
-    click: "Opens your billing page; sign in and activate the free plan. No payment.",
+    click: "Free access. Sign in to save research and manage your allowance.",
   },
   analyst: {
     who: "Individual analysts and buyers who use AI briefs often",
@@ -55,10 +55,10 @@ const ABOUT: Record<PlanId, { who: string; problem: string; click: string }> = {
 const COMPARE: { row: string; free: string; analyst: string; business: string; brief: string }[] = [
   {
     row: "Price",
-    free: "₹0",
-    analyst: "₹999/month",
-    business: "₹4,999/month",
-    brief: "₹2,500 once",
+    free: formatINR(PLANS.free.price),
+    analyst: `${formatINR(PLANS.analyst.price)}/month`,
+    business: `${formatINR(PLANS.business.price)}/month`,
+    brief: `${formatINR(CUSTOM_REPORT.price)} once`,
   },
   {
     row: "Billing",
@@ -69,7 +69,13 @@ const COMPARE: { row: string; free: string; analyst: string; business: string; b
   },
   { row: "Maps, events, impact & risk views", free: "✓", analyst: "✓", business: "✓", brief: "—" },
   { row: "Watchlist, notes, exposure profile", free: "✓", analyst: "✓", business: "✓", brief: "—" },
-  { row: "AI analyst briefs per day", free: "5", analyst: "50", business: "200", brief: "—" },
+  {
+    row: "AI analyst briefs per day",
+    free: String(BRIEF_DAILY_LIMIT.free),
+    analyst: String(BRIEF_DAILY_LIMIT.analyst),
+    business: String(BRIEF_DAILY_LIMIT.business),
+    brief: "—",
+  },
   { row: "Analyst-written PDF for your scope", free: "—", analyst: "—", business: "—", brief: "✓" },
 ];
 
@@ -103,6 +109,10 @@ function PlanCard({ id }: { id: PlanId }) {
         </span>
       </p>
       <p className="mt-2 text-sm text-muted-foreground">{ABOUT[id].who}</p>
+      <div className="gm-plan-allowance mt-5 border-y border-border py-4">
+        <strong className="text-3xl font-medium">{BRIEF_DAILY_LIMIT[id]}</strong>
+        <span className="ml-3 text-xs text-muted-foreground">AI briefs / day</span>
+      </div>
       <p className="mt-4 font-mono text-xs uppercase r text-muted-foreground">Includes</p>
       <ul className="mt-2 space-y-1.5 text-sm text-foreground">
         {p.features.map((f) => (
@@ -154,10 +164,13 @@ function Pricing() {
         <div className="gm-pricing-intro">
           <p className="gm-reference-eyebrow mt-8">Research at your pace</p>
           <h1 className="mt-8 text-3xl font-semibold  text-foreground sm:text-5xl">
-            Intelligence. At your scale.
+            Business research.
+            <br />
+            At your pace.
           </h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            Start with the world. Go further with more daily AI briefs.
+            Every plan includes the same intelligence workspace. Choose the daily AI-brief allowance
+            your research needs—not a different dataset.
           </p>
         </div>
         <div
@@ -178,7 +191,27 @@ function Pricing() {
           <h2 id="compare" className="text-xl font-semibold text-foreground">
             Compare
           </h2>
-          <div className="mt-4 overflow-x-auto rounded-xl border border-border">
+          <div className="gm-mobile-comparison mt-4 space-y-6 md:hidden">
+            {COMPARE.map((row) => (
+              <div key={row.row} className="border-t border-border pt-4">
+                <h3 className="text-sm font-medium">{row.row}</h3>
+                <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+                  {[
+                    ["Free Explorer", row.free],
+                    ["Analyst", row.analyst],
+                    ["Business", row.business],
+                    ["Risk Brief", row.brief],
+                  ].map(([name, value]) => (
+                    <div key={name} className="flex flex-col gap-1">
+                      <dt className="text-muted-foreground">{name}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 hidden overflow-x-auto rounded-lg border border-border md:block">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="bg-card text-xs text-muted-foreground">
                 <tr>
@@ -233,13 +266,11 @@ function Pricing() {
               {formatINR(CUSTOM_REPORT.price)}
             </p>
             <p className="text-sm text-muted-foreground">one-time</p>
-            <Link
-              to="/app/checkout/$product"
-              params={{ product: "custom_report" }}
-              className="mt-4 inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-            >
-              Order a Risk Brief
-            </Link>
+            <Button asChild className="mt-4">
+              <Link to="/app/checkout/$product" params={{ product: "custom_report" }}>
+                Order a Risk Brief
+              </Link>
+            </Button>
           </div>
         </section>
 
@@ -256,6 +287,55 @@ function Pricing() {
           </Link>
         </div>
 
+        <section
+          className="gm-pricing-faq mt-16 border-t border-border pt-10"
+          aria-labelledby="billing-questions"
+        >
+          <div>
+            <p className="gm-reference-eyebrow">Before you choose</p>
+            <h2 id="billing-questions" className="mt-5 text-3xl font-medium">
+              Clear terms.
+              <br />
+              No surprises.
+            </h2>
+            <Link to="/terms" className="mt-5 inline-block text-sm text-primary">
+              Product & billing terms →
+            </Link>
+          </div>
+          <div>
+            {[
+              [
+                "Can I pay or activate a paid plan now?",
+                "No. Checkout is a demonstration. Orders remain unpaid and paid access cannot activate until live payment verification is configured. Never send money to the demo QR.",
+              ],
+              [
+                "What changes when I choose a paid plan?",
+                "The daily AI-brief allowance increases. Maps, events, country and industry views, sources and demonstration-data coverage are the same across plans.",
+              ],
+              [
+                "Is billing automatic or annual?",
+                "Neither. Paid plans use monthly manual renewal; there are no automatic charges or supported annual plans.",
+              ],
+              [
+                "How do cancellation and downgrades work?",
+                "You can cancel an eligible open order from Billing. Active subscriptions have no self-service cancellation or downgrade control yet. Without manual renewal, paid access expires and returns to Free Explorer.",
+              ],
+              [
+                "Is this live intelligence?",
+                "Event intelligence uses a demonstration corpus. Economic observations have attributed sources and their own update timing. Exposure and AI conclusions are modelled, not verified predictions. Named supplier exposure remains unmeasured.",
+              ],
+              [
+                "Does the custom brief come with a subscription?",
+                "No. It is a separate one-time service, with scope confirmation and delivery after verified payment. Demo orders do not start paid work.",
+              ],
+            ].map(([question, answer]) => (
+              <details key={question} className="border-b border-border py-5">
+                <summary className="cursor-pointer text-sm font-medium">{question}</summary>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
         <section id="request-report" className="mt-14 scroll-mt-8">
           <h2 className="text-xl font-semibold text-foreground">Questions or a custom scope?</h2>
           <div className="mt-4 max-w-2xl">
