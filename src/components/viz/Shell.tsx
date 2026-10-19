@@ -25,6 +25,7 @@ import {
   type NavItem,
 } from "@/components/viz/navigation";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { IntelligenceRail } from "@/components/viz/IntelligenceRail";
 
 /**
@@ -55,6 +56,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { focus, clear } = useFocus();
 
   const handleSignOut = async () => {
@@ -88,8 +90,13 @@ export function Shell({ children }: { children: ReactNode }) {
       </a>
       {/* Top navigation. `shrink-0` so it never takes part in the scroll, and the
           page body below is the one and only scroll container. */}
-      <header className="sticky top-0 z-30 shrink-0 border-b border-[var(--exec-hairline)] bg-[var(--exec-base)]">
-        <div className="gm-width flex h-16 items-center gap-3 px-4 lg:gap-6 lg:px-8">
+      <header
+        className={cn(
+          "gm-workspace-nav sticky top-0 z-30 shrink-0 border-b border-border backdrop-blur-xl",
+          scrolled && "is-scrolled",
+        )}
+      >
+        <div className="gm-width grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 xl:flex lg:gap-6 lg:px-8">
           {/* Left — the wordmark. */}
           <Link
             to="/app"
@@ -140,13 +147,13 @@ export function Shell({ children }: { children: ReactNode }) {
               </div>
             ) : (
               <div className="hidden items-center gap-1.5 lg:flex">
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
                   onClick={signIn}
                   className="shrink-0 rounded-lg border border-[var(--exec-hairline-strong)] px-3 py-2 text-[13px] font-medium text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-cyan)]"
                 >
                   Sign in
-                </button>
+                </Button>
                 <Link
                   to="/signup"
                   className="shrink-0 rounded-full bg-primary px-3.5 py-2 text-[13px] font-semibold text-primary-foreground transition-opacity hover:opacity-90"
@@ -157,15 +164,15 @@ export function Shell({ children }: { children: ReactNode }) {
             )}
 
             {/* The whole directory, one tap away on every viewport. */}
-            <button
-              type="button"
+            <Button
+              variant="outline"
               onClick={() => setExploreOpen(true)}
               title="Explore every destination"
               className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-[var(--exec-hairline)] px-2.5 text-[13px] text-[var(--exec-ink)] transition-colors hover:border-[var(--exec-hairline-strong)] sm:px-3"
             >
               <User className="size-4 lg:hidden" aria-hidden />
               Explore
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -205,6 +212,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <div className="flex min-h-0 min-w-0 flex-1">
         <IntelligenceRail />
         <div
+          onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 24)}
           id="gm-content"
           tabIndex={-1}
           className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain pb-20 focus:outline-none md:pb-0"

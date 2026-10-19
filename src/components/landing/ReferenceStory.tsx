@@ -8,7 +8,7 @@ import { api } from "@/lib/backend/api";
 import { buildStages } from "@/lib/intel/chain";
 import { Skeleton } from "@/components/viz/core";
 import { cn } from "@/lib/utils";
-import orbit from "@/assets/intelligence-orbit.jpg";
+import orbit from "@/assets/intelligence-dark.jpg";
 
 export const STORY_SECTIONS = [
   { id: "start", label: "See the signal" },
@@ -22,10 +22,20 @@ export const STORY_SECTIONS = [
 
 export function ReferenceNav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   return (
     <>
       <nav
-        className="gm-reference-nav sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur"
+        className={cn(
+          "gm-reference-nav sticky top-0 z-40 border-b border-border backdrop-blur-xl",
+          scrolled && "is-scrolled",
+        )}
         aria-label="GlobalMatrix"
       >
         <div className="gm-width flex h-16 items-center justify-between gap-4 px-5 sm:px-8">
@@ -41,6 +51,11 @@ export function ReferenceNav() {
             <Link to="/pricing">Pricing</Link>
           </div>
           <div className="flex items-center gap-2">
+            <Button asChild className="hidden lg:inline-flex">
+              <Link to="/signup">
+                Start exploring <ArrowUpRight />
+              </Link>
+            </Button>
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
               <Link to="/login">
                 Sign in <ArrowUpRight />
@@ -76,15 +91,6 @@ export function ReferenceNav() {
           </div>
         )}
       </nav>
-      <div className="gm-reference-announcement flex flex-wrap items-center justify-center gap-3 border-b border-primary/20 px-4 py-2 text-xs">
-        <Network className="size-3.5 text-primary" />
-        <span>Explore global exposure. No account needed.</span>
-        <Button asChild size="sm" className="h-7 text-xs">
-          <Link to="/app">
-            Explore free <ArrowUpRight />
-          </Link>
-        </Button>
-      </div>
     </>
   );
 }
@@ -180,10 +186,12 @@ export function EcosystemStory() {
 
 const STAGES = [
   { title: "Global event", source: "event", question: "What changed?" },
-  { title: "Country exposure", source: "country", question: "Where does it land?" },
+  { title: "Evidence assessment", source: "event", question: "What is the evidence?" },
+  { title: "Country & trade", source: "country", question: "Where does it land?" },
   { title: "Industry impact", source: "industry", question: "Which sectors are exposed?" },
   { title: "Supplier disruption", source: "company", question: "What remains unmeasured?" },
-  { title: "Business action", source: null, question: "What should you investigate?" },
+  { title: "Business exposure", source: null, question: "What should you investigate?" },
+  { title: "Intelligence & next steps", source: null, question: "What is the next question?" },
 ] as const;
 
 export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
@@ -202,7 +210,7 @@ export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
       className={cn("gm-reference-section scroll-mt-20", embedded && "gm-propagation-workbench")}
       aria-labelledby={embedded ? "workbench-title" : "impact-title"}
     >
-      <p className="gm-reference-eyebrow">Five stages. One connected story.</p>
+      <p className="gm-reference-eyebrow">Seven stages. One connected story.</p>
       <h2 id={embedded ? "workbench-title" : "impact-title"} className="gm-reference-heading">
         From global change
         <br />
@@ -228,7 +236,7 @@ export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
           Demonstration event · analytical inferences, not a prediction
         </p>
       </div>
-      <ol className="gm-five-stages mx-auto mt-10 grid max-w-5xl gap-2 md:grid-cols-5">
+      <ol className="gm-five-stages mx-auto mt-10 grid max-w-5xl gap-2 md:grid-cols-7">
         {STAGES.map((stage, i) => (
           <li key={stage.title}>
             <Button
@@ -257,7 +265,33 @@ export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
           >
             <p className="font-mono text-xs text-primary">STAGE 0{active + 1}</p>
             <h3 className="mt-3 text-2xl font-semibold">{step.question}</h3>
-            {detail ? (
+            {active === 1 ? (
+              <div className="mt-4 grid gap-6 sm:grid-cols-3">
+                <div>
+                  <p className="text-xs text-muted-foreground">Basis</p>
+                  <p className="mt-2 text-sm">Demonstration corpus</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Model confidence</p>
+                  <p className="mt-2 text-sm">{Math.round(chain.event.confidence * 100)}%</p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">80% score interval</p>
+                  <p className="mt-2 text-sm">
+                    {chain.event.low.toFixed(0)}–{chain.event.high.toFixed(0)}
+                  </p>
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground sm:col-span-3">
+                  This event is a demonstration, not verified live news. Inspect its signal history
+                  and stated assumptions before interpreting the exposure.
+                </p>
+                <Button asChild variant="outline">
+                  <Link to={`/app/event/${chain.event.id}`}>
+                    Inspect event evidence <ArrowUpRight />
+                  </Link>
+                </Button>
+              </div>
+            ) : detail ? (
               <>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {detail.rows[0]?.detail ?? detail.unmeasured?.reason ?? detail.about}
