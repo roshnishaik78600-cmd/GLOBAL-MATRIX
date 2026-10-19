@@ -1400,6 +1400,29 @@
 .gm-checkout-composition {
   align-items: start;
 }
+.gm-layout-atlas .gm-research-header { position: relative; overflow: hidden; text-align: center; }
+.gm-atlas-identity { position: relative; height: 280px; display: grid; place-items: center; }
+.gm-atlas-identity::before { content: ""; position: absolute; inset: -260px -180px; background: repeating-radial-gradient(circle, transparent 0 78px, var(--reference-orbit) 79px 80px, transparent 81px 130px); pointer-events: none; }
+.gm-atlas-identity img { width: 480px; height: 280px; object-fit: contain; mix-blend-mode: multiply; position: relative; }
+.gm-atlas-stage { position: absolute; bottom: 12px; font-size: 10px; color: var(--muted-foreground); }
+.gm-layout-atlas .gm-research-header .gm-width { padding-top: 8px; padding-bottom: 34px; position: relative; }
+.gm-layout-atlas .gm-research-header .gm-width > div { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.gm-layout-atlas .gm-chapter-label { display: none; }
+.gm-layout-atlas .t-page { max-width: 640px; margin-inline: auto; font-size: 40px; }
+.gm-layout-atlas .t-body { margin-inline: auto; font-size: 14px; }
+.gm-layout-atlas .gm-page-actions { justify-content: center; }
+.gm-layout-atlas .gm-overview-map .map-frame { height: 480px; }
+.gm-layout-atlas .gm-overview-signals { border-left: 0; padding-left: 0; }
+.gm-layout-atlas .gm-overview-signals ul { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.gm-layout-atlas .gm-overview-signals li { border-top: 1px solid var(--border); }
+.gm-layout-atlas .gm-overview-signals li button { padding: 20px; }
+@media (max-width: 767px) {
+  .gm-atlas-identity { height: 220px; }
+  .gm-atlas-identity img { height: 220px; width: 100%; }
+  .gm-layout-atlas .t-page { font-size: 30px; }
+  .gm-layout-atlas .gm-overview-signals ul { grid-template-columns: minmax(0,1fr); }
+  .gm-layout-atlas .gm-overview-map .map-frame { height: 340px; }
+}
 .gm-printed-report > section {
   position: relative;
   padding-block: 40px;
