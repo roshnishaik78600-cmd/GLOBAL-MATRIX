@@ -1,13 +1,13 @@
 # Roadmap
-- [ ] Latest reconstruction brief: make /app a reference-led exploration experience, not a conventional dashboard; preserve all analytical controls
-- [ ] New non-negotiable brief: replace sidebar-first shell; reconstruct overview, graph and each page family with distinct reference-derived layouts
-- [ ] Reorder homepage into seven narrative stages and verify reconstructed routes with preserved workflows
+- [x] Latest reconstruction brief: make /app a reference-led exploration experience, preserving analytical controls; verified at 951×609 and desktop/phone sizes
+- [x] Reconstruct overview, graph and page families with distinct reference-derived layouts; compact expandable navigation inventory retained
+- [x] Reorder homepage into seven narrative stages and verify reconstructed routes with preserved workflows
 - [x] Recreate live Orizon reference: extracted light/lime tokens, centered homepage, five-stage impact story, ecosystem and conversion sections
 - [x] Carry shared reference visual system through app, auth, pricing, checkout, loading and unavailable states
 - [x] Compare reference and updated preview; test public and signed-in demo order creation/cancellation at desktop/tablet/mobile sizes
 - [x] Orizon-inspired foundation: immersive homepage, persistent navigation, map-first overview, connected impact story, pricing and shared page layouts
 - [x] Verify redesigned navigation, map selection, pricing and desktop/mobile rendering
-- [ ] Remaining full-product brief: individual event/profile/trade/scenario/auth/billing layouts and authenticated end-to-end checks; not completed in this pass
+- [x] Event/profile report indices, regional country rosters, sector catalogue, source register, scenario builder, analyst notebook and centered auth; billing/order layout and signed-in demo read-back verified
 - [x] Non-blue design system and compact map-first homepage
 - [x] Consistent app/map/graph styling and dummy QR checkout
 - [x] Automated tests and public navigation at desktop/tablet/phone sizes
