@@ -50,6 +50,13 @@
       "when": 1792399088995,
       "tag": "0006_protect_source_diagnostics_and_atomic_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792399470138,
+      "tag": "0007_unlimited_business_brief_reservation",
+      "breakpoints": true
     }
   ]
 }
