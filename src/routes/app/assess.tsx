@@ -124,8 +124,8 @@ function Assess() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10">
-      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+    <div className="gm-account-page mx-auto max-w-6xl px-6 py-10">
+      <h1 className="text-4xl font-semibold text-foreground">
         Business exposure assessment
       </h1>
       <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
@@ -134,7 +134,7 @@ function Assess() {
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-        <div className="space-y-4 rounded-lg border border-border bg-card p-6">
+        <div className="space-y-6 border-t border-border pt-6">
           <div className="space-y-1.5">
             <Label>Company name (optional)</Label>
             <Input

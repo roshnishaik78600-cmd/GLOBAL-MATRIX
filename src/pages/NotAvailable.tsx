@@ -35,6 +35,7 @@ export default function NotAvailable() {
 
   return (
     <PageFrame
+      layout="register"
       eyebrow={module ?? "Unavailable"}
       title={module ?? "Unavailable"}
       lede={
@@ -69,7 +70,7 @@ export default function NotAvailable() {
         ]}
       />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-        <section className="lg:col-span-7">
+        <section className="lg:col-span-12">
           <Panel title="Status" meta="no data available">
             <div className="space-y-3 p-4">
               <div className="flex items-baseline justify-between border-b border-rule pb-2">
@@ -88,7 +89,7 @@ export default function NotAvailable() {
           </Panel>
         </section>
 
-        <section className="lg:col-span-5">
+        <section className="lg:col-span-12">
           <Panel title="Available now" meta="fully data-backed">
             <ul className="divide-y divide-rule">
               {[

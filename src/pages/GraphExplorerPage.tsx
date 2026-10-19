@@ -8,6 +8,7 @@ import { Bar, NoData, Panel, Skeleton } from "@/components/viz/core";
 import { getNode } from "@/lib/intel/nodes";
 import { riskColorForScore } from "@/lib/intel/visual";
 import { Button } from "@/components/ui/button";
+import { FiveStageStory } from "@/components/landing/ReferenceStory";
 import { useFocus } from "@/lib/focus";
 
 /**
@@ -90,6 +91,7 @@ export default function GraphExplorerPage() {
         </>
       }
     >
+      <FiveStageStory embedded />
       <div className="gm-graph-workspace grid grid-cols-1 gap-6 xl:grid-cols-12">
         <section className="min-w-0 xl:col-span-9">
           <Panel

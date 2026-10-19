@@ -102,7 +102,7 @@ function Checkout() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+    <div className="gm-account-page mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <Button asChild variant="ghost" size="sm">
         <Link to="/pricing">← Back to pricing</Link>
       </Button>
@@ -115,7 +115,7 @@ function Checkout() {
           <ShieldCheck className="size-4 text-primary" /> Account-linked order
         </p>
       </div>
-      <div className="mt-7 grid gap-8 border-t border-border pt-7 md:grid-cols-[1fr_1fr]">
+      <div className="gm-checkout-composition mt-7 grid gap-12 border-t border-border pt-7 md:grid-cols-[1.2fr_1fr]">
         <section>
           <h2 className="text-xl font-semibold">{name}</h2>
           <p className="mt-5 text-4xl font-semibold text-foreground">
@@ -142,7 +142,7 @@ function Checkout() {
             Demo only. No money is collected and paid access stays locked.
           </div>
         </section>
-        <section className="min-w-0">
+        <section className="min-w-0 border-l-0 border-border md:border-l md:pl-10">
           <div className="flex flex-col items-center gap-3 border-b border-border pb-5">
             <div className="rounded-md bg-qr-paper p-4">
               <DemoQr className="block size-44 text-qr-ink" />

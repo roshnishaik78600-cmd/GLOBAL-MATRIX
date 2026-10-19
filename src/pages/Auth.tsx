@@ -178,92 +178,16 @@ function Auth({ redirectAfterAuth, mode = "login" }: AuthProps = {}) {
       };
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[var(--exec-base)] text-[var(--exec-ink)] lg:flex-row">
+    <div className="gm-auth-page flex min-h-dvh flex-col bg-background text-foreground">
       {/* ------------------------------------------------ Left: identity panel.
           Hidden below lg so the form owns small screens; nothing decorative
           stands between a phone and the form. */}
-      <aside className="gm-auth-identity relative hidden overflow-hidden border-r border-[var(--exec-hairline)] bg-[var(--exec-panel)] lg:flex lg:w-[46%] lg:flex-col lg:justify-between xl:w-1/2">
-        <div className="p-10 xl:p-14">
-          <Link to="/" className="inline-flex items-center gap-2.5" aria-label="GlobalMatrix home">
-            <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
-            <span className="text-[14px] font-semibold tracking-[0.2em] uppercase">
-              Globalmatrix
-            </span>
-          </Link>
-        </div>
-
-        <div className="px-10 pb-4 xl:px-14">
-          <img
-            src={orbit}
-            alt=""
-            loading="lazy"
-            width={1536}
-            height={1024}
-            className="gm-auth-orbit mb-8"
-          />
-          <p className="t-hero text-[40px] text-[var(--exec-ink)]">
-            See what changed.
-            <br />
-            <span className="text-[var(--exec-cyan)]">Trace the impact.</span>
-          </p>
-          <p className="mt-5 max-w-md text-[15px] leading-relaxed text-[var(--exec-ink-dim)]">
-            Global geopolitical and supply-chain exposure intelligence that connects events to the
-            countries, flows, infrastructure, industries and businesses they affect.
-          </p>
-
-          {/* The product in four steps: a restrained chain, not a demo. */}
-          <ol className="mt-10 max-w-sm">
-            {CHAIN.map((node, i) => (
-              <motion.li
-                key={node.label}
-                initial={reduceMotion ? false : { opacity: 0, x: -6 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 + i * 0.09 }}
-              >
-                <div className="flex items-baseline gap-3">
-                  <span
-                    className="mt-1.5 size-2 shrink-0 rounded-full border border-[var(--exec-cyan)] bg-[var(--exec-cyan)]/30"
-                    aria-hidden
-                  />
-                  <span className="w-24 shrink-0 text-[13px] font-semibold tracking-[0.14em] text-[var(--exec-ink)] uppercase">
-                    {node.label}
-                  </span>
-                  <span className="h-px min-w-0 flex-1 bg-[var(--exec-hairline)]" aria-hidden />
-                  <span className="exec-label shrink-0">{node.note}</span>
-                </div>
-                {i < CHAIN.length - 1 ? (
-                  <span
-                    className="relative ml-[3.5px] block h-5 w-px overflow-hidden bg-[var(--exec-hairline)]"
-                    aria-hidden
-                  >
-                    {!reduceMotion ? (
-                      <motion.span
-                        className="absolute inset-x-0 top-0 h-2 bg-[var(--exec-cyan)]"
-                        animate={{ y: [-8, 20] }}
-                        transition={{
-                          duration: 1.6,
-                          repeat: Infinity,
-                          delay: 0.4 + i * 0.35,
-                          repeatDelay: 2.4,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    ) : null}
-                  </span>
-                ) : null}
-              </motion.li>
-            ))}
-          </ol>
-        </div>
-
-        <p className="px-10 pb-10 text-[12px] leading-relaxed text-[var(--exec-ink-muted)] xl:px-14">
-          Evidence before decoration · every figure carries its source and freshness · scenarios are
-          never presented as predictions.
-        </p>
-      </aside>
-
+      <header className="gm-auth-masthead border-b border-border px-6 py-5">
+        <Link to="/" className="text-lg font-semibold">GlobalMatrix<span className="text-primary">.</span></Link>
+        <Link to="/app" className="text-sm text-muted-foreground">Explore intelligence <ArrowRight className="inline size-4" /></Link>
+      </header>
       {/* ------------------------------------------------ Right: the form. */}
-      <main className="flex w-full min-w-0 flex-1 items-center justify-center px-4 py-8 sm:px-8 lg:w-[54%] lg:py-14 xl:w-1/2">
+      <main className="flex w-full min-w-0 flex-1 items-center justify-center px-4 py-12 sm:px-8">
         <div className="w-full max-w-[430px] min-w-0">
           <div className="mb-5 flex items-center justify-between gap-3">
             <Link

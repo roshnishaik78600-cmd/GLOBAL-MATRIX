@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "@/lib/router-shim";
 import { ArrowRight, ArrowUpRight, Globe2, Menu, Network, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@/lib/backend/shim";
 import { api } from "@/lib/backend/api";
@@ -11,12 +11,13 @@ import { cn } from "@/lib/utils";
 import orbit from "@/assets/intelligence-orbit.jpg";
 
 export const STORY_SECTIONS = [
-  { id: "start", label: "Start" },
-  { id: "ecosystem", label: "Ecosystem" },
-  { id: "impact-story", label: "Impact chain" },
-  { id: "world-map", label: "One world" },
-  { id: "evidence", label: "Evidence" },
-  { id: "pricing-teaser", label: "Plans" },
+  { id: "start", label: "See the signal" },
+  { id: "trace-event", label: "Trace the event" },
+  { id: "world-map", label: "Follow propagation" },
+  { id: "evidence", label: "Understand exposure" },
+  { id: "next-step", label: "Decide what’s next" },
+  { id: "ecosystem", label: "Explore the platform" },
+  { id: "pricing-teaser", label: "Choose a plan" },
 ];
 
 export function ReferenceNav() {
@@ -35,7 +36,7 @@ export function ReferenceNav() {
           <div className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <Link to="/app">Intelligence</Link>
             <a href="#ecosystem">Capabilities</a>
-            <a href="#impact-story">Impact chain</a>
+            <a href="#trace-event">Impact chain</a>
             <Link to="/app/data">Sources</Link>
             <Link to="/pricing">Pricing</Link>
           </div>
@@ -189,7 +190,8 @@ const STAGES = [
   { title: "Business action", source: null, question: "What should you investigate?" },
 ] as const;
 
-export function FiveStageStory() {
+export function FiveStageStory({ embedded = false }: { embedded?: boolean }) {
+  const reducedMotion = useReducedMotion();
   const feed = useQuery(api.intel.detectionFeed, {});
   const [eventId, setEventId] = useState<string | null>(null);
   const [active, setActive] = useState(0);
@@ -200,12 +202,12 @@ export function FiveStageStory() {
   const detail = stages.find((stage) => stage.id === step.source);
   return (
     <section
-      id="impact-story"
-      className="gm-reference-section scroll-mt-20"
-      aria-labelledby="impact-title"
+      id={embedded ? undefined : "trace-event"}
+      className={cn("gm-reference-section scroll-mt-20", embedded && "gm-propagation-workbench")}
+      aria-labelledby={embedded ? "workbench-title" : "impact-title"}
     >
       <p className="gm-reference-eyebrow">Five stages. One connected story.</p>
-      <h2 id="impact-title" className="gm-reference-heading">
+      <h2 id={embedded ? "workbench-title" : "impact-title"} className="gm-reference-heading">
         From global change
         <br />
         to <span className="text-primary">business context.</span>
@@ -252,10 +254,10 @@ export function FiveStageStory() {
         <AnimatePresence mode="wait">
           <motion.div
             key={`${active}:${selected}`}
-            initial={{ opacity: 0, y: 8 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            className="gm-stage-detail mx-auto mt-8 max-w-3xl border-y border-border py-8 text-left"
+            exit={reducedMotion ? undefined : { opacity: 0, y: -4 }}
+            className="gm-stage-detail mx-auto mt-8 max-w-5xl border-y border-border py-8 text-left"
           >
             <p className="font-mono text-xs text-primary">STAGE 0{active + 1}</p>
             <h3 className="mt-3 text-2xl font-semibold">{step.question}</h3>
@@ -264,7 +266,7 @@ export function FiveStageStory() {
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {detail.rows[0]?.detail ?? detail.unmeasured?.reason ?? detail.about}
                 </p>
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div className="gm-propagation-nodes mt-5 grid gap-3 sm:grid-cols-3">
                   {detail.rows.slice(0, 3).map((row) =>
                     row.href ? (
                       <Button key={row.id} asChild variant="outline">

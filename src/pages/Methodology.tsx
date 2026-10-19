@@ -69,7 +69,7 @@ export default function Methodology() {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <ExecPage className="min-h-full">
+    <ExecPage className="gm-methodology-page min-h-full">
       <nav className="sticky top-0 z-30 border-b border-[var(--exec-hairline)] bg-[var(--exec-base)]/90 backdrop-blur">
         <div className="gm-width flex h-16 items-center gap-4 px-4 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2.5">

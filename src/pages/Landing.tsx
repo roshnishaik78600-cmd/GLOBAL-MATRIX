@@ -263,14 +263,13 @@ export default function Landing() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="#impact-story">
+              <a href="#trace-event">
                 Follow the impact <Network />
               </a>
             </Button>
           </motion.div>
         </motion.div>
       </header>
-      <EcosystemStory />
       <FiveStageStory />
       <section
         id="world-map"
@@ -379,8 +378,22 @@ export default function Landing() {
           </details>
 
           <section id="evidence" className="gm-reference-evidence scroll-mt-20">
+            <p className="gm-reference-eyebrow">04 / Understand the exposure</p>
+            <h2 className="gm-reference-heading mb-8 text-center">Evidence, before conclusions.</h2>
             <DataAndEvidence />
           </section>
+          <section id="next-step" className="gm-reference-section scroll-mt-20">
+            <p className="gm-reference-eyebrow">05 / Decide what comes next</p>
+            <h2 className="gm-reference-heading">A clearer next question.</h2>
+            <div className="gm-decision-paths mt-10 grid gap-6 md:grid-cols-3">
+              {[
+                { to: "/app/assess", label: "Review your dependencies", number: "01" },
+                { to: "/app/watchlist", label: "Keep the signal in view", number: "02" },
+                { to: "/app/analyst", label: "Read an evidence-led brief", number: "03" },
+              ].map((item) => <Link key={item.to} to={item.to} className="border-t border-border py-6 text-left"><span className="font-mono text-xs text-primary">{item.number}</span><h3 className="mt-5 text-xl font-semibold">{item.label}</h3><ArrowRight className="mt-8 size-5" /></Link>)}
+            </div>
+          </section>
+          <EcosystemStory />
           <PricingTeaser />
 
           <AccessBand />

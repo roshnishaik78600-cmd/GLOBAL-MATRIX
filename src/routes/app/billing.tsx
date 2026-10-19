@@ -78,9 +78,9 @@ function Billing() {
 
   const plan = PLANS[data.plan];
   return (
-    <div className="mx-auto max-w-4xl space-y-6 p-6">
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-semibold text-foreground">Billing</h1>
+    <div className="gm-account-page mx-auto max-w-6xl px-6 py-10">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-border pb-8">
+        <h1 className="text-4xl font-semibold text-foreground">Billing</h1>
         {data.isAdmin && (
           <Link to="/admin" className="text-sm text-primary hover:underline">
             Admin dashboard →
@@ -97,11 +97,12 @@ function Billing() {
         </div>
       )}
 
-      <section className="border-y border-border py-6">
+      <div className="gm-billing-composition mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+      <section className="border-t border-border py-6">
         <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
           Current plan
         </p>
-        <p className="mt-2 text-xl font-semibold text-foreground">{plan.name}</p>
+        <p className="mt-4 text-3xl font-semibold text-foreground">{plan.name}</p>
         <p className="mt-1 text-sm text-muted-foreground">
           AI analyst briefs: {BRIEF_DAILY_LIMIT[data.plan]} per day
         </p>
@@ -202,6 +203,7 @@ function Billing() {
           Invoices and receipts are not issued yet; they will appear here once payments go live.
         </p>
       </section>
+      </div>
     </div>
   );
 }
