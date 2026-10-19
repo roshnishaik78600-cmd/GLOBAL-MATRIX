@@ -8,7 +8,7 @@
 - Shared `styles.css` and `ui/button.tsx` apply the dark system to existing reports, country/industry directories, graph, risk, trade, markets, supply, scenarios, watchlists, analyst, sources, auth, pricing, checkout, billing and admin. These analytical tools were preserved, not individually replaced with mockups.
 - Browser sweep: 31 destinations × desktop (1280×1800), tablet/current viewport (951×609), phone (390×844), no uncaught runtime exceptions or document overflow. Scenario simulation ran. Selected capability linked to `/app/watchlist`; stage 05 stated supplier data is unmeasured; stage 02 displayed the event confidence and interval. Mobile menu reached Pricing.
 - Signed-in demo billing: new ₹999 Analyst order created, cancelled and read back in Billing. Free Explorer stayed at five briefs/day, no funds moved, no paid activation. Admin still required two-step verification; post-code admin review untested.
-- All 31 existing tests passed. Changed-component lint had zero errors and one Fast Refresh warning. Harness reported build OK; no manual build/typecheck run. Pre-existing full-project lint failures are not claimed resolved.
+- All 31 existing tests passed. Final changed-component lint had zero errors and two Fast Refresh export warnings. Harness reported build OK; no manual build/typecheck run. Pre-existing full-project lint failures are not claimed resolved.
 - Compared against Orizon's freshly fetched live screenshot: recognizable centered visual/stage rhythm, but original GlobalMatrix geography and user-directed dark palette, not identical proprietary animation. Backend/schema/payment rules unchanged.
 
 ## Changed presentation files
