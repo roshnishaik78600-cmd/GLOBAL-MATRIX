@@ -528,9 +528,7 @@ function DataAndEvidence() {
             </Button>
           </div>
         ) : health === undefined ? (
-          <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
-            Resolving connector state…
-          </p>
+          <Skeleton className="h-24 w-full" />
         ) : health.length === 0 ? (
           <p className="px-4 py-4 text-[13px] text-[var(--exec-ink-dim)]">
             No connector has returned a reading yet. This page shows no estimates while that is

@@ -59,13 +59,13 @@ export function EventPreview() {
                 {countries?.rows
                   .slice(0, 2)
                   .map((row) => row.label)
-                  .join(" · ") || (chain ? "Unmeasured" : "Loading…")}
+                  .join(" · ") || (chain ? "Unmeasured" : <Skeleton className="h-4 w-24" />)}
               </strong>
             </div>
             <div>
               <Network className="size-4 text-primary" />
               <small>Industry impact</small>
-              <strong>{industry?.rows[0]?.label || (chain ? "Unmeasured" : "Loading…")}</strong>
+              <strong>{industry?.rows[0]?.label || (chain ? "Unmeasured" : <Skeleton className="h-4 w-24" />)}</strong>
             </div>
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3">
