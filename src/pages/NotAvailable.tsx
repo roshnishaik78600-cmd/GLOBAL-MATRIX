@@ -2,6 +2,8 @@ import { useLocation } from "@/lib/router-shim";
 import { PageFrame } from "@/components/viz/exec/design";
 import { Panel } from "@/components/viz/core";
 import { QuestionStrip } from "@/components/viz/Unavailable";
+import { Link } from "@/lib/router-shim";
+import { Button } from "@/components/ui/button";
 
 const REASONS: Record<string, { data: string; because: string }> = {
   Companies: {
@@ -49,7 +51,7 @@ export default function NotAvailable() {
         answers={[
           {
             q: "What's happening?",
-            a: "Nothing here, and nothing is faked to fill the gap.",
+            a: "This dataset is not connected; this is a coverage gap, not a zero-risk finding.",
           },
           {
             q: "Why is it empty?",
@@ -85,6 +87,10 @@ export default function NotAvailable() {
                 Every surface that <em>is</em> populated is driven by the propagation engine and can
                 be traced back to a signal, a pathway or a stated coefficient.
               </p>
+              <div className="flex flex-wrap gap-3 pt-3">
+                <Button asChild><Link to="/contact">Request early access</Link></Button>
+                <Button asChild variant="outline"><Link to="/methodology">See methodology</Link></Button>
+              </div>
             </div>
           </Panel>
         </section>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitInquiry } from "@/lib/inquiries.functions";
 import { inquirySchema, type InquiryKind } from "@/lib/commerce";
@@ -17,6 +17,7 @@ const KIND_LABEL: Record<InquiryKind, string> = {
 
 export function RequestForm({ defaultKind = "sample", fixedKind = false, defaultMessage = "" }: { defaultKind?: InquiryKind; fixedKind?: boolean; defaultMessage?: string }) {
   const sendInquiry = useServerFn(submitInquiry);
+  const formId = useId();
   const [kind, setKind] = useState<InquiryKind>(defaultKind);
   const [form, setForm] = useState({ name: "", email: "", company: "", message: defaultMessage, website: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -63,9 +64,9 @@ export function RequestForm({ defaultKind = "sample", fixedKind = false, default
 
   const field = (key: "name" | "email" | "company", label: string, type = "text") => (
     <div className="space-y-1.5">
-      <Label htmlFor={`rq-${key}`}>{label}</Label>
+      <Label htmlFor={`${formId}-${key}`}>{label}</Label>
       <Input
-        id={`rq-${key}`}
+        id={`${formId}-${key}`}
         type={type}
         value={form[key]}
         onChange={(e) => setForm({ ...form, [key]: e.target.value })}
@@ -100,9 +101,9 @@ export function RequestForm({ defaultKind = "sample", fixedKind = false, default
       </div>
       {field("company", "Company (optional)")}
       <div className="space-y-1.5">
-        <Label htmlFor="rq-message">What do you need to understand?</Label>
+        <Label htmlFor={`${formId}-message`}>What do you need to understand?</Label>
         <Textarea
-          id="rq-message"
+          id={`${formId}-message`}
           rows={4}
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
