@@ -1,5 +1,16 @@
 # Orizon reference redesign — verification
 
+## Final black / burgundy transformation
+- User's latest dark brief supersedes the older white/lime theme documented below. Obsidian background, ivory type, burgundy actions and aubergine selection tokens replace green across existing chart/status aliases.
+- New `IntelligenceExperience.tsx`: full-bleed original globe scene with scroll-linked movement and animated geographic paths, alternating product compositions, selectable six-capability core with meaningful explanations and existing-route links.
+- Rebuilt `Landing.tsx` hero and section composition; `ReferenceStory.tsx` now uses seven propagation stages, explicit demonstration evidence/confidence/interval, translucent scroll-sensitive navigation, mobile menu and conversion CTA.
+- `Overview.tsx` places the actual interactive map before the supporting signal composition. `Shell.tsx` has translucent scroll-sensitive navigation and design-system controls; existing single scroll viewport, navigation inventory and all drawers preserved.
+- Shared `styles.css` and `ui/button.tsx` apply the dark system to existing reports, country/industry directories, graph, risk, trade, markets, supply, scenarios, watchlists, analyst, sources, auth, pricing, checkout, billing and admin. These analytical tools were preserved, not individually replaced with mockups.
+- Browser sweep: 31 destinations × desktop (1280×1800), tablet/current viewport (951×609), phone (390×844), no uncaught runtime exceptions or document overflow. Scenario simulation ran. Selected capability linked to `/app/watchlist`; stage 05 stated supplier data is unmeasured; stage 02 displayed the event confidence and interval. Mobile menu reached Pricing.
+- Signed-in demo billing: new ₹999 Analyst order created, cancelled and read back in Billing. Free Explorer stayed at five briefs/day, no funds moved, no paid activation. Admin still required two-step verification; post-code admin review untested.
+- All 31 existing tests passed. Changed-component lint had zero errors and one Fast Refresh warning. Harness reported build OK; no manual build/typecheck run. Pre-existing full-project lint failures are not claimed resolved.
+- Compared against Orizon's freshly fetched live screenshot: recognizable centered visual/stage rhythm, but original GlobalMatrix geography and user-directed dark palette, not identical proprietary animation. Backend/schema/payment rules unchanged.
+
 ## Changed presentation files
 - `src/styles.css`: extracted white/ink/lime palette, shared executive aliases, centred story layouts, orbital linework, lightweight surfaces, mobile sizing.
 - `src/components/landing/ReferenceStory.tsx`: original ecosystem artwork, mobile navigation, section progress, five-stage event-driven story, footer.

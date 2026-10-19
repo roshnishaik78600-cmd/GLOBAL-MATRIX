@@ -1,6 +1,6 @@
 # Roadmap
-- [ ] Final dark transformation: replace lime tokens, rebuild homepage hero/ecosystem and application stage hierarchy; preserve data and payment logic
-- [ ] Verify dark pages, map/graph/stage navigation, mobile menu, signed-in demo billing and existing tests
+- [x] Final dark transformation: replace lime tokens, rebuild homepage hero/ecosystem and map-first application stage hierarchy; preserve data and payment logic
+- [x] Verify 31 dark destinations at three sizes, map/graph/stage navigation, mobile menu, signed-in demo billing and 31 existing tests
 - [x] Latest reconstruction brief: make /app a reference-led exploration experience, preserving analytical controls; verified at 951×609 and desktop/phone sizes
 - [x] Reconstruct overview, graph and page families with distinct reference-derived layouts; compact expandable navigation inventory retained
 - [x] Reorder homepage into seven narrative stages and verify reconstructed routes with preserved workflows

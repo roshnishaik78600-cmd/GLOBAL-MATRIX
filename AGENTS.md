@@ -14,6 +14,6 @@
 - Keep the homepage map interactive and reuse the shared WorldMap rather than introducing a second geography renderer.
 - Use the shared navigation inventory for the compact, expandable desktop spine and mobile directory; retain one shell scroll viewport to prevent navigation obscuring content.
 
-- Reference storytelling lives in ReferenceStory; IntelligenceExperience owns the scroll-linked visual hero and selectable capability core because marketing interactions must stay separate from analytical data logic. the original nine-stage analysis and WorldMap remain available to preserve analytical workflows.
+- Reference storytelling lives in ReferenceStory; IntelligenceExperience owns the scroll-linked visual hero and selectable capability core because marketing interactions must stay separate from analytical data logic. The original nine-stage analysis and WorldMap remain available to preserve analytical workflows.
 
 - Compose PageFrame with explicit workspace, report, directory, laboratory, register or notebook layouts; reports use a section index and full-width ordered bands rather than a uniform KPI grid.
