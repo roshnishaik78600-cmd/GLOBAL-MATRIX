@@ -68,8 +68,8 @@ export default function GraphExplorerPage() {
   return (
     <PageFrame
       eyebrow="Knowledge graph"
-      title="Knowledge graph"
-      lede="Trace shared exposure. Demonstration events; modelled pathways."
+      title="Every connection has a context."
+      lede="Select a signal. Explore its modelled pathways and inspect the supported exposure relationships."
       actions={
         <>
           <label className="flex items-center gap-2">
@@ -89,10 +89,10 @@ export default function GraphExplorerPage() {
         </>
       }
     >
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-        <section className="min-w-0 lg:col-span-9">
+      <div className="gm-graph-workspace grid grid-cols-1 gap-6 xl:grid-cols-12">
+        <section className="min-w-0 xl:col-span-9">
           <Panel
-            title="Propagation graph"
+            title="Exposure network"
             meta={`${view.nodes.length} of ${nodeCount} nodes · ${view.edges.length} edges`}
             actions={
               <Button
@@ -116,7 +116,7 @@ export default function GraphExplorerPage() {
               <GraphExplorer
                 nodes={view.nodes}
                 edges={view.edges}
-                height={560}
+                height={640}
                 selected={selected}
                 onSelect={(id) => {
                   // Graph ids are node ids, except the synthetic event and
@@ -133,7 +133,7 @@ export default function GraphExplorerPage() {
                 }}
               />
             ) : (
-              <Skeleton className="h-[560px] w-full" />
+              <Skeleton className="h-[640px] w-full" />
             )}
             <div className="flex flex-wrap items-center gap-4 border-t border-rule px-3 py-2">
               {kindCounts.map(([kind, count]) => (
@@ -154,7 +154,7 @@ export default function GraphExplorerPage() {
           </Panel>
         </section>
 
-        <section className="min-w-0 space-y-3 lg:col-span-3">
+        <section className="min-w-0 space-y-3 xl:col-span-3">
           <Panel title="Selection" meta="click a node">
             {selected ? (
               <div className="space-y-3 p-3">

@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
     links: [{ rel: "canonical", href: "https://globalmatrix.lovable.app" }],
     meta: [
       { property: "og:url", content: "https://globalmatrix.lovable.app" },
-      { title: "GlobalMatrix — Understand Global Disruption Before It Reaches Your Supply Chain" },
+      { title: "GlobalMatrix — See the World. Understand the Impact." },
       {
         name: "description",
         content:
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "GlobalMatrix — Understand Global Disruption Before It Reaches Your Supply Chain",
+        content: "GlobalMatrix — See the World. Understand the Impact.",
       },
       {
         property: "og:description",

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Globe2 } from "lucide-react";
 import { api } from "@/lib/backend/api";
 import type { TopologyResult } from "@/lib/backend/api";
 import { useFocus, type TimeWindow } from "@/lib/focus";
@@ -34,6 +34,8 @@ import {
 } from "@/components/viz/exec/Topology";
 import { freshnessOf } from "@/lib/freshness";
 import { period as periodLabel } from "@/lib/numbers";
+import { Button } from "@/components/ui/button";
+import { ChainExplorer } from "@/components/viz/ChainExplorer";
 
 /**
  * The executive command centre.
@@ -99,8 +101,8 @@ export default function Overview() {
   return (
     <PageFrame
       eyebrow="Overview"
-      title="Executive command centre"
-      lede="Where global risk is concentrated right now, the macro topology behind it, and what changed."
+      title="The world. In context."
+      lede="Global signals, connected exposure, and the evidence behind every relationship."
       actions={
         <>
           <Action to="/app/risk">Risk explorer</Action>
@@ -138,6 +140,145 @@ export default function Overview() {
         </div>
       }
     >
+      <div className="gm-overview-intro flex flex-wrap items-center justify-between gap-5 border-b border-border pb-6">
+        <div className="flex items-center gap-4">
+          <Globe2 className="size-8 text-primary" />
+          <div>
+            <p className="text-lg font-medium">Global exposure atlas</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {mappable.length} mapped places · {data.flows.length} modelled connections
+            </p>
+          </div>
+        </div>
+        <Button asChild variant="outline">
+          <Link to="/app/world">
+            Open world explorer <ArrowUpRight />
+          </Link>
+        </Button>
+      </div>
+      {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
+          support it rather than compete with it. */}
+      <Region width={12} dominant className="gm-overview-map">
+        <PanelHead
+          title="Explore the exposure network"
+          meta="land shading and arcs are model output"
+          actions={<DataType type="model" />}
+        />
+        <div className="min-w-0 flex-1">
+          <WorldMap
+            nodes={data.mapNodes}
+            flows={data.flows}
+            events={mapEvents}
+            className="map-frame"
+            selected={selected}
+            channel={mapChannel}
+            onSelect={setSelected}
+            onInspect={(id) => navigate(`/app/country/${id}`)}
+          />
+        </div>
+      </Region>
+
+      {/* LEVEL 2 — what changed, as a readable feed. */}
+      <Region width={7}>
+        <PanelHead
+          title="Scenario intelligence"
+          meta="Demonstration corpus · not live news"
+          actions={<DataType type="model" />}
+        />
+        <ul className="min-w-0 divide-y divide-[var(--exec-hairline)]">
+          {data.topEvents
+            .filter((event) => ticker.some((item) => item.id === event.id && item.inWindow))
+            .map((event) => {
+              const active = isFocused("event", event.id);
+              return (
+                <li key={event.id} className="flex min-w-0 items-stretch">
+                  <button
+                    type="button"
+                    onClick={() => toggle({ kind: "event", id: event.id })}
+                    aria-pressed={active}
+                    className="min-w-0 flex-1 px-3 py-2.5 text-left transition-colors hover:bg-[var(--exec-surface)]"
+                  >
+                    <div className="flex min-w-0 items-baseline justify-between gap-2">
+                      <span
+                        className="exec-label min-w-0 truncate"
+                        style={{ color: riskColorForScore(event.score) }}
+                      >
+                        {CHANNEL_LABEL[event.dominantChannel]}
+                      </span>
+                      <span className="exec-num shrink-0 text-[12px] font-semibold text-[var(--exec-ink)]">
+                        {num(event.score, 1)}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-[12px] leading-snug font-medium text-[var(--exec-ink)]">
+                      {event.title}
+                    </p>
+                    <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-1">
+                      {event.topNodes.map((n) => (
+                        <span
+                          key={n.nodeId}
+                          className="exec-num max-w-[14ch] truncate rounded-sm border border-[var(--exec-hairline)] px-1 text-[12px] text-[var(--exec-ink-dim)]"
+                          title={`${n.label} · weight ${num(n.weight, 2)}`}
+                        >
+                          {n.short}
+                        </span>
+                      ))}
+                      <span className="exec-num ml-auto shrink-0 text-[12px] text-[var(--exec-ink-dim)]">
+                        {`80% ${num(event.low, 0)}–${num(event.high, 0)}`}
+                      </span>
+                    </div>
+                  </button>
+                  <Link
+                    to={`/app/event/${event.id}`}
+                    aria-label={`Open ${event.title}`}
+                    className="flex w-8 shrink-0 items-center justify-center border-l border-[var(--exec-hairline)] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
+                  >
+                    <ArrowUpRight className="size-3.5" />
+                  </Link>
+                </li>
+              );
+            })}
+        </ul>
+      </Region>
+
+      {/* LEVEL 2 — the timeline of what happened. */}
+      <Region width={5}>
+        {ticker.length === 0 ? (
+          <>
+            <PanelHead
+              title="Threat timeline"
+              meta={timeWindow.toUpperCase()}
+              actions={<DataType type="scenario" />}
+            />
+            <EmptyState
+              title="No events in this window"
+              reason="The corpus supplies the events behind this board. Nothing falls inside the selected window, and GlobalMatrix will not substitute an illustrative feed for a missing one."
+              action={<Action to="/app/events">Open the event observatory</Action>}
+            />
+          </>
+        ) : (
+          <ThreatTicker
+            events={ticker}
+            windowLabel={timeWindow.toUpperCase()}
+            selected={focus?.kind === "event" ? focus.id : null}
+            onSelect={(id) => toggle({ kind: "event", id })}
+          />
+        )}
+      </Region>
+
+      <div className="border-t border-border pt-8">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p>
+            <h2 className="mt-3 text-2xl font-medium">Follow what comes next.</h2>
+          </div>
+          <Button asChild variant="ghost">
+            <Link to="/app/graph">
+              Knowledge graph <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <ChainExplorer className="gm-story-chain" />
+      </div>
       {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
           two columns each, so every headline number sits on the same baseline as
           the panels below it rather than in a card of its own. */}
@@ -189,34 +330,12 @@ export default function Overview() {
         </MetricGrid>
       </Region>
 
-      {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
-          support it rather than compete with it. */}
-      <Region width={8} dominant>
-        <PanelHead
-          title="Global risk surface"
-          meta="land shading and arcs are model output"
-          actions={<DataType type="model" />}
-        />
-        <div className="min-w-0 flex-1">
-          <WorldMap
-            nodes={data.mapNodes}
-            flows={data.flows}
-            events={mapEvents}
-            className="map-frame"
-            selected={selected}
-            channel={mapChannel}
-            onSelect={setSelected}
-            onInspect={(id) => navigate(`/app/country/${id}`)}
-          />
-        </div>
-      </Region>
-
       {/* LEVEL 2 — the radar. One tile per row, because this region is four of
           the twelve columns and six tiles across that width would be unreadable. */}
-      <Region width={4}>
+      <Region width={12}>
         <RiskTopology
           data={topology}
-          columns={1}
+          columns={3}
           selected={topologyFilter}
           onSelect={(id) => {
             setTopologyFilter(id);
@@ -225,91 +344,6 @@ export default function Overview() {
             }
           }}
         />
-      </Region>
-
-      {/* LEVEL 2 — what changed, as a readable feed. */}
-      <Region width={7}>
-        <PanelHead
-          title="Streamed events"
-          meta={`${inWindow} of ${data.topEvents.length} inside ${timeWindow.toUpperCase()}`}
-          actions={<DataType type="model" />}
-        />
-        <ul className="min-w-0 divide-y divide-[var(--exec-hairline)]">
-          {data.topEvents.map((event) => {
-            const active = isFocused("event", event.id);
-            return (
-              <li key={event.id} className="flex min-w-0 items-stretch">
-                <button
-                  type="button"
-                  onClick={() => toggle({ kind: "event", id: event.id })}
-                  aria-pressed={active}
-                  className="min-w-0 flex-1 px-3 py-2.5 text-left transition-colors hover:bg-[var(--exec-surface)]"
-                >
-                  <div className="flex min-w-0 items-baseline justify-between gap-2">
-                    <span
-                      className="exec-label min-w-0 truncate"
-                      style={{ color: riskColorForScore(event.score) }}
-                    >
-                      {CHANNEL_LABEL[event.dominantChannel]}
-                    </span>
-                    <span className="exec-num shrink-0 text-[12px] font-semibold text-[var(--exec-ink)]">
-                      {num(event.score, 1)}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-[12px] leading-snug font-medium text-[var(--exec-ink)]">
-                    {event.title}
-                  </p>
-                  <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-1">
-                    {event.topNodes.map((n) => (
-                      <span
-                        key={n.nodeId}
-                        className="exec-num max-w-[14ch] truncate rounded-sm border border-[var(--exec-hairline)] px-1 text-[12px] text-[var(--exec-ink-dim)]"
-                        title={`${n.label} · weight ${num(n.weight, 2)}`}
-                      >
-                        {n.short}
-                      </span>
-                    ))}
-                    <span className="exec-num ml-auto shrink-0 text-[12px] text-[var(--exec-ink-dim)]">
-                      {`80% ${num(event.low, 0)}–${num(event.high, 0)}`}
-                    </span>
-                  </div>
-                </button>
-                <Link
-                  to={`/app/event/${event.id}`}
-                  aria-label={`Open ${event.title}`}
-                  className="flex w-8 shrink-0 items-center justify-center border-l border-[var(--exec-hairline)] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
-                >
-                  <ArrowUpRight className="size-3.5" />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </Region>
-
-      {/* LEVEL 2 — the timeline of what happened. */}
-      <Region width={5}>
-        {ticker.length === 0 ? (
-          <>
-            <PanelHead
-              title="Threat timeline"
-              meta={timeWindow.toUpperCase()}
-              actions={<DataType type="scenario" />}
-            />
-            <EmptyState
-              title="No events in this window"
-              reason="The corpus supplies the events behind this board. Nothing falls inside the selected window, and GlobalMatrix will not substitute an illustrative feed for a missing one."
-              action={<Action to="/app/events">Open the event observatory</Action>}
-            />
-          </>
-        ) : (
-          <ThreatTicker
-            events={ticker}
-            windowLabel={timeWindow.toUpperCase()}
-            selected={focus?.kind === "event" ? focus.id : null}
-            onSelect={(id) => toggle({ kind: "event", id })}
-          />
-        )}
       </Region>
 
       {/* LEVEL 3 — the three composite gauges, full width so each dial keeps

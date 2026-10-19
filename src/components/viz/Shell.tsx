@@ -25,6 +25,7 @@ import {
   type NavItem,
 } from "@/components/viz/navigation";
 import { cn } from "@/lib/utils";
+import { IntelligenceRail } from "@/components/viz/IntelligenceRail";
 
 /**
  * The application shell.
@@ -203,12 +204,15 @@ export function Shell({ children }: { children: ReactNode }) {
       {/* The one scroll container. Everything above is fixed height, so a long
           page scrolls here and nowhere else. `pb-24 lg:pb-0` reserves the space
           the fixed mobile bar occupies rather than letting it cover a row. */}
-      <div
-        id="gm-content"
-        tabIndex={-1}
-        className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain pb-20 focus:outline-none lg:pb-0"
-      >
-        {children}
+      <div className="flex min-h-0 min-w-0 flex-1">
+        <IntelligenceRail />
+        <div
+          id="gm-content"
+          tabIndex={-1}
+          className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain pb-20 focus:outline-none md:pb-0"
+        >
+          {children}
+        </div>
       </div>
 
       {/* Mobile: the same five, as a bar. */}
@@ -378,7 +382,7 @@ function MobileBar({ onOpenSearch }: { onOpenSearch: () => void }) {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 flex h-16 shrink-0 items-stretch border-t border-[var(--exec-hairline)] bg-[var(--exec-base)] lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 flex h-16 shrink-0 items-stretch border-t border-[var(--exec-hairline)] bg-[var(--exec-base)] md:hidden"
       aria-label="Primary"
     >
       {MOBILE_NAV.map((item) => {

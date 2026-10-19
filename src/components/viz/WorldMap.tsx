@@ -400,6 +400,16 @@ export function WorldMap({
               <g
                 key={n.nodeId}
                 className={cn(onSelect && "cursor-pointer")}
+                role={onSelect ? "button" : undefined}
+                tabIndex={onSelect ? 0 : undefined}
+                aria-label={onSelect ? `Inspect ${n.node.label}` : undefined}
+                onPointerDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onSelect?.(n.nodeId);
+                  }
+                }}
                 onMouseEnter={() => setHover(n.nodeId)}
                 onClick={() => onSelect?.(n.nodeId)}
                 onDoubleClick={() => onInspect?.(n.nodeId)}

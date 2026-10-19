@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, ArrowUpRight, Compass, Network, Layers } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { formatINR } from "@/lib/commerce";
 import { PLANS, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { RequestForm } from "@/components/commerce/RequestForm";
@@ -79,26 +80,30 @@ function PlanCard({ id }: { id: PlanId }) {
     <motion.div
       variants={fadeUp}
       whileHover={hoverLift}
-      className={`relative flex flex-col rounded-2xl border bg-card p-6 transition-shadow ${
+      className={`gm-subscription-card relative flex flex-col rounded-lg border bg-card p-6 transition-shadow ${
         featured ? "gm-plan-featured border-transparent" : "border-border hover:border-primary/40"
       }`}
     >
       {featured && (
-        <span className="absolute -top-3 left-6 inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold tracking-wide text-primary-foreground uppercase">
-          <Sparkles className="size-3" aria-hidden /> Most popular
+        <span className="absolute -top-3 left-6 inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold  text-primary-foreground uppercase">
+          <Sparkles className="size-3" aria-hidden /> For deeper research
         </span>
       )}
+      <div className="mb-7 flex items-center justify-between">
+        <span className="flex size-11 items-center justify-center rounded-md border border-border text-primary">
+          {id === "free" ? <Compass /> : id === "analyst" ? <Network /> : <Layers />}
+        </span>
+        <span className="text-xs text-muted-foreground">0{ORDER.indexOf(id) + 1}</span>
+      </div>
       <h2 className="text-lg font-semibold text-foreground">{p.name}</h2>
-      <p className="mt-3 text-4xl font-semibold tracking-tight text-foreground">
+      <p className="mt-3 text-4xl font-semibold  text-foreground">
         {formatINR(p.price)}
         <span className="text-sm font-normal text-muted-foreground">
           {p.period ? " / month" : ""}
         </span>
       </p>
       <p className="mt-2 text-sm text-muted-foreground">{ABOUT[id].who}</p>
-      <p className="mt-4 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-        Includes
-      </p>
+      <p className="mt-4 font-mono text-xs uppercase r text-muted-foreground">Includes</p>
       <ul className="mt-2 space-y-1.5 text-sm text-foreground">
         {p.features.map((f) => (
           <li key={f} className="flex gap-2">
@@ -107,8 +112,8 @@ function PlanCard({ id }: { id: PlanId }) {
           </li>
         ))}
       </ul>
-      <p className="mt-4 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-        Limits
+      <p className="mt-4 font-mono text-xs uppercase r text-muted-foreground">
+        Daily allowance & terms
       </p>
       <ul className="mt-2 flex-1 space-y-1.5 text-sm text-muted-foreground">
         {p.limits.map((f) => (
@@ -120,20 +125,17 @@ function PlanCard({ id }: { id: PlanId }) {
       </ul>
       <p className="mt-4 text-xs text-muted-foreground">{ABOUT[id].click}</p>
       {id === "free" ? (
-        <Link
-          to="/app/billing"
-          className="mt-6 inline-flex justify-center rounded-full border border-border px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-primary/60 hover:bg-accent"
-        >
-          Explore Free
-        </Link>
+        <Button asChild variant="outline" className="mt-6 w-full">
+          <Link to="/app/billing" className="mt-6">
+            Explore Free <ArrowUpRight />
+          </Link>
+        </Button>
       ) : (
-        <Link
-          to="/app/checkout/$product"
-          params={{ product: id }}
-          className="mt-6 inline-flex justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-        >
-          Choose {p.name}
-        </Link>
+        <Button asChild className="mt-6 w-full">
+          <Link to="/app/checkout/$product" params={{ product: id }} className="mt-6">
+            Choose {p.name} <ArrowUpRight />
+          </Link>
+        </Button>
       )}
     </motion.div>
   );
@@ -145,15 +147,15 @@ function Pricing() {
       <div className="mx-auto max-w-6xl px-5 py-16">
         <Link
           to="/"
-          className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+          className="font-mono text-xs uppercase r text-muted-foreground hover:text-foreground"
         >
           ← GlobalMatrix
         </Link>
-        <h1 className="mt-6 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          Plans and pricing
+        <h1 className="mt-8 text-3xl font-semibold  text-foreground sm:text-5xl">
+          Intelligence. At your scale.
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Every plan lists what it actually includes today. Prices are in Indian rupees.
+          Start with the world. Go further with more daily AI briefs.
         </p>
         <div
           role="status"
@@ -163,11 +165,7 @@ function Pricing() {
           paid plans stay inactive until payment verification goes live.
         </div>
 
-        <motion.div
-          variants={stagger}
-          {...revealProps}
-          className="mt-10 grid gap-5 md:grid-cols-3"
-        >
+        <motion.div variants={stagger} {...revealProps} className="mt-10 grid gap-5 md:grid-cols-3">
           {ORDER.map((id) => (
             <PlanCard key={id} id={id} />
           ))}
@@ -207,9 +205,9 @@ function Pricing() {
           </div>
         </section>
 
-        <section className="mt-14 grid gap-6 rounded-xl border border-border bg-card p-6 md:grid-cols-[1fr_auto] md:items-start">
+        <section className="mt-14 grid gap-6 border-y border-border py-10 md:grid-cols-[1fr_auto] md:items-start">
           <div>
-            <span className="rounded bg-accent px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent-foreground">
+            <span className="rounded bg-accent px-2 py-0.5 font-mono text-xs uppercase r text-accent-foreground">
               One-time service · not a subscription
             </span>
             <h2 className="mt-3 text-xl font-semibold text-foreground">{CUSTOM_REPORT.name}</h2>

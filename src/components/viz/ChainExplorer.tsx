@@ -9,6 +9,7 @@ import { StatusBadge } from "@/components/viz/Provenance";
 import { buildStages, type ChainRow, type ChainStage, type ChainStageId } from "@/lib/intel/chain";
 import { riskColorForScore } from "@/lib/intel/visual";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 /**
  * Follow one event all the way through the world.
@@ -61,7 +62,7 @@ export function ChainExplorer({ className }: { className?: string }) {
     <Panel
       title="Follow an event through the world"
       meta="event → country → trade → energy → infrastructure → supply chain → industry → company → market"
-      className={cn("min-w-0", className)}
+      className={cn("gm-propagation-workspace min-w-0", className)}
     >
       <div className="flex flex-wrap items-center gap-2 border-b border-rule px-3 py-2">
         <label className="label text-muted-foreground" htmlFor="chain-event">
@@ -105,13 +106,14 @@ export function ChainExplorer({ className }: { className?: string }) {
               always has something to be about; the connector dash runs between
               them so it reads as directed flow, not as a row of equal chips. */}
           <nav aria-label="Propagation stages" className="border-b border-rule px-3 py-3">
-            <ol className="flex flex-wrap items-stretch gap-1.5">
+            <ol className="gm-stage-sequence flex items-stretch gap-3 overflow-x-auto pb-3">
               {stages.map((s, i) => {
                 const isActive = s.id === stage?.id;
                 const dim = s.unmeasured !== undefined && s.rows.length === 0;
                 return (
-                  <li key={s.id} className="relative min-w-0">
-                    <button
+                  <li key={s.id} className="relative min-w-[120px] flex-1">
+                    <Button
+                      variant="ghost"
                       type="button"
                       onClick={() => {
                         setStageId(s.id);
@@ -119,14 +121,14 @@ export function ChainExplorer({ className }: { className?: string }) {
                       }}
                       aria-pressed={isActive}
                       className={cn(
-                        "flex min-w-0 flex-col gap-0.5 rounded-md border px-2.5 py-1.5 text-left transition-colors",
+                        "gm-stage-button flex h-24 w-full min-w-0 flex-col items-start justify-between gap-3 rounded-md border px-3 py-3 text-left transition-colors",
                         isActive
                           ? "border-[var(--exec-cyan)] bg-[color-mix(in_srgb,var(--exec-cyan)_10%,transparent)]"
                           : "border-rule hover:border-foreground/40",
                       )}
                     >
                       <span className="flex items-center gap-1.5">
-                        <span className="num text-[11px] text-muted-foreground">
+                        <span className="num text-lg text-primary">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <span
@@ -147,7 +149,7 @@ export function ChainExplorer({ className }: { className?: string }) {
                           }}
                         />
                       </span>
-                    </button>
+                    </Button>
                     {i < stages.length - 1 ? (
                       <ArrowRight
                         className="pointer-events-none absolute top-1/2 -right-2 size-3 -translate-y-1/2 text-muted-foreground/50"

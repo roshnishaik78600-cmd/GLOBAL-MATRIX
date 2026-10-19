@@ -592,6 +592,151 @@
 .gm-map-stage {
   height: 360px;
 }
+/* Cartography-led storytelling and the research workspace. */
+:root {
+  --story-shade: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    color-mix(in srgb, var(--background) 96%, transparent) 20%,
+    color-mix(in srgb, var(--background) 20%, transparent) 66%,
+    transparent 100%
+  );
+  --research-light: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--foreground) 3%, var(--background)),
+    var(--background) 65%
+  );
+  --story-edge: color-mix(in srgb, var(--primary) 50%, var(--border));
+}
+.gm-cinematic-hero {
+  height: 720px;
+}
+.gm-cinematic-title {
+  font-size: 4.5rem;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+.gm-hero-cartography {
+  height: 610px;
+}
+.gm-cinematic-map {
+  height: 100%;
+}
+.gm-hero-cartography::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--story-shade);
+  pointer-events: none;
+}
+.gm-hero-caption {
+  background: linear-gradient(transparent, var(--background));
+}
+.gm-intelligence-rail {
+  transition: width 220ms ease;
+}
+.gm-rail-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: var(--primary);
+}
+.gm-research-header {
+  background: var(--research-light);
+}
+.gm-research-region {
+  border-top: 1px solid var(--border);
+  background: transparent;
+}
+.gm-research-dominant {
+  border: 1px solid var(--story-edge);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.gm-research-region > div:first-child {
+  padding-block: 18px;
+}
+.gm-overview-map .map-frame {
+  height: 480px;
+}
+.gm-overview-map {
+  position: relative;
+}
+.gm-overview-intro {
+  padding-top: 4px;
+}
+.gm-overview-intro + .gm-overview-map {
+  margin-top: -8px;
+}
+.gm-propagation-workspace {
+  border-radius: 6px;
+  border-color: var(--story-edge);
+}
+.gm-story-chain {
+  background: var(--background);
+}
+.gm-story-chain .panel-head {
+  padding: 20px;
+}
+.gm-story-chain .gm-stage-button {
+  white-space: normal;
+}
+.gm-stage-button[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--background));
+}
+.gm-subscription-card {
+  padding: 32px 26px;
+}
+.gm-subscription-card.gm-plan-featured {
+  border-color: var(--primary);
+}
+.gm-subscription-card > p:nth-of-type(1) {
+  font-size: 3rem;
+  margin-block: 18px;
+}
+.gm-subscription-card ul {
+  line-height: 1.7;
+}
+@media (min-width: 768px) {
+  .gm-research-page .t-page {
+    font-size: 2.5rem;
+  }
+  .gm-research-page .gm-body {
+    gap: 28px;
+  }
+  .gm-impact-story {
+    padding-block: 64px;
+  }
+}
+@media (max-width: 767px) {
+  .gm-cinematic-hero {
+    height: 680px;
+  }
+  .gm-cinematic-title {
+    font-size: 2.5rem;
+  }
+  .gm-hero-cartography {
+    height: 420px;
+  }
+  .gm-overview-map .map-frame {
+    height: 360px;
+  }
+  .gm-subscription-card {
+    padding: 26px;
+  }
+  .gm-research-page .t-page {
+    font-size: 2rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gm-intelligence-rail {
+    transition: none;
+  }
+}
 @media (min-width: 768px) {
   .gm-map-stage {
     height: 440px;
@@ -606,8 +751,16 @@
 /* Atmospheric copper glow for hero sections — pure decoration, no motion. */
 .gm-hero-glow {
   background:
-    radial-gradient(60% 55% at 18% 0%, color-mix(in oklch, var(--primary) 16%, transparent), transparent 70%),
-    radial-gradient(45% 40% at 85% 12%, color-mix(in oklch, var(--accent, var(--primary)) 10%, transparent), transparent 70%);
+    radial-gradient(
+      60% 55% at 18% 0%,
+      color-mix(in oklch, var(--primary) 16%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 40% at 85% 12%,
+      color-mix(in oklch, var(--accent, var(--primary)) 10%, transparent),
+      transparent 70%
+    );
 }
 
 /* Featured pricing card: copper edge light + soft lift shadow. */
@@ -615,7 +768,13 @@
   border-color: color-mix(in oklch, var(--primary) 65%, transparent);
   background:
     linear-gradient(var(--card), var(--card)) padding-box,
-    linear-gradient(160deg, color-mix(in oklch, var(--primary) 70%, transparent), transparent 45%, color-mix(in oklch, var(--primary) 35%, transparent)) border-box;
+    linear-gradient(
+        160deg,
+        color-mix(in oklch, var(--primary) 70%, transparent),
+        transparent 45%,
+        color-mix(in oklch, var(--primary) 35%, transparent)
+      )
+      border-box;
   box-shadow:
     0 0 0 1px color-mix(in oklch, var(--primary) 25%, transparent),
     0 18px 50px -18px color-mix(in oklch, var(--primary) 45%, transparent);
@@ -634,7 +793,11 @@
 /* Hairline card with a soft top light — the default "premium panel". */
 .gm-panel {
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, color-mix(in oklch, var(--card) 100%, var(--foreground) 2%), var(--card));
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--card) 100%, var(--foreground) 2%),
+    var(--card)
+  );
   border-radius: 1rem;
   box-shadow: inset 0 1px 0 color-mix(in oklch, var(--foreground) 6%, transparent);
 }
@@ -748,4 +911,35 @@
   .gm-draw {
     stroke-dashoffset: 0;
   }
+}
+
+/* Keep the atlas visible on compact laptop screens. */
+@media (min-width: 768px) and (max-height: 800px) {
+  .gm-research-header .gm-width {
+    padding-top: 20px;
+    padding-bottom: 18px;
+  }
+  .gm-research-header .t-body {
+    max-width: 40rem;
+    font-size: 13px;
+  }
+  .gm-research-header .t-page {
+    font-size: 2rem;
+  }
+  .gm-research-header .t-body {
+    margin-top: 6px;
+  }
+  .gm-overview-intro {
+    display: none;
+  }
+  .gm-overview-map {
+    margin-top: 0;
+  }
+  .gm-research-page main > .gm-width {
+    padding-top: 18px;
+  }
+}
+.gm-graph-workspace > section:first-child > .panel {
+  border-color: var(--story-edge);
+  background: var(--background);
 }
