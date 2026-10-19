@@ -1,4 +1,6 @@
 # Roadmap
+- [ ] New non-negotiable brief: replace sidebar-first shell; reconstruct overview, graph and each page family with distinct reference-derived layouts
+- [ ] Reorder homepage into seven narrative stages and verify reconstructed routes with preserved workflows
 - [x] Recreate live Orizon reference: extracted light/lime tokens, centered homepage, five-stage impact story, ecosystem and conversion sections
 - [x] Carry shared reference visual system through app, auth, pricing, checkout, loading and unavailable states
 - [x] Compare reference and updated preview; test public and signed-in demo order creation/cancellation at desktop/tablet/mobile sizes
