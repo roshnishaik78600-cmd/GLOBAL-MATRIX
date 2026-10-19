@@ -209,7 +209,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div
           id="gm-content"
           tabIndex={-1}
-          className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain pb-20 focus:outline-none lg:pb-0"
+          className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain pb-20 focus:outline-none md:pb-0"
         >
           {children}
         </div>
@@ -382,7 +382,7 @@ function MobileBar({ onOpenSearch }: { onOpenSearch: () => void }) {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 flex h-16 shrink-0 items-stretch border-t border-[var(--exec-hairline)] bg-[var(--exec-base)] lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 flex h-16 shrink-0 items-stretch border-t border-[var(--exec-hairline)] bg-[var(--exec-base)] md:hidden"
       aria-label="Primary"
     >
       {MOBILE_NAV.map((item) => {

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -10,8 +11,7 @@ const IDS: PlanId[] = ["free", "analyst", "business"];
 /** Short pricing summary + final call to action. Prices come from the central billing config. */
 export function PricingTeaser() {
   return (
-    <section aria-labelledby="pricing-teaser" className="card relative overflow-hidden p-6 sm:p-8">
-      <div aria-hidden className="gm-hero-glow pointer-events-none absolute inset-0 opacity-70" />
+    <section aria-labelledby="pricing-teaser" className="relative border-t border-border py-10">
       <div className="relative">
         <h2
           id="pricing-teaser"
@@ -25,17 +25,17 @@ export function PricingTeaser() {
         <motion.div
           variants={stagger}
           {...revealProps}
-          className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-8 grid gap-4 md:grid-cols-3"
         >
           {IDS.map((id) => (
             <motion.div
               key={id}
               variants={fadeUp}
               whileHover={hoverLift}
-              className="rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/70 p-4 transition-colors hover:border-[var(--exec-cyan)]"
+              className={`rounded-md border bg-card p-6 transition-colors hover:border-primary ${id === "analyst" ? "gm-plan-featured border-primary" : "border-border"}`}
             >
               <p className="text-[13px] text-[var(--exec-ink-dim)]">{PLANS[id].name}</p>
-              <p className="mt-1 text-[1.5rem] font-semibold text-[var(--exec-ink)]">
+              <p className="mt-1 text-[2.25rem] font-semibold text-[var(--exec-ink)]">
                 {formatINR(PLANS[id].price)}
                 {PLANS[id].period && (
                   <span className="text-[13px] font-normal text-[var(--exec-ink-dim)]"> /mo</span>
@@ -46,20 +46,9 @@ export function PricingTeaser() {
               </p>
             </motion.div>
           ))}
-          <motion.div
-            variants={fadeUp}
-            whileHover={hoverLift}
-            className="rounded-xl border border-[var(--exec-hairline)] bg-[var(--exec-panel)]/70 p-4 transition-colors hover:border-[var(--exec-cyan)]"
-          >
-            <p className="text-[13px] text-[var(--exec-ink-dim)]">Risk Brief</p>
-            <p className="mt-1 text-[1.5rem] font-semibold text-[var(--exec-ink)]">
-              {formatINR(CUSTOM_REPORT.price)}
-            </p>
-            <p className="mt-1 text-[12px] text-[var(--exec-ink-muted)]">
-              One-time, no subscription
-            </p>
-          </motion.div>
         </motion.div>
+        </motion.div>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6"><p className="text-sm text-muted-foreground">One focused risk brief <span className="text-foreground">{formatINR(CUSTOM_REPORT.price)}</span> · one-time</p><Button asChild variant="outline"><Link to="/app/checkout/$product" params={{product: "custom_report"}}>Request a Risk Brief <ArrowRight /></Link></Button></div>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             to="/app"

@@ -912,3 +912,34 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* Keep the atlas visible on compact laptop screens. */
+@media (min-width: 768px) and (max-height: 800px) {
+  .gm-research-header .gm-width {
+    padding-top: 20px;
+    padding-bottom: 18px;
+  }
+  .gm-research-header .t-body {
+    max-width: 40rem;
+    font-size: 13px;
+  }
+  .gm-research-header .t-page {
+    font-size: 2rem;
+  }
+  .gm-research-header .t-body {
+    margin-top: 6px;
+  }
+  .gm-overview-intro {
+    display: none;
+  }
+  .gm-overview-map {
+    margin-top: 0;
+  }
+  .gm-research-page main > .gm-width {
+    padding-top: 18px;
+  }
+}
+.gm-graph-workspace > section:first-child > .panel {
+  border-color: var(--story-edge);
+  background: var(--background);
+}
