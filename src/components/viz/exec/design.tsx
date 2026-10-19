@@ -62,8 +62,10 @@ export function PageFrame({
   children,
   footer,
   layout = "workspace",
+  visual,
 }: {
-  layout?: "workspace" | "report" | "directory" | "laboratory" | "register" | "notebook";
+  layout?: "workspace" | "report" | "directory" | "laboratory" | "register" | "notebook" | "atlas";
+  visual?: ReactNode;
   eyebrow: string;
   title: string;
   /** One sentence. A paragraph here is a Level-6 statement in a Level-1 slot. */
@@ -80,6 +82,7 @@ export function PageFrame({
     // worth of empty space below its footer.
     <ExecPage className={cn("gm-research-page flex min-h-full flex-col", `gm-layout-${layout}`)}>
       <header className="gm-research-header border-b border-[var(--exec-hairline)]">
+        {visual}
         <div className="gm-width px-4 pt-8 pb-6 lg:px-8">
           <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
             <div className="min-w-0 max-w-3xl">

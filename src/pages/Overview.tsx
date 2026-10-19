@@ -35,6 +35,8 @@ import {
 import { freshnessOf } from "@/lib/freshness";
 import { period as periodLabel } from "@/lib/numbers";
 import { Button } from "@/components/ui/button";
+import orbit from "@/assets/intelligence-orbit.jpg";
+import { FiveStageStory } from "@/components/landing/ReferenceStory";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
 
 /**
@@ -100,8 +102,10 @@ export default function Overview() {
 
   return (
     <PageFrame
+      layout="atlas"
+      visual={<div className="gm-atlas-identity"><img src={orbit} alt="" width={1536} height={1024} /><span className="gm-atlas-stage font-mono">01 / GLOBAL INTELLIGENCE</span></div>}
       eyebrow="Overview"
-      title="The world. In context."
+      title="See the world. Understand the impact."
       lede="Global signals, connected exposure, and the evidence behind every relationship."
       actions={
         <>
@@ -142,7 +146,11 @@ export default function Overview() {
     >
       {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
           support it rather than compete with it. */}
-      <Region width={8} dominant className="gm-overview-map">
+      <nav className="gm-atlas-index flex flex-wrap justify-center gap-6 border-b border-border pb-5 text-xs" aria-label="Intelligence stages">
+        {[{ id:"overview-atlas",label:"01 / The world" },{id:"overview-signals",label:"02 / The signals"},{id:"overview-impact",label:"03 / The impact"},{id:"overview-readings",label:"04 / The readings"}].map((stage)=><a key={stage.id} href={`#${stage.id}`} className="text-muted-foreground hover:text-primary">{stage.label}</a>)}
+      </nav>
+      <div id="overview-atlas" className="lg:col-span-12 scroll-mt-6">
+      <Region width={12} dominant className="gm-overview-map">
         <PanelHead
           title="Explore the exposure network"
           meta="land shading and arcs are model output"
@@ -161,9 +169,11 @@ export default function Overview() {
           />
         </div>
       </Region>
+      </div>
 
       {/* LEVEL 2 — what changed, as a readable feed. */}
-      <Region width={4} className="gm-overview-signals">
+      <div id="overview-signals" className="lg:col-span-12 scroll-mt-6">
+      <Region width={12} className="gm-overview-signals">
         <PanelHead
           title="Scenario intelligence"
           meta="Demonstration corpus · not live news"
@@ -223,6 +233,7 @@ export default function Overview() {
             })}
         </ul>
       </Region>
+      </div>
 
       {/* LEVEL 2 — the timeline of what happened. */}
       <Region width={12}>
@@ -249,7 +260,7 @@ export default function Overview() {
         )}
       </Region>
 
-      <div className="border-t border-border pt-8">
+      <div id="overview-impact" className="scroll-mt-6 border-t border-border pt-8">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p>
@@ -261,12 +272,13 @@ export default function Overview() {
             </Link>
           </Button>
         </div>
-        <ChainExplorer className="gm-story-chain" />
+        <FiveStageStory embedded />
+        <details className="border-t border-border py-5"><summary className="cursor-pointer text-sm font-semibold">Explore all nine propagation stages</summary><ChainExplorer className="gm-story-chain" /></details>
       </div>
       {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
           two columns each, so every headline number sits on the same baseline as
           the panels below it rather than in a card of its own. */}
-      <Region width={12}>
+      <div id="overview-readings" className="lg:col-span-12 scroll-mt-6"><Region width={12}>
         <MetricGrid columns={6}>
           <Metric
             label="Mean composite"
@@ -312,7 +324,7 @@ export default function Overview() {
             hint="Events falling inside the selected window"
           />
         </MetricGrid>
-      </Region>
+      </Region></div>
 
       {/* LEVEL 2 — the radar. One tile per row, because this region is four of
           the twelve columns and six tiles across that width would be unreadable. */}
