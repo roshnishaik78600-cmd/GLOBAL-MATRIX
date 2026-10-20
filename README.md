@@ -186,6 +186,6 @@ GlobalMatrix is an evolving risk-intelligence product. Its reliability depends o
 ---
 
 <p align="center">
-  <strong>Built by Roshnishaik78600</strong><br/>
+  <strong>Built by Roshni Shaik</strong><br/>
   Computer Science & Engineering · AI · Data Intelligence · Cybersecurity
 </p>
