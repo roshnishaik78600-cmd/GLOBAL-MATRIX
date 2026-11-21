@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@/lib/router-shim";
-import { ArrowRight, ArrowUpRight, Globe2, Menu, Network, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Menu, Network, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@/lib/backend/shim";
@@ -40,7 +40,7 @@ export function ReferenceNav() {
       >
         <div className="gm-width flex h-16 items-center justify-between gap-4 px-5 sm:px-8">
           <Link to="/" className="flex items-center gap-2 font-semibold">
-            <Globe2 className="size-7 text-primary" />
+            <img src="/logo-mark.svg" alt="" aria-hidden className="size-7 shrink-0" />
             <span>GlobalMatrix</span>
           </Link>
           <div className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">

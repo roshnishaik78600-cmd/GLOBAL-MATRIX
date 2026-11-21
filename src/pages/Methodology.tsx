@@ -73,7 +73,7 @@ export default function Methodology() {
       <nav className="sticky top-0 z-30 border-b border-[var(--exec-hairline)] bg-[var(--exec-base)]/90 backdrop-blur">
         <div className="gm-width flex min-h-16 flex-wrap items-center gap-2 px-4 py-2 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
+            <img src="/logo-mark.svg" alt="" aria-hidden className="size-7 shrink-0" />
             <span className="truncate text-[14px] font-semibold tracking-[0.2em] text-[var(--exec-ink)] uppercase">
               Globalmatrix
             </span>

@@ -15,7 +15,7 @@ export default function NotFound() {
       <header className="border-b border-[var(--exec-hairline)]">
         <div className="gm-width flex h-16 items-center px-4 lg:px-8">
           <Link to="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
+            <img src="/logo-mark.svg" alt="" aria-hidden className="size-7 shrink-0" />
             <span className="truncate text-[14px] font-semibold tracking-[0.2em] uppercase">
               Globalmatrix
             </span>

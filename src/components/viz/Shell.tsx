@@ -103,7 +103,7 @@ export function Shell({ children }: { children: ReactNode }) {
             className="flex min-w-0 shrink-0 items-center gap-2.5"
             aria-label="GlobalMatrix, overview"
           >
-            <span className="size-2 shrink-0 rounded-sm bg-[var(--exec-cyan)]" aria-hidden />
+            <img src="/logo-mark.svg" alt="" aria-hidden className="size-7 shrink-0" />
             <span className="truncate text-[16px] font-semibold text-foreground">GlobalMatrix</span>
           </Link>
 

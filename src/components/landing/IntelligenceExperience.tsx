@@ -152,7 +152,7 @@ export function IntelligenceCore() {
             <path d="M300 240L120 75M300 240L480 75M300 240L80 240M300 240L520 240M300 240L120 405M300 240L480 405" />
           </svg>
           <div className="gm-core-center">
-            <Network className="size-8" />
+            <img src="/logo-mark.svg" alt="" aria-hidden className="size-10" />
             <span>GlobalMatrix</span>
             <small>INTELLIGENCE CORE</small>
           </div>
