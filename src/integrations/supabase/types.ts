@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit_logs: {
+        Row: {
+          action: string
+          actor_id: string
+          created_at: string
+          detail: string | null
+          id: string
+          target_id: string | null
+          target_type: string
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          target_id?: string | null
+          target_type: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          created_at?: string
+          detail?: string | null
+          id?: string
+          target_id?: string | null
+          target_type?: string
+        }
+        Relationships: []
+      }
       annotations: {
         Row: {
           body: string
@@ -157,6 +187,7 @@ export type Database = {
       }
       inquiries: {
         Row: {
+          admin_note: string | null
           company: string | null
           created_at: string
           created_day: string
@@ -165,9 +196,12 @@ export type Database = {
           kind: string
           message: string
           name: string
+          priority: string
           status: string
+          updated_at: string
         }
         Insert: {
+          admin_note?: string | null
           company?: string | null
           created_at?: string
           created_day?: string
@@ -176,9 +210,12 @@ export type Database = {
           kind: string
           message: string
           name: string
+          priority?: string
           status?: string
+          updated_at?: string
         }
         Update: {
+          admin_note?: string | null
           company?: string | null
           created_at?: string
           created_day?: string
@@ -187,7 +224,9 @@ export type Database = {
           kind?: string
           message?: string
           name?: string
+          priority?: string
           status?: string
+          updated_at?: string
         }
         Relationships: []
       }

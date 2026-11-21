@@ -6,6 +6,12 @@ import { formatINR } from "@/lib/commerce";
 import { MfaGate } from "@/components/admin/MfaGate";
 import { supabase } from "@/integrations/supabase/client";
 import { adminOverview, adminDecideOrder } from "@/lib/billing/billing.functions";
+import {
+  AdminActivityPanel,
+  CustomersPanel,
+  SupportPanel,
+  useAdminConsole,
+} from "@/components/admin/AdminConsole";
 
 export const Route = createFileRoute("/admin")({
   staticData: { sitemap: false },
@@ -29,10 +35,13 @@ export const Route = createFileRoute("/admin")({
 type Data = Awaited<ReturnType<typeof adminOverview>>;
 const TABS = [
   "Overview",
+  "Customers",
+  "Support inbox",
   "Verification queue",
   "Orders",
   "Subscriptions",
   "Audit history",
+  "Admin activity",
   "Settings",
 ] as const;
 
@@ -93,6 +102,37 @@ function Admin() {
       </main>
     );
   if (!data) return <p className="p-8 text-sm text-muted-foreground">Loading…</p>;
+  return (
+    <AdminBody
+      data={data}
+      refresh={refresh}
+      tab={tab}
+      setTab={setTab}
+      msg={msg}
+      setMsg={setMsg}
+      decide={decide}
+    />
+  );
+}
+
+function AdminBody({
+  data,
+  refresh,
+  tab,
+  setTab,
+  msg,
+  setMsg,
+  decide,
+}: {
+  data: Data;
+  refresh: () => void;
+  tab: (typeof TABS)[number];
+  setTab: (t: (typeof TABS)[number]) => void;
+  msg: string | null;
+  setMsg: (m: string | null) => void;
+  decide: ReturnType<typeof useServerFn<typeof adminDecideOrder>>;
+}) {
+  const c = useAdminConsole();
 
   const queue = data.orders.filter((o) => o.status === "pending_verification");
   const act = async (id: string, decision: "verified" | "rejected") => {
@@ -187,6 +227,9 @@ function Admin() {
               }
             />
           )}
+          {tab === "Customers" && <CustomersPanel c={c} />}
+          {tab === "Support inbox" && <SupportPanel c={c} />}
+          {tab === "Admin activity" && <AdminActivityPanel c={c} />}
           {tab === "Subscriptions" && (
             <Table
               rows={data.subscriptions}

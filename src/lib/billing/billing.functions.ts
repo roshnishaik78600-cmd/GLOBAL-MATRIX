@@ -181,7 +181,7 @@ export const cancelOrder = createServerFn({ method: "POST" })
 /* Admin -------------------------------------------------------------- */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- receives the request-scoped client from auth middleware
-async function assertAdmin(context: { supabase: any; userId: string; claims: unknown }) {
+export async function assertAdmin(context: { supabase: any; userId: string; claims: unknown }) {
   const { data } = await context.supabase.rpc("has_role", {
     _user_id: context.userId,
     _role: "admin",
