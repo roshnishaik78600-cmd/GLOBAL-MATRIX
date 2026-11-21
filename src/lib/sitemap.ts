@@ -66,9 +66,7 @@ function isSafeSitemapPath(pathname: string): boolean {
   if (!pathname.startsWith("/") || pathname.startsWith("//") || /[?#\\]/.test(pathname))
     return false;
   try {
-    return (
-      decodeURI(new URL(pathname, "https://sitemap.invalid").pathname) === decodeURI(pathname)
-    );
+    return decodeURI(new URL(pathname, "https://sitemap.invalid").pathname) === decodeURI(pathname);
   } catch {
     return false;
   }
