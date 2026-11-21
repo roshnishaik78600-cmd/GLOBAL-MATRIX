@@ -1,0 +1,2 @@
+DROP POLICY IF EXISTS "anyone reads observations" ON public.observations;
+CREATE POLICY "anyone reads successful observations" ON public.observations FOR SELECT TO anon, authenticated USING (ok = true);

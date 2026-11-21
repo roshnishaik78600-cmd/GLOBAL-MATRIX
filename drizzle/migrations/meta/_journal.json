@@ -57,6 +57,13 @@
       "when": 1792399470138,
       "tag": "0007_unlimited_business_brief_reservation",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1795242220587,
+      "tag": "0008_restrict_public_observations",
+      "breakpoints": true
     }
   ]
 }
