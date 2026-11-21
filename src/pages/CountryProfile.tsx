@@ -566,9 +566,9 @@ export default function CountryProfile() {
               {[...exposure.contributions]
                 .sort((a, b) => b.contribution - a.contribution)
                 .slice(0, 8)
-                .map((c) => (
+                .map((c, i) => (
                   <motion.li
-                    key={`${c.eventId}-${c.title}`}
+                    key={`${c.eventId}-${c.title}-${i}`}
                     variants={{
                       hidden: { opacity: 0, y: 6 },
                       shown: { opacity: 1, y: 0 },
