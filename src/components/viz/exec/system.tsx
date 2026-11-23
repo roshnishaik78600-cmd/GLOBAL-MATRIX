@@ -245,10 +245,10 @@ export function ProvenanceFoot({
           {source.label}
         </a>
       ) : null}
-      {period ? <span className="exec-label">as of {period}</span> : null}
+      {period ? <span className="exec-label">data period {period}</span> : null}
       {retrievedAt ? (
         <span className="exec-num text-[12px] text-[var(--exec-ink-dim)]">
-          UPDATED {utcStamp(retrievedAt)}
+          RETRIEVED {utcStamp(retrievedAt)}
         </span>
       ) : null}
       <FreshnessTag freshness={freshness} className="ml-auto" />

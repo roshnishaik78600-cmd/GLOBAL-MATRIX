@@ -87,10 +87,10 @@ export function SourceLine({
         </a>
       ) : null}
       {asOf ? (
-        <span className="label whitespace-nowrap text-muted-foreground">as of {asOf}</span>
+        <span className="label whitespace-nowrap text-muted-foreground">data period {asOf}</span>
       ) : null}
       <span className="label whitespace-nowrap text-muted-foreground/70">
-        fetched {timestamp(provenance.retrievedAt)}
+        retrieved {timestamp(provenance.retrievedAt)}
       </span>
       <StatusBadge status={provenance.status} />
     </div>

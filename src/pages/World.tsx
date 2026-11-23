@@ -1,3 +1,4 @@
+import { scenarioEventStatus } from "@/lib/event-status";
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link, useNavigate, useSearchParams } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
@@ -153,46 +154,12 @@ function StatusTag({
   );
 }
 
-/**
- * Event recency, stated against the corpus's own timeline rather than the
- * wall clock: the corpus is a fixed scenario set, so "LIVE" means "detected
- * within three days of the newest detection in the corpus", and the tooltip
- * says exactly that instead of implying a stream that does not exist.
- */
-function eventStatus(detectedAt: string, corpusLatest: string) {
-  if (!detectedAt || !corpusLatest) {
-    return {
-      label: "UNAVAILABLE",
-      colour: "var(--exec-crimson)",
-      help: "No detection date is recorded for this event.",
-    };
-  }
-  const age = (Date.parse(corpusLatest) - Date.parse(detectedAt)) / 86_400_000;
-  if (!Number.isFinite(age)) {
-    return {
-      label: "UNAVAILABLE",
-      colour: "var(--exec-crimson)",
-      help: "The detection date could not be parsed.",
-    };
-  }
-  if (age <= 3) {
-    return {
-      label: "LIVE",
-      colour: "var(--exec-emerald)",
-      help: `Detected ${detectedAt}, within 3 days of the corpus's newest detection (${corpusLatest}).`,
-    };
-  }
-  if (age <= 21) {
-    return {
-      label: "RECENT",
-      colour: "var(--exec-cyan)",
-      help: `Detected ${detectedAt}, ${Math.round(age)} days before the corpus's newest detection (${corpusLatest}).`,
-    };
-  }
+/** Corpus events are demonstration data: always SCENARIO, never LIVE. */
+function eventStatus(detectedAt: string, _corpusLatest: string) {
+  const s = scenarioEventStatus(detectedAt, Date.now());
   return {
-    label: "HISTORICAL",
-    colour: "var(--exec-ink-dim)",
-    help: `Detected ${detectedAt}, ${Math.round(age)} days before the corpus's newest detection (${corpusLatest}).`,
+    ...s,
+    colour: s.label === "SCENARIO" ? "var(--exec-violet)" : "var(--exec-crimson)",
   };
 }
 
@@ -1340,8 +1307,8 @@ function EvidenceCard({
   }[] = [
     {
       title: "Event detections",
-      basis: "observed",
-      body: "Each event is anchored to dated signals from named sources with reliability weights. The status tag in the header reports the detection date against the corpus's newest detection.",
+      basis: "scenario",
+      body: "Events on this page come from a fixed demonstration corpus. Each is tied to dated example signals; the header tag always reads SCENARIO and states the event's date and age against today's date.",
     },
     {
       title: "Propagation & exposure",
@@ -1357,7 +1324,7 @@ function EvidenceCard({
       title: "Reported growth",
       basis: growthSource ? "observed" : "unavailable",
       body: growthSource
-        ? "Real GDP growth as reported by the World Bank, shown only where the Bank publishes a reading for that economy — never estimated, never carried forward."
+        ? "Real GDP growth as reported by the World Bank, shown only where the Bank publishes a reading for that economy — never estimated, never carried forward. This is a reported economic indicator, not a risk score. The data year is the year the figure describes; the retrieval time is only when GlobalMatrix last downloaded it."
         : "No World Bank macro reading has been fetched, so the Economic column stays absent rather than borrowing a number.",
       source: growthSource,
     },
