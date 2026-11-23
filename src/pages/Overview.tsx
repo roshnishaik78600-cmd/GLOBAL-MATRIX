@@ -177,11 +177,11 @@ export default function Overview() {
               hint="Places the map can plot"
             />
             <Metric
-              label="Active signals"
+              label="Elevated demo events"
               value={count((stats?.bands?.high ?? 0) + (stats?.bands?.severe ?? 0))}
               basis="model"
-              period={timeWindow.toUpperCase()}
-              hint="Events at elevated-or-worse composite score inside the active window"
+              period="all dates"
+              hint="Demonstration events at high or severe composite score, across all dates (not limited to the selected window)"
             />
             <Metric
               label="Demo events in window"

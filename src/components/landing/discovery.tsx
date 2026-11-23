@@ -91,10 +91,10 @@ export function WhatsChanging({ events }: { events: TimelineEvent[] }) {
   return (
     <ExecCard>
       <SectionTitle
-        meta={`${events.length} events · newest first`}
+        meta={`${events.length} demonstration events · historical dates · newest first`}
         right={<BasisTag basis="scenario" />}
       >
-        What changed
+        Demo event timeline
       </SectionTitle>
 
       {/* Horizontal rail. `snap-x` so a card always lands flush on mobile, where
