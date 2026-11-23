@@ -226,6 +226,30 @@ export default function Landing() {
       <StoryProgress />
 
       <IntelligenceHero />
+      <div className="gm-width px-4 pt-8 lg:px-8">
+        <DataAndEvidence />
+      </div>
+      <section
+        id="demo-environment"
+        aria-labelledby="demo-env-heading"
+        className="gm-width mt-10 px-4 lg:px-8"
+      >
+        <div className="gm-demo-banner">
+          <span className="gm-term-dot" aria-hidden />
+          <div className="min-w-0">
+            <p id="demo-env-heading" className="font-mono text-[12px] tracking-[0.14em] text-primary">
+              DEMONSTRATION ENVIRONMENT · NOT LIVE INTELLIGENCE
+            </p>
+            <p className="mt-1 text-[13px] text-muted-foreground">
+              Everything below uses a fixed demonstration event set and a modelled exposure network
+              to show how the method works. Scores are model estimates, not observations.{" "}
+              <Link to="/methodology" className="text-primary underline-offset-4 hover:underline">
+                Methodology
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
       <FiveStageStory />
       <ProductShowcases />
       <section
@@ -321,7 +345,6 @@ export default function Landing() {
 
               {/* DATA & EVIDENCE — what every picture above is built from, with
               each connector's own freshness, stated on the page that uses it. */}
-              <DataAndEvidence />
 
               {/* EXPLORE — the six panels, each previewed from the board it opens. */}
               <section>
@@ -508,7 +531,14 @@ function DataAndEvidence() {
   return (
     <section>
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="t-section text-[var(--exec-ink)]">Data &amp; evidence</h2>
+        <div className="min-w-0">
+          <p className="font-mono text-[12px] tracking-[0.14em] text-primary">VERIFIED OBSERVATIONS</p>
+          <h2 className="t-section mt-1 text-[var(--exec-ink)]">Live source readings</h2>
+          <p className="mt-1 text-[13px] text-muted-foreground">
+            Stored readings from public publishers, with their real retrieval time. Stale or failing
+            sources are shown as such.
+          </p>
+        </div>
         <Link
           to="/app/data"
           className="exec-label text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
@@ -556,6 +586,13 @@ function DataAndEvidence() {
                   <span className="exec-label">
                     {h.readingCount} verified reading
                     {h.readingCount === 1 ? "" : "s"}
+                  </span>
+                  <span className="exec-num w-full text-[12px] text-[var(--exec-ink-dim)] sm:w-auto">
+                    {h.lastSuccessAt
+                      ? `retrieved ${new Date(h.lastSuccessAt).toISOString().slice(0, 16).replace("T", " ")} UTC`
+                      : "no stored reading"}
+                    {h.asOf ? ` · data period ${h.asOf}` : ""}
+                    {h.problem ? ` · last attempt failed: ${h.problem}` : ""}
                   </span>
                 </li>
               );

@@ -48,6 +48,7 @@ import { Route as AppCountryNodeIdRouteImport } from './routes/app/country/$node
 import { Route as AppEventEventIdRouteImport } from './routes/app/event/$eventId'
 import { Route as AppIndustryIndustryIdRouteImport } from './routes/app/industry/$industryId'
 import { Route as AppReportEventIdRouteImport } from './routes/app/report/$eventId'
+import { Route as ApiPublicJobsRefreshSourcesRouteImport } from './routes/api/public/jobs/refresh-sources'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -244,6 +245,12 @@ const AppReportEventIdRoute = AppReportEventIdRouteImport.update({
   path: '/report/$eventId',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicJobsRefreshSourcesRoute =
+  ApiPublicJobsRefreshSourcesRouteImport.update({
+    id: '/api/public/jobs/refresh-sources',
+    path: '/api/public/jobs/refresh-sources',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -285,6 +292,7 @@ export interface FileRoutesByFullPath {
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
   '/app/report/$eventId': typeof AppReportEventIdRoute
+  '/api/public/jobs/refresh-sources': typeof ApiPublicJobsRefreshSourcesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -325,6 +333,7 @@ export interface FileRoutesByTo {
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
   '/app/report/$eventId': typeof AppReportEventIdRoute
+  '/api/public/jobs/refresh-sources': typeof ApiPublicJobsRefreshSourcesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -367,6 +376,7 @@ export interface FileRoutesById {
   '/app/event/$eventId': typeof AppEventEventIdRoute
   '/app/industry/$industryId': typeof AppIndustryIndustryIdRoute
   '/app/report/$eventId': typeof AppReportEventIdRoute
+  '/api/public/jobs/refresh-sources': typeof ApiPublicJobsRefreshSourcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -410,6 +420,7 @@ export interface FileRouteTypes {
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
     | '/app/report/$eventId'
+    | '/api/public/jobs/refresh-sources'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -450,6 +461,7 @@ export interface FileRouteTypes {
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
     | '/app/report/$eventId'
+    | '/api/public/jobs/refresh-sources'
   id:
     | '__root__'
     | '/'
@@ -491,6 +503,7 @@ export interface FileRouteTypes {
     | '/app/event/$eventId'
     | '/app/industry/$industryId'
     | '/app/report/$eventId'
+    | '/api/public/jobs/refresh-sources'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -508,6 +521,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
+  ApiPublicJobsRefreshSourcesRoute: typeof ApiPublicJobsRefreshSourcesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -785,6 +799,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppReportEventIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/jobs/refresh-sources': {
+      id: '/api/public/jobs/refresh-sources'
+      path: '/api/public/jobs/refresh-sources'
+      fullPath: '/api/public/jobs/refresh-sources'
+      preLoaderRoute: typeof ApiPublicJobsRefreshSourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -861,6 +882,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
+  ApiPublicJobsRefreshSourcesRoute: ApiPublicJobsRefreshSourcesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

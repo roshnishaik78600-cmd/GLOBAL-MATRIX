@@ -2760,3 +2760,16 @@ table tbody tr:hover {
 *::-webkit-scrollbar-track {
   background: transparent;
 }
+
+.gm-demo-banner {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.9rem 1rem;
+  border: 1px dashed color-mix(in oklch, var(--maroon) 70%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in oklch, var(--burgundy) 16%, var(--card));
+}
+.gm-demo-banner .gm-term-dot {
+  margin-top: 0.3rem;
+}
