@@ -155,18 +155,20 @@ async function eventDetail(args: { eventId: string }) {
   } | null = null;
 
   if (userId) {
-    const { data: w } = await supabase
+    const { data: w, error: wErr } = await supabase
       .from("watchlist")
       .select("event_id")
       .eq("user_id", userId)
       .in("event_id", [args.eventId, `EVENT:${args.eventId}`]);
+    if (wErr) throw wErr;
     watched = !!(w && w.length > 0);
 
-    const { data: a } = await supabase
+    const { data: a, error: aErr } = await supabase
       .from("annotations")
       .select("*")
       .eq("user_id", userId)
       .eq("event_id", args.eventId);
+    if (aErr) throw aErr;
     annotations = (a ?? []).map((r) => ({
       id: r.id,
       body: r.body,
@@ -1039,21 +1041,24 @@ async function toggleWatch(args: { eventId: string }) {
   const bare = eventId.startsWith("EVENT:") ? eventId.slice("EVENT:".length) : eventId;
   const forms = isEventKey ? [...new Set([eventId, bare, `EVENT:${bare}`])] : [eventId];
 
-  const { data: rows } = await supabase
+  const { data: rows, error: findErr } = await supabase
     .from("watchlist")
     .select("id, event_id")
     .eq("user_id", userId)
     .in("event_id", forms);
+  if (findErr) throw findErr;
   const existing = rows?.[0];
 
   if (existing) {
-    await supabase.from("watchlist").delete().eq("id", existing.id);
+    const { error: delErr } = await supabase.from("watchlist").delete().eq("id", existing.id);
+    if (delErr) throw delErr;
     return { watched: false };
   }
 
-  await supabase
+  const { error: insErr } = await supabase
     .from("watchlist")
     .insert({ user_id: userId, event_id: isEventKey ? `EVENT:${bare}` : eventId });
+  if (insErr) throw insErr;
   return { watched: true };
 }
 
@@ -1086,18 +1091,20 @@ async function deleteAnnotation(args: { annotationId: string }) {
 async function watchlist() {
   const userId = await currentUserId();
   if (!userId) return [];
-  const { data } = await supabase.from("watchlist").select("*").eq("user_id", userId);
+  const { data, error } = await supabase.from("watchlist").select("*").eq("user_id", userId);
+  if (error) throw error;
   return data ?? [];
 }
 
 async function annotations(args: { eventId: string }) {
   const userId = await currentUserId();
   if (!userId) return [];
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("annotations")
     .select("*")
     .eq("user_id", userId)
     .eq("event_id", args.eventId);
+  if (error) throw error;
   return data ?? [];
 }
 

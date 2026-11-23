@@ -78,6 +78,13 @@
       "when": 1795252109934,
       "tag": "0010_admin_allowlist_support_email",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1795443730175,
+      "tag": "0011_brief_claim_refunds_and_role_check_access",
+      "breakpoints": true
     }
   ]
 }

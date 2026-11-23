@@ -72,16 +72,19 @@ export type Database = {
         Row: {
           at: string
           id: string
+          refunded: boolean
           user_id: string
         }
         Insert: {
           at?: string
           id?: string
+          refunded?: boolean
           user_id: string
         }
         Update: {
           at?: string
           id?: string
+          refunded?: boolean
           user_id?: string
         }
         Relationships: []

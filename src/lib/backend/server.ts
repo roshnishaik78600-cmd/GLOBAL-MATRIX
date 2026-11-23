@@ -189,6 +189,19 @@ export const generateBrief = createServerFn({ method: "POST" })
       };
     }
 
+    const refund = async () => {
+      const { data: last } = await supabaseAdmin
+        .from("brief_claims")
+        .select("id")
+        .eq("user_id", userId)
+        .order("at", { ascending: false })
+        .limit(1);
+      const id = last?.[0]?.id;
+      if (id) {
+        const { error } = await supabaseAdmin.from("brief_claims").update({ refunded: true }).eq("id", id);
+        if (error) console.error("[brief] refund failed", error.message);
+      }
+    };
     const prompt = buildPrompt(assessment);
 
     let response: Response;
@@ -218,6 +231,7 @@ export const generateBrief = createServerFn({ method: "POST" })
         }),
       });
     } catch {
+      await refund();
       return {
         ok: false,
         reason: "upstream_error",
@@ -229,6 +243,7 @@ export const generateBrief = createServerFn({ method: "POST" })
       const detail = await response.text();
       console.error("[brief] gateway error", response.status, detail.slice(0, 500));
       if (response.status === 429) {
+        await refund();
         return {
           ok: false,
           reason: "rate_limited",
@@ -236,12 +251,14 @@ export const generateBrief = createServerFn({ method: "POST" })
         };
       }
       if (response.status === 402) {
+        await refund();
         return {
           ok: false,
           reason: "upstream_error",
           message: "AI credits are exhausted for this workspace. Add credits, then retry.",
         };
       }
+      await refund();
       return {
         ok: false,
         reason: "upstream_error",
@@ -253,6 +270,7 @@ export const generateBrief = createServerFn({ method: "POST" })
     try {
       payload = (await response.json()) as typeof payload;
     } catch {
+      await refund();
       return {
         ok: false,
         reason: "unparseable",
@@ -261,6 +279,7 @@ export const generateBrief = createServerFn({ method: "POST" })
     }
     const text = payload.choices?.[0]?.message?.content?.trim() ?? "";
     if (!text) {
+      await refund();
       return {
         ok: false,
         reason: "empty_response",
@@ -270,6 +289,7 @@ export const generateBrief = createServerFn({ method: "POST" })
 
     const parsed = parseBrief(text);
     if (!parsed) {
+      await refund();
       return {
         ok: false,
         reason: "unparseable",
@@ -279,18 +299,31 @@ export const generateBrief = createServerFn({ method: "POST" })
     }
 
     const createdAt = Date.now();
-    await supabaseAdmin.from("briefs").delete().eq("user_id", userId).eq("event_id", data.eventId);
-    const { error: saveError } = await supabaseAdmin.from("briefs").insert({
-      user_id: userId,
-      event_id: data.eventId,
-      thesis: parsed.thesis,
-      channels: parsed.channels,
-      caveats: parsed.caveats,
-      model: MODEL,
-      corpus_version: CORPUS_VERSION,
-      created_at: new Date(createdAt).toISOString(),
-    });
-    if (saveError) console.error("[brief] save failed", saveError.message);
+    const { data: saved, error: saveError } = await supabaseAdmin
+      .from("briefs")
+      .insert({
+        user_id: userId,
+        event_id: data.eventId,
+        thesis: parsed.thesis,
+        channels: parsed.channels,
+        caveats: parsed.caveats,
+        model: MODEL,
+        corpus_version: CORPUS_VERSION,
+        created_at: new Date(createdAt).toISOString(),
+      })
+      .select("id")
+      .single();
+    if (saveError || !saved) {
+      console.error("[brief] save failed", saveError?.message);
+      return { ok: true, brief: parsed, createdAt };
+    }
+    const { error: pruneError } = await supabaseAdmin
+      .from("briefs")
+      .delete()
+      .eq("user_id", userId)
+      .eq("event_id", data.eventId)
+      .neq("id", saved.id);
+    if (pruneError) console.error("[brief] prune failed", pruneError.message);
 
     return { ok: true, brief: parsed, createdAt };
   });

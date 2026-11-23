@@ -35,7 +35,10 @@ export const adminConsole = createServerFn({ method: "POST" })
         created_at: u.created_at,
         last_sign_in_at: u.last_sign_in_at ?? null,
         confirmed: !!u.email_confirmed_at,
-        plan: s && s.status === "active" ? s.plan : "free",
+        plan:
+          s && s.status === "active" && (!s.expires_at || Date.parse(s.expires_at) > Date.now())
+            ? s.plan
+            : "free",
         status: s?.status ?? "none",
         expires_at: s?.expires_at ?? null,
       };
