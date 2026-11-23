@@ -143,7 +143,7 @@ export default function Industries() {
                   </div>
 
                   <div className="col-span-6">
-                    <Label>Live load</Label>
+                    <Label>Modelled load</Label>
                     <p className="exec-num mt-1 text-[1.75rem] leading-none font-bold text-[var(--exec-ink)]">
                       {pct(row.load)}
                     </p>

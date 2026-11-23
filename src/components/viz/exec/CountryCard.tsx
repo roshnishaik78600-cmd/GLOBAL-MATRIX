@@ -117,7 +117,7 @@ export function CountryCard({ row, index = 0 }: { row: ExecCountry; index?: numb
       {/* Load + fragility */}
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
-          <p className="exec-label">Live load</p>
+          <p className="exec-label">Modelled load</p>
           <p
             className="exec-num mt-1 text-[22px] leading-none font-bold tracking-[-0.02em]"
             style={{

@@ -925,7 +925,7 @@ function PlacePanel({
                 </span>
                 <div className="min-w-0">
                   <p className="text-[13px] leading-tight font-semibold text-[var(--exec-ink)]">
-                    {matrixRow ? "Weighted exposure" : "Live load"}
+                    {matrixRow ? "Weighted exposure" : "Modelled load"}
                   </p>
                   <BasisChip basis="model" className="mt-1" />
                 </div>

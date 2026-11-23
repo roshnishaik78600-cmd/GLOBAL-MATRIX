@@ -189,7 +189,7 @@ export function ExecLegend() {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       {[
-        ["Live load", "var(--exec-cyan)"],
+        ["Modelled load", "var(--exec-cyan)"],
         ["Fragility · low", "var(--exec-emerald)"],
         ["Fragility · moderate", "var(--exec-amber)"],
         ["Fragility · high", "var(--exec-crimson)"],

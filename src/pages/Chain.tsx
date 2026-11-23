@@ -20,6 +20,9 @@ import { useFocus } from "@/lib/focus";
  */
 export default function ChainPage() {
   const overview = useQuery(api.intel.overview);
+  // Canonical ranking: the same weighted signal matrix the World map reads, so
+  // both pages name the same top economy for the same scenario corpus.
+  const matrix = useQuery(api.intel.signalMatrix);
   const navigate = useNavigate();
   const { focus, toggle, clear } = useFocus();
   const selected = focus?.kind === "node" ? focus.id : null;
@@ -35,7 +38,10 @@ export default function ChainPage() {
     );
   }
 
-  const hottest = overview.hottestCountries[0];
+  const ranked = [
+    ...((matrix?.rows ?? []) as Array<{ nodeId: string; label: string; overall: number }>),
+  ].sort((a, b) => b.overall - a.overall);
+  const hottest = ranked[0];
   // Count only places the map can actually draw, so the number in the caption
   // matches the markers in the picture.
   const plottablePlaces = overview.mapNodes.filter((n) => isPlottable(n.nodeId)).length;
@@ -59,8 +65,10 @@ export default function ChainPage() {
           {
             q: "Where does it land?",
             a: hottest
-              ? `${hottest.label} carries the most exposure at ${(hottest.load * 100).toFixed(0)}%.`
-              : "No country exposure resolved.",
+              ? `${hottest.label} ranks highest in modelled weighted exposure (${Math.round(hottest.overall * 100)} of 100, demonstration scenario — same calculation as the World map).`
+              : matrix === undefined
+                ? "Loading the modelled exposure ranking."
+                : "Modelled exposure ranking unavailable.",
             href: hottest ? `/app/country/${hottest.nodeId}` : undefined,
           },
           {
@@ -80,7 +88,8 @@ export default function ChainPage() {
         <FiveStageStory embedded />
         <details className="border-t border-border py-5">
           <summary className="cursor-pointer text-lg font-semibold">
-            Full nine-stage analysis
+            Full nine-stage analysis (the seven-stage view above is a simplified presentation of the
+            same model)
           </summary>
           <ChainExplorer />
         </details>
@@ -119,7 +128,7 @@ export default function ChainPage() {
                   <span className="label">Pick a place</span>
                 </div>
                 <p className="p-3 text-[13px] leading-relaxed text-muted-foreground">
-                  Select any country, bloc or chokepoint on the map to see its live load, its
+                  Select any country, bloc or chokepoint on the map to see its modelled load, its
                   reported growth and its reported trade — each with the source it came from.
                 </p>
               </div>

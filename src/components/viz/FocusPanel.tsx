@@ -61,7 +61,7 @@ export function FocusDrawer() {
           </>
         }
         title={node.label}
-        subtitle={`Live load ${pct((row ?? corridor)?.load ?? 0)} from ${
+        subtitle={`Modelled load ${pct((row ?? corridor)?.load ?? 0)} from ${
           (row ?? corridor)?.eventCount ?? 0
         } events · criticality ${pct(node.criticality)}`}
         footer={
