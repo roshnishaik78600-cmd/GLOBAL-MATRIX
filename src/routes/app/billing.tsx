@@ -6,6 +6,7 @@ import { formatINR } from "@/lib/commerce";
 import { PLANS, briefLimitLabel, CUSTOM_REPORT, type PlanId } from "@/lib/billing/core";
 import { getMyBilling, activateFree, cancelOrder } from "@/lib/billing/billing.functions";
 import { Button } from "@/components/ui/button";
+import { AccountSettings } from "@/components/account/AccountSettings";
 
 export const Route = createFileRoute("/app/billing")({
   staticData: { sitemap: false },
@@ -207,6 +208,7 @@ function Billing() {
             Invoices and receipts are not issued yet; they will appear here once payments go live.
           </p>
         </section>
+        {user?.email && <AccountSettings email={user.email} />}
       </div>
     </div>
   );
