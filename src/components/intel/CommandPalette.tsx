@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "@/lib/router-shim";
-import { useQuery } from "@/lib/backend/shim";
+import { useQueryState } from "@/lib/backend/shim";
 import {
   CommandDialog,
   CommandEmpty,
@@ -124,9 +124,10 @@ export function CommandPalette({
 }) {
   const navigate = useNavigate();
 
-  const feed = useQuery(api.intel.detectionFeed, {});
-  const countries = useQuery(api.intel.countryDirectory);
-  const industries = useQuery(api.intel.industryDirectory);
+  // Search is a shared header tool: a slow or failed directory must not crash the page.
+  const feed = useQueryState(api.intel.detectionFeed, {}).data;
+  const countries = useQueryState(api.intel.countryDirectory).data;
+  const industries = useQueryState(api.intel.industryDirectory).data;
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
