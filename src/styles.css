@@ -2577,3 +2577,186 @@
     font-size: 42px;
   }
 }
+
+/* ===================================================================
+   INTELLIGENCE TERMINAL LAYER — final, decisive visual system.
+   Declared last so it supersedes earlier layered experiments.
+   Obsidian base, layered graphite surfaces, burgundy/maroon/aubergine accents.
+   =================================================================== */
+:root {
+  --background: oklch(0.1 0.004 300);
+  --card: oklch(0.145 0.008 310);
+  --surface-2: oklch(0.18 0.012 315);
+  --muted: oklch(0.19 0.01 315);
+  --border: oklch(0.26 0.016 330);
+  --input: oklch(0.36 0.03 340);
+  --primary: oklch(0.68 0.13 352);
+  --burgundy: oklch(0.32 0.1 352);
+  --maroon: oklch(0.42 0.14 355);
+  --aubergine: oklch(0.45 0.1 320);
+  --term-glow: color-mix(in oklch, var(--maroon) 35%, transparent);
+  --term-edge: linear-gradient(90deg, var(--maroon), var(--aubergine) 55%, transparent);
+  --term-card: linear-gradient(180deg, color-mix(in oklch, var(--surface-2) 70%, var(--card)), var(--card) 46%);
+  --term-shadow:
+    0 1px 0 color-mix(in oklch, var(--foreground) 6%, transparent) inset,
+    0 18px 40px -24px color-mix(in oklch, var(--background) 95%, transparent);
+  --term-backdrop:
+    radial-gradient(1200px 500px at 85% -10%, color-mix(in oklch, var(--burgundy) 32%, transparent), transparent 70%),
+    radial-gradient(900px 420px at -10% 10%, color-mix(in oklch, var(--aubergine) 18%, transparent), transparent 70%);
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "IBM Plex Sans", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-image: var(--term-backdrop);
+  background-attachment: fixed;
+}
+h1,
+h2,
+h3,
+.t-hero,
+.t-page,
+.t-section {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+.t-page {
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
+  font-weight: 600;
+}
+
+/* Cards: layered graphite with a lit top edge and depth. */
+.card,
+.glass,
+.exec-surface,
+.panel,
+.gm-research-region {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--term-card);
+  box-shadow: var(--term-shadow);
+  overflow: hidden;
+}
+.card::before,
+.gm-research-region::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: var(--term-edge);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.gm-research-dominant {
+  border-color: color-mix(in oklch, var(--maroon) 60%, var(--border));
+  box-shadow: var(--term-shadow), 0 0 0 1px color-mix(in oklch, var(--maroon) 25%, transparent),
+    0 24px 60px -30px var(--term-glow);
+}
+.gm-research-dominant::before {
+  height: 2px;
+  opacity: 1;
+}
+.card:hover,
+.gm-research-region:hover {
+  border-color: color-mix(in oklch, var(--maroon) 45%, var(--border));
+}
+
+/* Panel heads read as terminal section bars. */
+.gm-research-region h2,
+.card h2 {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.exec-label,
+.label {
+  letter-spacing: 0.02em;
+}
+.exec-num,
+.num {
+  font-family: var(--font-mono);
+}
+
+/* Page header: status bar + grid-lit title block. */
+.gm-term-header {
+  position: relative;
+  background:
+    linear-gradient(180deg, color-mix(in oklch, var(--burgundy) 22%, transparent), transparent 85%),
+    repeating-linear-gradient(90deg, color-mix(in oklch, var(--foreground) 4%, transparent) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(0deg, color-mix(in oklch, var(--foreground) 3%, transparent) 0 1px, transparent 1px 48px);
+}
+.gm-term-statusbar {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklch, var(--background) 70%, transparent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+.gm-term-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 22%, transparent);
+  flex-shrink: 0;
+}
+.gm-term-title {
+  border-left: 2px solid var(--maroon);
+  padding-left: 1rem;
+}
+.gm-chapter-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--primary);
+}
+
+/* Top nav: obsidian glass with an accent underline. */
+.gm-workspace-nav {
+  background: color-mix(in oklch, var(--background) 82%, transparent);
+  box-shadow: 0 1px 0 color-mix(in oklch, var(--maroon) 40%, transparent);
+}
+
+/* Tables. */
+table thead th {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: color-mix(in oklch, var(--surface-2) 80%, transparent);
+}
+table tbody tr:hover {
+  background: color-mix(in oklch, var(--burgundy) 18%, transparent);
+}
+
+/* Command-centre feed scrolls inside its column. */
+.gm-scroll-list {
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+/* Thin themed scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklch, var(--maroon) 60%, var(--border)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--maroon) 55%, var(--border));
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}

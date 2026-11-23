@@ -102,9 +102,8 @@ export default function Overview() {
 
   return (
     <PageFrame
-      layout="atlas"
-
-      eyebrow="Overview"
+      layout="workspace"
+      eyebrow="Command centre"
       title="See the world. Understand the impact."
       lede="Global signals, connected exposure, and the evidence behind every relationship."
       actions={
@@ -144,28 +143,59 @@ export default function Overview() {
         </div>
       }
     >
-      {/* LEVEL 1 — one dominant object. The map. Everything else is sized to
-          support it rather than compete with it. */}
-      <nav
-        className="gm-atlas-index flex flex-wrap justify-center gap-6 border-b border-border pb-5 text-xs"
-        aria-label="Intelligence stages"
-      >
-        {[
-          { id: "overview-atlas", label: "01 / The world" },
-          { id: "overview-signals", label: "02 / The signals" },
-          { id: "overview-impact", label: "03 / The impact" },
-          { id: "overview-readings", label: "04 / The readings" },
-        ].map((stage) => (
-          <a
-            key={stage.id}
-            href={`#${stage.id}`}
-            className="text-muted-foreground hover:text-primary"
-          >
-            {stage.label}
-          </a>
-        ))}
-      </nav>
-      <div id="overview-atlas" className="lg:col-span-12 scroll-mt-6">
+      {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
+          two columns each, so every headline number sits on the same baseline as
+          the panels below it rather than in a card of its own. */}
+      <div id="overview-readings" className="lg:col-span-12 scroll-mt-6">
+        <Region width={12}>
+          <MetricGrid columns={6}>
+            <Metric
+              label="Mean composite"
+              value={num(stats?.meanScore ?? 0, 1)}
+              unit="/100"
+              basis="model"
+              tone={loadColour((stats?.meanScore ?? 0) / 100)}
+              period="30D"
+              hint="Corpus mean composite risk on the 30-day horizon"
+            />
+            <Metric
+              label="Most exposed"
+              value={hottest?.short ?? "—"}
+              basis="model"
+              tone={loadColour(hottest?.load ?? 0)}
+              hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
+            />
+            <Metric
+              label="Corpus events"
+              value={count(stats?.events ?? data.stats.events)}
+              basis="scenario"
+              hint="Synthetic events currently in the corpus"
+            />
+            <Metric
+              label="Tracked places"
+              value={count(mappable.length)}
+              basis="scenario"
+              hint="Places the map can plot"
+            />
+            <Metric
+              label="Active signals"
+              value={count((stats?.bands?.high ?? 0) + (stats?.bands?.severe ?? 0))}
+              basis="model"
+              period={timeWindow.toUpperCase()}
+              hint="Events at elevated-or-worse composite score inside the active window"
+            />
+            <Metric
+              label="In window"
+              value={count(inWindow)}
+              unit={`/ ${count(ticker.length)}`}
+              basis="scenario"
+              period={timeWindow.toUpperCase()}
+              hint="Events falling inside the selected window"
+            />
+          </MetricGrid>
+        </Region>
+      </div>
+      <div id="overview-atlas" className="scroll-mt-6 lg:col-span-8">
         <Region width={12} dominant className="gm-overview-map">
           <PanelHead
             title="Explore the exposure network"
@@ -186,37 +216,16 @@ export default function Overview() {
           </div>
         </Region>
       </div>
-
-      <section className="gm-mission-strip lg:col-span-12" aria-label="Intelligence workspace">
-        <img src={orbit} alt="Global geographic exposure pathways" width={1536} height={1024} />
-        <div>
-          <p className="font-mono text-xs text-primary">STAGE 01 / GLOBAL SIGNAL</p>
-          <h2 className="mt-4 text-3xl font-medium">
-            From signal
-            <br />
-            to perspective.
-          </h2>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Demonstration events. Modelled connections.
-            <br />
-            Explore the evidence behind the exposure.
-          </p>
-          <Button asChild variant="outline" className="mt-6">
-            <Link to="/app/graph">
-              Open impact graph <ArrowUpRight />
-            </Link>
-          </Button>
-        </div>
-      </section>
+      <div className="flex min-w-0 flex-col gap-6 lg:col-span-4">
       {/* LEVEL 2 — what changed, as a readable feed. */}
-      <div id="overview-signals" className="lg:col-span-12 scroll-mt-6">
+      <div id="overview-signals" className="scroll-mt-6">
         <Region width={12} className="gm-overview-signals">
           <PanelHead
             title="Scenario intelligence"
             meta="Demonstration corpus · not live news"
             actions={<DataType type="model" />}
           />
-          <ul className="min-w-0 divide-y divide-[var(--exec-hairline)]">
+          <ul className="gm-scroll-list min-w-0 divide-y divide-[var(--exec-hairline)]">
             {data.topEvents
               .filter((event) => ticker.some((item) => item.id === event.id && item.inWindow))
               .map((event) => {
@@ -271,7 +280,12 @@ export default function Overview() {
           </ul>
         </Region>
       </div>
-
+      {/* LEVEL 5 — external verified data, with its own freshness per source. */}
+      <Region width={12}>
+        <PanelHead title="Verified external data" meta="live connectors" />
+        <VerifiedStrip />
+      </Region>
+      </div>
       {/* LEVEL 2 — the timeline of what happened. */}
       <Region width={12}>
         {ticker.length === 0 ? (
@@ -296,80 +310,6 @@ export default function Overview() {
           />
         )}
       </Region>
-
-      <div id="overview-impact" className="lg:col-span-12 scroll-mt-6 border-t border-border pt-8">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p>
-            <h2 className="mt-3 text-2xl font-medium">Follow what comes next.</h2>
-          </div>
-          <Button asChild variant="ghost">
-            <Link to="/app/graph">
-              Knowledge graph <ArrowRight />
-            </Link>
-          </Button>
-        </div>
-        <FiveStageStory embedded />
-        <details className="border-t border-border py-5">
-          <summary className="cursor-pointer text-sm font-semibold">
-            Explore all nine propagation stages
-          </summary>
-          <ChainExplorer className="gm-story-chain" />
-        </details>
-      </div>
-      {/* LEVEL 1 — the summary strip. Six readings on the shared 12-column grid,
-          two columns each, so every headline number sits on the same baseline as
-          the panels below it rather than in a card of its own. */}
-      <div id="overview-readings" className="lg:col-span-12 scroll-mt-6">
-        <Region width={12}>
-          <MetricGrid columns={6}>
-            <Metric
-              label="Mean composite"
-              value={num(stats?.meanScore ?? 0, 1)}
-              unit="/100"
-              basis="model"
-              tone={loadColour((stats?.meanScore ?? 0) / 100)}
-              period="30D"
-              hint="Corpus mean composite risk on the 30-day horizon"
-            />
-            <Metric
-              label="Most exposed"
-              value={hottest?.short ?? "—"}
-              basis="model"
-              tone={loadColour(hottest?.load ?? 0)}
-              hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
-            />
-            <Metric
-              label="Corpus events"
-              value={count(stats?.events ?? data.stats.events)}
-              basis="scenario"
-              hint="Synthetic events currently in the corpus"
-            />
-            <Metric
-              label="Tracked places"
-              value={count(mappable.length)}
-              basis="scenario"
-              hint="Places the map can plot"
-            />
-            <Metric
-              label="Active signals"
-              value={count((stats?.bands?.high ?? 0) + (stats?.bands?.severe ?? 0))}
-              basis="model"
-              period={timeWindow.toUpperCase()}
-              hint="Events at elevated-or-worse composite score inside the active window"
-            />
-            <Metric
-              label="In window"
-              value={count(inWindow)}
-              unit={`/ ${count(ticker.length)}`}
-              basis="scenario"
-              period={timeWindow.toUpperCase()}
-              hint="Events falling inside the selected window"
-            />
-          </MetricGrid>
-        </Region>
-      </div>
-
       {/* LEVEL 2 — the radar. One tile per row, because this region is four of
           the twelve columns and six tiles across that width would be unreadable. */}
       <Region width={12}>
@@ -391,16 +331,50 @@ export default function Overview() {
           </p>
         )}
       </Region>
-
       {/* LEVEL 3 — the three composite gauges, full width so each dial keeps
           its own readable width instead of being squeezed into a sidebar. */}
       <Region width={12}>{topology && <GaugeCluster data={topology} />}</Region>
-
-      {/* LEVEL 5 — external verified data, with its own freshness per source. */}
-      <Region width={12}>
-        <PanelHead title="Verified external data" meta="live connectors" />
-        <VerifiedStrip />
-      </Region>
+      <section className="gm-mission-strip lg:col-span-12" aria-label="Intelligence workspace">
+        <img src={orbit} alt="Global geographic exposure pathways" width={1536} height={1024} />
+        <div>
+          <p className="font-mono text-xs text-primary">STAGE 01 / GLOBAL SIGNAL</p>
+          <h2 className="mt-4 text-3xl font-medium">
+            From signal
+            <br />
+            to perspective.
+          </h2>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Demonstration events. Modelled connections.
+            <br />
+            Explore the evidence behind the exposure.
+          </p>
+          <Button asChild variant="outline" className="mt-6">
+            <Link to="/app/graph">
+              Open impact graph <ArrowUpRight />
+            </Link>
+          </Button>
+        </div>
+      </section>
+      <div id="overview-impact" className="lg:col-span-12 scroll-mt-6 border-t border-border pt-8">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs text-primary">SIGNAL → EXPOSURE → IMPACT</p>
+            <h2 className="mt-3 text-2xl font-medium">Follow what comes next.</h2>
+          </div>
+          <Button asChild variant="ghost">
+            <Link to="/app/graph">
+              Knowledge graph <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+        <FiveStageStory embedded />
+        <details className="border-t border-border py-5">
+          <summary className="cursor-pointer text-sm font-semibold">
+            Explore all nine propagation stages
+          </summary>
+          <ChainExplorer className="gm-story-chain" />
+        </details>
+      </div>
     </PageFrame>
   );
 }

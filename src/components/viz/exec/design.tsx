@@ -81,11 +81,18 @@ export function PageFrame({
     // 100vh minimum here would give every page a permanent phantom scrollbar's
     // worth of empty space below its footer.
     <ExecPage className={cn("gm-research-page flex min-h-full flex-col", `gm-layout-${layout}`)}>
-      <header className="gm-research-header border-b border-[var(--exec-hairline)]">
+      <header className="gm-research-header gm-term-header border-b border-[var(--exec-hairline)]">
         {visual}
-        <div className="gm-width px-4 pt-8 pb-6 lg:px-8">
+        <div className="gm-term-statusbar">
+          <div className="gm-width flex min-w-0 items-center gap-3 px-4 lg:px-8">
+            <span className="gm-term-dot" aria-hidden />
+            <span className="min-w-0 truncate">GM // {eyebrow.toUpperCase()}</span>
+            <span className="ml-auto hidden shrink-0 sm:inline">{layout.toUpperCase()} VIEW</span>
+          </div>
+        </div>
+        <div className="gm-width px-4 pt-7 pb-6 lg:px-8">
           <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-[minmax(0,1fr)_auto]">
-            <div className="min-w-0 max-w-3xl">
+            <div className="gm-term-title min-w-0 max-w-3xl">
               <p className="gm-chapter-label exec-label text-muted-foreground">
                 <span className="gm-chapter-mark" aria-hidden />
                 {eyebrow}
