@@ -1,3 +1,4 @@
+import { rankByWeightedExposure, type WeightedRow } from "@/lib/canonical-exposure";
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
@@ -57,6 +58,7 @@ export default function Overview() {
   const data = useQuery(api.intel.overview);
   const topology = useQuery(api.macroTopology.macroTopology) as TopologyResult | undefined;
   const stats = useQuery(api.intel.corpusStats);
+  const matrix = useQuery(api.intel.signalMatrix);
   const navigate = useNavigate();
   const { focus, toggle, clear, isFocused, window: timeWindow, setWindow } = useFocus();
   const [domain, setDomain] = useState<Channel | "risk">("risk");
@@ -93,7 +95,7 @@ export default function Overview() {
 
   const mapEvents = (data.mapEvents ?? []).filter((e) => e.nodeId !== "");
   const mapChannel = domain === "risk" ? null : domain;
-  const hottest = data.hottestCountries[0];
+  const hottest = rankByWeightedExposure(matrix?.rows as WeightedRow[] | undefined)[0];
   const inWindow = ticker.filter((e) => e.inWindow).length;
   // Only places the map can actually draw are counted, so the number on the
   // page matches the number of markers in the picture.
@@ -159,10 +161,14 @@ export default function Overview() {
             />
             <Metric
               label="Most exposed"
-              value={hottest?.short ?? "—"}
+              value={hottest?.short ?? hottest?.label ?? "—"}
               basis="model"
-              tone={loadColour(hottest?.load ?? 0)}
-              hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
+              tone={loadColour(hottest?.overall ?? 0)}
+              hint={
+                hottest
+                  ? `${hottest.label} · modelled weighted exposure ${Math.round(hottest.overall * 100)}/100 (demo scenario)`
+                  : "Modelled exposure ranking unavailable"
+              }
             />
             <Metric
               label="Demo corpus events"
@@ -216,81 +222,81 @@ export default function Overview() {
         </Region>
       </div>
       <div className="flex min-w-0 flex-col gap-6 lg:col-span-4">
-      {/* LEVEL 2 — what changed, as a readable feed. */}
-      <div id="overview-signals" className="scroll-mt-6">
-        <Region width={12} className="gm-overview-signals">
-          <PanelHead
-            title="Scenario intelligence"
-            meta="Demonstration corpus · not live news"
-            actions={<DataType type="model" />}
-          />
-          {inWindow === 0 ? (
-            <p className="px-4 py-4 text-[13px] text-muted-foreground">
-              No events were detected in the last {timeWindow.toUpperCase()}. The demonstration
-              events are dated September–October 2026, so they are historical and are not counted
-              as current. No live event feed is connected yet.
-            </p>
-          ) : null}
-          <ul className="gm-scroll-list min-w-0 divide-y divide-[var(--exec-hairline)]">
-            {data.topEvents
-              .filter((event) => ticker.some((item) => item.id === event.id && item.inWindow))
-              .map((event) => {
-                const active = isFocused("event", event.id);
-                return (
-                  <li key={event.id} className="flex min-w-0 items-stretch">
-                    <button
-                      type="button"
-                      onClick={() => toggle({ kind: "event", id: event.id })}
-                      aria-pressed={active}
-                      className="min-w-0 flex-1 px-3 py-2.5 text-left transition-colors hover:bg-[var(--exec-surface)]"
-                    >
-                      <div className="flex min-w-0 items-baseline justify-between gap-2">
-                        <span
-                          className="exec-label min-w-0 truncate"
-                          style={{ color: riskColorForScore(event.score) }}
-                        >
-                          {CHANNEL_LABEL[event.dominantChannel]}
-                        </span>
-                        <span className="exec-num shrink-0 text-[12px] font-semibold text-[var(--exec-ink)]">
-                          {num(event.score, 1)}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-[12px] leading-snug font-medium text-[var(--exec-ink)]">
-                        {event.title}
-                      </p>
-                      <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-1">
-                        {event.topNodes.map((n) => (
+        {/* LEVEL 2 — what changed, as a readable feed. */}
+        <div id="overview-signals" className="scroll-mt-6">
+          <Region width={12} className="gm-overview-signals">
+            <PanelHead
+              title="Scenario intelligence"
+              meta="Demonstration corpus · not live news"
+              actions={<DataType type="model" />}
+            />
+            {inWindow === 0 ? (
+              <p className="px-4 py-4 text-[13px] text-muted-foreground">
+                No events were detected in the last {timeWindow.toUpperCase()}. The demonstration
+                events are dated September–October 2026, so they are historical and are not counted
+                as current. No live event feed is connected yet.
+              </p>
+            ) : null}
+            <ul className="gm-scroll-list min-w-0 divide-y divide-[var(--exec-hairline)]">
+              {data.topEvents
+                .filter((event) => ticker.some((item) => item.id === event.id && item.inWindow))
+                .map((event) => {
+                  const active = isFocused("event", event.id);
+                  return (
+                    <li key={event.id} className="flex min-w-0 items-stretch">
+                      <button
+                        type="button"
+                        onClick={() => toggle({ kind: "event", id: event.id })}
+                        aria-pressed={active}
+                        className="min-w-0 flex-1 px-3 py-2.5 text-left transition-colors hover:bg-[var(--exec-surface)]"
+                      >
+                        <div className="flex min-w-0 items-baseline justify-between gap-2">
                           <span
-                            key={n.nodeId}
-                            className="exec-num max-w-[14ch] truncate rounded-sm border border-[var(--exec-hairline)] px-1 text-[12px] text-[var(--exec-ink-dim)]"
-                            title={`${n.label} · weight ${num(n.weight, 2)}`}
+                            className="exec-label min-w-0 truncate"
+                            style={{ color: riskColorForScore(event.score) }}
                           >
-                            {n.short}
+                            {CHANNEL_LABEL[event.dominantChannel]}
                           </span>
-                        ))}
-                        <span className="exec-num ml-auto shrink-0 text-[12px] text-[var(--exec-ink-dim)]">
-                          {`80% ${num(event.low, 0)}–${num(event.high, 0)}`}
-                        </span>
-                      </div>
-                    </button>
-                    <Link
-                      to={`/app/event/${event.id}`}
-                      aria-label={`Open ${event.title}`}
-                      className="flex w-8 shrink-0 items-center justify-center border-l border-[var(--exec-hairline)] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
-                    >
-                      <ArrowUpRight className="size-3.5" />
-                    </Link>
-                  </li>
-                );
-              })}
-          </ul>
+                          <span className="exec-num shrink-0 text-[12px] font-semibold text-[var(--exec-ink)]">
+                            {num(event.score, 1)}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-[12px] leading-snug font-medium text-[var(--exec-ink)]">
+                          {event.title}
+                        </p>
+                        <div className="mt-1.5 flex min-w-0 flex-wrap items-center gap-1">
+                          {event.topNodes.map((n) => (
+                            <span
+                              key={n.nodeId}
+                              className="exec-num max-w-[14ch] truncate rounded-sm border border-[var(--exec-hairline)] px-1 text-[12px] text-[var(--exec-ink-dim)]"
+                              title={`${n.label} · weight ${num(n.weight, 2)}`}
+                            >
+                              {n.short}
+                            </span>
+                          ))}
+                          <span className="exec-num ml-auto shrink-0 text-[12px] text-[var(--exec-ink-dim)]">
+                            {`80% ${num(event.low, 0)}–${num(event.high, 0)}`}
+                          </span>
+                        </div>
+                      </button>
+                      <Link
+                        to={`/app/event/${event.id}`}
+                        aria-label={`Open ${event.title}`}
+                        className="flex w-8 shrink-0 items-center justify-center border-l border-[var(--exec-hairline)] text-[var(--exec-ink-dim)] transition-colors hover:text-[var(--exec-ink)]"
+                      >
+                        <ArrowUpRight className="size-3.5" />
+                      </Link>
+                    </li>
+                  );
+                })}
+            </ul>
+          </Region>
+        </div>
+        {/* LEVEL 5 — external verified data, with its own freshness per source. */}
+        <Region width={12}>
+          <PanelHead title="Verified external data" meta="live connectors" />
+          <VerifiedStrip />
         </Region>
-      </div>
-      {/* LEVEL 5 — external verified data, with its own freshness per source. */}
-      <Region width={12}>
-        <PanelHead title="Verified external data" meta="live connectors" />
-        <VerifiedStrip />
-      </Region>
       </div>
       {/* LEVEL 2 — the timeline of what happened. */}
       <Region width={12}>

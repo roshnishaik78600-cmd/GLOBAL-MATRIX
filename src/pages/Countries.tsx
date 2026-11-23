@@ -1,3 +1,4 @@
+import { rankByWeightedExposure, type WeightedRow } from "@/lib/canonical-exposure";
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
@@ -31,6 +32,7 @@ import { cn } from "@/lib/utils";
 export default function Countries() {
   const directory = useQuery(api.intel.countryDirectory);
   const trends = useQuery(api.intel.countryTrends);
+  const matrix = useQuery(api.intel.signalMatrix);
   const navigate = useNavigate();
   const { toggle } = useFocus();
 
@@ -105,7 +107,7 @@ export default function Countries() {
   }
 
   const watchCount = directory.watchlistSize;
-  const hottest = countries[0];
+  const hottest = rankByWeightedExposure(matrix?.rows as WeightedRow[] | undefined)[0];
   const mostFragile = [...countries].sort((a, b) => b.fragility - a.fragility)[0];
   const busiestChannel = (["trade", "energy", "finance", "diplomatic"] as Channel[])
     .map((channel) => ({
@@ -171,7 +173,7 @@ export default function Countries() {
           {
             q: "What's happening?",
             a: hottest
-              ? `${hottest.label} carries the most live exposure at ${pct(hottest.load)}.`
+              ? `${hottest.label} ranks highest in modelled weighted exposure (${Math.round(hottest.overall * 100)}/100, demo scenario).`
               : "No country exposure resolved.",
             href: hottest ? `/app/country/${hottest.nodeId}` : undefined,
           },
@@ -216,8 +218,8 @@ export default function Countries() {
           note={`${corridors.length} corridors and rails`}
         />
         <ExecStat
-          label="Highest exposure"
-          value={hottest ? pct(hottest.load) : "—"}
+          label="Highest modelled exposure"
+          value={hottest ? `${Math.round(hottest.overall * 100)}/100` : "—"}
           tone="var(--exec-crimson)"
           note={hottest?.label}
         />

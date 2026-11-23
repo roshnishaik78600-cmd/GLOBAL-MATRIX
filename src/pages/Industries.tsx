@@ -85,7 +85,7 @@ export default function Industries() {
 
       <Panel
         caption={`Sectors · ${industries.length}`}
-        aside="Ranked by live exposure to the current corpus"
+        aside="Ranked by modelled exposure to the current corpus"
       >
         {industries.length === 0 ? (
           // Not an absence of data: every sector is still in the corpus, the

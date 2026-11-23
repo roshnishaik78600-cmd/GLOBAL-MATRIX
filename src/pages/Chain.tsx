@@ -1,3 +1,4 @@
+import { rankByWeightedExposure, type WeightedRow } from "@/lib/canonical-exposure";
 import { useNavigate } from "@/lib/router-shim";
 import { useQuery } from "@/lib/backend/shim";
 import { api } from "@/lib/backend/api";
