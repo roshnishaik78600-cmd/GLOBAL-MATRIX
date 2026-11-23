@@ -42,6 +42,7 @@ import { Route as AppSupplyRouteImport } from './routes/app/supply'
 import { Route as AppTradeRouteImport } from './routes/app/trade'
 import { Route as AppWatchlistRouteImport } from './routes/app/watchlist'
 import { Route as AppWorldRouteImport } from './routes/app/world'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as AppCheckoutProductRouteImport } from './routes/app/checkout/$product'
 import { Route as AppCountryNodeIdRouteImport } from './routes/app/country/$nodeId'
 import { Route as AppEventEventIdRouteImport } from './routes/app/event/$eventId'
@@ -213,6 +214,11 @@ const AppWorldRoute = AppWorldRouteImport.update({
   path: '/world',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppCheckoutProductRoute = AppCheckoutProductRouteImport.update({
   id: '/checkout/$product',
   path: '/checkout/$product',
@@ -273,6 +279,7 @@ export interface FileRoutesByFullPath {
   '/app/watchlist': typeof AppWatchlistRoute
   '/app/world': typeof AppWorldRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/app/checkout/$product': typeof AppCheckoutProductRoute
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
@@ -312,6 +319,7 @@ export interface FileRoutesByTo {
   '/app/watchlist': typeof AppWatchlistRoute
   '/app/world': typeof AppWorldRoute
   '/app': typeof AppIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/app/checkout/$product': typeof AppCheckoutProductRoute
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
@@ -353,6 +361,7 @@ export interface FileRoutesById {
   '/app/watchlist': typeof AppWatchlistRoute
   '/app/world': typeof AppWorldRoute
   '/app/': typeof AppIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/app/checkout/$product': typeof AppCheckoutProductRoute
   '/app/country/$nodeId': typeof AppCountryNodeIdRoute
   '/app/event/$eventId': typeof AppEventEventIdRoute
@@ -395,6 +404,7 @@ export interface FileRouteTypes {
     | '/app/watchlist'
     | '/app/world'
     | '/app/'
+    | '/api/public/health'
     | '/app/checkout/$product'
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
@@ -434,6 +444,7 @@ export interface FileRouteTypes {
     | '/app/watchlist'
     | '/app/world'
     | '/app'
+    | '/api/public/health'
     | '/app/checkout/$product'
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
@@ -474,6 +485,7 @@ export interface FileRouteTypes {
     | '/app/watchlist'
     | '/app/world'
     | '/app/'
+    | '/api/public/health'
     | '/app/checkout/$product'
     | '/app/country/$nodeId'
     | '/app/event/$eventId'
@@ -495,6 +507,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  ApiPublicHealthRoute: typeof ApiPublicHealthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -730,6 +743,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppWorldRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/checkout/$product': {
       id: '/app/checkout/$product'
       path: '/checkout/$product'
@@ -840,6 +860,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  ApiPublicHealthRoute: ApiPublicHealthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

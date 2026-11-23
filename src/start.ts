@@ -18,6 +18,21 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
+// Baseline hardening headers. Framing headers are deliberately omitted so the
+// editor preview (an iframe) keeps working.
+const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => {
+  const result = await next();
+  const res = (result as { response?: Response }).response;
+  if (res instanceof Response) {
+    const h = res.headers;
+    h.set("X-Content-Type-Options", "nosniff");
+    h.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    h.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+    h.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  }
+  return result;
+});
+
 // Start installs this automatically when src/start.ts is absent; defining the
 // file opts out, so re-add it explicitly to keep server functions protected
 // from cross-site requests.
@@ -27,5 +42,5 @@ const csrfMiddleware = createCsrfMiddleware({
 
 export const startInstance = createStart(() => ({
   functionMiddleware: [attachSupabaseAuth],
-  requestMiddleware: [errorMiddleware, csrfMiddleware],
+  requestMiddleware: [errorMiddleware, securityHeadersMiddleware, csrfMiddleware],
 }));
