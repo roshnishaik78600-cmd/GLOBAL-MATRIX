@@ -35,6 +35,7 @@ import {
 import { freshnessOf } from "@/lib/freshness";
 import { period as periodLabel } from "@/lib/numbers";
 import { Button } from "@/components/ui/button";
+import { isInWindow, windowRangeLabel } from "@/lib/time-window";
 import orbit from "@/assets/intelligence-dark.jpg";
 import { FiveStageStory } from "@/components/landing/ReferenceStory";
 import { ChainExplorer } from "@/components/viz/ChainExplorer";
@@ -71,9 +72,7 @@ export default function Overview() {
   // it as if its events were happening right now would misdate every one of them.
   const ticker = useMemo<TickerEvent[]>(() => {
     if (!data) return [];
-    const anchor = corpusClock(data.topEvents.map((e) => e.detectedAt));
-    if (!anchor) return [];
-    const cutoff = anchor - WINDOW_CUTOFF[timeWindow];
+    const now = Date.now();
     return [...data.topEvents]
       .sort((a, b) => b.detectedAt.localeCompare(a.detectedAt))
       .map((e) => ({
@@ -86,7 +85,7 @@ export default function Overview() {
         channel: e.dominantChannel,
         confidence: e.confidence,
         source: e.signals[0]?.source ?? CORPUS_LABEL,
-        inWindow: Date.parse(e.detectedAt) >= cutoff,
+        inWindow: isInWindow(e.detectedAt, timeWindow, now),
       }));
   }, [data, timeWindow]);
 
@@ -166,7 +165,7 @@ export default function Overview() {
               hint={hottest ? `${hottest.label} at ${pct(hottest.load)}` : "No exposure resolved"}
             />
             <Metric
-              label="Corpus events"
+              label="Demo corpus events"
               value={count(stats?.events ?? data.stats.events)}
               basis="scenario"
               hint="Synthetic events currently in the corpus"
@@ -185,7 +184,7 @@ export default function Overview() {
               hint="Events at elevated-or-worse composite score inside the active window"
             />
             <Metric
-              label="In window"
+              label="Demo events in window"
               value={count(inWindow)}
               unit={`/ ${count(ticker.length)}`}
               basis="scenario"
@@ -225,6 +224,13 @@ export default function Overview() {
             meta="Demonstration corpus · not live news"
             actions={<DataType type="model" />}
           />
+          {inWindow === 0 ? (
+            <p className="px-4 py-4 text-[13px] text-muted-foreground">
+              No events were detected in the last {timeWindow.toUpperCase()}. The demonstration
+              events are dated September–October 2026, so they are historical and are not counted
+              as current. No live event feed is connected yet.
+            </p>
+          ) : null}
           <ul className="gm-scroll-list min-w-0 divide-y divide-[var(--exec-hairline)]">
             {data.topEvents
               .filter((event) => ticker.some((item) => item.id === event.id && item.inWindow))
@@ -304,7 +310,7 @@ export default function Overview() {
         ) : (
           <ThreatTicker
             events={ticker}
-            windowLabel={timeWindow.toUpperCase()}
+            windowLabel={`${timeWindow.toUpperCase()} (${windowRangeLabel(timeWindow, Date.now())}, by detection time)`}
             selected={focus?.kind === "event" ? focus.id : null}
             onSelect={(id) => toggle({ kind: "event", id })}
           />
@@ -427,24 +433,6 @@ const WINDOW_FILTERS: { id: TimeWindow; label: string }[] = [
   { id: "24h", label: "24H" },
   { id: "7d", label: "7D" },
 ];
-
-/** Shared window is a focus concern, so the cut lives with it. */
-const WINDOW_CUTOFF = {
-  "1h": 60 * 60 * 1000,
-  "6h": 6 * 60 * 60 * 1000,
-  "24h": 24 * 60 * 60 * 1000,
-  "7d": 7 * 24 * 60 * 60 * 1000,
-} as const;
-
-/** The corpus's own "now": its latest detection timestamp, as epoch ms. */
-function corpusClock(dates: string[]): number {
-  let latest = 0;
-  for (const d of dates) {
-    const ms = Date.parse(d);
-    if (!Number.isNaN(ms) && ms > latest) latest = ms;
-  }
-  return latest;
-}
 
 /** Which map domain a topology tile implies, so a click connects the two boards. */
 const CHANNEL_BY_TOPOLOGY: Record<string, Channel> = {
